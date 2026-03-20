@@ -1,263 +1,354 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { useState, useEffect, useCallback } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
-interface Book {
+interface Slide {
   id: string
+  type: "book" | "game"
+  tag: string
   title: string
+  subtitle: string
   description: string
   image: string
-  tag: string
   buttonText: string
   href: string
+  accentColor: string
 }
 
-const books: Book[] = [
+const slides: Slide[] = [
   {
     id: "zaiire",
-    title: "THE GOLDEN AGE OF BLACK AFRICAN COMICS",
-    description: "Follow Zaiire, a young boy from Kinshasa, and discover legendary superheroes born from ancestral African wisdom and mystical powers.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Zaiire%20The%20Prince%20of%20Kongo%20-%20Necklace%20of%20Destiny.png-SBP7EKt5MlGVIe83Q3sI9wCYYYZfHG.jpeg",
+    type: "book",
     tag: "ZAIÏRE: THE PRINCE OF KONGO",
-    buttonText: "Learn more",
+    title: "THE PRINCE OF KONGO",
+    subtitle: "Zaiïre — Book I",
+    description:
+      "In the heart of the ancient Kongo Kingdom, a young prince named Zaiïre discovers he carries the blood of the ancestors — and the power to reshape the destiny of an entire people. A cinematic epic blending African mythology, royal intrigue, and superhuman gifts.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0045-2K7U0yRJN26nTH5BRGiR6lTJAMNfqK.jpg",
+    buttonText: "Discover Zaiïre",
     href: "/books/zaiire",
+    accentColor: "#F6B800",
   },
   {
     id: "kimoya",
-    title: "THE KANDAKE REBORN",
-    description: "Queen Kimoya Amanirenas returns as the Shadow Huntress, protector of ancient kingdoms and wielder of temporal magic.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-RqaWGnjgEshe1jwMnMTWRFJoVkAA53.jpeg",
-    tag: "KIMOYA: KANDAKE OF FIRE AND STONE",
-    buttonText: "Discover",
+    type: "book",
+    tag: "KIMOYA: KANDAKE OF THE SOUTH",
+    title: "KANDAKE OF THE SOUTH",
+    subtitle: "Kimoya — Book I",
+    description:
+      "Kimoya Kandake sits upon the golden throne of an ancient southern empire. A warrior queen whose wisdom is matched only by her ferocity — she must unite fractured kingdoms against a rising darkness threatening to erase Africa from memory.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0046-lZMOgoh1a5DhlEtWih4TxM2AVDVl3u.jpg",
+    buttonText: "Discover Kimoya",
     href: "/books/kimoya",
+    accentColor: "#D4AF37",
   },
   {
-    id: "kufu",
-    title: "KUFU – THE CROWN GAME",
-    description: "Enter the realm of African royalty through an immersive card game experience. HÉRITAGE • ROYALTY • NKUFU YA BAKULU.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-RqaWGnjgEshe1jwMnMTWRFJoVkAA53.jpeg",
-    tag: "ZAIIRE BOOK III",
-    buttonText: "Get started Game",
-    href: "/kufu-game",
+    id: "njoko",
+    type: "book",
+    tag: "NJOKO: SPIRIT OF THE FOREST",
+    title: "SPIRIT OF THE FOREST",
+    subtitle: "Njoko — Book I",
+    description:
+      "Deep in the primeval rainforests of Central Africa, Njoko — half-human, half-spirit — walks between two worlds. Guardian of forgotten sacred lands, she must face those who seek to exploit the earth's most ancient power.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0044-rm6HLzPaenXZgdpaDPyfmN97Aabcgu.jpg",
+    buttonText: "Discover Njoko",
+    href: "/books/njoko",
+    accentColor: "#4CAF50",
   },
   {
     id: "zattar",
-    title: "THE BLOOD ARCHITECT",
-    description: "A cursed genius of forbidden technology rises from the shadows to reshape the destiny of kingdoms.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Zaiire%20The%20Prince%20of%20Kongo%20-%20Necklace%20of%20Destiny.png-SBP7EKt5MlGVIe83Q3sI9wCYYYZfHG.jpeg",
-    tag: "ZATTAR: THE BLOOD ARCHITECT",
-    buttonText: "Explore",
+    type: "book",
+    tag: "ZATTAR: THE DESERT FLAME",
+    title: "THE DESERT FLAME",
+    subtitle: "Zattar — Book I",
+    description:
+      "From the scorching sands of the Sahara emerges Zattar — a warrior forged in fire and silence. His journey across the continent will ignite a revolution that echoes from the ancient pyramids to the modern streets of Kinshasa.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0055-7oKwB0RaBefWj90AIaARep0VGAQxg6.jpg",
+    buttonText: "Discover Zattar",
     href: "/books/zattar",
+    accentColor: "#FF6B35",
+  },
+  {
+    id: "imvula",
+    type: "book",
+    tag: "IMVULA: THE RAIN BRINGER",
+    title: "THE RAIN BRINGER",
+    subtitle: "Imvula — Book I",
+    description:
+      "When drought threatens to swallow the continent whole, Imvula — the last descendant of the rain gods — must undertake a sacred journey to restore the waters of life. A story of sacrifice, ancestral duty, and the power of nature reborn.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0059-7jQOcRicDvdQkPYsWwzJ5OvOU3FXX4.jpg",
+    buttonText: "Discover Imvula",
+    href: "/books/imvula",
+    accentColor: "#00BCD4",
+  },
+  {
+    id: "kufu",
+    type: "game",
+    tag: "HÉRITAGE · ROYALTY · NKUFU YA BAKULU",
+    title: "KUFU — THE CROWN GAME",
+    subtitle: "Zaiire Book III",
+    description:
+      "KUFU Ludo is the official board game of the ISOLELE universe — an immersive ludo-style strategy game rooted in African royal traditions. Navigate your warriors across a ceremonial board inspired by Kongo cosmology and claim the Crown of the Ancestors.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-ifvBiGyVajqX0jXvhJQOH1k83wp5KC.jpeg",
+    buttonText: "Explore the Game",
+    href: "/kufu-game",
+    accentColor: "#F6B800",
   },
 ]
 
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? "-100%" : "100%",
+    opacity: 0,
+  }),
+}
+
 export function BookHeroSection() {
+  const [current, setCurrent] = useState(0)
+  const [direction, setDirection] = useState(1)
   const [mounted, setMounted] = useState(false)
-  const { scrollY } = useScroll()
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
+  const paginate = useCallback(
+    (newDirection: number) => {
+      setDirection(newDirection)
+      setCurrent((prev) => {
+        const next = prev + newDirection
+        if (next < 0) return slides.length - 1
+        if (next >= slides.length) return 0
+        return next
+      })
+    },
+    []
+  )
+
+  // Auto-advance every 7 seconds
+  useEffect(() => {
+    if (!mounted) return
+    const timer = setInterval(() => paginate(1), 7000)
+    return () => clearInterval(timer)
+  }, [mounted, paginate])
+
   if (!mounted) return null
 
-  return (
-    <motion.section
-      className="relative w-full"
-      style={{
-        "--theme-accent": "#FFD000",
-      } as React.CSSProperties}
-    >
-      {/* Global styles for theme */}
-      <style>{`
-        :root {
-          --theme-accent: #FFD000;
-        }
-        body {
-          scroll-behavior: smooth;
-        }
-      `}</style>
+  const slide = slides[current]
 
-      {/* HEADER */}
+  return (
+    <section className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: "#000" }}>
+      {/* SLIDES */}
+      <AnimatePresence custom={direction} mode="wait">
+        <motion.div
+          key={slide.id}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.65, ease: [0.32, 0.72, 0, 1] }}
+          className="absolute inset-0"
+        >
+          {/* BG IMAGE */}
+          <div className="absolute inset-0">
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              fill
+              className="object-cover object-top"
+              priority={current === 0}
+            />
+            {/* Gradient overlay */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.2) 100%)",
+              }}
+            />
+          </div>
+
+          {/* SLIDE CONTENT */}
+          <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 pt-[70px]">
+            <div className="max-w-2xl">
+              {/* TAG badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.5 }}
+                className="inline-block mb-5"
+                style={{
+                  backgroundColor: slide.accentColor,
+                  color: "#000",
+                  fontSize: "11px",
+                  fontWeight: "700",
+                  padding: "7px 14px",
+                  borderRadius: "3px",
+                  letterSpacing: "1.5px",
+                  textTransform: "uppercase",
+                }}
+              >
+                {slide.tag}
+              </motion.div>
+
+              {/* SUBTITLE */}
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="text-sm font-semibold tracking-widest uppercase mb-3"
+                style={{ color: slide.accentColor, opacity: 0.85 }}
+              >
+                {slide.subtitle}
+              </motion.p>
+
+              {/* TITLE */}
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25, duration: 0.6 }}
+                className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 text-balance"
+                style={{
+                  color: "#FFFFFF",
+                  lineHeight: "1.05",
+                  textShadow: "0 4px 20px rgba(0,0,0,0.6)",
+                  textTransform: "uppercase",
+                  fontFamily: "Montserrat, sans-serif",
+                }}
+              >
+                {slide.title}
+              </motion.h1>
+
+              {/* DESCRIPTION */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.35, duration: 0.6 }}
+                className="text-base md:text-lg leading-relaxed mb-8 max-w-xl"
+                style={{ color: "#E0E0E0" }}
+              >
+                {slide.description}
+              </motion.p>
+
+              {/* BUTTON */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.45, duration: 0.5 }}
+              >
+                <Link href={slide.href}>
+                  <button
+                    className="px-8 py-4 font-bold text-base tracking-wider uppercase rounded-md transition-all duration-200 hover:brightness-110 hover:scale-[1.02] active:scale-[0.98]"
+                    style={{
+                      backgroundColor: slide.accentColor,
+                      color: "#000",
+                    }}
+                  >
+                    {slide.buttonText}
+                  </button>
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* FIXED HEADER with ISOLELE Logo */}
       <motion.header
-        className="fixed top-0 left-0 right-0 z-40 h-[70px] flex items-center"
+        className="fixed top-0 left-0 right-0 z-40 h-[70px] flex items-center px-6 md:px-10"
         style={{
-          backgroundColor: "#000000",
-          paddingLeft: "20px",
+          backgroundColor: "rgba(0,0,0,0.75)",
           backdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(246, 184, 0, 0.1)",
+          borderBottom: "1px solid rgba(246, 184, 0, 0.12)",
         }}
         initial={{ y: -70 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="flex items-center gap-0">
-          <h2
-            className="text-[28px] font-bold tracking-[2px]"
-            style={{ color: "#F6B800", fontFamily: "Montserrat, sans-serif" }}
-          >
-            ISOLELE
-          </h2>
-          <p
-            className="text-[10px] tracking-[3px] uppercase ml-3"
-            style={{ color: "#d0d0d0" }}
-          >
-            THE CHOSEN ONES
-          </p>
-        </div>
+        <Link href="/">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ei_1774029892268-removebg-preview-OGLwAWrJqgxIOFX6ES21zzBCcRpiHa.png"
+            alt="ISOLELE — The Chosen Ones"
+            width={180}
+            height={50}
+            className="object-contain"
+            priority
+          />
+        </Link>
       </motion.header>
 
-      {/* BOOK HERO CONTAINER */}
-      <div
-        className="pt-[70px] flex flex-col gap-[60px] px-6 md:px-[24px] py-[40px]"
-        style={{ backgroundColor: "#000000" }}
+      {/* NAV ARROWS */}
+      <button
+        onClick={() => paginate(-1)}
+        aria-label="Previous slide"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full transition-all hover:scale-110"
+        style={{
+          background: "rgba(246,184,0,0.15)",
+          border: "1.5px solid rgba(246,184,0,0.5)",
+          color: "#F6B800",
+        }}
       >
-        {books.map((book, index) => (
-          <BookCard key={book.id} book={book} index={index} />
+        <ChevronLeft size={22} />
+      </button>
+      <button
+        onClick={() => paginate(1)}
+        aria-label="Next slide"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full transition-all hover:scale-110"
+        style={{
+          background: "rgba(246,184,0,0.15)",
+          border: "1.5px solid rgba(246,184,0,0.5)",
+          color: "#F6B800",
+        }}
+      >
+        <ChevronRight size={22} />
+      </button>
+
+      {/* DOT INDICATORS */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+        {slides.map((s, i) => (
+          <button
+            key={s.id}
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => {
+              setDirection(i > current ? 1 : -1)
+              setCurrent(i)
+            }}
+            className="rounded-full transition-all duration-300"
+            style={{
+              width: i === current ? 28 : 8,
+              height: 8,
+              backgroundColor: i === current ? "#F6B800" : "rgba(255,255,255,0.35)",
+            }}
+          />
         ))}
       </div>
-    </motion.section>
-  )
-}
 
-interface BookCardProps {
-  book: Book
-  index: number
-}
-
-function BookCard({ book, index }: BookCardProps) {
-  return (
-    <motion.div
-      className="relative w-full h-screen flex items-center overflow-hidden rounded-2xl"
-      style={{
-        backgroundImage: `url(${book.image})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
-    >
-      {/* DARK OVERLAY */}
-      <motion.div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.6))",
-        }}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      />
-
-      {/* CONTENT - positioned on left/center */}
-      <motion.div
-        className="relative z-10 max-w-2xl px-8 md:px-16 py-16"
-        initial={{ opacity: 0, x: -50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 0.2 }}
+      {/* Slide counter */}
+      <div
+        className="absolute bottom-8 right-8 md:right-16 z-20 text-xs font-bold tracking-widest"
+        style={{ color: "rgba(255,255,255,0.5)" }}
       >
-        {/* BOOK TAG */}
-        <motion.div
-          className="inline-block mb-6"
-          style={{
-            backgroundColor: "var(--theme-accent)",
-            color: "#000",
-            fontSize: "13px",
-            fontWeight: "700",
-            padding: "8px 14px",
-            borderRadius: "3px",
-            letterSpacing: "1px",
-          }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          {book.tag}
-        </motion.div>
-
-        {/* MAIN TITLE */}
-        <motion.h1
-          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-balance"
-          style={{
-            fontFamily: "Montserrat, sans-serif",
-            fontWeight: "800",
-            lineHeight: "1.1",
-            color: "#FFFFFF",
-            textShadow: "0 3px 10px rgba(0,0,0,0.7)",
-            textTransform: "uppercase",
-          }}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          {book.title}
-        </motion.h1>
-
-        {/* DESCRIPTION */}
-        <motion.p
-          className="text-base md:text-lg max-w-xl mb-8 leading-relaxed"
-          style={{
-            color: "#E6E6E6",
-            lineHeight: "1.6",
-          }}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          {book.description}
-        </motion.p>
-
-        {/* CTA BUTTON */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <Link href={book.href}>
-            <button
-              className="px-8 md:px-10 py-4 md:py-5 rounded-lg border-none font-semibold text-base md:text-lg transition-all duration-300 cursor-pointer"
-              style={{
-                backgroundColor: "var(--theme-accent)",
-                color: "#000",
-                fontSize: "16px",
-                fontWeight: "600",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#ffdb33"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "var(--theme-accent)"
-              }}
-            >
-              {book.buttonText}
-            </button>
-          </Link>
-        </motion.div>
-      </motion.div>
-
-      {/* Optional: Floating elements for visual interest */}
-      <motion.div
-        className="absolute top-10 right-10 w-32 h-32 opacity-10 pointer-events-none"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      >
-        <Image
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/plug%20hover%20load%20image%20isolele-9yXBgFpQgCY8EQC9Pp0QnSUkE3zNps.jpg"
-          alt="background accent"
-          fill
-          className="object-contain"
-        />
-      </motion.div>
-    </motion.div>
+        {String(current + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+      </div>
+    </section>
   )
 }
