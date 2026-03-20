@@ -34,7 +34,7 @@ export interface TranslationKeys {
   nav_shop: string
   nav_supporters: string
   nav_contact: string
-  nav_chatbot: string
+  nav_games: string
   nav_all_characters: string
   nav_become_supporter: string
   nav_partners: string
@@ -189,7 +189,7 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_shop: "Shop",
     nav_supporters: "Supporters",
     nav_contact: "Contact",
-    nav_chatbot: "AI Assistant",
+    nav_games: "Games",
     nav_all_characters: "All Characters",
     nav_become_supporter: "Become a Supporter",
     nav_partners: "Partners",
@@ -343,7 +343,7 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_shop: "Boutique",
     nav_supporters: "Supporteurs",
     nav_contact: "Contact",
-    nav_chatbot: "Assistant IA",
+    nav_games: "Jeux",
     nav_all_characters: "Tous les Personnages",
     nav_become_supporter: "Devenir Supporteur",
     nav_partners: "Partenaires",
@@ -496,6 +496,7 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_shop: "Loja",
     nav_supporters: "Apoiadores",
     nav_contact: "Contato",
+    nav_games: "Jogos",
     nav_all_characters: "Todos os Personagens",
     nav_become_supporter: "Torne-se um Apoiador",
     nav_partners: "Parceiros",
@@ -624,6 +625,7 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_shop: "Tienda",
     nav_supporters: "Seguidores",
     nav_contact: "Contacto",
+    nav_games: "Juegos",
     nav_all_characters: "Todos los Personajes",
     nav_become_supporter: "Convertirse en Seguidor",
     nav_partners: "Socios",

@@ -4,7 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, Menu, X, ShoppingBag, Settings, Home, Users, Zap, BookOpen } from "lucide-react"
+import { ChevronDown, Menu, X, ShoppingBag, Settings, Home, Users, Zap, Gamepad2 } from "lucide-react"
 import { useTheme, themes } from "@/lib/theme-context"
 import { useLanguage, languages } from "@/lib/language-context"
 import { useCart } from "@/lib/cart-context"
@@ -30,7 +30,7 @@ export function SiteHeader() {
     { key: "nav_founder", href: "/founder" },
     { key: "nav_characters", href: "/characters", hasDropdown: true },
     { key: "nav_shop", href: "/shop" },
-    { key: "nav_chatbot", href: "/chatbot" },
+    { key: "nav_games", href: "/kufu-game" },
   ]
 
   return (
@@ -216,8 +216,8 @@ export function SiteHeader() {
             </motion.button>
           </Link>
 
-          {/* Chatbot */}
-          <Link href="/chatbot">
+          {/* Games */}
+          <Link href="/kufu-game">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -227,7 +227,7 @@ export function SiteHeader() {
                 color: currentTheme.colors.accentPrimary,
               }}
             >
-              <BookOpen size={24} />
+              <Gamepad2 size={24} />
             </motion.button>
           </Link>
 
