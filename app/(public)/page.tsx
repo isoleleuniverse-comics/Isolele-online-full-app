@@ -1,6 +1,13 @@
-"use client"
-
 import { BookHeroSection } from "@/components/home/book-hero-section"
+import { UniverseSection } from "@/components/home/universe-section"
+import { CharactersSection } from "@/components/home/characters-section"
+import { StorySection } from "@/components/home/story-section"
+import { ProductsSection } from "@/components/home/products-section"
+import { FounderPreview } from "@/components/home/founder-preview"
+import { ReviewsSection } from "@/components/home/reviews-section"
+import { NewsSection } from "@/components/home/news-section"
+import { CtaSection } from "@/components/home/cta-section"
+import { SiteFooter } from "@/components/site-footer"
 import { OrganizationJsonLd, ComicSeriesJsonLd, WebsiteJsonLd } from "@/components/json-ld"
 
 export default function HomePage() {
@@ -11,8 +18,35 @@ export default function HomePage() {
       <ComicSeriesJsonLd />
       <WebsiteJsonLd />
 
-      {/* Single fullscreen book / game slideshow — all transitions contained here */}
+      {/* Fullscreen book / game slideshow hero */}
       <BookHeroSection />
+
+      {/* Universe pillars */}
+      <UniverseSection />
+
+      {/* Characters carousel */}
+      <CharactersSection />
+
+      {/* Story / synopsis section */}
+      <StorySection />
+
+      {/* Products / shop preview */}
+      <ProductsSection />
+
+      {/* Founder spotlight */}
+      <FounderPreview />
+
+      {/* Reviews */}
+      <ReviewsSection />
+
+      {/* News / articles */}
+      <NewsSection />
+
+      {/* CTA / newsletter */}
+      <CtaSection />
+
+      {/* Footer */}
+      <SiteFooter />
     </>
   )
 }
