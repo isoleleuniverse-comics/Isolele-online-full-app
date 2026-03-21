@@ -7,7 +7,7 @@ import { useInView } from "framer-motion"
 import { useRef } from "react"
 import Link from "next/link"
 
-export function CTASection() {
+export function CtaSection() {
   const { currentTheme } = useTheme()
   const { t } = useLanguage()
   const ref = useRef(null)
