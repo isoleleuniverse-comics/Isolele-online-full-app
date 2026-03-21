@@ -248,8 +248,15 @@ export default function KufuGamePage() {
           className="absolute inset-0"
           style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(10,10,10,1) 100%)" }}
         />
-        {/* Back nav */}
-        <div className="absolute top-6 left-6 z-10">
+        {/* Back nav with ISOLELE logo */}
+        <div className="absolute top-6 left-6 z-10 flex items-center gap-3">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0030-kydmLlQEI33of4mfyTaGi2r6TNvZWz.jpg"
+            alt="ISOLELE Logo"
+            width={32}
+            height={32}
+            className="object-contain"
+          />
           <Link
             href="/"
             className="flex items-center gap-1.5 text-sm font-semibold tracking-wide hover:opacity-80 transition-opacity"
@@ -272,9 +279,9 @@ export default function KufuGamePage() {
           }}
         >
           <div className="flex flex-col md:flex-row gap-6 items-start">
-            {/* Cover */}
+            {/* Cover with ISOLELE branding */}
             <div
-              className="relative shrink-0 rounded-xl overflow-hidden"
+              className="relative shrink-0 rounded-xl overflow-hidden group"
               style={{ width: 140, height: 140, border: "3px solid rgba(246,184,0,0.4)" }}
             >
               <Image
@@ -283,6 +290,15 @@ export default function KufuGamePage() {
                 fill
                 className="object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/30 flex items-end justify-center p-2">
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0030-kydmLlQEI33of4mfyTaGi2r6TNvZWz.jpg"
+                  alt="ISOLELE"
+                  width={24}
+                  height={24}
+                  className="object-contain opacity-80"
+                />
+              </div>
             </div>
 
             {/* Info */}
@@ -463,8 +479,28 @@ export default function KufuGamePage() {
                 </div>
               </div>
 
-              {/* Right — sidebar */}
+              {/* Right — sidebar with ISOLELE branding */}
               <div className="flex flex-col gap-5">
+                {/* ISOLELE Badge */}
+                <div
+                  className="rounded-xl p-4 flex flex-col items-center justify-center text-center"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(246,184,0,0.15) 0%, rgba(246,184,0,0.05) 100%)",
+                    border: "2px solid rgba(246,184,0,0.3)",
+                  }}
+                >
+                  <Image
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0030-kydmLlQEI33of4mfyTaGi2r6TNvZWz.jpg"
+                    alt="ISOLELE Logo"
+                    width={60}
+                    height={60}
+                    className="object-contain mb-2"
+                  />
+                  <p className="text-xs font-bold tracking-widest uppercase" style={{ color: "#F6B800" }}>
+                    Part of the ISOLELE Universe
+                  </p>
+                </div>
+
                 {/* Game info */}
                 <div
                   className="rounded-xl p-5"
@@ -575,10 +611,19 @@ export default function KufuGamePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
             >
-              <p className="text-sm mb-6" style={{ color: "#777" }}>
-                Meet the guardians featured on the KUFU card game — characters drawn directly from the
-                ISOLELE comic universe, each with a unique card designation and power within the game.
-              </p>
+              <div className="flex items-center gap-3 mb-6">
+                <Image
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0030-kydmLlQEI33of4mfyTaGi2r6TNvZWz.jpg"
+                  alt="ISOLELE"
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
+                <p className="text-sm" style={{ color: "#777" }}>
+                  Meet the guardians featured on the KUFU card game — characters drawn directly from the
+                  <span style={{ color: "#F6B800" }} className="font-semibold ml-1">ISOLELE comic universe</span>, each with a unique card designation and power within the game.
+                </p>
+              </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
                 {CHARACTERS.map((char) => (
                   <div key={char.name} className="flex flex-col items-center gap-3">
@@ -665,6 +710,32 @@ export default function KufuGamePage() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* ISOLELE Footer Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="flex justify-center items-center gap-3 mt-12 pt-8 border-t"
+          style={{ borderColor: "rgba(246,184,0,0.1)" }}
+        >
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0030-kydmLlQEI33of4mfyTaGi2r6TNvZWz.jpg"
+            alt="ISOLELE"
+            width={40}
+            height={40}
+            className="object-contain"
+          />
+          <div>
+            <p className="font-bold text-sm" style={{ color: "#F6B800" }}>
+              ISOLELE STUDIOS
+            </p>
+            <p className="text-xs" style={{ color: "#666" }}>
+              The Chosen Ones
+            </p>
+          </div>
+        </motion.div>
       </section>
     </div>
   )
