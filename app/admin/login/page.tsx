@@ -2,16 +2,15 @@
 
 import React from "react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
-import Image from "next/image"
-import {
-  Eye,
-  EyeOff,
-  AlertCircle,
-  Loader2,
-  Mail,
-  Lock,
-} from "lucide-react"
+import { createClient } from "@supabase/supabase-js"
+import { Eye, EyeOff, AlertCircle, Loader2, Mail, Lock } from "lucide-react"
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ""
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ""
+
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("")
@@ -19,6 +18,7 @@ export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,22 +26,28 @@ export default function AdminLoginPage() {
     setLoading(true)
 
     try {
-      const res = await fetch("/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       })
 
-      const data = await res.json()
+      if (signInError) throw signInError
 
-      if (data.success) {
-        // Use full page reload so the cookie is sent with the next request
-        window.location.href = "/admin/home"
-      } else {
-        setError(data.error || "Email ou mot de passe incorrect")
+      if (data.user) {
+        const authCheck = await fetch("/api/admin/check-auth")
+        const authData = await authCheck.json()
+
+        if (authData.isAdmin) {
+          router.push("/admin/dashboard")
+          router.refresh()
+        } else {
+          setError("You do not have admin access")
+          await supabase.auth.signOut()
+        }
       }
-    } catch {
-      setError("Une erreur s'est produite. Veuillez réessayer.")
+    } catch (err: any) {
+      console.error("[v0] Login error:", err)
+      setError(err.message || "Failed to login")
     } finally {
       setLoading(false)
     }
@@ -84,11 +90,9 @@ export default function AdminLoginPage() {
         >
           {/* Header */}
           <div className="p-6 pb-4 border-b border-[#C9A542]/20 text-center">
-            <Image src="/images/isolele-logo.png" alt="ISOLELE Admin" width={70} height={70} className="mx-auto mb-4 object-contain" style={{ width: 70, height: 70 }} />
-            <h1 className="text-xl font-bold text-white tracking-wider">CENTRE DE COMMANDES</h1>
-            <p className="text-sm text-gray-400 mt-1">
-              Connectez-vous pour accéder au panneau
-            </p>
+            <h1 className="text-2xl font-bold text-[#C9A542] tracking-wider">ISOLELE</h1>
+            <p className="text-xs text-gray-400 mt-2 tracking-widest">ADMIN DASHBOARD</p>
+            <p className="text-sm text-gray-500 mt-2">Manage content and media</p>
           </div>
 
           {/* Login Form */}
@@ -100,40 +104,58 @@ export default function AdminLoginPage() {
             className="p-6 space-y-5"
           >
             {error && (
-              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/30"
+              >
                 <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
                 <p className="text-sm text-red-400">{error}</p>
               </motion.div>
             )}
 
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-2 tracking-wider">ADRESSE EMAIL</label>
+              <label className="block text-xs font-medium text-gray-400 mb-2 tracking-wider">
+                EMAIL
+              </label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => { setEmail(e.target.value); setError(null) }}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    setError(null)
+                  }}
                   className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-[#1a2035] text-white outline-none transition-all border border-[#C9A542]/20 focus:border-[#C9A542] focus:shadow-[0_0_20px_rgba(201,165,66,0.15)]"
-                  placeholder="Votre adresse email"
+                  placeholder="admin@isolele.com"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-2 tracking-wider">MOT DE PASSE</label>
+              <label className="block text-xs font-medium text-gray-400 mb-2 tracking-wider">
+                PASSWORD
+              </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) => { setPassword(e.target.value); setError(null) }}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                    setError(null)
+                  }}
                   className="w-full pl-12 pr-12 py-3.5 rounded-xl bg-[#1a2035] text-white outline-none transition-all border border-[#C9A542]/20 focus:border-[#C9A542] focus:shadow-[0_0_20px_rgba(201,165,66,0.15)]"
-                  placeholder="Votre mot de passe"
+                  placeholder="••••••••"
                   required
                 />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors">
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                >
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
@@ -147,7 +169,7 @@ export default function AdminLoginPage() {
               whileHover={{ scale: 1.02, boxShadow: "0 0 30px rgba(201, 165, 66, 0.4)" }}
               whileTap={{ scale: 0.98 }}
             >
-              {loading ? <Loader2 className="w-5 h-5 mx-auto animate-spin" /> : "SE CONNECTER"}
+              {loading ? <Loader2 className="w-5 h-5 mx-auto animate-spin" /> : "SIGN IN"}
             </motion.button>
           </motion.form>
         </div>
@@ -159,3 +181,4 @@ export default function AdminLoginPage() {
     </div>
   )
 }
+
