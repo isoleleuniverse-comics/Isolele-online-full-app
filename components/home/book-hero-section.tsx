@@ -51,28 +51,28 @@ const slides: Slide[] = [
   {
     id: "bambula",
     type: "book",
-    tag: "BAMBULA: GARDIENNE DE LA SAVANE",
+    tag: "BAMBULA: CHILD OF RHYTHM",
     title: "BAMBULA",
-    subtitle: "Bambula — Book I",
+    subtitle: "CHAPTER I · THE SACRED DRUM",
     description:
-      "Bambula — fierce guardian of the African savanna — walks between the spirit world and the living. Armed with a glowing sacred drum, she commands the rhythms of nature itself to defend the ancient lands from those who would destroy them.",
+      "Before words, there was rhythm. Bambula was the child who heard everything. When the drums were taken and the land went silent, he kept the rhythm alive inside him. Armed with the sacred drum, he walks between the spirit world and the living. He does not fight to destroy. He protects to remember.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
-    buttonText: "Discover Bambula",
+    buttonText: "DISCOVER BAMBULA",
     href: "/books/bambula",
     accentColor: "#B3541E",
   },
   {
     id: "mokele",
     type: "book",
-    tag: "MOKELE: CROWNED BY THE STREETS",
-    title: "CROWNED BY THE STREETS",
-    subtitle: "Mokele — Book I · H.R.M King Kufulula",
+    tag: "MOKELE: BORN INTO STRUGGLE",
+    title: "MOKELE",
+    subtitle: "From Child to Lord of Kinshasa",
     description:
-      "From the streets of Kinshasa to the throne rooms of Africa — MOKELE is the story of an heir who was never meant to be found. Suited and sovereign, Crowned by the Streets is a modern African epic where power, legacy, and the city collide.",
+      "Mokele is not born a king. He is born into struggle. The streets of Kinshasa teach him before school ever could, where loyalty is fragile, violence is normal, and survival is everything. From child to hustler to lord. He builds power, money, and respect. In Kinshasa, you either get eaten... or you become the predator.",
     image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mokele-lZToplq4eNUuy08B5V6faXETr5YnKg.jpg",
-    buttonText: "Discover Mokele",
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg",
+    buttonText: "DISCOVER MOKELE",
     href: "/books/mokele",
     accentColor: "#4169E1",
   },
