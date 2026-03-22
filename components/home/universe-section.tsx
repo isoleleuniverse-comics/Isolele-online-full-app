@@ -17,8 +17,8 @@ const pillars = [
   {
     key: "heritage",
     icon: Crown,
-    title: "Les Lignées Royales Portent un Pouvoir Ancien",
-    description: "Le sang royal transporte la mémoire et la puissance des royaumes oubliés, attendant d'être réveillés par les élus.",
+    title: "Everything Begins in Kongo",
+    description: "Music. Dance. Royalty. Fashion. Culture. History. Before the world had names for these things, the Kongo had mastered them all. Africa is not a continent. It is a source. And the Congo is not just part of that source. The Congo IS the source. The trigger of all human culture. The heartbeat that started everything. ISOLELE was born there. Not by accident. By destiny.",
   },
   {
     key: "resurrection",
