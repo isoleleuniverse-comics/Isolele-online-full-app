@@ -1,5 +1,5 @@
 "use client"
-
+// Updated: Welcome to ISOLELE hero section
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
