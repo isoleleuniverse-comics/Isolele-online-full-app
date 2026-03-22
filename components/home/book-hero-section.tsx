@@ -104,6 +104,20 @@ const slides: Slide[] = [
     href: "/kufu-game",
     accentColor: "#F6B800",
   },
+  {
+    id: "amara",
+    type: "book",
+    tag: "AMARA: QUEEN OF THE SEAS",
+    title: "AMARA",
+    subtitle: "CHAPTER I · QUEEN OF THE PIRATES OF AMAZON",
+    description:
+      "Every pirate fears the ocean. Amara owns it. She is the Queen of the Seas. The most feared captain on every water in the world. No ship has outrun her. No king has outsmarted her. No army has stopped her fleet. But Amara does not sail alone. Beside her stand four women bound by blood, loyalty and destiny. Five queens of the sea who together carry a power that will shake every throne on the continent. From their union the Agojie dynasty is born. And from that dynasty rise the five women kings who will change the course of African history forever. This is not just a pirate story. This is where the greatest female dynasty in the ISOLELE universe begins.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
+    buttonText: "DISCOVER AMARA",
+    href: "/books/amara",
+    accentColor: "#1E90B3",
+  },
 ]
 
 const slideVariants = {
