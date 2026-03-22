@@ -35,17 +35,17 @@ const slides: Slide[] = [
     accentColor: "#F6B800",
   },
   {
-    id: "kimoya",
+    id: "makanda",
     type: "book",
-    tag: "KIMOYA: THE RISING KANDAKE",
-    title: "THE RISING KANDAKE",
-    subtitle: "Kimoya — Book I",
+    tag: "THE MAKANDA DYNASTY — BOOK I",
+    title: "MAKANDA",
+    subtitle: "The Most Powerful Empire in History Was Not Lost. It Was Hidden On Purpose.",
     description:
-      "A warrior emperor of unmatched power strides forward from the royal halls of an ancient empire. KIMOYA — The Rising Kandake — unites the fractured kingdoms of Africa against a darkness that seeks to erase their memory from history.",
+      "The Civilization the World Was Never Supposed to Find. Deep within Central Africa, a civilization existed that the world was never meant to know about. The Makanda were not primitive. They were not discovered. They were not saved by anyone. They were already everything, spiritually awakened, technologically advanced, rich in knowledge that the modern world still cannot explain. When outside forces came seeking to take what was theirs, the Makanda made a choice that no conqueror expected. They did not fight to be seen. They vanished to survive. Cities were concealed. Knowledge was sealed inside bloodlines. History was rewritten by those who feared what the Makanda represented. The world called them a mystery. A myth. A legend with no proof. But the Makanda were never gone. They were protecting the Sacred Flame. Waiting for the one born to carry it again. The hidden city was never lost. It was waiting to be found by the right one.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
-    buttonText: "Discover Kimoya",
-    href: "/books/kimoya",
+    buttonText: "DISCOVER MAKANDA",
+    href: "/books/makanda",
     accentColor: "#C0392B",
   },
   {
