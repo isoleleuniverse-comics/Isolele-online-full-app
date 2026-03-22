@@ -97,6 +97,19 @@ export function UniverseSection() {
                 border: `1px solid ${currentTheme.colors.accentPrimary}30`,
               }}
             >
+              {/* Background image for first pillar (Lion) */}
+              {index === 0 && (
+                <div 
+                  className="absolute inset-0 rounded-2xl opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+                  style={{
+                    backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c1e14e48-7ad7-4311-8f7e-73b69263fd5f.jpeg')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                />
+              )}
+              
               {/* Hover glow effect */}
               <div 
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
