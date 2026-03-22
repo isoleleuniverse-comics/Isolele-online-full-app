@@ -38,15 +38,18 @@ export function UniverseSection() {
     <section 
       ref={ref}
       className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden"
-      style={{ 
-        backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/b6dcbb8a-131e-4f9e-ba9e-a5d778f07dd4.jpeg')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
+      style={{ backgroundColor: currentTheme.colors.backgroundSecondary }}
     >
-      {/* Background overlay for text readability */}
-      <div className="absolute inset-0 bg-[#F5F0E8]/70" />
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-5">
+        <div 
+          className="absolute top-0 left-0 w-full h-full"
+          style={{
+            backgroundImage: `radial-gradient(circle at 20% 50%, ${currentTheme.colors.accentPrimary} 0%, transparent 50%),
+                              radial-gradient(circle at 80% 50%, ${currentTheme.colors.accentSecondary} 0%, transparent 50%)`
+          }}
+        />
+      </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
