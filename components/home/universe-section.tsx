@@ -23,8 +23,8 @@ const pillars = [
   {
     key: "resurrection",
     icon: Flame,
-    title: "Les Esprits Ancestraux ne Meurent Jamais",
-    description: "L'Afrique n'a jamais été impuissante. La prophétie est revenue, et avec elle, la résurrection des mythes enterrés.",
+    title: "You Have Always Been Royal",
+    description: "Before anyone told you who you were, the ancestors already knew. Every child born on African soil, every member of the diaspora who crossed oceans and survived, every person who carries African blood in their veins has always carried a crown they were never told about. ISOLELE exists to give it back. Not as a gift. As a reminder. You were never lost. You were never less. You were never without power. You were just waiting for someone to tell you the truth. Welcome home.",
   },
 ]
 
