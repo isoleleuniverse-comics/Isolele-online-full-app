@@ -70,7 +70,7 @@ export function UniverseSection() {
             className="text-xl font-medium tracking-wide mb-6"
             style={{ color: currentTheme.colors.accentPrimary }}
           >
-            • Africa has always had heroes. ISOLELE gives them a universe.
+            Africa has always had heroes. ISOLELE gives them a universe.
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -79,7 +79,7 @@ export function UniverseSection() {
             className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto"
             style={{ color: currentTheme.colors.textSecondary }}
           >
-            • Born from the roots of Kongo. Built for every African child who never saw themselves as a hero. ISOLELE is the universe that was always meant to exist. The kingdom was never lost. It was waiting for its storytellers. ISOLELE FOREVER.
+            Born from the roots of Kongo. Built for every African child who never saw themselves as a hero. ISOLELE is the universe that was always meant to exist. The kingdom was never lost. It was waiting for its storytellers. ISOLELE FOREVER.
           </motion.p>
         </div>
 
