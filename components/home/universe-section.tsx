@@ -150,21 +150,28 @@ export function UniverseSection() {
               </div>
 
               {/* Content */}
-              <h3 
-                className="text-xl font-bold tracking-wide mb-4 relative"
-                style={{ color: currentTheme.colors.textPrimary }}
+              <div 
+                className={index === 0 ? "relative bg-[#F5F0E8]/90 rounded-lg p-4 -mx-2" : "relative"}
               >
-                {pillar.title}
-              </h3>
-              <p 
-                className="text-sm leading-relaxed relative"
-                style={{ 
-                  color: index === 0 ? '#000000' : currentTheme.colors.textSecondary,
-                  fontWeight: index === 0 ? 600 : 400
-                }}
-              >
-                {pillar.description}
-              </p>
+                <h3 
+                  className="text-xl font-bold tracking-wide mb-4 relative"
+                  style={{ 
+                    color: index === 0 ? '#000000' : currentTheme.colors.textPrimary,
+                    fontWeight: index === 0 ? 700 : 700
+                  }}
+                >
+                  {pillar.title}
+                </h3>
+                <p 
+                  className="text-sm leading-relaxed relative"
+                  style={{ 
+                    color: index === 0 ? '#000000' : currentTheme.colors.textSecondary,
+                    fontWeight: index === 0 ? 600 : 400
+                  }}
+                >
+                  {pillar.description}
+                </p>
+              </div>
 
               {/* Bottom accent line */}
               <motion.div
