@@ -1,5 +1,5 @@
 "use client"
-
+// Admin layout - Updated March 2026
 import { useState, type ReactNode } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import Link from "next/link"

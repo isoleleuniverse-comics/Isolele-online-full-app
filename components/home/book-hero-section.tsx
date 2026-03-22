@@ -1,5 +1,5 @@
 "use client"
-// Updated: Welcome to ISOLELE hero section
+// ISOLELE Hero Section - THE CHOSEN ONES - March 2026
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
