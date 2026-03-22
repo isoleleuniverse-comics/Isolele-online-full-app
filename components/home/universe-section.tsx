@@ -100,7 +100,7 @@ export function UniverseSection() {
               {/* Background image for first pillar (Lion) */}
               {index === 0 && (
                 <div 
-                  className="absolute inset-0 rounded-2xl opacity-[0.23] group-hover:opacity-[0.33] transition-opacity duration-500"
+                  className="absolute inset-0 rounded-2xl opacity-[0.53] group-hover:opacity-[0.63] transition-opacity duration-500"
                   style={{
                     backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c1e14e48-7ad7-4311-8f7e-73b69263fd5f.jpeg')`,
                     backgroundSize: 'cover',
@@ -158,7 +158,10 @@ export function UniverseSection() {
               </h3>
               <p 
                 className="text-sm leading-relaxed relative"
-                style={{ color: currentTheme.colors.textSecondary }}
+                style={{ 
+                  color: index === 0 ? '#000000' : currentTheme.colors.textSecondary,
+                  fontWeight: index === 0 ? 600 : 400
+                }}
               >
                 {pillar.description}
               </p>
