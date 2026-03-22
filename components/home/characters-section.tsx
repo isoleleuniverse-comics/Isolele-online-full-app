@@ -107,7 +107,7 @@ export function CharactersSection() {
               className="text-lg"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              Rencontrez les heros, legendes et gardiens de l'Univers Isolele
+              Rencontrez les héros, légendes et gardiens de l'Univers Isolele
             </motion.p>
           </div>
           

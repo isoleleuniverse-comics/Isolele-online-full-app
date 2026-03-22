@@ -12,19 +12,18 @@ export interface Language {
 
 export const languages: Language[] = [
   { code: "en", name: "English", nativeName: "English", flag: languageFlags.en },
-  { code: "fr", name: "French", nativeName: "Francais", flag: languageFlags.fr },
-  { code: "pt", name: "Portuguese", nativeName: "Portugues", flag: languageFlags.pt },
-  { code: "es", name: "Spanish", nativeName: "Espanol", flag: languageFlags.es },
+  { code: "fr", name: "French", nativeName: "Français", flag: languageFlags.fr },
+  { code: "pt", name: "Portuguese", nativeName: "Português", flag: languageFlags.pt },
+  { code: "es", name: "Spanish", nativeName: "Español", flag: languageFlags.es },
   { code: "zu", name: "Zulu", nativeName: "Zulu", flag: languageFlags.zu },
-  { code: "xh", name: "Xhosa", nativeName: "Xhosa", flag: languageFlags.xh },
-  { code: "sw", name: "Swahili", nativeName: "Swahili", flag: languageFlags.sw },
-  { code: "ln", name: "Lingala", nativeName: "Lingala", flag: languageFlags.ln },
+  { code: "sw", name: "Swahili", nativeName: "Kiswahili", flag: languageFlags.sw },
 ]
 
 interface LanguageContextType {
   currentLanguage: Language
   setLanguage: (code: string) => void
   t: (key: keyof TranslationKeys | string) => string
+  translateText: (text: string, targetLang?: string) => Promise<string>
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
@@ -34,7 +33,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Load saved language from localStorage on client side only
     try {
       const savedLang = localStorage.getItem("isolele-language")
       if (savedLang) {
@@ -44,7 +42,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         }
       }
     } catch (error) {
-      console.error("Error loading language preference:", error)
+      console.error("[v0] Error loading language preference:", error)
     }
     setMounted(true)
   }, [])
@@ -64,9 +62,33 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return langTranslations[translationKey] || translations.en[translationKey] || String(key)
   }
 
-  // Return children only when mounted to prevent hydration mismatch
+  const translateText = async (text: string, targetLang?: string): Promise<string> => {
+    try {
+      const target = targetLang || currentLanguage.code
+      if (target === "en") return text
+
+      const response = await fetch("/api/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text,
+          targetLanguage: target,
+          sourceLanguage: "en",
+          action: "translate",
+        }),
+      })
+
+      if (!response.ok) throw new Error("Translation failed")
+      const data = await response.json()
+      return data.result?.translatedText || text
+    } catch (error) {
+      console.error("[v0] Translation error:", error)
+      return text
+    }
+  }
+
   return (
-    <LanguageContext.Provider value={{ currentLanguage, setLanguage, t }}>
+    <LanguageContext.Provider value={{ currentLanguage, setLanguage, t, translateText }}>
       {mounted ? children : <>{children}</>}
     </LanguageContext.Provider>
   )

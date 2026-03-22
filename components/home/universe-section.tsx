@@ -11,20 +11,20 @@ const pillars = [
   {
     key: "destiny",
     icon: Sparkles,
-    title: "La Destinee n'est pas un Choix",
-    description: "C'est un Appel. Chaque personnage est invoque par les lignees sanguines, les esprits anciens et les histoires inachevees de leurs ancetres.",
+    title: "La Destinée n'est pas un Choix",
+    description: "C'est un Appel. Chaque personnage est invoqué par les lignées sanguines, les esprits anciens et les histoires inachevées de leurs ancêtres.",
   },
   {
     key: "heritage",
     icon: Crown,
-    title: "Les Lignees Royales Portent un Pouvoir Ancien",
-    description: "Le sang royal transporte la memoire et la puissance des royaumes oublies, attendant d'etre reveillees par les elus.",
+    title: "Les Lignées Royales Portent un Pouvoir Ancien",
+    description: "Le sang royal transporte la mémoire et la puissance des royaumes oubliés, attendant d'être réveillés par les élus.",
   },
   {
     key: "resurrection",
     icon: Flame,
     title: "Les Esprits Ancestraux ne Meurent Jamais",
-    description: "L'Afrique n'a jamais ete impuissante. La prophetie est revenue, et avec elle, la resurrection des mythes enterres.",
+    description: "L'Afrique n'a jamais été impuissante. La prophétie est revenue, et avec elle, la résurrection des mythes enterrés.",
   },
 ]
 
@@ -79,9 +79,9 @@ export function UniverseSection() {
             className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto"
             style={{ color: currentTheme.colors.textSecondary }}
           >
-            Isolele est un univers visionnaire ne pour restaurer l'ame du storytelling africain, 
-            un empire mythologique ou les super-heros sont choisis par le destin, les royaumes jamais 
-            oublies, et le pouvoir ancestral est vivant dans chaque page, chaque prophetie, chaque bataille.
+            Isolele est un univers visionnaire né pour restaurer l'âme du storytelling africain, 
+            un empire mythologique où les super-héros sont choisis par le destin, les royaumes jamais 
+            oubliés, et le pouvoir ancestral est vivant dans chaque page, chaque prophétie, chaque bataille.
           </motion.p>
         </div>
 
