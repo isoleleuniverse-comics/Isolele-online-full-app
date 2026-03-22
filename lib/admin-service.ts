@@ -53,22 +53,33 @@ export async function verifyAdminLogin(
   password: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    if (email !== ADMIN_EMAIL) {
+    // Direct credential check
+    const ADMIN_EMAIL = 'admin@isolele.com'
+    const ADMIN_PASSWORD = 'Isolele2025#'
+
+    if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      console.log('[v0] Invalid email:', email)
       return { success: false, error: 'Invalid credentials' }
     }
 
     if (password !== ADMIN_PASSWORD) {
+      console.log('[v0] Invalid password')
       return { success: false, error: 'Invalid credentials' }
     }
 
-    // Update last login
-    await supabase
-      .from('admin_login')
-      .update({
-        last_login: new Date().toISOString(),
-        login_attempts: 0,
-      })
-      .eq('email', ADMIN_EMAIL)
+    // Log successful login
+    try {
+      await supabase
+        .from('admin_login')
+        .update({
+          last_login: new Date().toISOString(),
+          login_attempts: 0,
+        })
+        .eq('email', ADMIN_EMAIL)
+    } catch (dbError) {
+      // Database might not have the record yet, that's ok
+      console.log('[v0] Could not update last_login:', dbError)
+    }
 
     return { success: true }
   } catch (error) {
