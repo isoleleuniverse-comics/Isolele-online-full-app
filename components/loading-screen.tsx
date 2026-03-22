@@ -110,7 +110,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
                 className="text-xs tracking-[0.22em] uppercase"
                 style={{ color: "#d8d8d8" }}
               >
-                African Mythology. Reawakened.
+                Heritage. Royalty. Nkufu ya Bakulu.
               </p>
             </motion.div>
 
