@@ -132,6 +132,20 @@ const slides: Slide[] = [
     href: "/books/zattar",
     accentColor: "#2E8B57",
   },
+  {
+    id: "zaiko",
+    type: "book",
+    tag: "ZAÏKO: LAST KING OF THE STREETS OF KIVUS",
+    title: "THE LEGEND OF ZAÏKO",
+    subtitle: "He Did Not Rise From the Streets. He Conquered Them.",
+    description:
+      "Born in North Kivu. Forged in Kinshasa. Zaïko was never meant to survive. But survival was never enough. In a world ruled by power, money, and fear, he rises from nothing. Not as a hero. But as a force. With his brother, he builds the most feared empire the Kivus have ever known. No crown was given. No destiny was written. Everything was taken.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1175-njlosetUOsqZszKylrOXsIRLw0l3s7.jpeg",
+    buttonText: "DISCOVER ZAÏKO",
+    href: "/books/zaiko",
+    accentColor: "#8B7355",
+  },
 ]
 
 const slideVariants = {
