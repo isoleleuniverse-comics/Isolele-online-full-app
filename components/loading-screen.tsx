@@ -72,16 +72,16 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
             <div
               className="relative overflow-hidden"
               style={{
-                width: 220,
-                height: 220,
+                width: 260,
+                height: 260,
                 borderRadius: "50%",
                 border: "4px solid #F6B800",
                 boxShadow: "0 0 40px rgba(246,184,0,0.5), 0 0 80px rgba(246,184,0,0.2)",
               }}
             >
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0058-gD7wFf8li9ITXSvC57xza5JO8jIl7z.jpg"
-                alt="ISOLELE Crown"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CERCLE-ISOLELE%202026%20copie.png-fKr5oGDmJ112nZD0gVtCNZbA1E2Ld1.jpeg"
+                alt="ISOLELE Circle 2026"
                 fill
                 className="object-cover"
                 priority
