@@ -93,14 +93,14 @@ const slides: Slide[] = [
   {
     id: "kufu",
     type: "game",
-    tag: "HÉRITAGE · ROYALTY · NKUFU YA BAKULU",
-    title: "KUFU — THE CROWN GAME",
-    subtitle: "Le Jeu Officiel de l'Univers ISOLELE",
+    tag: "KUFU: THE CROWN GAME",
+    title: "KUFU",
+    subtitle: "THE OFFICIAL GAME OF THE ISOLELE UNIVERSE",
     description:
-      "KUFU Ludo is the official board game of the ISOLELE universe — an immersive ludo-style strategy game rooted in African royal traditions. Navigate your warriors across a ceremonial board inspired by Kongo cosmology and claim the Crown of the Ancestors.",
+      "This is not just a card game. It is a ceremony. Gather your warriors. Build your kingdom. Outplay every opponent at the table. But to claim the crown there is only one way to win. You must raise your voice and speak the name of the king out loud. Then someone places the necklace over your head. Not by your own hand. By another. Because a true king is not crowned alone. KUFU is where African royalty becomes something you feel in your hands, hear in your voice, and carry around your neck. Every game is a coronation. Every winner is a king.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_20260321_113436-ktAJOL2e0SS0pkTY6aPnn7aBKxr3pq.jpg",
-    buttonText: "Explore the Game",
+    buttonText: "EXPLORE THE GAME",
     href: "/kufu-game",
     accentColor: "#F6B800",
   },
