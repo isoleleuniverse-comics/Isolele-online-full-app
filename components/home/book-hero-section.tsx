@@ -25,7 +25,7 @@ const slides: Slide[] = [
     type: "book",
     tag: "CHAPTER I",
     title: "ZAIIRE THE PRINCE OF KONGO",
-    subtitle: "THE NECKLACE OF DESTINY",
+    subtitle: "& THE NECKLACE OF DESTINY",
     description:
       "Before the throne was earned, before the cosmos answered his call, there was a necklace. Forged in the heart of the ancient Kongo Kingdom and hidden across centuries, the Necklace of Destiny chose its bearer not by power, but by the blood of a thousand kings. Zaiire does not seek glory. Glory seeks him.",
     image:
