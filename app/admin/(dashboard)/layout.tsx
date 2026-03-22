@@ -12,14 +12,11 @@ import { SaveProvider } from "@/components/admin/save-progress"
 
 const navItems = [
   { icon: LayoutDashboard, label: "Tableau de bord", href: "/admin" },
-  { icon: Settings, label: "Controle du Site", href: "/admin/site-controller" },
-  { icon: FileText, label: "Actualites", href: "/admin/news" },
-  { icon: Users, label: "Personnages", href: "/admin/characters" },
-  { icon: ShoppingBag, label: "Boutique", href: "/admin/shop" },
-  { icon: ImageIcon, label: "Medias", href: "/admin/media" },
-  { icon: BookOpen, label: "Pages", href: "/admin/pages" },
+  { icon: FileText, label: "Display", href: "/admin/display" },
+  { icon: FileText, label: "Refact Display", href: "/admin/refact-display" },
   { icon: BarChart3, label: "Analytics", href: "/admin/analytics" },
-  { icon: Shield, label: "Securite", href: "/admin/security" },
+  { icon: Bell, label: "Notifications", href: "/admin/notifications" },
+  { icon: Settings, label: "AI Assistant", href: "/admin/ai-assistant" },
   { icon: Settings, label: "Parametres", href: "/admin/settings" },
 ]
 
@@ -65,7 +62,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             {/* Logo */}
             <div className="p-4 flex items-center gap-3 border-b border-[#C9A542]/20">
               <NextImage
-                src="/isolele-logo-transparent.png"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/isolele-removebg-preview-HeByXSyVrkbKFrcntxvpelZxSswbcU.png"
                 alt="ISOLELE"
                 width={40}
                 height={40}
@@ -128,8 +125,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   style={{ backgroundColor: "#0a0f1a" }}
                 >
                   <div className="p-4 flex items-center justify-between border-b border-[#C9A542]/20">
-                    <div className="flex items-center gap-3">
-                      <NextImage src="/isolele-logo-transparent.png" alt="ISOLELE" width={40} height={40} className="object-contain" style={{ width: 'auto', height: 'auto' }} />
+                  <div className="flex items-center gap-3">
+                    <NextImage src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/isolele-removebg-preview-HeByXSyVrkbKFrcntxvpelZxSswbcU.png" alt="ISOLELE" width={40} height={40} className="object-contain" style={{ width: 'auto', height: 'auto' }} />
                       <div>
                         <h1 className="text-lg font-bold text-white tracking-wider">ISOLELE</h1>
                         <p className="text-xs text-gray-400">Administration</p>

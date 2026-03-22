@@ -61,7 +61,7 @@ export default function AdminDashboard() {
   }
 
   const menuItems = [
-    { label: "Dashboard", icon: BarChart3, href: "/admin/dashboard" },
+    { label: "Dashboard", icon: BarChart3, href: "/admin" },
     { label: "Display", icon: Eye, href: "/admin/display" },
     { label: "Refact Display", icon: Eye, href: "/admin/refact-display" },
     { label: "AI Assistant", icon: MessageCircle, href: "/admin/ai-assistant" },
