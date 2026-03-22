@@ -23,15 +23,15 @@ const slides: Slide[] = [
   {
     id: "zaiire",
     type: "book",
-    tag: "ZAIÏRE: LE PRINCE DU KONGO",
-    title: "THE PRINCE OF KONGO",
-    subtitle: "Zaiïre — Le Collier du Destin",
+    tag: "WELCOME TO ISOLELE",
+    title: "THE CHOSEN ONES",
+    subtitle: "An entire universe born from the roots of Kongo...",
     description:
-      "In the heart of the ancient Kongo Kingdom, a young prince named Zaiïre discovers he carries the blood of the ancestors — and the power to reshape the destiny of an entire people. A cinematic epic blending African mythology, royal intrigue, and superhuman gifts.",
+      "Isolele is a visionary universe born to restore the soul of African storytelling — a mythological empire where superheroes are chosen by destiny, kingdoms never forgotten, and ancestral power is alive in every page, every prophecy, every battle. Every child who reads Isolele will discover superheroes who look like them, speak their language, protect their land, and honor their ancestors. This is for the next generation of kings, queens, warriors, inventors, and storytellers.",
     image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
-    buttonText: "Discover Zaiïre",
-    href: "/books/zaiire",
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg",
+    buttonText: "EXPLORE THE UNIVERSE",
+    href: "/characters",
     accentColor: "#F6B800",
   },
   {
