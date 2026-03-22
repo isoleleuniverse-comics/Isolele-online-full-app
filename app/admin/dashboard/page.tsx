@@ -17,8 +17,10 @@ import {
   X,
   TrendingUp,
   Zap,
+  MessageCircle,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { useChangeStore } from "@/lib/change-store"
 
 export default function AdminDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
@@ -33,6 +35,7 @@ export default function AdminDashboard() {
   })
   const [loading, setLoading] = useState(true)
   const router = useRouter()
+  const { hasPendingChanges, getPendingCount } = useChangeStore()
 
   useEffect(() => {
     fetchStats()
@@ -60,6 +63,8 @@ export default function AdminDashboard() {
   const menuItems = [
     { label: "Dashboard", icon: BarChart3, href: "/admin/dashboard" },
     { label: "Display", icon: Eye, href: "/admin/display" },
+    { label: "Refact Display", icon: Eye, href: "/admin/refact-display" },
+    { label: "AI Assistant", icon: MessageCircle, href: "/admin/ai-assistant" },
     { label: "Analytics", icon: TrendingUp, href: "/admin/analytics" },
     { label: "Notifications", icon: Bell, href: "/admin/notifications" },
     { label: "Settings", icon: Settings, href: "/admin/settings" },
@@ -98,13 +103,26 @@ export default function AdminDashboard() {
           <h1 className="text-xl font-bold text-[#C9A542] hidden sm:block">ISOLELE ADMIN</h1>
         </div>
 
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-red-500/10 text-red-400 transition-colors text-sm"
-        >
-          <LogOut size={18} />
-          <span className="hidden sm:inline">Logout</span>
-        </button>
+        <div className="flex items-center gap-4">
+          {hasPendingChanges && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
+              style={{ backgroundColor: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.3)" }}
+            >
+              <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
+              <span className="text-xs text-red-400 font-semibold">{getPendingCount()} unsaved</span>
+            </motion.div>
+          )}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-red-500/10 text-red-400 transition-colors text-sm"
+          >
+            <LogOut size={18} />
+            <span className="hidden sm:inline">Logout</span>
+          </button>
+        </div>
       </div>
 
       <div className="flex">
