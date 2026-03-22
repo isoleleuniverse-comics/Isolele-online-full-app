@@ -41,7 +41,7 @@ const slides: Slide[] = [
     title: "MAKANDA",
     subtitle: "The Most Powerful Empire in History Was Not Lost. It Was Hidden On Purpose.",
     description:
-      "The Civilization the World Was Never Supposed to Find. Deep within Central Africa, a civilization existed that the world was never meant to know about. The Makanda were not primitive. They were not discovered. They were not saved by anyone. They were already everything, spiritually awakened, technologically advanced, rich in knowledge that the modern world still cannot explain. When outside forces came seeking to take what was theirs, the Makanda made a choice that no conqueror expected. They did not fight to be seen. They vanished to survive. Cities were concealed. Knowledge was sealed inside bloodlines. History was rewritten by those who feared what the Makanda represented. The world called them a mystery. A myth. A legend with no proof. But the Makanda were never gone. They were protecting the Sacred Flame. Waiting for the one born to carry it again. The hidden city was never lost. It was waiting to be found by the right one.",
+      "Deep within Central Africa existed a civilization the world was never meant to know about. Spiritually awakened. Technologically advanced. Protected by the Sacred Flame. When outside forces came for what was theirs, the Makanda did not fall. They disappeared. Their city was never lost. It was waiting for the one born to carry the flame again.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
     buttonText: "DISCOVER MAKANDA",
