@@ -118,6 +118,20 @@ const slides: Slide[] = [
     href: "/books/amara",
     accentColor: "#1E90B3",
   },
+  {
+    id: "zattar",
+    type: "book",
+    tag: "ZATTAR: THE PRINCE OF THE UNIVERSE",
+    title: "ZATTAR",
+    subtitle: "The Conqueror of Thrones",
+    description:
+      "When Destiny Refused Him One Kingdom, He Decided to Take Them All. Prince Zattar was born to inherit the throne of Bapindi. But when the Ancestors chose another, something inside him did not break. It ignited. He studied the First and Second Wars of Vegas, legends of devastation that shook the world before he was even born. Where others saw warning, Zattar saw a map. He started the Third War of Vegas. Not out of madness. Not out of pain. But because he looked at the entire universe and reached one conclusion: It belongs to someone. And that someone is Zattar. He was not chosen. So he chose the universe instead.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e9c64c65-3717-4fe3-a391-885767df3303-LbjnMwCViF43pwErKmoFv7iGxQdCeQ.jpeg",
+    buttonText: "DISCOVER ZATTAR",
+    href: "/books/zattar",
+    accentColor: "#2E8B57",
+  },
 ]
 
 const slideVariants = {
