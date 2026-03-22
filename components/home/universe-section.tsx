@@ -11,8 +11,8 @@ const pillars = [
   {
     key: "destiny",
     icon: Sparkles,
-    title: "La Destinée n'est pas un Choix",
-    description: "C'est un Appel. Chaque personnage est invoqué par les lignées sanguines, les esprits anciens et les histoires inachevées de leurs ancêtres.",
+    title: "The Lion Has Learned to Write",
+    description: "An African proverb says: 'Until the lion learns to write, every story will glorify the hunter.' ISOLELE is the lion's pen. Africa is writing its own heroes, its own kingdoms, its own legends. The hunter's version of history is over.",
   },
   {
     key: "heritage",
