@@ -110,6 +110,19 @@ export function UniverseSection() {
                 />
               )}
               
+              {/* Background image for second pillar (Kongo) */}
+              {index === 1 && (
+                <div 
+                  className="absolute inset-0 rounded-2xl opacity-100 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ecd63fb5-27fa-4fc5-9a8b-0d5058adc2c1.jpeg')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                />
+              )}
+              
               {/* Hover glow effect */}
               <div 
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -132,7 +145,7 @@ export function UniverseSection() {
                   />
                 </motion.div>
                 {/* Animated particles around icon with golden magical glow */}
-                {index === 0 && (
+                {(index === 0 || index === 1) && (
                   <motion.div
                     className="absolute -top-2 -right-2 w-6 h-6"
                     animate={{
@@ -154,13 +167,13 @@ export function UniverseSection() {
 
               {/* Content */}
               <div 
-                className={index === 0 ? "relative bg-[#F5F0E8]/90 rounded-lg p-4 -mx-2" : "relative"}
+                className={(index === 0 || index === 1) ? "relative bg-[#F5F0E8]/90 rounded-lg p-4 -mx-2" : "relative"}
               >
                 <h3 
                   className="text-xl font-bold tracking-wide mb-4 relative"
                   style={{ 
-                    color: index === 0 ? '#000000' : currentTheme.colors.textPrimary,
-                    fontWeight: index === 0 ? 700 : 700
+                    color: (index === 0 || index === 1) ? '#000000' : currentTheme.colors.textPrimary,
+                    fontWeight: (index === 0 || index === 1) ? 700 : 700
                   }}
                 >
                   {pillar.title}
@@ -168,8 +181,8 @@ export function UniverseSection() {
                 <p 
                   className="text-sm leading-relaxed relative"
                   style={{ 
-                    color: index === 0 ? '#000000' : currentTheme.colors.textSecondary,
-                    fontWeight: index === 0 ? 600 : 400
+                    color: (index === 0 || index === 1) ? '#000000' : currentTheme.colors.textSecondary,
+                    fontWeight: (index === 0 || index === 1) ? 600 : 400
                   }}
                 >
                   {pillar.description}
