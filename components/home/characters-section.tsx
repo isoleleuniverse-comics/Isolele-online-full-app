@@ -38,7 +38,7 @@ const characters = [
     name: "MOKELE",
     title: "Crowned by the Streets",
     description: "Heir of urban chaos and ancestral power — Crowned by the Streets.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mokele-lZToplq4eNUuy08B5V6faXETr5YnKg.jpg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5bdc2ecc-913b-412b-a840-2a5197cd801a.jpeg",
     color: "#4169E1",
   },
   {
