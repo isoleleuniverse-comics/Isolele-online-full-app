@@ -181,6 +181,17 @@ export function CharactersSection() {
                     }}
                   />
                   
+                  {/* Makanda title for KIMOYA */}
+                  {character.id === "kimoya" && (
+                    <div 
+                      className="absolute top-4 left-4 right-4 z-20"
+                    >
+                      <h2 className="text-4xl font-black tracking-widest" style={{ color: '#F6B800' }}>
+                        Makanda
+                      </h2>
+                    </div>
+                  )}
+                  
                   {/* NEW badge for MOKELE */}
                   {character.id === "mokele" && (
                     <div 
