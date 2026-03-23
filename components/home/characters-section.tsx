@@ -195,16 +195,6 @@ export function CharactersSection() {
                     </div>
                   )}
                   
-                  {/* Name text overlay for KING KUFULULA */}
-                  {character.id === "kufulula" && (
-                    <div 
-                      className="absolute top-6 left-6 z-10"
-                    >
-                      <p className="text-sm font-light tracking-wide mb-1" style={{ color: currentTheme.colors.textPrimary }}>
-                        HRM KING KUFULULA
-                      </p>
-                    </div>
-                  )}
                   {/* Gradient overlay - transparent top to color bottom */}
                   <div 
                     className="absolute inset-0"
