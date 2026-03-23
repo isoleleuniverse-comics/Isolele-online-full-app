@@ -192,37 +192,6 @@ export function CharactersSection() {
                     </div>
                   )}
                   
-                  {/* NEW badge for MOKELE */}
-                  {character.id === "mokele" && (
-                    <div 
-                      className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-black tracking-wider z-10"
-                      style={{ 
-                        backgroundColor: '#F6B800',
-                        color: '#000000',
-                        boxShadow: '0 0 15px #F6B800'
-                      }}
-                    >
-                      NEW
-                    </div>
-                  )}
-                  
-                  {/* Makanda title overlay for KIMOYA */}
-                  {character.id === "kimoya" && (
-                    <div 
-                      className="absolute inset-0 flex items-center justify-center z-10"
-                    >
-                      <h2 
-                        className="text-6xl font-black tracking-wider text-center"
-                        style={{ 
-                          color: '#F6B800',
-                          textShadow: '0 4px 12px rgba(0,0,0,0.6), 0 0 20px rgba(246, 184, 0, 0.4)'
-                        }}
-                      >
-                        MAKANDA
-                      </h2>
-                    </div>
-                  )}
-                  
                   {/* Gradient overlay - transparent top to color bottom */}
                   <div 
                     className="absolute inset-0"
