@@ -180,6 +180,20 @@ export function CharactersSection() {
                       backgroundPosition: 'top center'
                     }}
                   />
+                  
+                  {/* NEW badge for MOKELE */}
+                  {character.id === "mokele" && (
+                    <div 
+                      className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-black tracking-wider z-10"
+                      style={{ 
+                        backgroundColor: '#F6B800',
+                        color: '#000000',
+                        boxShadow: '0 0 15px #F6B800'
+                      }}
+                    >
+                      NEW
+                    </div>
+                  )}
                   {/* Gradient overlay - transparent top to color bottom */}
                   <div 
                     className="absolute inset-0"
