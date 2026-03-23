@@ -115,7 +115,7 @@ export function UniverseSection() {
                 <div 
                   className="absolute inset-0 rounded-2xl opacity-100 group-hover:opacity-100 transition-opacity duration-500"
                   style={{
-                    backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ecd63fb5-27fa-4fc5-9a8b-0d5058adc2c1.jpeg')`,
+                    backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/a1486131-34f6-4e8f-941d-1f1185ed8af7.jpeg')`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
