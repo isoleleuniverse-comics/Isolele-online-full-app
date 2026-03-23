@@ -20,7 +20,7 @@ const characters = [
   {
     id: "bambula",
     name: "BAMBULA",
-    title: "Guardian of the Savanna",
+    title: "Child of Rhythm",
     description: "Warrior of the savannas, master of sacred fire and wild nature.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
     color: "#B3541E",
@@ -177,7 +177,7 @@ export function CharactersSection() {
                     style={{
                       backgroundImage: `url('${character.image}')`,
                       backgroundSize: 'cover',
-                      backgroundPosition: 'center'
+                      backgroundPosition: 'top center'
                     }}
                   />
                   {/* Gradient overlay - transparent top to color bottom */}
