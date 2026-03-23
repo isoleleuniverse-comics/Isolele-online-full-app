@@ -30,7 +30,7 @@ const characters = [
     name: "KIMOYA",
     title: "The Rising Kandake",
     description: "Warrior empress whose royal court holds the destiny of the continent in her hands.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/f5443909-fba9-48b2-98d9-fb0692d2afe3.jpeg",
     color: "#C0392B",
   },
   {
