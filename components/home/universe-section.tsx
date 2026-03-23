@@ -123,6 +123,19 @@ export function UniverseSection() {
                 />
               )}
               
+              {/* Background image for third pillar (Royal) */}
+              {index === 2 && (
+                <div 
+                  className="absolute inset-0 rounded-2xl opacity-100 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/577207f9-ac97-4745-a175-9815c6c39313.jpeg')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                />
+              )}
+              
               {/* Hover glow effect */}
               <div 
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -182,17 +195,36 @@ export function UniverseSection() {
                     />
                   </motion.div>
                 )}
+                {/* Animated flame for third pillar (Royal) with golden magical glow */}
+                {index === 2 && (
+                  <motion.div
+                    className="absolute -top-2 -right-2 w-6 h-6"
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.7, 1, 0.7],
+                    }}
+                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                    style={{
+                      filter: 'drop-shadow(0 0 8px #F6B800) drop-shadow(0 0 16px #F6B800) drop-shadow(0 0 24px #FFD700)',
+                    }}
+                  >
+                    <Flame 
+                      className="w-6 h-6"
+                      style={{ color: '#F6B800' }}
+                    />
+                  </motion.div>
+                )}
               </div>
 
               {/* Content */}
               <div 
-                className={(index === 0 || index === 1) ? "relative bg-[#F5F0E8]/90 rounded-lg p-4 -mx-2" : "relative"}
+                className="relative bg-[#F5F0E8]/90 rounded-lg p-4 -mx-2"
               >
                 <h3 
                   className="text-xl font-bold tracking-wide mb-4 relative"
                   style={{ 
-                    color: (index === 0 || index === 1) ? '#000000' : currentTheme.colors.textPrimary,
-                    fontWeight: (index === 0 || index === 1) ? 700 : 700
+                    color: '#000000',
+                    fontWeight: 700
                   }}
                 >
                   {pillar.title}
@@ -200,8 +232,8 @@ export function UniverseSection() {
                 <p 
                   className="text-sm leading-relaxed relative"
                   style={{ 
-                    color: (index === 0 || index === 1) ? '#000000' : currentTheme.colors.textSecondary,
-                    fontWeight: (index === 0 || index === 1) ? 600 : 400
+                    color: '#000000',
+                    fontWeight: 600
                   }}
                 >
                   {pillar.description}
