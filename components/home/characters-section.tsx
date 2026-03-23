@@ -27,10 +27,10 @@ const characters = [
   },
   {
     id: "kimoya",
-    name: "KIMOYA",
-    title: "The Rising Kandake",
+    name: "MAKANDA",
+    title: "THE MOST POWERFUL Empire in History",
     description: "Warrior empress whose royal court holds the destiny of the continent in her hands.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/f5443909-fba9-48b2-98d9-fb0692d2afe3.jpeg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/de7a845a-4c21-4723-99ba-94a0d62e3e6e.jpeg",
     color: "#C0392B",
   },
   {
