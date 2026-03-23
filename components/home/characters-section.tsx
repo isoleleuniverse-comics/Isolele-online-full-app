@@ -43,9 +43,9 @@ const characters = [
   },
   {
     id: "kufulula",
-    name: "KING KUFULULA",
-    title: "The Ancestral King",
-    description: "Legendary monarch of New York, protector of the ISOLELE royal lineage.",
+    name: "HRM KING KUFULULA",
+    title: "Visionary• Cultural Architect • African Royalty",
+    description: "Legendary monarch, protector of the ISOLELE royal lineage.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg",
     color: "#8B6914",
   },
@@ -192,6 +192,17 @@ export function CharactersSection() {
                       }}
                     >
                       NEW
+                    </div>
+                  )}
+                  
+                  {/* Name text overlay for KING KUFULULA */}
+                  {character.id === "kufulula" && (
+                    <div 
+                      className="absolute top-6 left-6 z-10"
+                    >
+                      <p className="text-sm font-light tracking-wide mb-1" style={{ color: currentTheme.colors.textPrimary }}>
+                        HRM KING KUFULULA
+                      </p>
                     </div>
                   )}
                   {/* Gradient overlay - transparent top to color bottom */}
