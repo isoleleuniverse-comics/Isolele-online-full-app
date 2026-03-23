@@ -11,49 +11,49 @@ import Link from "next/link"
 const characters = [
   {
     id: "zaire",
-    name: "ZAIÏRE",
-    title: "Prince du Kongo",
-    description: "Fils du tonnerre et de la royauté, choisi par le Collier de la Destinée.",
+    name: "ZAIIRE",
+    title: "Prince of Kongo",
+    description: "Son of thunder and royalty, chosen by the Necklace of Destiny.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
     color: "#F6B800",
   },
   {
     id: "bambula",
     name: "BAMBULA",
-    title: "Gardienne de la Savane",
-    description: "Guerrière des savanes, maîtresse du feu sacré et de la nature sauvage.",
+    title: "Guardian of the Savanna",
+    description: "Warrior of the savannas, master of sacred fire and wild nature.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
     color: "#B3541E",
   },
   {
     id: "kimoya",
     name: "KIMOYA",
-    title: "La Kandake Montante",
-    description: "Imperatrice guerrière dont la cour royale tient le destin du continent entre ses mains.",
+    title: "The Rising Kandake",
+    description: "Warrior empress whose royal court holds the destiny of the continent in her hands.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
     color: "#C0392B",
   },
   {
     id: "mokele",
     name: "MOKELE",
-    title: "Couronné par les Rues",
-    description: "Héritier du chaos urbain et de la puissance ancestrale — Crowned by the Streets.",
+    title: "Crowned by the Streets",
+    description: "Heir of urban chaos and ancestral power — Crowned by the Streets.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mokele-lZToplq4eNUuy08B5V6faXETr5YnKg.jpg",
     color: "#4169E1",
   },
   {
     id: "kufulula",
     name: "KING KUFULULA",
-    title: "Le Roi Ancestral",
-    description: "Monarque légendaire de New York, protecteur de la lignée royale ISOLELE.",
+    title: "The Ancestral King",
+    description: "Legendary monarch of New York, protector of the ISOLELE royal lineage.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg",
     color: "#8B6914",
   },
   {
     id: "ensemble",
-    name: "L'ASSEMBLÉE ISOLELE",
-    title: "Les Élus Réunis",
-    description: "Tous les guerriers et reines du royaume ZAIIRE réunis dans leur splendeur.",
+    name: "THE ISOLELE ASSEMBLY",
+    title: "The Chosen Ones United",
+    description: "All warriors and queens of the ZAIIRE kingdom united in their splendor.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Isolele%20ZAIIRE-EKnQs6Sp5EFeF3bYx9m4utnSu3LdM5.jpg",
     color: "#9932CC",
   },
@@ -98,7 +98,7 @@ export function CharactersSection() {
               className="text-4xl sm:text-5xl font-black tracking-wider mb-2"
               style={{ color: currentTheme.colors.textPrimary }}
             >
-              {t("theChosen")}
+              THE CHOSEN ONES
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, x: -30 }}
@@ -107,7 +107,7 @@ export function CharactersSection() {
               className="text-lg"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              Rencontrez les héros, légendes et gardiens de l'Univers Isolele
+              Meet the heroes, legends and guardians of the ISOLELE Universe.
             </motion.p>
           </div>
           
