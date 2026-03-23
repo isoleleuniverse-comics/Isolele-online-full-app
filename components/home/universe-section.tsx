@@ -147,14 +147,66 @@ export function UniverseSection() {
               {/* Icon */}
               <div className="relative mb-6">
                 <motion.div
-                  className="w-16 h-16 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20` }}
-                  whileHover={{ rotate: 360 }}
+                  className={`w-16 h-16 rounded-xl flex items-center justify-center relative overflow-hidden ${index === 2 ? '' : ''}`}
+                  style={{ 
+                    backgroundColor: index === 2 
+                      ? 'transparent' 
+                      : `${currentTheme.colors.accentPrimary}20`,
+                    background: index === 2 
+                      ? 'linear-gradient(135deg, #1E9B8A 0%, #0D7377 30%, #F6B800 60%, #FF6B35 80%, #4A4A4A 100%)' 
+                      : undefined
+                  }}
+                  whileHover={{ rotate: index === 2 ? 0 : 360 }}
                   transition={{ duration: 0.8 }}
+                  animate={index === 2 ? {
+                    boxShadow: [
+                      '0 0 20px #1E9B8A, 0 0 40px #F6B800, inset 0 0 15px #FF6B35',
+                      '0 0 30px #0D7377, 0 0 50px #FF6B35, inset 0 0 20px #F6B800',
+                      '0 0 20px #1E9B8A, 0 0 40px #F6B800, inset 0 0 15px #FF6B35',
+                    ]
+                  } : {}}
                 >
+                  {/* Ash particles for fire effect */}
+                  {index === 2 && (
+                    <>
+                      <motion.div
+                        className="absolute w-1 h-1 rounded-full bg-gray-400"
+                        animate={{
+                          y: [-5, -20],
+                          x: [0, 5, -3],
+                          opacity: [0.8, 0],
+                        }}
+                        transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5 }}
+                        style={{ top: '30%', left: '20%' }}
+                      />
+                      <motion.div
+                        className="absolute w-1.5 h-1.5 rounded-full bg-gray-500"
+                        animate={{
+                          y: [-3, -25],
+                          x: [0, -4, 2],
+                          opacity: [0.7, 0],
+                        }}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 0.3 }}
+                        style={{ top: '40%', right: '25%' }}
+                      />
+                      <motion.div
+                        className="absolute w-0.5 h-0.5 rounded-full bg-gray-300"
+                        animate={{
+                          y: [-2, -18],
+                          x: [0, 3, -2],
+                          opacity: [0.6, 0],
+                        }}
+                        transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 0.7 }}
+                        style={{ top: '35%', left: '50%' }}
+                      />
+                    </>
+                  )}
                   <pillar.icon 
-                    className="w-8 h-8"
-                    style={{ color: currentTheme.colors.accentPrimary }}
+                    className="w-8 h-8 relative z-10"
+                    style={{ 
+                      color: index === 2 ? '#FFFFFF' : currentTheme.colors.accentPrimary,
+                      filter: index === 2 ? 'drop-shadow(0 0 8px #1E9B8A) drop-shadow(0 0 12px #F6B800)' : undefined
+                    }}
                   />
                 </motion.div>
                 {/* Animated sparkles for first pillar (Lion) with golden magical glow */}
