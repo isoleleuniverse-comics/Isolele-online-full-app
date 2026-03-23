@@ -12,7 +12,7 @@ const characters = [
   {
     id: "zaire",
     name: "ZAIIRE",
-    title: "Prince of Kongo",
+    title: "The Prince of Kongo and the Necklace of Destiny",
     description: "Son of thunder and royalty, chosen by the Necklace of Destiny.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
     color: "#F6B800",
