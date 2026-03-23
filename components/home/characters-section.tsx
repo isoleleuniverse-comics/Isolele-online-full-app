@@ -54,7 +54,7 @@ const characters = [
     name: "THE ISOLELE ASSEMBLY",
     title: "The Chosen Ones United",
     description: "All warriors and queens of the ZAIIRE kingdom united in their splendor.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Isolele%20ZAIIRE-EKnQs6Sp5EFeF3bYx9m4utnSu3LdM5.jpg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c389067b-e5b3-4664-8c15-26b59810c68b.jpeg",
     color: "#9932CC",
   },
 ]
