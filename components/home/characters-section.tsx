@@ -213,7 +213,7 @@ export function CharactersSection() {
                   {character.name}
                 </h3>
                 <p 
-                  className="text-sm font-medium mb-3"
+                  className="text-xs font-medium mb-3 whitespace-nowrap"
                   style={{ color: character.color }}
                 >
                   {character.title}
