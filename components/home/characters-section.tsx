@@ -200,6 +200,48 @@ export function CharactersSection() {
                     }}
                   />
                   
+                  {/* MAKANDA Comic Title for KIMOYA */}
+                  {character.id === "kimoya" && (
+                    <div 
+                      className="absolute top-0 left-0 right-0 flex items-center justify-center pt-8 z-10"
+                    >
+                      <div className="relative">
+                        <h2 
+                          className="text-7xl font-black tracking-wider"
+                          style={{ 
+                            color: '#FFD700',
+                            textShadow: `
+                              -3px -3px 0 #8B6914,
+                              3px -3px 0 #8B6914,
+                              -3px 3px 0 #8B6914,
+                              3px 3px 0 #8B6914,
+                              -3px 0 0 #8B6914,
+                              3px 0 0 #8B6914,
+                              0 -3px 0 #8B6914,
+                              0 3px 0 #8B6914,
+                              -4px -4px 8px rgba(0,0,0,0.5),
+                              4px 4px 8px rgba(0,0,0,0.3),
+                              0 0 20px rgba(255,215,0,0.6)
+                            `,
+                            letterSpacing: '0.15em',
+                            filter: 'drop-shadow(0 2px 4px rgba(139, 105, 20, 0.8))'
+                          }}
+                        >
+                          MAKANDA
+                        </h2>
+                        {/* Comic book style accent line */}
+                        <div 
+                          className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 h-1 rounded-full"
+                          style={{ 
+                            width: '85%',
+                            background: 'linear-gradient(90deg, transparent 0%, #F6B800 20%, #FFD700 50%, #F6B800 80%, transparent 100%)',
+                            boxShadow: '0 0 12px #F6B800'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  
                   {/* Hover overlay */}
                   <div 
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500"
