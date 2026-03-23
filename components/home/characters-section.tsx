@@ -30,7 +30,7 @@ const characters = [
     name: "MAKANDA",
     title: "THE MOST POWERFUL Empire in History",
     description: "Warrior empress whose royal court holds the destiny of the continent in her hands.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/de7a845a-4c21-4723-99ba-94a0d62e3e6e.jpeg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4f46df0c-7552-43f4-9c50-8c5df8486e08.jpeg",
     color: "#C0392B",
   },
   {
