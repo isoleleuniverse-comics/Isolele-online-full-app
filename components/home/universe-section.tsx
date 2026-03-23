@@ -144,8 +144,8 @@ export function UniverseSection() {
                     style={{ color: currentTheme.colors.accentPrimary }}
                   />
                 </motion.div>
-                {/* Animated particles around icon with golden magical glow */}
-                {(index === 0 || index === 1) && (
+                {/* Animated sparkles for first pillar (Lion) with golden magical glow */}
+                {index === 0 && (
                   <motion.div
                     className="absolute -top-2 -right-2 w-6 h-6"
                     animate={{
@@ -158,6 +158,25 @@ export function UniverseSection() {
                     }}
                   >
                     <Sparkles 
+                      className="w-6 h-6"
+                      style={{ color: '#F6B800' }}
+                    />
+                  </motion.div>
+                )}
+                {/* Animated crown for second pillar (Kongo) with golden magical glow */}
+                {index === 1 && (
+                  <motion.div
+                    className="absolute -top-2 -right-2 w-6 h-6"
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.7, 1, 0.7],
+                    }}
+                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                    style={{
+                      filter: 'drop-shadow(0 0 8px #F6B800) drop-shadow(0 0 16px #F6B800) drop-shadow(0 0 24px #FFD700)',
+                    }}
+                  >
+                    <Crown 
                       className="w-6 h-6"
                       style={{ color: '#F6B800' }}
                     />
