@@ -80,7 +80,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
               }}
             >
               <Image
-                src="/isolele-logo-official.jpg"
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot_2026-03-24-13-21-28-238-edit_com.microsoft.emmx-3na3y2BzFD8J2WvJpv2GY9rGJhOs2t.jpg"
                 alt="ISOLELE Official Logo"
                 fill
                 className="object-cover"
