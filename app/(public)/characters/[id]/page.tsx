@@ -11,11 +11,20 @@ import { useState } from "react"
 const charactersData: Record<string, any> = {
   zaire: {
     name: "ZAIÏRE",
-    title: "Prince of Kongo",
+    title: "The Prince of Kongo and the Necklace of Destiny",
     color: "#F6B800",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
-    fullDescription:
-      "Zaiïre is the rightful heir to the ancient Kongo Kingdom, chosen by the legendary Collier du Destin (Necklace of Destiny). Born into royal blood and awakened by ancestral spirits, he carries the sacred power of thunder and the weight of a lost empire on his shoulders.",
+    subtitle: "An Epic Journey of Heritage, Power, and Destiny",
+    fullDescription: `In the heart of Africa, where tradition and legacy intertwine with modernity, a royal prince will soon discover his true destiny.
+
+"The Prince of Kongo: Necklace of Destiny" tells the epic story of Zaiire, a young boy from the bustling city of Kinshasa, raised in a life of unimaginable wealth and privilege. His family, one of the richest in Africa, has built an empire of prosperity, yet Zaiire's heart belongs to something far greater.
+
+Unbeknownst to him, an ancient legacy flows through his veins. A legacy tied to the very soul of his people, rooted deep within the rich culture and history of Kongo.
+
+On the surface, Zaiire is a boy accustomed to luxury, prestige, and respect. But when he visits his estranged mother in the poorest slums of Kinshasa, his world is turned upside down.
+
+During their reunion, his mother entrusts him with a powerful and ancient relic. The Necklace of Destiny. A mystical artifact passed down through generations of Congolese royalty. This necklace holds the power to awaken his inner strength and connects him to the primal forces of the earth, the spirits of his ancestors, and the true role he is destined to play as a protector of the Kongo.`,
+    quote: "The destiny of a nation rests around his neck. Will Zaiire embrace it?",
     powers: ["Thunder Control", "Ancestral Connection", "Royal Authority", "Prophetic Visions"],
     backstory:
       "The son of a forgotten kingdom, Zaiïre never knew his true birthright until the spirits of his ancestors revealed his destiny. With the Collier du Destin, he became a bridge between the mortal world and the realm of the ancestors, tasked with restoring the glory of the Kongo people.",
@@ -192,6 +201,11 @@ export default function CharacterPage({ params }: { params: { id: string } }) {
               <h1 className="text-5xl font-black tracking-wider mb-4" style={{ color: currentTheme.colors.textPrimary }}>
                 {character.name}
               </h1>
+              {character.subtitle && (
+                <p className="text-xl font-semibold mb-6" style={{ color: currentTheme.colors.textSecondary }}>
+                  {character.subtitle}
+                </p>
+              )}
               <p className="text-lg leading-relaxed" style={{ color: currentTheme.colors.textSecondary }}>
                 {character.fullDescription}
               </p>
@@ -314,6 +328,24 @@ export default function CharacterPage({ params }: { params: { id: string } }) {
             ))}
           </div>
         </motion.div>
+
+        {/* Quote section */}
+        {character.quote && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="mb-16 p-8 rounded-lg border-l-4"
+            style={{
+              backgroundColor: `${character.color}10`,
+              borderLeftColor: character.color,
+            }}
+          >
+            <p className="text-2xl font-black italic" style={{ color: character.color }}>
+              "{character.quote}"
+            </p>
+          </motion.div>
+        )}
 
         {/* CTA */}
         <motion.div
