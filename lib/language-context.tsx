@@ -34,14 +34,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      // Always force English language on mount
-      const englishLang = languages[0] // English
-      setCurrentLanguage(englishLang)
-      localStorage.clear()
-      localStorage.setItem("isolele-language", "en")
-      console.log("[v0] Language forced to English:", englishLang)
+      const savedLang = localStorage.getItem("isolele-language")
+      if (savedLang) {
+        const lang = languages.find((l) => l.code === savedLang)
+        if (lang) {
+          setCurrentLanguage(lang)
+        }
+      } else {
+        setCurrentLanguage(languages[0])
+        localStorage.setItem("isolele-language", "en")
+      }
     } catch (error) {
-      console.error("[v0] Error setting language:", error)
+      console.error("[v0] Error loading language preference:", error)
     }
     setMounted(true)
   }, [])
