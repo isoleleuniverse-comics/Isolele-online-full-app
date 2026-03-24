@@ -95,7 +95,7 @@ export default function FounderPage() {
           {/* Background image */}
           <div className="absolute inset-0">
             <Image
-              src="/king-kufulula-1.jpg"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0068-oW8t7866Lj6ntmY3K1tLeXSbX7Zuj2.jpg"
               alt="HRM King Kufulula"
               fill
               className="object-cover object-center"
@@ -202,7 +202,7 @@ export default function FounderPage() {
               >
                 <div className="aspect-[3/4] rounded-2xl overflow-hidden relative" style={{ border: "2px solid var(--isolele-accent)" }}>
                   <Image
-                    src="/king-kufulula-2.jpg"
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0062-wz9xjGnD86fk5T3C1o6FPBmK7lDbHU.jpg"
                     alt="HRM King Kufulula - Royal Portrait"
                     fill
                     className="object-cover object-center"
