@@ -7,53 +7,13 @@ import Link from "next/link"
 import { useLanguage } from "@/lib/language-context"
 import { useTheme } from "@/lib/theme-context"
 import { Play, Star, Users, Clock, GamepadIcon } from "lucide-react"
-
-const GAMES = [
-  {
-    id: "official-game",
-    title: { en: "The Official Game", fr: "Le Jeu Officiel" },
-    subtitle: { en: "of the Isolele Universe", fr: "de l'Univers Isolele" },
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260304-WA0012-XSCUSyYtBnqRoFkU9Ubd5qRihh3IXm.jpg",
-    rating: 4.9,
-    players: "2-4",
-    category: { en: "Card Game", fr: "Jeu de Cartes" },
-    description: { 
-      en: "The official strategic card game of the ISOLELE universe with characters from all books.",
-      fr: "Le jeu de cartes stratégique officiel de l'univers ISOLELE avec des personnages de tous les livres."
-    }
-  },
-  {
-    id: "kufu-crown",
-    title: "KUFU",
-    subtitle: { en: "The Crown Game", fr: "Le Jeu de la Couronne" },
-    image: "/games/kufu-card.jpg",
-    rating: 4.8,
-    players: "2-4",
-    category: { en: "Board Game", fr: "Jeu de Plateau" },
-    description: {
-      en: "KUFU Ludo - An immersive strategy game rooted in African royal traditions and Kongo cosmology.",
-      fr: "KUFU Ludo - Un jeu de stratégie immersif enraciné dans les traditions royales africaines et la cosmologie Kongo."
-    }
-  },
-  {
-    id: "makanda-quest",
-    title: { en: "Makanda Quest", fr: "Quête de Makanda" },
-    subtitle: { en: "Adventure RPG", fr: "RPG d'Aventure" },
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CERCLE-ISOLELE%202026%20copie.png-63QN4pp7BsSYA3UxbGCI8Ymq6QlgiM.jpeg",
-    rating: 4.7,
-    players: "1+",
-    category: { en: "RPG", fr: "RPG" },
-    description: {
-      en: "Explore the lost Makanda kingdom in this immersive role-playing adventure.",
-      fr: "Explorez le royaume perdu de Makanda dans cette aventure RPG immersive."
-    }
-  }
-]
+import { getGames } from "@/lib/actions/games"
 
 export default function GamesPage() {
   const { currentLanguage } = useLanguage()
   const { currentTheme } = useTheme()
   const [isLoading, setIsLoading] = useState(true)
+  const [games, setGames] = useState<any[]>([])
   const lang = currentLanguage.code
 
   const t = (obj: any) => {
@@ -62,8 +22,67 @@ export default function GamesPage() {
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 3000)
-    return () => clearTimeout(timer)
+    const loadGames = async () => {
+      try {
+        const data = await getGames()
+        if (data) {
+          setGames(data)
+        } else {
+          // Fallback to default games if Supabase not ready
+          setGames([
+            {
+              id: "kufu-crown",
+              title: "KUFU",
+              slug: "kufu-the-crown-game",
+              subtitle: { en: "The Crown Game", fr: "Le Jeu de la Couronne" },
+              image_url: "/games/kufu-card.jpg",
+              rating: 4.8,
+              players: "2-6",
+              category: { en: "Card Game", fr: "Jeu de Cartes" },
+              description: {
+                en: "KUFU Ludo - An immersive strategy game rooted in African royal traditions.",
+                fr: "KUFU Ludo - Un jeu de stratégie immersif enraciné dans les traditions royales africaines."
+              }
+            },
+            {
+              id: "zaiire-conquest",
+              title: "ZAIIRE CONQUEST",
+              slug: "zaiire-conquest",
+              subtitle: { en: "Empire Building", fr: "Construction d'Empire" },
+              image_url: "/games/zaiire-conquest.jpg",
+              rating: 4.6,
+              players: "1-4",
+              category: { en: "Strategy", fr: "Stratégie" },
+              description: {
+                en: "Build your African empire through strategy and diplomacy.",
+                fr: "Construisez votre empire africain par la stratégie et la diplomatie."
+              }
+            },
+            {
+              id: "makanda-mysteries",
+              title: "MAKANDA MYSTERIES",
+              slug: "makanda-mysteries",
+              subtitle: { en: "Cooperative Adventure", fr: "Aventure Coopérative" },
+              image_url: "/games/makanda-mysteries.jpg",
+              rating: 4.7,
+              players: "2-5",
+              category: { en: "Puzzle", fr: "Puzzle" },
+              description: {
+                en: "Uncover the secrets of the lost Makanda empire.",
+                fr: "Découvrez les secrets de l'empire perdu de Makanda."
+              }
+            }
+          ])
+        }
+      } catch (error) {
+        console.error("Error loading games:", error)
+      }
+      
+      const timer = setTimeout(() => setIsLoading(false), 3000)
+      return () => clearTimeout(timer)
+    }
+
+    loadGames()
   }, [])
 
   return (
@@ -126,16 +145,16 @@ export default function GamesPage() {
 
           {/* Games Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {GAMES.map((game, index) => (
+            {games.map((game, index) => (
               <motion.div
-                key={game.id}
+                key={game.id || game.slug}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
                 whileHover={{ y: -8 }}
               >
-                <Link href={`/games/${game.id}`}>
+                <Link href={`/games/${game.slug || game.id}`}>
                   <div
                     className="rounded-2xl overflow-hidden cursor-pointer relative group"
                     style={{ border: `2px solid ${currentTheme.colors.accentPrimary}30` }}
@@ -143,7 +162,7 @@ export default function GamesPage() {
                     {/* Image */}
                     <div className="relative h-64 overflow-hidden bg-gray-900">
                       <Image
-                        src={game.image}
+                        src={game.image_url || game.image}
                         alt={t(game.title)}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-500"
