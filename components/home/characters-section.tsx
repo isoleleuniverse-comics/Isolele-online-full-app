@@ -4,8 +4,7 @@ import { motion } from "framer-motion"
 import { useTheme } from "@/lib/theme-context"
 import { useLanguage } from "@/lib/language-context"
 import { useInView } from "framer-motion"
-import { useRef, useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
 
 const characters = [
@@ -64,22 +63,25 @@ export function CharactersSection() {
   const { t } = useLanguage()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [activeIndex, setActiveIndex] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
+  const [isHovered, setIsHovered] = useState(false)
 
-  const scroll = (direction: "left" | "right") => {
-    if (carouselRef.current) {
-      const scrollAmount = 350
-      const newScrollLeft = carouselRef.current.scrollLeft + (direction === "left" ? -scrollAmount : scrollAmount)
-      carouselRef.current.scrollTo({ left: newScrollLeft, behavior: "smooth" })
+  useEffect(() => {
+    if (!carouselRef.current || isHovered) return
+
+    const carousel = carouselRef.current
+    let animationId: NodeJS.Timeout
+
+    const scroll = () => {
+      carousel.scrollLeft += 2
+      if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth) {
+        carousel.scrollLeft = 0
+      }
     }
-    
-    if (direction === "left" && activeIndex > 0) {
-      setActiveIndex(activeIndex - 1)
-    } else if (direction === "right" && activeIndex < characters.length - 1) {
-      setActiveIndex(activeIndex + 1)
-    }
-  }
+
+    animationId = setInterval(scroll, 30)
+    return () => clearInterval(animationId)
+  }, [isHovered])
 
   return (
     <section 
@@ -115,7 +117,6 @@ export function CharactersSection() {
         {/* Navigation Buttons */}
         <div className="flex gap-3 mb-8">
           <motion.button
-            onClick={() => scroll("left")}
             className="w-12 h-12 rounded-full flex items-center justify-center"
             style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20` }}
             whileHover={{ 
@@ -124,11 +125,11 @@ export function CharactersSection() {
               color: currentTheme.colors.background
             }}
             whileTap={{ scale: 0.95 }}
+            disabled
           >
-            <ChevronLeft className="w-6 h-6" />
+            ‹
           </motion.button>
           <motion.button
-            onClick={() => scroll("right")}
             className="w-12 h-12 rounded-full flex items-center justify-center"
             style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20` }}
             whileHover={{ 
@@ -137,25 +138,28 @@ export function CharactersSection() {
               color: currentTheme.colors.background
             }}
             whileTap={{ scale: 0.95 }}
+            disabled
           >
-            <ChevronRight className="w-6 h-6" />
+            ›
           </motion.button>
         </div>
 
-        {/* Characters Carousel */}
+        {/* Infinite Auto-Scrolling Carousel */}
         <div 
           ref={carouselRef}
-          className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
-          style={{ scrollSnapType: "x mandatory" }}
+          className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide"
+          style={{ scrollBehavior: "auto" }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          {characters.map((character, index) => (
+          {/* Duplicate characters 3 times for infinite loop */}
+          {[...characters, ...characters, ...characters].map((character, index) => (
             <motion.div
-              key={character.id}
+              key={`${character.id}-${Math.floor(index / characters.length)}`}
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+              transition={{ duration: 0.6, delay: 0.2 + (index % characters.length) * 0.1 }}
               className="flex-shrink-0 w-72 group"
-              style={{ scrollSnapAlign: "start" }}
             >
               <Link href={`/characters/${character.id}`}>
                 <div 
@@ -230,28 +234,6 @@ export function CharactersSection() {
                 </motion.span>
               </Link>
             </motion.div>
-          ))}
-        </div>
-
-        {/* Progress dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          {characters.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setActiveIndex(index)
-                if (carouselRef.current) {
-                  carouselRef.current.scrollTo({ left: index * 300, behavior: "smooth" })
-                }
-              }}
-              className="w-2 h-2 rounded-full transition-all duration-300"
-              style={{
-                backgroundColor: index === activeIndex 
-                  ? currentTheme.colors.accentPrimary 
-                  : `${currentTheme.colors.textSecondary}40`,
-                width: index === activeIndex ? "24px" : "8px"
-              }}
-            />
           ))}
         </div>
       </div>
