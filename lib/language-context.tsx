@@ -34,19 +34,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      const savedLang = localStorage.getItem("isolele-language")
-      if (savedLang) {
-        const lang = languages.find((l) => l.code === savedLang)
-        if (lang) {
-          setCurrentLanguage(lang)
-        }
-      } else {
-        // Default to English
-        setCurrentLanguage(languages[0])
-        localStorage.setItem("isolele-language", "en")
-      }
+      // Force English language - clear any saved French preference
+      localStorage.setItem("isolele-language", "en")
+      setCurrentLanguage(languages[0])
     } catch (error) {
-      console.error("[v0] Error loading language preference:", error)
+      console.error("[v0] Error setting language:", error)
     }
     setMounted(true)
   }, [])
