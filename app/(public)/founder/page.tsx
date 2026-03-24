@@ -202,10 +202,10 @@ export default function FounderPage() {
               >
                 <div className="aspect-[3/4] rounded-2xl overflow-hidden relative" style={{ border: "2px solid var(--isolele-accent)" }}>
                   <Image
-                    src="/founder.jpg"
+                    src="/king-kufulula.jpg"
                     alt="HRM King Kufulula - Royal Portrait"
                     fill
-                    className="object-cover object-top"
+                    className="object-cover object-center"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-6 left-6 right-6">

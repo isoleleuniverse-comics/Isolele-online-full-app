@@ -14,14 +14,14 @@ export const languageNames: Record<Language, string> = {
 }
 
 export const languageFlags: Record<Language, string> = {
-  en: "US",
-  fr: "FR",
-  pt: "PT",
-  es: "ES",
-  zu: "ZA",
-  xh: "ZA",
-  sw: "TZ",
-  ln: "CD",
+  en: "🇺🇸",
+  fr: "🇫🇷",
+  pt: "🇵🇹",
+  es: "🇪🇸",
+  zu: "🇿🇦",
+  xh: "🇿🇦",
+  sw: "🇹🇿",
+  ln: "🇨🇩",
 }
 
 export interface TranslationKeys {

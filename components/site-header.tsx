@@ -293,7 +293,7 @@ export function SiteHeader() {
                         ringColor: currentTheme.colors.accentPrimary
                       }}
                     >
-                      {lang.code.toUpperCase()}
+                      {lang.flag} {lang.code.toUpperCase()}
                     </button>
                   ))}
                 </div>
