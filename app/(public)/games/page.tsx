@@ -59,9 +59,9 @@ export default function GamesPage() {
               }
             },
             {
-              id: "makanda-mysteries",
+              id: "makanda-quest",
               title: "MAKANDA MYSTERIES",
-              slug: "makanda-mysteries",
+              slug: "makanda-quest",
               subtitle: { en: "Cooperative Adventure", fr: "Aventure Coopérative" },
               image_url: "/games/makanda-mysteries.jpg",
               rating: 4.7,
@@ -154,7 +154,7 @@ export default function GamesPage() {
                 transition={{ delay: index * 0.2 }}
                 whileHover={{ y: -8 }}
               >
-                <Link href={`/games/${game.slug || game.id}`}>
+                <Link href={`/games/${game.id}`}>
                   <div
                     className="rounded-2xl overflow-hidden cursor-pointer relative group"
                     style={{ border: `2px solid ${currentTheme.colors.accentPrimary}30` }}
