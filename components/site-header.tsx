@@ -30,7 +30,9 @@ export function SiteHeader() {
     { key: "nav_founder", href: "/founder" },
     { key: "nav_characters", href: "/characters", hasDropdown: true },
     { key: "nav_shop", href: "/shop" },
+    { key: "nav_fashion", href: "/fashion" },
     { key: "nav_games", href: "/kufu-game" },
+    { key: "nav_settings", href: "/settings" },
   ]
 
   return (
@@ -49,10 +51,10 @@ export function SiteHeader() {
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ei_1774029892268-removebg-preview-OGLwAWrJqgxIOFX6ES21zzBCcRpiHa.png"
+                src="/IMG-20260311-WA0030.jpg"
                 alt="ISOLELE — The Chosen Ones"
-                width={200}
-                height={54}
+                width={120}
+                height={120}
                 className="object-contain"
                 priority
               />

@@ -71,12 +71,11 @@ export function SiteFooter() {
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3">
               <Image
-                src="/isolele-logo-transparent.png"
+                src="/IMG-20260311-WA0030.jpg"
                 alt="ISOLELE"
-                width={40}
-                height={40}
+                width={50}
+                height={50}
                 className="object-contain"
-                style={{ width: 'auto', height: 'auto' }}
               />
               <span 
                 className="text-xl font-bold tracking-wider"

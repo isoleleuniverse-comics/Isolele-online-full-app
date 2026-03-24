@@ -80,8 +80,8 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
               }}
             >
               <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CERCLE-ISOLELE%202026%20copie.png-fKr5oGDmJ112nZD0gVtCNZbA1E2Ld1.jpeg"
-                alt="ISOLELE Circle 2026"
+                src="/isolele-logo-official.jpg"
+                alt="ISOLELE Official Logo"
                 fill
                 className="object-cover"
                 priority

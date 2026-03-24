@@ -39,6 +39,8 @@ export interface TranslationKeys {
   nav_become_supporter: string
   nav_partners: string
   nav_restaurant: string
+  nav_fashion: string
+  nav_settings: string
   
   // Hero Section
   hero_title: string
@@ -194,6 +196,8 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_become_supporter: "Become a Supporter",
     nav_partners: "Partners",
     nav_restaurant: "Partner Restaurant",
+    nav_fashion: "Fashion",
+    nav_settings: "Settings",
     
     // Hero Section
     hero_title: "ZAIIRE - PRINCE OF KONGO",
@@ -349,6 +353,8 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_become_supporter: "Devenir Supporteur",
     nav_partners: "Partenaires",
     nav_restaurant: "Restaurant Partenaire",
+    nav_fashion: "Mode",
+    nav_settings: "Parametres",
     
     // Hero Section
     hero_title: "ZAIIRE - PRINCE DU KONGO",

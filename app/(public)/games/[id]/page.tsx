@@ -74,7 +74,7 @@ const GAME_DETAILS: Record<string, any> = {
       { en: "Multiplayer Mode", fr: "Mode Multijoueur" },
     ],
     images: [
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/CERCLE-ISOLELE%202026%20copie.png-63QN4pp7BsSYA3UxbGCI8Ymq6QlgiM.jpeg",
+      "/isolele-logo-official.jpg",
     ],
     developer: "ISOLELE Creative Labs",
     platform: ["Digital"],

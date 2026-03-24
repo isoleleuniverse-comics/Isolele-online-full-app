@@ -113,6 +113,79 @@ export default function CharactersPage() {
       
       <main className="min-h-screen py-20" style={{ backgroundColor: 'var(--isolele-bg)' }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8">
+          {/* The Chosen One Section - HRM King Kufulula */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-24 p-12 rounded-3xl overflow-hidden relative"
+            style={{ 
+              background: 'linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(179,84,30,0.1) 100%)',
+              border: '2px solid rgba(212,175,55,0.3)'
+            }}
+          >
+            <div className="grid md:grid-cols-2 gap-8 items-center max-w-6xl mx-auto">
+              {/* Image */}
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="relative aspect-[3/4] rounded-2xl overflow-hidden"
+                style={{ border: '3px solid #D4AF37' }}
+              >
+                <Image
+                  src="/king-kufulula-3.jpg"
+                  alt="HRM King Kufulula - The Chosen One"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+              </motion.div>
+              
+              {/* Content */}
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="space-y-6"
+              >
+                <div>
+                  <span 
+                    className="text-sm font-medium px-4 py-2 rounded-full"
+                    style={{ backgroundColor: 'rgba(212,175,55,0.3)', color: '#D4AF37' }}
+                  >
+                    {lang === 'fr' ? 'L\'ARCHÉTICTE ROYAL' : 'ROYAL ARCHITECT'}
+                  </span>
+                  <h2 className="text-5xl md:text-6xl font-bold mt-6" style={{ color: '#D4AF37' }}>
+                    HRM King<br />Kufulula
+                  </h2>
+                  <h3 className="text-2xl mt-3" style={{ color: 'var(--isolele-text-secondary)' }}>
+                    {lang === 'fr' ? 'Le Fondateur Visionnaire' : 'The Visionary Founder'}
+                  </h3>
+                </div>
+                
+                <p className="text-lg leading-relaxed" style={{ color: 'var(--isolele-text)' }}>
+                  {lang === 'fr'
+                    ? 'Gardien du patrimoine congolais et architecte culturel, le Roi Kufulula a fondé ISOLELE pour restaurer l\'identité africaine et créer un empire mythologique où les super-héros émergent de l\'histoire authentique.'
+                    : 'Custodian of Congolese heritage and cultural architect, King Kufulula founded ISOLELE to restore African identity and create a mythological empire where superheroes rise from authentic history.'}
+                </p>
+
+                <div className="flex flex-wrap gap-4 pt-2">
+                  <Link
+                    href="/founder"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-lg font-bold transition-all hover:scale-105"
+                    style={{ backgroundColor: '#D4AF37', color: '#000' }}
+                  >
+                    {lang === 'fr' ? 'DÉCOUVRIR' : 'DISCOVER'}
+                    <span>→</span>
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Divider */}
+          <div className="my-12 h-1 w-24 mx-auto rounded-full" style={{ backgroundColor: '#D4AF37' }} />
+
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
