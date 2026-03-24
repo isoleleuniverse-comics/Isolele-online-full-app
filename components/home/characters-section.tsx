@@ -114,36 +114,6 @@ export function CharactersSection() {
           </div>
         </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex gap-3 mb-8">
-          <motion.button
-            className="w-12 h-12 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20` }}
-            whileHover={{ 
-              scale: 1.1,
-              backgroundColor: currentTheme.colors.accentPrimary,
-              color: currentTheme.colors.background
-            }}
-            whileTap={{ scale: 0.95 }}
-            disabled
-          >
-            ‹
-          </motion.button>
-          <motion.button
-            className="w-12 h-12 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20` }}
-            whileHover={{ 
-              scale: 1.1,
-              backgroundColor: currentTheme.colors.accentPrimary,
-              color: currentTheme.colors.background
-            }}
-            whileTap={{ scale: 0.95 }}
-            disabled
-          >
-            ›
-          </motion.button>
-        </div>
-
         {/* Infinite Auto-Scrolling Carousel */}
         <div 
           ref={carouselRef}
