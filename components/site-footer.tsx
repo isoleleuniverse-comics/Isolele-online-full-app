@@ -89,7 +89,7 @@ export function SiteFooter() {
               className="text-sm leading-relaxed"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              Isolele est un univers visionnaire né pour restaurer l'âme du storytelling africain, un empire mythologique où les super-héros sont choisis par le destin, les royaumes jamais oubliés, et le pouvoir ancestral est vivant dans chaque page, chaque prophétie, chaque bataille.
+              {t("footer_description")}
             </p>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
@@ -186,7 +186,7 @@ export function SiteFooter() {
               className="text-sm mb-4"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              Inscrivez-vous pour recevoir des mises à jour exclusives sur les nouvelles sorties, les événements et les offres spéciales.
+              {t("footer_newsletter_desc")}
             </p>
             <form onSubmit={handleSubscribe} className="space-y-3">
               <input
