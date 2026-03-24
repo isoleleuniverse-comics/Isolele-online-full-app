@@ -217,7 +217,7 @@ export function SiteFooter() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {subscribed ? "MERCI!" : t("footer_subscribe")}
+                {subscribed ? t("footer_thank_you") : t("footer_subscribe")}
               </motion.button>
             </form>
           </div>
