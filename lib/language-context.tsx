@@ -40,6 +40,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         if (lang) {
           setCurrentLanguage(lang)
         }
+      } else {
+        // Default to English
+        setCurrentLanguage(languages[0])
+        localStorage.setItem("isolele-language", "en")
       }
     } catch (error) {
       console.error("[v0] Error loading language preference:", error)
