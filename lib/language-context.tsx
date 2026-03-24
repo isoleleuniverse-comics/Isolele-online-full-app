@@ -34,9 +34,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      // Force English language - clear any saved French preference
+      // Always force English language on mount
+      const englishLang = languages[0] // English
+      setCurrentLanguage(englishLang)
+      localStorage.clear()
       localStorage.setItem("isolele-language", "en")
-      setCurrentLanguage(languages[0])
+      console.log("[v0] Language forced to English:", englishLang)
     } catch (error) {
       console.error("[v0] Error setting language:", error)
     }
