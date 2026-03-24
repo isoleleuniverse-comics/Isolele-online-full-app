@@ -132,7 +132,7 @@ export default function CharactersPage() {
                 style={{ border: '3px solid #D4AF37' }}
               >
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0074-R60VZ95iAJc2Uj1a7i1ECpbQWM1Bam.jpg"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260202-WA0007-oizvrYvXZmN98swSFrMjDIldyIoV8Z.jpg"
                   alt="HRM King Kufulula - The Chosen One"
                   fill
                   className="object-cover"
