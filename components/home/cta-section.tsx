@@ -99,31 +99,69 @@ export function CtaSection() {
           <div className="h-px w-12" style={{ backgroundColor: currentTheme.colors.accentPrimary }} />
         </motion.div>
 
-        {/* Heading: JOIN THE LEGEND - Graffiti Street Art Style */}
+        {/* Heading: JOIN THE LEGEND - With Luxury Fireworks */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="mb-12"
+          className="mb-12 relative"
         >
+          {/* Fireworks particles */}
+          {Array.from({ length: 60 }).map((_, i) => {
+            const angle = (i / 60) * Math.PI * 2;
+            const velocity = 2 + Math.random() * 3;
+            const delay = (i % 20) * 0.15;
+            
+            return (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 rounded-full pointer-events-none"
+                style={{
+                  left: "50%",
+                  top: "50%",
+                  backgroundColor: i % 2 === 0 ? "#FFD700" : "#00D4FF",
+                  boxShadow: i % 2 === 0 
+                    ? "0 0 8px #FFD700, 0 0 15px rgba(255, 215, 0, 0.5)"
+                    : "0 0 8px #00D4FF, 0 0 15px rgba(0, 212, 255, 0.5)"
+                }}
+                animate={{
+                  x: [0, Math.cos(angle) * velocity * 100],
+                  y: [0, Math.sin(angle) * velocity * 100],
+                  opacity: [1, 0],
+                  scale: [1, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  delay: delay,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeOut",
+                }}
+              />
+            );
+          })}
+
           <motion.h2 
-            className="graffiti-text text-5xl sm:text-6xl lg:text-7xl whitespace-nowrap"
+            className="text-5xl sm:text-6xl lg:text-7xl whitespace-nowrap relative z-10"
             style={{ 
               fontFamily: 'Impact, Arial Black, sans-serif',
+              fontWeight: 900,
               width: '100%',
+              position: 'relative',
             }}
             animate={{
               color: [
+                "#FFD700",
                 "#00D4FF",
-                "#00FFFF",
-                "#0099FF",
+                "#FFD700",
                 "#00D4FF",
+                "#FFD700",
               ],
-              filter: [
-                'drop-shadow(2px 2px 0px #0088CC) drop-shadow(4px 4px 0px rgba(0, 136, 204, 0.3))',
-                'drop-shadow(2px 2px 0px #0066FF) drop-shadow(4px 4px 0px rgba(0, 102, 255, 0.3))',
-                'drop-shadow(2px 2px 0px #0088CC) drop-shadow(4px 4px 0px rgba(0, 136, 204, 0.3))',
-                'drop-shadow(2px 2px 0px #0099FF) drop-shadow(4px 4px 0px rgba(0, 153, 255, 0.3))',
+              textShadow: [
+                "0 0 20px #FFD700, 0 0 40px #FFD700, 2px 2px 0px #0088CC",
+                "0 0 20px #00D4FF, 0 0 40px #00D4FF, 2px 2px 0px #0066FF",
+                "0 0 20px #FFD700, 0 0 40px #FFD700, 2px 2px 0px #0088CC",
+                "0 0 20px #00D4FF, 0 0 40px #00D4FF, 2px 2px 0px #0066FF",
+                "0 0 20px #FFD700, 0 0 40px #FFD700, 2px 2px 0px #0088CC",
               ],
             }}
             transition={{
