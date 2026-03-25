@@ -50,14 +50,21 @@ export function SiteHeader() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <Image
-                src="/IMG-20260311-WA0030.jpg"
-                alt="ISOLELE — The Chosen Ones"
-                width={120}
-                height={120}
-                className="object-contain"
-                priority
-              />
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Image
+                  src="/IMG-20260311-WA0030.jpg"
+                  alt="ISOLELE — The Chosen Ones"
+                  width={120}
+                  height={120}
+                  className="object-contain"
+                  priority
+                />
+              </motion.div>
             </Link>
 
             {/* Desktop Navigation */}
