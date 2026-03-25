@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { useTheme } from "@/lib/theme-context"
 import { useLanguage } from "@/lib/language-context"
 import { useInView } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -13,6 +13,89 @@ export function CtaSection() {
   const { t } = useLanguage()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const audioContextRef = useRef(null)
+  const oscillatorRef = useRef(null)
+  const gainRef = useRef(null)
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const [currentPitch, setCurrentPitch] = useState(200)
+
+  // Initialize Web Audio API
+  useEffect(() => {
+    const initAudio = () => {
+      if (!audioContextRef.current) {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+        audioContextRef.current = audioContext
+
+        const oscillator = audioContext.createOscillator()
+        const gain = audioContext.createGain()
+
+        oscillator.type = 'sine'
+        oscillator.frequency.value = 200
+        gain.gain.value = 0
+
+        oscillator.connect(gain)
+        gain.connect(audioContext.destination)
+        oscillator.start()
+
+        oscillatorRef.current = oscillator
+        gainRef.current = gain
+      }
+    }
+
+    window.addEventListener('scroll', initAudio, { once: true })
+    return () => window.removeEventListener('scroll', initAudio)
+  }, [])
+
+  // Handle scroll for pitch modulation
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current || !oscillatorRef.current || !gainRef.current) return
+
+      const element = ref.current
+      const elementRect = element.getBoundingClientRect()
+      const windowHeight = window.innerHeight
+      const scrollY = window.scrollY
+      const distanceFromCenter = Math.abs(elementRect.top + elementRect.height / 2 - windowHeight / 2)
+      const maxDistance = windowHeight
+      const proximityRatio = Math.max(0, 1 - distanceFromCenter / maxDistance)
+
+      // Check scroll direction
+      const scrollDelta = scrollY - lastScrollY
+      setLastScrollY(scrollY)
+
+      // Calculate pitch: higher when near, lower when far
+      // Pitch goes UP when scrolling UP to the section
+      // Pitch goes DOWN when scrolling DOWN past the section
+      const basePitch = 150 + proximityRatio * 200
+      const pitchModulation = scrollDelta > 0 ? -50 : 50 // Down scroll = lower pitch, up scroll = higher pitch
+      const newPitch = Math.max(100, Math.min(400, basePitch + pitchModulation))
+
+      setCurrentPitch(newPitch)
+
+      // Update oscillator frequency with smooth transition
+      if (proximityRatio > 0.1) {
+        oscillatorRef.current.frequency.setTargetAtTime(
+          newPitch,
+          audioContextRef.current.currentTime,
+          0.1
+        )
+        gainRef.current.gain.setTargetAtTime(
+          proximityRatio * 0.05,
+          audioContextRef.current.currentTime,
+          0.1
+        )
+      } else {
+        gainRef.current.gain.setTargetAtTime(
+          0,
+          audioContextRef.current.currentTime,
+          0.2
+        )
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY])
 
   return (
     <section 
