@@ -33,7 +33,6 @@ export function SiteFooter() {
     { key: "nav_news", href: "/news" },
     { key: "nav_characters", href: "/characters" },
     { key: "nav_shop", href: "/shop" },
-    { key: "nav_supporters", href: "/supporters" },
   ]
 
   const resourceLinks = [
@@ -66,7 +65,7 @@ export function SiteFooter() {
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Column 1: Identity */}
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3">
@@ -173,7 +172,33 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Column 4: Newsletter */}
+          {/* Column 4: Fashion */}
+          <div>
+            <h3 
+              className="text-lg font-bold tracking-wider mb-4"
+              style={{ color: currentTheme.colors.accentPrimary }}
+            >
+              FASHION
+            </h3>
+            <div className="grid grid-cols-2 gap-3">
+              {[1, 2, 3, 4].map((i) => (
+                <motion.div
+                  key={i}
+                  className="relative aspect-square rounded-lg overflow-hidden shadow-lg"
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <Image
+                    src={`/fashion/fashion-${i}.jpg`}
+                    alt={`Fashion ${i}`}
+                    fill
+                    className="object-cover"
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Column 5: Newsletter */}
           <div>
             <h3 
               className="text-lg font-bold tracking-wider mb-6"
