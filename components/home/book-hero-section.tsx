@@ -148,6 +148,21 @@ const slides: Slide[] = [
   },
 ]
 
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? "-100%" : "100%",
+    opacity: 0,
+  }),
+}
+
 export function BookHeroSection() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
@@ -157,44 +172,34 @@ export function BookHeroSection() {
     setMounted(true)
   }, [])
 
-  const paginate = useCallback((newDirection: number) => {
-    setDirection(newDirection)
-    setCurrent((prev) => {
-      const next = prev + newDirection
-      if (next < 0) return slides.length - 1
-      if (next >= slides.length) return 0
-      return next
-    })
-  }, [])
-
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1,
+  const paginate = useCallback(
+    (newDirection: number) => {
+      setDirection(newDirection)
+      setCurrent((prev) => {
+        const next = prev + newDirection
+        if (next < 0) return slides.length - 1
+        if (next >= slides.length) return 0
+        return next
+      })
     },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
-    }),
-  }
+    []
+  )
+
+  // Auto-advance every 7 seconds
+  useEffect(() => {
+    if (!mounted) return
+    const timer = setInterval(() => paginate(1), 7000)
+    return () => clearInterval(timer)
+  }, [mounted, paginate])
 
   if (!mounted) return null
 
   const slide = slides[current]
 
   return (
-    <div
-      className="relative w-full h-screen overflow-hidden bg-black flex items-center justify-center"
-      style={{ aspectRatio: "auto" }}
-    >
-      {/* Background Image with Overlay */}
-      <AnimatePresence initial={false} custom={direction} mode="wait">
+    <section className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: "#000" }}>
+      {/* SLIDES */}
+      <AnimatePresence custom={direction} mode="wait">
         <motion.div
           key={slide.id}
           custom={direction}
@@ -202,37 +207,31 @@ export function BookHeroSection() {
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.2 },
-          }}
+          transition={{ duration: 0.65, ease: [0.32, 0.72, 0, 1] }}
           className="absolute inset-0"
         >
-          <Image
-            src={slide.image}
-            alt={slide.title}
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-          {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
-        </motion.div>
-      </AnimatePresence>
+          {/* BG IMAGE */}
+          <div className="absolute inset-0">
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              fill
+              className="object-cover object-top"
+              priority={current === 0}
+            />
+            {/* Gradient overlay */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 55%, rgba(0,0,0,0.2) 100%)",
+              }}
+            />
+          </div>
 
-      {/* Content */}
-      <div className="absolute inset-0 z-10 flex items-center">
-        <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={slide.id}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
-              transition={{ duration: 0.5 }}
-              className="max-w-2xl"
-            >
+          {/* SLIDE CONTENT */}
+          <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 pt-[70px]">
+            <div className="max-w-2xl">
               {/* TAG badge */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -310,57 +309,88 @@ export function BookHeroSection() {
                   </button>
                 </Link>
               </motion.div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* FIXED HEADER with ISOLELE Logo */}
+      <motion.header
+        className="fixed top-0 left-0 right-0 z-40 h-[70px] flex items-center px-6 md:px-10"
+        style={{
+          backgroundColor: "rgba(0,0,0,0.75)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid rgba(246, 184, 0, 0.12)",
+        }}
+        initial={{ y: -70 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Link href="/">
+          <Image
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ei_1774029892268-removebg-preview-OGLwAWrJqgxIOFX6ES21zzBCcRpiHa.png"
+            alt="ISOLELE — The Chosen Ones"
+            width={180}
+            height={50}
+            className="object-contain"
+            priority
+          />
+        </Link>
+      </motion.header>
+
+      {/* NAV ARROWS */}
+      <button
+        onClick={() => paginate(-1)}
+        aria-label="Previous slide"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full transition-all hover:scale-110"
+        style={{
+          background: "rgba(246,184,0,0.15)",
+          border: "1.5px solid rgba(246,184,0,0.5)",
+          color: "#F6B800",
+        }}
+      >
+        <ChevronLeft size={22} />
+      </button>
+      <button
+        onClick={() => paginate(1)}
+        aria-label="Next slide"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full transition-all hover:scale-110"
+        style={{
+          background: "rgba(246,184,0,0.15)",
+          border: "1.5px solid rgba(246,184,0,0.5)",
+          color: "#F6B800",
+        }}
+      >
+        <ChevronRight size={22} />
+      </button>
+
+      {/* DOT INDICATORS */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+        {slides.map((s, i) => (
+          <button
+            key={s.id}
+            aria-label={`Go to slide ${i + 1}`}
+            onClick={() => {
+              setDirection(i > current ? 1 : -1)
+              setCurrent(i)
+            }}
+            className="rounded-full transition-all duration-300"
+            style={{
+              width: i === current ? 28 : 8,
+              height: 8,
+              backgroundColor: i === current ? "#F6B800" : "rgba(255,255,255,0.35)",
+            }}
+          />
+        ))}
       </div>
 
-      {/* Navigation Controls */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-6">
-        {/* Left Arrow */}
-        <button
-          onClick={() => paginate(-1)}
-          className="p-2 rounded-full hover:bg-white/20 transition-colors"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft size={24} color="#F6B800" />
-        </button>
-
-        {/* Dots */}
-        <div className="flex gap-2">
-          {slides.map((_, idx) => (
-            <motion.button
-              key={idx}
-              onClick={() => {
-                setDirection(idx > current ? 1 : -1)
-                setCurrent(idx)
-              }}
-              className="rounded-full transition-all"
-              style={{
-                backgroundColor: idx === current ? "#F6B800" : "rgba(255,255,255,0.3)",
-                width: idx === current ? "24px" : "8px",
-                height: "8px",
-              }}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
-            />
-          ))}
-        </div>
-
-        {/* Right Arrow */}
-        <button
-          onClick={() => paginate(1)}
-          className="p-2 rounded-full hover:bg-white/20 transition-colors"
-          aria-label="Next slide"
-        >
-          <ChevronRight size={24} color="#F6B800" />
-        </button>
-      </div>
-
-      {/* Slide Counter */}
-      <div className="absolute bottom-8 right-8 z-20 text-white/60 text-sm font-medium">
+      {/* Slide counter */}
+      <div
+        className="absolute bottom-8 right-8 md:right-16 z-20 text-xs font-bold tracking-widest"
+        style={{ color: "rgba(255,255,255,0.5)" }}
+      >
         {String(current + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
       </div>
-    </div>
+    </section>
   )
 }
