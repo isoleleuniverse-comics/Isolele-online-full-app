@@ -18,7 +18,7 @@ const articles = [
     excerpt: "A new wave of historians and cultural leaders sheds light on Makanda, a once-hidden Congolese empire that may hold the true heritage behind the myth of Wakanda.",
     readTime: "5 min",
     date: "March 2025",
-    image: "/events/event-showcase-1.jpg",
+    image: "/events/wakanda-makanda-royal.jpg",
   },
   {
     id: 2,
