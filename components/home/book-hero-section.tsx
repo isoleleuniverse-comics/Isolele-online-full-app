@@ -5,16 +5,17 @@ import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useLanguage } from "@/lib/language-context"
 
 interface Slide {
   id: string
   type: "book" | "game"
-  tag: string
-  title: string
-  subtitle: string
-  description: string
+  tagKey: string
+  titleKey: string
+  subtitleKey: string
+  descriptionKey: string
   image: string
-  buttonText: string
+  buttonTextKey: string
   href: string
   accentColor: string
 }
@@ -23,126 +24,117 @@ const slides: Slide[] = [
   {
     id: "zaiire",
     type: "book",
-    tag: "WELCOME TO ISOLELE",
-    title: "THE CHOSEN ONES",
-    subtitle: "An entire universe born from the roots of Kongo...",
-    description:
-      "Isolele is a visionary universe born to restore the soul of African storytelling, a mythological empire where superheroes are chosen by destiny, kingdoms never forgotten, and ancestral power is alive in every page, every prophecy, every battle. Every child who reads Isolele will discover superheroes who look like them, speak their language, protect their land, and honor their ancestors. This is for the next generation of kings, queens, warriors, inventors, and storytellers.",
+    tagKey: "hero_welcome",
+    titleKey: "hero_chosen_ones_title",
+    subtitleKey: "hero_chosen_ones_subtitle",
+    descriptionKey: "hero_chosen_ones_desc",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg",
-    buttonText: "EXPLORE THE UNIVERSE",
+    buttonTextKey: "btn_explore_universe",
     href: "/characters",
     accentColor: "#F6B800",
   },
   {
     id: "makanda",
     type: "book",
-    tag: "THE MAKANDA DYNASTY — BOOK I",
-    title: "MAKANDA",
-    subtitle: "The Most Powerful Empire in History Was Not Lost. It Was Hidden On Purpose.",
-    description:
-      "Deep within Central Africa existed a civilization the world was never meant to know about. Spiritually awakened. Technologically advanced. Protected by the Sacred Flame. When outside forces came for what was theirs, the Makanda did not fall. They disappeared. Their city was never lost. It was waiting for the one born to carry the flame again.",
+    tagKey: "hero_makanda_tag",
+    titleKey: "hero_makanda_title",
+    subtitleKey: "hero_makanda_subtitle",
+    descriptionKey: "hero_makanda_desc",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
-    buttonText: "DISCOVER MAKANDA",
+    buttonTextKey: "btn_discover_makanda",
     href: "/books/makanda",
     accentColor: "#C0392B",
   },
   {
     id: "bambula",
     type: "book",
-    tag: "BAMBULA: CHILD OF RHYTHM",
-    title: "BAMBULA",
-    subtitle: "CHAPTER I · THE SACRED DRUM",
-    description:
-      "Before words, there was rhythm. Bambula was the child who heard everything. When the drums were taken and the land went silent, he kept the rhythm alive inside him. Armed with the sacred drum, he walks between the spirit world and the living. He does not fight to destroy. He protects to remember.",
+    tagKey: "hero_bambula_tag",
+    titleKey: "hero_bambula_title",
+    subtitleKey: "hero_bambula_subtitle",
+    descriptionKey: "hero_bambula_desc",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
-    buttonText: "DISCOVER BAMBULA",
+    buttonTextKey: "btn_discover_bambula",
     href: "/books/bambula",
     accentColor: "#B3541E",
   },
   {
     id: "mokele",
     type: "book",
-    tag: "MOKELE: BORN INTO STRUGGLE",
-    title: "MOKELE",
-    subtitle: "From Child to Lord of Kinshasa",
-    description:
-      "Mokele is not born a king. He is born into struggle. The streets of Kinshasa teach him before school ever could, where loyalty is fragile, violence is normal, and survival is everything. From child to hustler to lord. He builds power, money, and respect. In Kinshasa, you either get eaten... or you become the predator.",
+    tagKey: "hero_mokele_tag",
+    titleKey: "hero_mokele_title",
+    subtitleKey: "hero_mokele_subtitle",
+    descriptionKey: "hero_mokele_desc",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg",
-    buttonText: "DISCOVER MOKELE",
+    buttonTextKey: "btn_discover_mokele",
     href: "/books/mokele",
     accentColor: "#4169E1",
   },
   {
     id: "zaiire-universe",
     type: "book",
-    tag: "ZAIIRE: THE PRINCE OF KONGO",
-    title: "THE PRINCE OF KONGO",
-    subtitle: "The Necklace of Destiny",
-    description:
-      "Forged in the heart of the Kongo Kingdom, the Necklace of Destiny was never made to be worn. It was made to choose. Passed through centuries of fire, war, and silence, it carries the soul of every king who bled for their people and every queen who held the world together with bare hands. When it finds Zaiire, it does not shine. It awakens.",
+    tagKey: "hero_zaiire_tag",
+    titleKey: "hero_zaiire_title",
+    subtitleKey: "hero_zaiire_subtitle",
+    descriptionKey: "hero_zaiire_desc",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0059-75yxyGjuDt9hhqXF6obymfG8BpNLz4.jpg",
-    buttonText: "DISCOVER ZAIIRE",
+    buttonTextKey: "btn_discover_zaiire",
     href: "/books/zaiire",
     accentColor: "#F6B800",
   },
   {
     id: "kufu",
     type: "game",
-    tag: "KUFU: THE CROWN GAME",
-    title: "KUFU",
-    subtitle: "THE OFFICIAL GAME OF THE ISOLELE UNIVERSE",
-    description:
-      "This is not just a card game. It is a ceremony. Gather your warriors. Build your kingdom. Outplay every opponent at the table. But to claim the crown there is only one way to win. You must raise your voice and speak the name of the king out loud. Then someone places the necklace over your head. Not by your own hand. By another. Because a true king is not crowned alone. KUFU is where African royalty becomes something you feel in your hands, hear in your voice, and carry around your neck. Every game is a coronation. Every winner is a king.",
+    tagKey: "hero_kufu_tag",
+    titleKey: "hero_kufu_title",
+    subtitleKey: "hero_kufu_subtitle",
+    descriptionKey: "hero_kufu_desc",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_20260321_113436-ktAJOL2e0SS0pkTY6aPnn7aBKxr3pq.jpg",
-    buttonText: "EXPLORE THE GAME",
+    buttonTextKey: "btn_explore_game",
     href: "/kufu-game",
     accentColor: "#F6B800",
   },
   {
     id: "amara",
     type: "book",
-    tag: "AMARA: QUEEN OF THE SEAS",
-    title: "AMARA",
-    subtitle: "CHAPTER I · QUEEN OF THE PIRATES OF AMAZON",
-    description:
-      "Every pirate fears the ocean. Amara owns it. She is the Queen of the Seas. The most feared captain on every water in the world. No ship has outrun her. No king has outsmarted her. No army has stopped her fleet. But Amara does not sail alone. Beside her stand four women bound by blood, loyalty and destiny. Five queens of the sea who together carry a power that will shake every throne on the continent. From their union the Agojie dynasty is born. And from that dynasty rise the five women kings who will change the course of African history forever. This is not just a pirate story. This is where the greatest female dynasty in the ISOLELE universe begins.",
+    tagKey: "hero_amara_tag",
+    titleKey: "hero_amara_title",
+    subtitleKey: "hero_amara_subtitle",
+    descriptionKey: "hero_amara_desc",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-    buttonText: "DISCOVER AMARA",
+    buttonTextKey: "btn_discover_amara",
     href: "/books/amara",
     accentColor: "#1E90B3",
   },
   {
     id: "zattar",
     type: "book",
-    tag: "ZATTAR: THE PRINCE OF THE UNIVERSE",
-    title: "ZATTAR",
-    subtitle: "The Conqueror of Thrones",
-    description:
-      "When Destiny Refused Him One Kingdom, He Decided to Take Them All. Prince Zattar was born to inherit the throne of Bapindi. But when the Ancestors chose another, something inside him did not break. It ignited. He studied the First and Second Wars of Vegas, legends of devastation that shook the world before he was even born. Where others saw warning, Zattar saw a map. He started the Third War of Vegas. Not out of madness. Not out of pain. But because he looked at the entire universe and reached one conclusion: It belongs to someone. And that someone is Zattar. He was not chosen. So he chose the universe instead.",
+    tagKey: "hero_zattar_tag",
+    titleKey: "hero_zattar_title",
+    subtitleKey: "hero_zattar_subtitle",
+    descriptionKey: "hero_zattar_desc",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e9c64c65-3717-4fe3-a391-885767df3303-LbjnMwCViF43pwErKmoFv7iGxQdCeQ.jpeg",
-    buttonText: "DISCOVER ZATTAR",
+    buttonTextKey: "btn_discover_zattar",
     href: "/books/zattar",
     accentColor: "#2E8B57",
   },
   {
     id: "zaiko",
     type: "book",
-    tag: "ZAÏKO: LAST KING OF THE STREETS OF KIVUS",
-    title: "THE LEGEND OF ZAÏKO",
-    subtitle: "He Did Not Rise From the Streets. He Conquered Them.",
-    description:
-      "Born in North Kivu. Forged in Kinshasa. Zaïko was never meant to survive. But survival was never enough. In a world ruled by power, money, and fear, he rises from nothing. Not as a hero. But as a force. With his brother, he builds the most feared empire the Kivus have ever known. No crown was given. No destiny was written. Everything was taken.",
+    tagKey: "hero_zaiko_tag",
+    titleKey: "hero_zaiko_title",
+    subtitleKey: "hero_zaiko_subtitle",
+    descriptionKey: "hero_zaiko_desc",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1175-njlosetUOsqZszKylrOXsIRLw0l3s7.jpeg",
-    buttonText: "DISCOVER ZAÏKO",
+    buttonTextKey: "btn_discover_zaiko",
     href: "/books/zaiko",
     accentColor: "#8B7355",
   },
@@ -164,6 +156,7 @@ const slideVariants = {
 }
 
 export function BookHeroSection() {
+  const { t } = useLanguage()
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
   const [mounted, setMounted] = useState(false)
@@ -249,7 +242,7 @@ export function BookHeroSection() {
                   textTransform: "uppercase",
                 }}
               >
-                {slide.tag}
+                {t(slide.tagKey as any)}
               </motion.div>
 
               {/* SUBTITLE */}
@@ -260,7 +253,7 @@ export function BookHeroSection() {
                 className="text-sm font-semibold tracking-widest uppercase mb-3"
                 style={{ color: slide.accentColor, opacity: 0.85 }}
               >
-                {slide.subtitle}
+                {t(slide.subtitleKey as any)}
               </motion.p>
 
               {/* TITLE */}
@@ -277,7 +270,7 @@ export function BookHeroSection() {
                   fontFamily: "Montserrat, sans-serif",
                 }}
               >
-                {slide.title}
+                {t(slide.titleKey as any)}
               </motion.h1>
 
               {/* DESCRIPTION */}
@@ -288,7 +281,7 @@ export function BookHeroSection() {
                 className="text-base md:text-lg leading-relaxed mb-8 max-w-xl"
                 style={{ color: "#E0E0E0" }}
               >
-                {slide.description}
+                {t(slide.descriptionKey as any)}
               </motion.p>
 
               {/* BUTTON */}
@@ -305,7 +298,7 @@ export function BookHeroSection() {
                       color: "#000",
                     }}
                   >
-                    {slide.buttonText}
+                    {t(slide.buttonTextKey as any)}
                   </button>
                 </Link>
               </motion.div>
