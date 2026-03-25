@@ -107,13 +107,11 @@ export function CtaSection() {
           className="mb-12"
         >
           <motion.h2 
-            className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-wider whitespace-nowrap"
+            className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-wider whitespace-nowrap"
             style={{ 
-              letterSpacing: '0.15em',
+              letterSpacing: '0.12em',
               textTransform: 'uppercase',
               width: '100%',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
             }}
             animate={{
               color: [
