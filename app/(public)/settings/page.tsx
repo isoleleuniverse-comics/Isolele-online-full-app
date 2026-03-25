@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useLanguage } from '@/lib/language-context'
-import { useTheme } from '@/lib/theme-context'
+import { useLanguage, languages } from '@/lib/language-context'
+import { useTheme, themes } from '@/lib/theme-context'
 import { Bell, Lock, User, Globe, Moon, Zap, LogOut, Home } from 'lucide-react'
 
 const settingsSections = [
@@ -142,28 +142,111 @@ export default function SettingsPage() {
                     {t(section.title)}
                   </h2>
 
-                  <div className="space-y-4">
-                    {section.items.map((item, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.1 }}
-                        className="p-6 rounded-xl cursor-pointer transition-all hover:scale-102"
-                        style={{
-                          backgroundColor: `${currentTheme.colors.accentPrimary}10`,
-                          border: `1px solid ${currentTheme.colors.accentPrimary}30`,
-                        }}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span style={{ color: currentTheme.colors.textPrimary }} className="font-medium">
-                            {t(item)}
-                          </span>
-                          <span style={{ color: currentTheme.colors.textSecondary }}>→</span>
+                  {/* Preferences Section - Language & Theme */}
+                  {section.id === 'preferences' && (
+                    <>
+                      {/* Language Section */}
+                      <div className="mb-12">
+                        <h3 className="text-xl font-bold mb-6" style={{ color: currentTheme.colors.textPrimary }}>
+                          {lang === 'fr' ? 'Langue' : 'Language'}
+                        </h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                          {languages.map((language) => (
+                            <motion.button
+                              key={language.code}
+                              onClick={() => {
+                                useLanguage().setLanguage(language.code)
+                              }}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="p-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+                              style={{
+                                backgroundColor: currentLanguage.code === language.code 
+                                  ? currentTheme.colors.accentPrimary
+                                  : `${currentTheme.colors.accentPrimary}20`,
+                                color: currentLanguage.code === language.code
+                                  ? currentTheme.colors.background
+                                  : currentTheme.colors.textPrimary,
+                                border: currentLanguage.code === language.code
+                                  ? `2px solid ${currentTheme.colors.accentPrimary}`
+                                  : `2px solid ${currentTheme.colors.accentPrimary}20`
+                              }}
+                            >
+                              <span className="text-lg">{language.flag}</span>
+                              <span>{language.code.toUpperCase()}</span>
+                            </motion.button>
+                          ))}
                         </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                      </div>
+
+                      {/* Theme Section */}
+                      <div>
+                        <h3 className="text-xl font-bold mb-6" style={{ color: currentTheme.colors.textPrimary }}>
+                          {lang === 'fr' ? 'Thème' : 'Theme'}
+                        </h3>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                          {themes.map((theme) => (
+                            <motion.button
+                              key={theme.name}
+                              onClick={() => {
+                                useTheme().setTheme(theme.name)
+                              }}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="p-6 rounded-lg transition-all flex flex-col items-center gap-3"
+                              style={{
+                                backgroundColor: currentTheme.name === theme.name
+                                  ? `${currentTheme.colors.accentPrimary}20`
+                                  : 'transparent',
+                                border: currentTheme.name === theme.name
+                                  ? `2px solid ${currentTheme.colors.accentPrimary}`
+                                  : `2px solid ${currentTheme.colors.accentPrimary}30`
+                              }}
+                            >
+                              <div className="flex gap-2">
+                                {Object.values(theme.colors).slice(0, 2).map((color: any, idx: number) => (
+                                  <div
+                                    key={idx}
+                                    className="w-6 h-6 rounded-full"
+                                    style={{ backgroundColor: color }}
+                                  />
+                                ))}
+                              </div>
+                              <span className="text-sm font-medium capitalize" style={{ color: currentTheme.colors.textPrimary }}>
+                                {theme.name}
+                              </span>
+                            </motion.button>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Other Settings */}
+                  {section.id !== 'preferences' && (
+                    <div className="space-y-4">
+                      {section.items.map((item, idx) => (
+                        <motion.div
+                          key={idx}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: idx * 0.1 }}
+                          className="p-6 rounded-xl cursor-pointer transition-all hover:scale-102"
+                          style={{
+                            backgroundColor: `${currentTheme.colors.accentPrimary}10`,
+                            border: `1px solid ${currentTheme.colors.accentPrimary}30`,
+                          }}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span style={{ color: currentTheme.colors.textPrimary }} className="font-medium">
+                              {t(item)}
+                            </span>
+                            <span style={{ color: currentTheme.colors.textSecondary }}>→</span>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Additional Settings Info */}
                   <div className="mt-12 p-8 rounded-xl" style={{
