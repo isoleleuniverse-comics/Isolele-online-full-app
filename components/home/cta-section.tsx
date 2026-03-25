@@ -6,6 +6,7 @@ import { useLanguage } from "@/lib/language-context"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 export function CtaSection() {
   const { currentTheme } = useTheme()
@@ -88,16 +89,43 @@ export function CtaSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-wider mb-6"
+          className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-wider mb-8"
           style={{ color: currentTheme.colors.textPrimary }}
         >
           {t("joinLegend")}
         </motion.h2>
+
+        {/* Featured Square with Legends Crew */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="relative w-full sm:w-96 h-96 rounded-2xl overflow-hidden mb-10 mx-auto shadow-2xl"
+          style={{ 
+            border: `3px solid ${currentTheme.colors.accentPrimary}`,
+            boxShadow: `0 0 30px ${currentTheme.colors.accentPrimary}40`
+          }}
+        >
+          <Image
+            src="/heroes/legends-crew.jpg"
+            alt="The Legends Crew"
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* Overlay gradient */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(135deg, transparent 0%, ${currentTheme.colors.background}20 100%)`
+            }}
+          />
+        </motion.div>
         
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
           className="text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl mx-auto"
           style={{ color: currentTheme.colors.textSecondary }}
         >
@@ -108,7 +136,7 @@ export function CtaSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Link href="/about">
