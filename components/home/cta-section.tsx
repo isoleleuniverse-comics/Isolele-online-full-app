@@ -99,7 +99,7 @@ export function CtaSection() {
           <div className="h-px w-12" style={{ backgroundColor: currentTheme.colors.accentPrimary }} />
         </motion.div>
 
-        {/* Heading: JOIN THE LEGEND - Signature Style */}
+        {/* Heading: JOIN THE LEGEND - Graffiti Street Art Style */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -107,39 +107,32 @@ export function CtaSection() {
           className="mb-12"
         >
           <motion.h2 
-            className="text-5xl sm:text-6xl lg:text-7xl whitespace-nowrap"
+            className="graffiti-text text-5xl sm:text-6xl lg:text-7xl whitespace-nowrap"
             style={{ 
-              fontFamily: 'var(--font-great-vibes), cursive',
-              letterSpacing: '0.05em',
-              fontWeight: '400',
-              textTransform: 'capitalize',
+              fontFamily: 'Impact, Arial Black, sans-serif',
               width: '100%',
             }}
             animate={{
               color: [
-                "#D4AF37",
-                "#FFD700",
-                "#FF1493",
+                "#00D4FF",
                 "#00FFFF",
-                "#FF69B4",
-                "#D4AF37",
+                "#0099FF",
+                "#00D4FF",
               ],
-              textShadow: [
-                "0 0 15px #D4AF37, 0 0 30px #D4AF37",
-                "0 0 15px #FFD700, 0 0 30px #FFD700",
-                "0 0 15px #FF1493, 0 0 30px #FF1493",
-                "0 0 15px #00FFFF, 0 0 30px #00FFFF",
-                "0 0 15px #FF69B4, 0 0 30px #FF69B4",
-                "0 0 15px #D4AF37, 0 0 30px #D4AF37",
+              filter: [
+                'drop-shadow(2px 2px 0px #0088CC) drop-shadow(4px 4px 0px rgba(0, 136, 204, 0.3))',
+                'drop-shadow(2px 2px 0px #0066FF) drop-shadow(4px 4px 0px rgba(0, 102, 255, 0.3))',
+                'drop-shadow(2px 2px 0px #0088CC) drop-shadow(4px 4px 0px rgba(0, 136, 204, 0.3))',
+                'drop-shadow(2px 2px 0px #0099FF) drop-shadow(4px 4px 0px rgba(0, 153, 255, 0.3))',
               ],
             }}
             transition={{
-              duration: 4,
+              duration: 3,
               repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
+              ease: "easeInOut",
             }}
           >
-            Join the Legend
+            JOIN THE LEGEND
           </motion.h2>
         </motion.div>
 
