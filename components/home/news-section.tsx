@@ -11,33 +11,33 @@ import { Clock, ArrowRight } from "lucide-react"
 const articles = [
   {
     id: 1,
-    category: "HISTOIRE DEVOILEE",
+    category: "HISTORY UNVEILED",
     categoryColor: "#D4AF37",
-    title: "La tribu perdue derriere Wakanda etait reelle : Rencontrez les Makanda du Congo",
-    excerpt: "Une nouvelle vague d'historiens et de leaders culturels met en lumiere Makanda, un empire congolais autrefois cache qui detiendrait le veritable heritage derriere le mythe de Wakanda.",
+    title: "The Lost Tribe Behind Wakanda Was Real: Meet the Makanda of Congo",
+    excerpt: "A new wave of historians and cultural leaders sheds light on Makanda, a once-hidden Congolese empire that may hold the true heritage behind the myth of Wakanda.",
     readTime: "5 min",
-    date: "Mars 2025",
+    date: "March 2025",
     image: "/events/event-showcase-1.jpg",
   },
   {
     id: 2,
-    category: "COMMENTAIRE CULTUREL",
+    category: "CULTURAL COMMENTARY",
     categoryColor: "#B3541E",
-    title: "Comment l'Univers Isolele Recupere la Memoire Africaine",
-    excerpt: "\"Le colonialisme n'a pas efface notre grandeur. Il l'a enterree sous son propre mythe.\" Un plan pour la restauration de l'imagination supprimee de l'Afrique.",
+    title: "How the Isolele Universe Recovers African Memory",
+    excerpt: "\"Colonialism did not erase our greatness. It buried it under its own myth.\" A plan for the restoration of Africa's suppressed imagination.",
     readTime: "8 min",
-    date: "Fevrier 2025",
+    date: "February 2025",
     image: "/events/event-showcase-2.jpg",
   },
   {
     id: 3,
-    category: "RECHERCHE",
+    category: "RESEARCH",
     categoryColor: "#4169E1",
-    title: "Du Mythe au Manuscrit : Cartographier l'Empire Makanda",
-    excerpt: "Un voyage cartographique a travers une civilisation africaine effacee dont la memoire a survecu dans des symboles, pas dans des frontieres.",
+    title: "From Myth to Manuscript: Mapping the Makanda Empire",
+    excerpt: "A cartographic journey through an erased African civilization whose memory survived in symbols, not borders.",
     readTime: "6 min",
-    date: "Janvier 2025",
-    image: "/events/event-showcase-1.jpg",
+    date: "January 2025",
+    image: "/events/courtroom-makanda.jpg",
   },
 ]
 
@@ -136,7 +136,7 @@ export function NewsSection() {
                       className="flex items-center gap-2 mt-4 text-sm font-bold tracking-wider"
                       style={{ color: currentTheme.colors.accentPrimary }}
                     >
-                      <span>LIRE L'ARTICLE</span>
+                      <span>READ ARTICLE</span>
                       <motion.div
                         className="group-hover:translate-x-2 transition-transform duration-300"
                       >
@@ -171,7 +171,7 @@ export function NewsSection() {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              VOIR TOUTES LES ACTUALITES
+              VIEW ALL NEWS
             </motion.button>
           </Link>
         </motion.div>
