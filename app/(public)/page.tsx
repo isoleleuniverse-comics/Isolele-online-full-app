@@ -1,4 +1,5 @@
 import { BookHeroSection } from "@/components/home/book-hero-section"
+import { FashionGridSection } from "@/components/home/fashion-grid-section"
 import { UniverseSection } from "@/components/home/universe-section"
 import { CharactersSection } from "@/components/home/characters-section"
 import { StorySection } from "@/components/home/story-section"
@@ -19,6 +20,9 @@ export default function HomePage() {
 
       {/* Fullscreen book / game slideshow hero */}
       <BookHeroSection />
+
+      {/* Fashion Grid Section */}
+      <FashionGridSection />
 
       {/* Universe pillars */}
       <UniverseSection />
