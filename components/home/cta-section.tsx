@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { useTheme } from "@/lib/theme-context"
 import { useLanguage } from "@/lib/language-context"
 import { useInView } from "framer-motion"
-import { useRef, useEffect, useState } from "react"
+import { useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 
@@ -13,75 +13,6 @@ export function CtaSection() {
   const { t } = useLanguage()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const audioRef = useRef(null)
-  const [lastScrollY, setLastScrollY] = useState(0)
-  const soundTriggeredRef = useRef(false)
-
-  // Create audio context for sound
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!ref.current) return
-
-      const element = ref.current
-      const elementRect = element.getBoundingClientRect()
-      const windowHeight = window.innerHeight
-      const scrollY = window.scrollY
-      
-      // Calculate proximity (0 to 1, where 1 is centered in viewport)
-      const distanceFromCenter = Math.abs(elementRect.top + elementRect.height / 2 - windowHeight / 2)
-      const maxDistance = windowHeight * 1.5
-      const proximityRatio = Math.max(0, 1 - distanceFromCenter / maxDistance)
-      
-      // Check if we're close enough to trigger sound
-      if (proximityRatio > 0.2) {
-        if (!soundTriggeredRef.current) {
-          soundTriggeredRef.current = true
-          playFireworksSound(proximityRatio)
-        }
-      } else {
-        soundTriggeredRef.current = false
-      }
-      
-      setLastScrollY(scrollY)
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const playFireworksSound = (proximity) => {
-    try {
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)()
-      
-      // Create multiple short bursts for fireworks effect
-      const now = audioContext.currentTime
-      const burstCount = Math.floor(proximity * 3)
-      
-      for (let i = 0; i < burstCount; i++) {
-        const osc = audioContext.createOscillator()
-        const gain = audioContext.createGain()
-        
-        osc.connect(gain)
-        gain.connect(audioContext.destination)
-        
-        osc.type = 'square'
-        
-        // Vary frequency based on proximity and burst
-        const baseFreq = 150 + proximity * 150
-        const freq = baseFreq + (i * 50)
-        osc.frequency.setValueAtTime(freq, now)
-        osc.frequency.exponentialRampToValueAtTime(50, now + 0.1)
-        
-        gain.gain.setValueAtTime(0.1 * proximity, now)
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1)
-        
-        osc.start(now)
-        osc.stop(now + 0.1)
-      }
-    } catch (e) {
-      console.log("[v0] Audio playback not available:", e.message)
-    }
-  }
 
   return (
     <section 
