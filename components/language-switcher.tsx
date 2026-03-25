@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useLanguage } from "@/lib/language-context"
-import { SUPPORTED_LANGUAGES, type LanguageCode } from "@/lib/google-translate"
+import { useLanguage, languages } from "@/lib/language-context"
 import { Globe } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -10,16 +9,9 @@ export function LanguageSwitcher() {
   const { currentLanguage, setLanguage } = useLanguage()
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleLanguageChange = (lang: LanguageCode) => {
-    console.log("[v0] Changing language to:", lang)
+  const handleLanguageChange = (lang: string) => {
     setLanguage(lang)
     setIsOpen(false)
-
-    // Optional: Call Google Translate API to cache translations
-    if (lang !== "en") {
-      console.log("[v0] Preparing translations for language:", lang)
-      // This will be used for real-time translation fallback
-    }
   }
 
   return (
@@ -32,7 +24,7 @@ export function LanguageSwitcher() {
       >
         <Globe size={18} />
         <span className="text-sm font-medium uppercase">
-          {currentLanguage}
+          {currentLanguage.code}
         </span>
       </motion.button>
 
@@ -46,21 +38,21 @@ export function LanguageSwitcher() {
             className="absolute top-full right-0 mt-2 bg-white dark:bg-gray-900 rounded-lg shadow-lg z-50 min-w-[200px] border border-gray-200 dark:border-gray-700"
           >
             <div className="py-2">
-              {Object.entries(SUPPORTED_LANGUAGES).map(([code, name]) => (
+              {languages.map((lang) => (
                 <motion.button
-                  key={code}
-                  onClick={() => handleLanguageChange(code as LanguageCode)}
+                  key={lang.code}
+                  onClick={() => handleLanguageChange(lang.code)}
                   className={`w-full px-4 py-2 text-left text-sm transition-colors ${
-                    currentLanguage === code
+                    currentLanguage.code === lang.code
                       ? "bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 font-semibold"
                       : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   }`}
                   whileHover={{ paddingLeft: "20px" }}
                 >
                   <span className="inline-block mr-2 text-xs font-bold uppercase">
-                    {code}
+                    {lang.code}
                   </span>
-                  {name}
+                  {lang.name}
                 </motion.button>
               ))}
             </div>
