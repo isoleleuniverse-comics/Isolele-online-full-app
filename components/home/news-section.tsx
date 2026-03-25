@@ -28,7 +28,7 @@ const articles = [
     excerpt: "\"Colonialism did not erase our greatness. It buried it under its own myth.\" A plan for the restoration of Africa's suppressed imagination.",
     readTime: "8 min",
     date: "February 2025",
-    image: "/events/event-showcase-2.jpg",
+    image: "/events/african-empire-luxury.jpg",
   },
   {
     id: 3,
