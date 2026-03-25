@@ -7,7 +7,6 @@ import { FounderPreview } from "@/components/home/founder-preview"
 import { ReviewsSection } from "@/components/home/reviews-section"
 import { NewsSection } from "@/components/home/news-section"
 import { CtaSection } from "@/components/home/cta-section"
-import { SiteFooter } from "@/components/site-footer"
 import { OrganizationJsonLd, ComicSeriesJsonLd, WebsiteJsonLd } from "@/components/json-ld"
 
 export default function HomePage() {
@@ -44,9 +43,6 @@ export default function HomePage() {
 
       {/* CTA / newsletter */}
       <CtaSection />
-
-      {/* Footer */}
-      <SiteFooter />
     </>
   )
 }
