@@ -10,7 +10,10 @@ export function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleLanguageChange = (lang: string) => {
+    console.log("[v0] Language switcher: attempting to change to:", lang)
+    console.log("[v0] Current language before change:", currentLanguage)
     setLanguage(lang)
+    console.log("[v0] setLanguage called, isOpen will be set to false")
     setIsOpen(false)
   }
 

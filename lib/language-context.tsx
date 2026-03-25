@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react"
 import { translations, type Language as LangCode, type TranslationKeys, languageNames, languageFlags } from "./translations"
 
 export interface Language {
@@ -35,14 +35,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const savedLang = localStorage.getItem("isolele-language")
+      console.log("[v0] LanguageProvider: savedLang from localStorage:", savedLang)
       if (savedLang) {
         const lang = languages.find((l) => l.code === savedLang)
+        console.log("[v0] LanguageProvider: found language object:", lang)
         if (lang) {
           setCurrentLanguage(lang)
+          console.log("[v0] LanguageProvider: set currentLanguage to:", lang.name)
         }
       } else {
         setCurrentLanguage(languages[0])
         localStorage.setItem("isolele-language", "en")
+        console.log("[v0] LanguageProvider: initialized with default English")
       }
     } catch (error) {
       console.error("[v0] Error loading language preference:", error)
@@ -50,19 +54,26 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setMounted(true)
   }, [])
 
-  const setLanguage = (code: string) => {
+  const setLanguage = useCallback((code: string) => {
+    console.log("[v0] setLanguage called with code:", code)
     const lang = languages.find((l) => l.code === code)
+    console.log("[v0] Found language:", lang)
     if (lang) {
       setCurrentLanguage(lang)
       localStorage.setItem("isolele-language", code)
+      console.log("[v0] Language changed to:", lang.name)
+    } else {
+      console.log("[v0] Language not found for code:", code)
     }
-  }
+  }, [])
 
   const t = (key: keyof TranslationKeys | string): string => {
     const langCode = currentLanguage.code as LangCode
     const langTranslations = translations[langCode] || translations.en
     const translationKey = key as keyof TranslationKeys
-    return langTranslations[translationKey] || translations.en[translationKey] || String(key)
+    const result = langTranslations[translationKey] || translations.en[translationKey] || String(key)
+    console.log("[v0] t() called - key:", key, "lang:", langCode, "result:", result)
+    return result
   }
 
   const translateText = async (text: string, targetLang?: string): Promise<string> => {
