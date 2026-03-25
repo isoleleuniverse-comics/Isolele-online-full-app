@@ -99,7 +99,7 @@ export function CtaSection() {
           <div className="h-px w-12" style={{ backgroundColor: currentTheme.colors.accentPrimary }} />
         </motion.div>
 
-        {/* Heading: JOIN the LEGEND */}
+        {/* Heading: JOIN the LEGEND - Casino Neon Style */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -108,12 +108,42 @@ export function CtaSection() {
           <h2 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-widest mb-2" style={{ color: currentTheme.colors.textPrimary }}>
             JOIN
           </h2>
-          <h3 
-            className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-widest mb-12"
-            style={{ color: currentTheme.colors.accentPrimary, letterSpacing: '0.15em' }}
+          <motion.h3 
+            className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-widest mb-12 drop-shadow-lg"
+            style={{ 
+              letterSpacing: '0.15em',
+              textShadow: `0 0 20px ${currentTheme.colors.accentPrimary}80, 0 0 40px ${currentTheme.colors.accentPrimary}40`
+            }}
+            animate={{
+              color: [
+                currentTheme.colors.accentPrimary,
+                "#FF1493", // Deep pink
+                "#00FFFF", // Cyan
+                "#FFD700", // Gold
+                currentTheme.colors.accentPrimary,
+                "#FF69B4", // Hot pink
+                "#1E90FF", // Dodger blue
+                currentTheme.colors.accentPrimary,
+              ],
+              textShadow: [
+                `0 0 20px ${currentTheme.colors.accentPrimary}80, 0 0 40px ${currentTheme.colors.accentPrimary}40`,
+                `0 0 20px #FF149380, 0 0 40px #FF149340`,
+                `0 0 20px #00FFFF80, 0 0 40px #00FFFF40`,
+                `0 0 20px #FFD70080, 0 0 40px #FFD70040`,
+                `0 0 20px ${currentTheme.colors.accentPrimary}80, 0 0 40px ${currentTheme.colors.accentPrimary}40`,
+                `0 0 20px #FF69B480, 0 0 40px #FF69B440`,
+                `0 0 20px #1E90FF80, 0 0 40px #1E90FF40`,
+                `0 0 20px ${currentTheme.colors.accentPrimary}80, 0 0 40px ${currentTheme.colors.accentPrimary}40`,
+              ],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "linear",
+            }}
           >
             the LEGEND
-          </h3>
+          </motion.h3>
         </motion.div>
 
         {/* Heroes image square */}
