@@ -178,7 +178,7 @@ export function SiteFooter() {
               className="text-lg font-bold tracking-wider mb-4"
               style={{ color: currentTheme.colors.accentPrimary }}
             >
-              FASHION
+              {t("nav_fashion")}
             </h3>
             <div className="grid grid-cols-2 gap-3">
               {[1, 2, 3, 4].map((i) => (

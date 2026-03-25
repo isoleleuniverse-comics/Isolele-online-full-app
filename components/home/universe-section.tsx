@@ -11,20 +11,20 @@ const pillars = [
   {
     key: "destiny",
     icon: Sparkles,
-    title: "The Lion Has Learned to Write",
-    description: "An African proverb says: 'Until the lion learns to write, every story will glorify the hunter.' ISOLELE is the lion's pen. Africa is writing its own heroes, its own kingdoms, its own legends. The hunter's version of history is over.",
+    titleKey: "universe_destiny_title",
+    descriptionKey: "universe_destiny_desc",
   },
   {
     key: "heritage",
     icon: Crown,
-    title: "Everything Begins in Kongo",
-    description: "Music. Dance. Royalty. Fashion. Culture. History. Before the world had names for these things, the Kongo had mastered them all. Africa is not a continent. It is a source. And the Congo is not just part of that source. The Congo IS the source. The trigger of all human culture. The heartbeat that started everything. ISOLELE was born there. Not by accident. By destiny.",
+    titleKey: "universe_heritage_title",
+    descriptionKey: "universe_heritage_desc",
   },
   {
     key: "resurrection",
     icon: Flame,
-    title: "You Have Always Been Royal",
-    description: "Before anyone told you who you were, the ancestors already knew. Every child born on African soil, every member of the diaspora who crossed oceans and survived, every person who carries African blood in their veins has always carried a crown they were never told about. ISOLELE exists to give it back. Not as a gift. As a reminder. You were never lost. You were never less. You were never without power. You were just waiting for someone to tell you the truth. Welcome home.",
+    titleKey: "universe_resurrection_title",
+    descriptionKey: "universe_resurrection_desc",
   },
 ]
 
@@ -61,7 +61,7 @@ export function UniverseSection() {
             className="text-2xl sm:text-3xl font-black tracking-wider mb-4 whitespace-nowrap"
             style={{ color: currentTheme.colors.textPrimary }}
           >
-            THE ISOLELE UNIVERSE
+            {t("universe_title")}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -70,7 +70,7 @@ export function UniverseSection() {
             className="text-xl font-medium tracking-wide mb-6"
             style={{ color: currentTheme.colors.accentPrimary }}
           >
-            Africa has always had heroes. ISOLELE gives them a universe.
+            {t("universe_subtitle")}
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -79,7 +79,7 @@ export function UniverseSection() {
             className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto"
             style={{ color: currentTheme.colors.textSecondary }}
           >
-            Born from the roots of Kongo. Built for every African child who never saw themselves as a hero. ISOLELE is the universe that was always meant to exist. The kingdom was never lost. It was waiting for its storytellers. ISOLELE FOREVER.
+            {t("universe_description")}
           </motion.p>
         </div>
 
@@ -170,7 +170,7 @@ export function UniverseSection() {
                     fontWeight: 700
                   }}
                 >
-                  {pillar.title}
+                  {t(pillar.titleKey)}
                 </h3>
                 <p 
                   className="text-sm leading-relaxed relative"
@@ -179,7 +179,7 @@ export function UniverseSection() {
                     fontWeight: 600
                   }}
                 >
-                  {pillar.description}
+                  {t(pillar.descriptionKey)}
                 </p>
               </div>
 
