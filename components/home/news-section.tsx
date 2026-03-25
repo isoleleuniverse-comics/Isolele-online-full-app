@@ -7,6 +7,7 @@ import { useInView } from "framer-motion"
 import { useRef } from "react"
 import Link from "next/link"
 import { Clock, ArrowRight } from "lucide-react"
+import Image from "next/image"
 
 const articles = [
   {
@@ -84,16 +85,22 @@ export function NewsSection() {
                   }}
                 >
                   {/* Image */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden bg-gray-300">
+                    <Image
+                      src={article.image}
+                      alt={article.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
                     <div 
                       className="absolute inset-0 transition-transform duration-500 group-hover:scale-110"
                       style={{
-                        background: `linear-gradient(135deg, ${article.categoryColor}40 0%, ${currentTheme.colors.backgroundSecondary} 100%)`
+                        background: `linear-gradient(135deg, ${article.categoryColor}40 0%, transparent 100%)`
                       }}
                     />
                     {/* Category badge */}
                     <span 
-                      className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold tracking-wider"
+                      className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold tracking-wider z-10"
                       style={{
                         backgroundColor: article.categoryColor,
                         color: currentTheme.colors.background,
