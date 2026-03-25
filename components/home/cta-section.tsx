@@ -99,7 +99,7 @@ export function CtaSection() {
           <div className="h-px w-12" style={{ backgroundColor: currentTheme.colors.accentPrimary }} />
         </motion.div>
 
-        {/* Heading: JOIN THE LEGEND - Casino Neon Sign Effect */}
+        {/* Heading: JOIN THE LEGEND - Signature Style */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -107,34 +107,30 @@ export function CtaSection() {
           className="mb-12"
         >
           <motion.h2 
-            className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-wider whitespace-nowrap"
+            className="text-5xl sm:text-6xl lg:text-7xl whitespace-nowrap"
             style={{ 
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
+              fontFamily: 'var(--font-great-vibes), cursive',
+              letterSpacing: '0.05em',
+              fontWeight: '400',
+              textTransform: 'capitalize',
               width: '100%',
             }}
             animate={{
               color: [
+                "#D4AF37",
                 "#FFD700",
                 "#FF1493",
                 "#00FFFF",
                 "#FF69B4",
-                "#1E90FF",
-                "#FFD700",
-                "#00FF00",
-                "#FF6347",
-                "#FFD700",
+                "#D4AF37",
               ],
               textShadow: [
-                "0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700",
-                "0 0 20px #FF1493, 0 0 40px #FF1493, 0 0 60px #FF1493",
-                "0 0 20px #00FFFF, 0 0 40px #00FFFF, 0 0 60px #00FFFF",
-                "0 0 20px #FF69B4, 0 0 40px #FF69B4, 0 0 60px #FF69B4",
-                "0 0 20px #1E90FF, 0 0 40px #1E90FF, 0 0 60px #1E90FF",
-                "0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700",
-                "0 0 20px #00FF00, 0 0 40px #00FF00, 0 0 60px #00FF00",
-                "0 0 20px #FF6347, 0 0 40px #FF6347, 0 0 60px #FF6347",
-                "0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700",
+                "0 0 15px #D4AF37, 0 0 30px #D4AF37",
+                "0 0 15px #FFD700, 0 0 30px #FFD700",
+                "0 0 15px #FF1493, 0 0 30px #FF1493",
+                "0 0 15px #00FFFF, 0 0 30px #00FFFF",
+                "0 0 15px #FF69B4, 0 0 30px #FF69B4",
+                "0 0 15px #D4AF37, 0 0 30px #D4AF37",
               ],
             }}
             transition={{
@@ -143,7 +139,7 @@ export function CtaSection() {
               ease: "linear",
             }}
           >
-            JOIN THE LEGEND
+            Join the Legend
           </motion.h2>
         </motion.div>
 
