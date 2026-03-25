@@ -170,7 +170,7 @@ export function CtaSection() {
               ease: "easeInOut",
             }}
           >
-            JOIN THE LEGEND
+            {t("cta_join_legend")}
           </motion.h2>
         </motion.div>
 
@@ -200,8 +200,7 @@ export function CtaSection() {
           className="text-lg sm:text-xl leading-relaxed mb-12 max-w-2xl mx-auto"
           style={{ color: currentTheme.colors.textSecondary }}
         >
-          Faites partie d'un univers de bande dessinee revolutionnaire qui celebre 
-          l'heritage africain tout en inspirant la prochaine generation de super-heros.
+          {t("cta_description")}
         </motion.p>
 
         {/* Buttons */}

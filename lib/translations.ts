@@ -85,6 +85,7 @@ export interface TranslationKeys {
   
   // CTA Section
   cta_title: string
+  cta_join_legend: string
   cta_description: string
   cta_explore: string
   cta_newsletter: string
@@ -242,6 +243,7 @@ export const translations: Record<Language, TranslationKeys> = {
     
     // CTA Section
     cta_title: "JOIN THE LEGEND",
+    cta_join_legend: "JOIN THE LEGEND",
     cta_description: "Be part of a revolutionary comic book universe that celebrates African heritage while inspiring the next generation of superheroes.",
     cta_explore: "EXPLORE THE UNIVERSE",
     cta_newsletter: "SUBSCRIBE TO NEWSLETTER",
@@ -399,6 +401,7 @@ export const translations: Record<Language, TranslationKeys> = {
     
     // CTA Section
     cta_title: "REJOIGNEZ LA LEGENDE",
+    cta_join_legend: "REJOIGNEZ LA LEGENDE",
     cta_description: "Faites partie d'un univers de bande dessinee revolutionnaire qui celebre l'heritage africain tout en inspirant la prochaine generation de super-heros.",
     cta_explore: "EXPLORER L'UNIVERS",
     cta_newsletter: "S'ABONNER A LA NEWSLETTER",
