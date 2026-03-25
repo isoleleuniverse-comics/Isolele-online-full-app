@@ -99,41 +99,38 @@ export function CtaSection() {
           <div className="h-px w-12" style={{ backgroundColor: currentTheme.colors.accentPrimary }} />
         </motion.div>
 
-        {/* Heading: JOIN the LEGEND - Casino Neon Style */}
+        {/* Heading: JOIN THE LEGEND - Casino Neon Sign Effect */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
+          className="mb-12"
         >
-          <h2 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-widest mb-2" style={{ color: currentTheme.colors.textPrimary }}>
-            JOIN
-          </h2>
-          <motion.h3 
-            className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-widest mb-12 drop-shadow-lg"
-            style={{ 
-              letterSpacing: '0.15em',
-              textShadow: `0 0 20px ${currentTheme.colors.accentPrimary}80, 0 0 40px ${currentTheme.colors.accentPrimary}40`
-            }}
+          <motion.h2 
+            className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-widest"
+            style={{ letterSpacing: '0.1em' }}
             animate={{
               color: [
-                currentTheme.colors.accentPrimary,
-                "#FF1493", // Deep pink
-                "#00FFFF", // Cyan
-                "#FFD700", // Gold
-                currentTheme.colors.accentPrimary,
-                "#FF69B4", // Hot pink
-                "#1E90FF", // Dodger blue
-                currentTheme.colors.accentPrimary,
+                "#FFD700",
+                "#FF1493",
+                "#00FFFF",
+                "#FF69B4",
+                "#1E90FF",
+                "#FFD700",
+                "#00FF00",
+                "#FF6347",
+                "#FFD700",
               ],
               textShadow: [
-                `0 0 20px ${currentTheme.colors.accentPrimary}80, 0 0 40px ${currentTheme.colors.accentPrimary}40`,
-                `0 0 20px #FF149380, 0 0 40px #FF149340`,
-                `0 0 20px #00FFFF80, 0 0 40px #00FFFF40`,
-                `0 0 20px #FFD70080, 0 0 40px #FFD70040`,
-                `0 0 20px ${currentTheme.colors.accentPrimary}80, 0 0 40px ${currentTheme.colors.accentPrimary}40`,
-                `0 0 20px #FF69B480, 0 0 40px #FF69B440`,
-                `0 0 20px #1E90FF80, 0 0 40px #1E90FF40`,
-                `0 0 20px ${currentTheme.colors.accentPrimary}80, 0 0 40px ${currentTheme.colors.accentPrimary}40`,
+                "0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700",
+                "0 0 20px #FF1493, 0 0 40px #FF1493, 0 0 60px #FF1493",
+                "0 0 20px #00FFFF, 0 0 40px #00FFFF, 0 0 60px #00FFFF",
+                "0 0 20px #FF69B4, 0 0 40px #FF69B4, 0 0 60px #FF69B4",
+                "0 0 20px #1E90FF, 0 0 40px #1E90FF, 0 0 60px #1E90FF",
+                "0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700",
+                "0 0 20px #00FF00, 0 0 40px #00FF00, 0 0 60px #00FF00",
+                "0 0 20px #FF6347, 0 0 40px #FF6347, 0 0 60px #FF6347",
+                "0 0 20px #FFD700, 0 0 40px #FFD700, 0 0 60px #FFD700",
               ],
             }}
             transition={{
@@ -142,8 +139,8 @@ export function CtaSection() {
               ease: "linear",
             }}
           >
-            the LEGEND
-          </motion.h3>
+            JOIN THE LEGEND
+          </motion.h2>
         </motion.div>
 
         {/* Heroes image square */}
