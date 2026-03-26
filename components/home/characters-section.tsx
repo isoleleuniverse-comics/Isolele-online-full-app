@@ -11,7 +11,16 @@ const characters = [
   {
     id: "zaire",
     name: "ZAIIRE",
-    title: "The Prince of Kongo and the Necklace of Destiny",
+    title: {
+      en: "The Prince of Kongo and the Necklace of Destiny",
+      fr: "Le Prince du Kongo et le Collier de la Destinée",
+      pt: "O Príncipe do Kongo e o Colar do Destino",
+      es: "El Príncipe del Kongo y el Collar del Destino",
+      zu: "INkosana weKongo neneKhanga leNkomo",
+      xh: "Inkosana yeKongo neKhanga leNkomo",
+      sw: "Mkuu wa Kongo na Mkufu wa Hatimaye",
+      ln: "Mwana wa Kongo mpe Mbele ya Suka"
+    },
     description: "Son of thunder and royalty, chosen by the Necklace of Destiny.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
     color: "#F6B800",
@@ -19,7 +28,16 @@ const characters = [
   {
     id: "bambula",
     name: "BAMBULA",
-    title: "Child of Rhythm",
+    title: {
+      en: "Child of Rhythm",
+      fr: "Enfant du Rythme",
+      pt: "Filha do Ritmo",
+      es: "Hija del Ritmo",
+      zu: "Umntwana weRhythm",
+      xh: "Umntwana weRhythm",
+      sw: "Mtoto wa Ritmu",
+      ln: "Mwana wa Ndakisa"
+    },
     description: "Warrior of the savannas, master of sacred fire and wild nature.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
     color: "#B3541E",
@@ -27,7 +45,16 @@ const characters = [
   {
     id: "kimoya",
     name: "MAKANDA",
-    title: "THE MOST POWERFUL Empire in History",
+    title: {
+      en: "THE MOST POWERFUL Empire in History",
+      fr: "L'EMPIRE LE PLUS PUISSANT de l'Histoire",
+      pt: "O IMPÉRIO MAIS PODEROSO da História",
+      es: "EL IMPERIO MÁS PODEROSO de la Historia",
+      zu: "UMBUSO ONAMANDLA KAKHULU Emlandweni",
+      xh: "UMBUSO ONAMANDLA KAKHULU Emlandweni",
+      sw: "NCHI YENYE NGUVU ZAIDI ya Historia",
+      ln: "BOKONZI OYO OYA NGUVU KAKHULU ya Biso"
+    },
     description: "Warrior empress whose royal court holds the destiny of the continent in her hands.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/9d1fd3c1-8795-450c-9685-e3afa6bb5904.jpeg",
     color: "#C0392B",
@@ -35,7 +62,16 @@ const characters = [
   {
     id: "mokele",
     name: "MOKELE",
-    title: "Crowned by the Streets",
+    title: {
+      en: "Crowned by the Streets",
+      fr: "Couronné par les Rues",
+      pt: "Coroado pelas Ruas",
+      es: "Coronado por las Calles",
+      zu: "Ukhethiwe NgeSitolo",
+      xh: "Ukhethiwe NgeSitolo",
+      sw: "Akamata Taji kutoka Mitaani",
+      ln: "Komonzi na Malela"
+    },
     description: "Heir of urban chaos and ancestral power — Crowned by the Streets.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5bdc2ecc-913b-412b-a840-2a5197cd801a.jpeg",
     color: "#4169E1",
@@ -43,7 +79,16 @@ const characters = [
   {
     id: "kufulula",
     name: "HRM KING KUFULULA",
-    title: "Visionary• Cultural Architect • African Royalty",
+    title: {
+      en: "Visionary• Cultural Architect • African Royalty",
+      fr: "Visionnaire• Architecte Culturel • Royauté Africaine",
+      pt: "Visionário• Arquiteto Cultural • Realeza Africana",
+      es: "Visionario• Arquitecto Cultural • Realeza Africana",
+      zu: "Ongabonisele• Umkhi weNtu • Umbuso weAfrika",
+      xh: "Ongabonisele• Umkhi weNtu • Umbuso weAfrika",
+      sw: "Mwenye Mawazo• Mwalimu wa Kitamaduni • Ukurusi wa Afrika",
+      ln: "Mwenye Longi• Mokambi wa Boyokoli• Mokonzi wa Bafriki"
+    },
     description: "Legendary monarch, protector of the ISOLELE royal lineage.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg",
     color: "#8B6914",
@@ -51,7 +96,16 @@ const characters = [
   {
     id: "ensemble",
     name: "THE ISOLELE ASSEMBLY",
-    title: "The Chosen Ones United",
+    title: {
+      en: "The Chosen Ones United",
+      fr: "Les Élus Unis",
+      pt: "Os Escolhidos Unidos",
+      es: "Los Elegidos Unidos",
+      zu: "Abasakhethiwe Ahlangene",
+      xh: "Abasakhethiwe Ahlangene",
+      sw: "Wachaguzi Waameunganisha",
+      ln: "Baya Likonde Bayambilakela"
+    },
     description: "All warriors and queens of the ZAIIRE kingdom united in their splendor.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c389067b-e5b3-4664-8c15-26b59810c68b.jpeg",
     color: "#9932CC",
@@ -88,6 +142,16 @@ export function CharactersSection() {
       xh: "Hlangana nengalo, inganekwane nezikhulu sezwe se-ISOLELE.",
       sw: "Kamatia wabunga, hadithi na walinzi wa Ulimwengu wa ISOLELE.",
       ln: "Longa baninga, bambo mpe basolani ya Bambwe ya ISOLELE."
+    },
+    discover: {
+      en: "DISCOVER",
+      fr: "DÉCOUVRIR",
+      pt: "DESCOBRIR",
+      es: "DESCUBRIR",
+      zu: "THOLA",
+      xh: "THOLA",
+      sw: "GUNDUA",
+      ln: "TALA"
     }
   }
 
@@ -215,7 +279,7 @@ export function CharactersSection() {
                   className="text-xs font-medium mb-3 whitespace-nowrap"
                   style={{ color: character.color }}
                 >
-                  {character.title}
+                  {typeof character.title === 'string' ? character.title : (character.title as any)[lang] || (character.title as any).en}
                 </p>
                 
                 {/* Discover button */}
