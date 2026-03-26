@@ -60,11 +60,41 @@ const characters = [
 
 export function CharactersSection() {
   const { currentTheme } = useTheme()
-  const { t } = useLanguage()
+  const { currentLanguage } = useLanguage()
+  const lang = currentLanguage.code
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
   const carouselRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
+
+  // Translation object for section header
+  const translations = {
+    title: {
+      en: "THE CHOSEN ONES",
+      fr: "LES ÉLUS",
+      pt: "OS ESCOLHIDOS",
+      es: "LOS ELEGIDOS",
+      zu: "ABASAKHETHIWE",
+      xh: "ABASAKHETHIWE",
+      sw: "WACHAGUZI",
+      ln: "BAYA LIKONDE"
+    },
+    subtitle: {
+      en: "Meet the heroes, legends and guardians of the ISOLELE Universe.",
+      fr: "Rencontrez les héros, légendes et gardiens de l'univers ISOLELE.",
+      pt: "Conheça os heróis, lendas e guardiões do Universo ISOLELE.",
+      es: "Conoce a los héroes, leyendas y guardianes del Universo ISOLELE.",
+      zu: "Hlangana nengalo, inganekwane nezikhulu sezwe se-ISOLELE.",
+      xh: "Hlangana nengalo, inganekwane nezikhulu sezwe se-ISOLELE.",
+      sw: "Kamatia wabunga, hadithi na walinzi wa Ulimwengu wa ISOLELE.",
+      ln: "Longa baninga, bambo mpe basolani ya Bambwe ya ISOLELE."
+    }
+  }
+
+  const t = (key: string) => {
+    return translations[key as keyof typeof translations]?.[lang as keyof typeof translations[keyof typeof translations]] || 
+           translations[key as keyof typeof translations]?.en || ""
+  }
 
   useEffect(() => {
     if (!carouselRef.current || isHovered) return
@@ -100,7 +130,7 @@ export function CharactersSection() {
               className="text-4xl sm:text-5xl font-black tracking-wider mb-2"
               style={{ color: currentTheme.colors.textPrimary }}
             >
-              THE CHOSEN ONES
+              {t("title")}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, x: -30 }}
@@ -109,7 +139,7 @@ export function CharactersSection() {
               className="text-lg"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              Meet the heroes, legends and guardians of the ISOLELE Universe.
+              {t("subtitle")}
             </motion.p>
           </div>
         </div>
