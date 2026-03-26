@@ -4,10 +4,11 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, Menu, X, ShoppingBag, Settings, Home, Users, Zap, Gamepad2 } from "lucide-react"
+import { ChevronDown, Menu, X, ShoppingBag, Settings, Home, Users, Zap, Gamepad2, Bell } from "lucide-react"
 import { useTheme, themes } from "@/lib/theme-context"
 import { useLanguage, languages } from "@/lib/language-context"
 import { useCart } from "@/lib/cart-context"
+import { useNotifications } from "@/lib/notifications-context"
 import { cn } from "@/lib/utils"
 
 const characterLinks = [
@@ -21,6 +22,7 @@ export function SiteHeader() {
   const { currentTheme, setTheme } = useTheme()
   const { currentLanguage, setLanguage, t } = useLanguage()
   const { totalItems, setIsCartOpen } = useCart()
+  const { unreadCount } = useNotifications()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
@@ -129,6 +131,18 @@ export function SiteHeader() {
                   ))}
                 </div>
               </div>
+
+              {/* Notifications */}
+              <Link href="/settings" className="relative p-2">
+                <div style={{ color: currentTheme.colors.accentPrimary }}>
+                  <Bell size={24} />
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                      {unreadCount}
+                    </span>
+                  )}
+                </div>
+              </Link>
 
               {/* Cart */}
               <button
@@ -241,101 +255,27 @@ export function SiteHeader() {
             </motion.button>
           </Link>
 
-          {/* Settings */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-3 rounded-2xl transition-all"
-            style={{
-              backgroundColor: `${currentTheme.colors.accentPrimary}15`,
-              color: currentTheme.colors.accentPrimary,
-            }}
-          >
-            <Settings size={24} />
-          </motion.button>
+          {/* Settings/Notifications */}
+          <Link href="/settings" className="relative">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-3 rounded-2xl transition-all"
+              style={{
+                backgroundColor: `${currentTheme.colors.accentPrimary}15`,
+                color: currentTheme.colors.accentPrimary,
+              }}
+            >
+              <Bell size={24} />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                  {unreadCount}
+                </span>
+              )}
+            </motion.button>
+          </Link>
         </div>
       </motion.div>
-
-      {/* Mobile Menu - Settings/Language/Theme */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 lg:hidden z-30"
-              style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
-            />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              className="fixed inset-y-0 right-0 w-80 lg:hidden z-40 overflow-y-auto p-6"
-              style={{ backgroundColor: currentTheme.colors.background }}
-            >
-              <button onClick={() => setMobileMenuOpen(false)} className="mb-6">
-                <X size={24} style={{ color: currentTheme.colors.textPrimary }} />
-              </button>
-
-              {/* Language Selector */}
-              <div className="mb-6">
-                <h3 className="text-sm font-bold mb-3" style={{ color: currentTheme.colors.textPrimary }}>
-                  {t("language")}
-                </h3>
-                <div className="grid grid-cols-3 gap-2">
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => setLanguage(lang.code)}
-                      className={cn(
-                        "py-2 rounded text-sm font-medium transition-all",
-                        currentLanguage.code === lang.code
-                          ? "ring-2"
-                          : ""
-                      )}
-                      style={{
-                        backgroundColor: currentLanguage.code === lang.code ? currentTheme.colors.accentPrimary : `${currentTheme.colors.accentPrimary}15`,
-                        color: currentLanguage.code === lang.code ? currentTheme.colors.background : currentTheme.colors.textSecondary,
-                        ringColor: currentTheme.colors.accentPrimary
-                      }}
-                    >
-                      {lang.flag} {lang.code.toUpperCase()}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Theme Selector */}
-              <div>
-                <h3 className="text-sm font-bold mb-3" style={{ color: currentTheme.colors.textPrimary }}>
-                  {t("theme")}
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {themes.map((theme) => (
-                    <button
-                      key={theme.id}
-                      onClick={() => setTheme(theme.id)}
-                      className="p-4 rounded-lg transition-all"
-                      style={{
-                        backgroundColor: theme.colors.background,
-                        border: currentTheme.id === theme.id ? `2px solid ${theme.colors.accentPrimary}` : `1px solid ${theme.colors.accentPrimary}20`
-                      }}
-                    >
-                      <div className="flex gap-2">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: theme.colors.accentPrimary }} />
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: theme.colors.accentSecondary }} />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </>
   )
 }

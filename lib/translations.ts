@@ -217,6 +217,10 @@ export interface TranslationKeys {
   founder_bio: string
   
   // Common
+  language: string
+  theme: string
+  discover: string
+  latestNews: string
   loading: string
   error: string
   success: string
@@ -234,6 +238,7 @@ export interface TranslationKeys {
   site_map: string
   accessibility: string
   cookie_settings: string
+  footer_thank_you: string
 }
 
 export const translations: Record<Language, TranslationKeys> = {
@@ -431,6 +436,10 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_bio: "The visionary behind Isolele, dedicated to restoring the soul of African storytelling and creating superheroes that reflect the true heritage of Africa.",
     
     // Common
+    language: "Language",
+    theme: "Theme",
+    discover: "Discover",
+    latestNews: "Latest News",
     loading: "Loading...",
     error: "Error",
     success: "Success",
@@ -448,6 +457,7 @@ export const translations: Record<Language, TranslationKeys> = {
     site_map: "Site Map",
     accessibility: "Accessibility",
     cookie_settings: "Cookie Settings",
+    footer_thank_you: "Thank You!",
   },
   
   fr: {
@@ -644,6 +654,10 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_bio: "Le visionnaire derrière Isolele, dédié à restaurer l'âme du storytelling africain et à créer des super-héros qui reflètent le véritable héritage de l'Afrique.",
     
     // Common
+    language: "Langue",
+    theme: "Thème",
+    discover: "Découvrir",
+    latestNews: "Dernières Nouvelles",
     loading: "Chargement...",
     error: "Erreur",
     success: "Succès",
@@ -661,6 +675,7 @@ export const translations: Record<Language, TranslationKeys> = {
     site_map: "Plan du site",
     accessibility: "Accessibilité",
     cookie_settings: "Paramètres des cookies",
+    footer_thank_you: "Merci!",
   },
   
   pt: {
@@ -774,6 +789,10 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_name: "H.R.M King Kufulula",
     founder_role: "Fundador e Criador do Universo Isolele",
     founder_bio: "O visionario por tras de Isolele.",
+    language: "Idioma",
+    theme: "Tema",
+    discover: "Descobrir",
+    latestNews: "Ultimas Noticias",
     loading: "Carregando...",
     error: "Erro",
     success: "Sucesso",
@@ -791,6 +810,7 @@ export const translations: Record<Language, TranslationKeys> = {
     site_map: "Mapa do site",
     accessibility: "Acessibilidade",
     cookie_settings: "Configuracoes de cookies",
+    footer_thank_you: "Obrigado!",
   },
   
   es: {
@@ -904,6 +924,10 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_name: "H.R.M King Kufulula",
     founder_role: "Fundador y Creador del Universo Isolele",
     founder_bio: "El visionario detras de Isolele.",
+    language: "Idioma",
+    theme: "Tema",
+    discover: "Descubrir",
+    latestNews: "Ultimas Noticias",
     loading: "Cargando...",
     error: "Error",
     success: "Exito",
@@ -921,6 +945,7 @@ export const translations: Record<Language, TranslationKeys> = {
     site_map: "Mapa del sitio",
     accessibility: "Accesibilidad",
     cookie_settings: "Configuracion de cookies",
+    footer_thank_you: "¡Gracias!",
   },
   
   zu: {
@@ -1162,6 +1187,10 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_name: "H.R.M King Kufulula",
     founder_role: "Umseki noMdali weNdalo ye-Isolele",
     founder_bio: "Obonayo ngasemva kwe-Isolele.",
+    language: "Ulwimi",
+    theme: "Intetho",
+    discover: "Fumana",
+    latestNews: "Iindaba Zakamuva",
     loading: "Iyalayisha...",
     error: "Impazamo",
     success: "Impumelelo",
@@ -1179,6 +1208,7 @@ export const translations: Record<Language, TranslationKeys> = {
     site_map: "Imephu Yesiza",
     accessibility: "Ukufikelela",
     cookie_settings: "Iisetingi Zeekhukhi",
+    footer_thank_you: "Enkosi!",
   },
   
   sw: {
@@ -1359,6 +1389,10 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_name: "H.R.M King Kufulula",
     founder_role: "Mwanzilishi na Mbunifu wa Ulimwengu wa Isolele",
     founder_bio: "Mwenye maono nyuma ya Isolele.",
+    language: "Lugha",
+    theme: "Mada",
+    discover: "Gundua",
+    latestNews: "Habari za Karibuni",
     loading: "Inapakia...",
     error: "Hitilafu",
     success: "Mafanikio",
@@ -1376,6 +1410,7 @@ export const translations: Record<Language, TranslationKeys> = {
     site_map: "Ramani ya Tovuti",
     accessibility: "Ufikiaji",
     cookie_settings: "Mipangilio ya Vidakuzi",
+    footer_thank_you: "Asante!",
   },
   
   ln: {
@@ -1487,6 +1522,10 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_name: "H.R.M King Kufulula",
     founder_role: "Mosungi mpe Mokelisi ya Mokili ya Isolele",
     founder_bio: "Moto ya makanisi nsima ya Isolele.",
+    language: "Lokota",
+    theme: "Sengo",
+    discover: "Yeba",
+    latestNews: "Sango ya Sika",
     loading: "Ezali kotia...",
     error: "Libunga",
     success: "Elongi",
@@ -1504,6 +1543,7 @@ export const translations: Record<Language, TranslationKeys> = {
     site_map: "Carte ya Site",
     accessibility: "Kozwa Nzela",
     cookie_settings: "Mibeko ya Cookies",
+    footer_thank_you: "Merci!",
   },
 
   // Portuguese (Portugal)
@@ -2129,6 +2169,10 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_bio: "Umuntu onezombang emva kwe-Isolele, ozitshele ukubuyisela umoya wezindaba zaseAfrika kanye nokuthi abaphathalali abamele ububunikazi bobubunikazi beAfrika.",
     
     // Common
+    language: "Ulwimi",
+    theme: "Isixwayiso",
+    discover: "Thola",
+    latestNews: "Izindaba Zakamuva",
     loading: "Kwilodi...",
     error: "Iphutha",
     success: "Impumelelo",
@@ -2146,6 +2190,7 @@ export const translations: Record<Language, TranslationKeys> = {
     site_map: "Imephu Yesite",
     accessibility: "Ukufikelela",
     cookie_settings: "Izilungiselelo zeKhukhi",
+    footer_thank_you: "Ngiyabonga!",
   },
 }
 

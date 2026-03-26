@@ -1,273 +1,374 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { useLanguage, languages } from '@/lib/language-context'
-import { useTheme, themes } from '@/lib/theme-context'
-import { Bell, Lock, User, Globe, Moon, Zap, LogOut, Home } from 'lucide-react'
+import { useState } from "react"
+import Link from "next/link"
+import { motion, AnimatePresence } from "framer-motion"
+import { X, Bell, ShoppingBag, Clock, Shirt } from "lucide-react"
+import { useTheme, themes } from "@/lib/theme-context"
+import { useLanguage, languages } from "@/lib/language-context"
+import { useNotifications } from "@/lib/notifications-context"
+import { useBillHistory } from "@/lib/bill-history-context"
+import { cn } from "@/lib/utils"
 
-const settingsSections = [
-  {
-    id: 'account',
-    icon: User,
-    title: { en: 'Account Settings', fr: 'Paramètres du Compte' },
-    items: [
-      { en: 'Profile Information', fr: 'Informations de Profil' },
-      { en: 'Email & Password', fr: 'Email et Mot de Passe' },
-      { en: 'Privacy Settings', fr: 'Paramètres de Confidentialité' },
-    ]
-  },
-  {
-    id: 'notifications',
-    icon: Bell,
-    title: { en: 'Notifications', fr: 'Notifications' },
-    items: [
-      { en: 'Email Notifications', fr: 'Notifications par Email' },
-      { en: 'Push Notifications', fr: 'Notifications Push' },
-      { en: 'Newsletter Subscriptions', fr: 'Abonnement à la Lettre d\'Information' },
-    ]
-  },
-  {
-    id: 'preferences',
-    icon: Globe,
-    title: { en: 'Preferences', fr: 'Préférences' },
-    items: [
-      { en: 'Language & Region', fr: 'Langue et Région' },
-      { en: 'Display Theme', fr: 'Thème d\'Affichage' },
-      { en: 'Content Recommendations', fr: 'Recommandations de Contenu' },
-    ]
-  },
-  {
-    id: 'security',
-    icon: Lock,
-    title: { en: 'Security', fr: 'Sécurité' },
-    items: [
-      { en: 'Two-Factor Authentication', fr: 'Authentification à Deux Facteurs' },
-      { en: 'Active Sessions', fr: 'Sessions Actives' },
-      { en: 'Blocked Users', fr: 'Utilisateurs Bloqués' },
-    ]
-  },
-  {
-    id: 'subscription',
-    icon: Zap,
-    title: { en: 'Subscription', fr: 'Abonnement' },
-    items: [
-      { en: 'Membership Status', fr: 'Statut d\'Adhésion' },
-      { en: 'Billing History', fr: 'Historique de Facturation' },
-      { en: 'Payment Methods', fr: 'Moyens de Paiement' },
-    ]
-  },
-]
+type Tab = "preferences" | "fashion" | "shop" | "bill-history" | "notifications"
 
 export default function SettingsPage() {
-  const { currentLanguage } = useLanguage()
-  const { currentTheme } = useTheme()
-  const [activeSection, setActiveSection] = useState('account')
-  const lang = currentLanguage.code
+  const { currentTheme, setTheme } = useTheme()
+  const { currentLanguage, setLanguage, t } = useLanguage()
+  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications()
+  const { bills } = useBillHistory()
+  const [activeTab, setActiveTab] = useState<Tab>("preferences")
 
-  const t = (obj: any) => obj[lang] || obj.en
+  const tabs = [
+    { id: "preferences", label: "Paramètres", icon: "⚙️" },
+    { id: "fashion", label: "Mode", icon: "👗" },
+    { id: "shop", label: "Boutique", icon: "🛍️" },
+    { id: "bill-history", label: "Factures", icon: "📋" },
+    { id: "notifications", label: "Notifications", icon: "🔔" },
+  ] as const
 
   return (
-    <main style={{ backgroundColor: currentTheme.colors.background, minHeight: '100vh' }}>
-      {/* Navigation */}
-      <div className="sticky top-0 z-40 backdrop-blur-lg" style={{
-        backgroundColor: `${currentTheme.colors.background}cc`,
-        borderBottom: `1px solid ${currentTheme.colors.accentPrimary}20`
-      }}>
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2" style={{ color: currentTheme.colors.accentPrimary }}>
-            <Home className="w-5 h-5" />
-            <span className="text-sm font-medium">{lang === 'fr' ? 'Accueil' : 'Home'}</span>
-          </Link>
-          <h1 className="text-2xl font-bold" style={{ color: currentTheme.colors.textPrimary }}>
-            {lang === 'fr' ? 'Paramètres' : 'Settings'}
+    <div className="min-h-screen pt-24 pb-32" style={{ backgroundColor: currentTheme.colors.background }}>
+      <div className="max-w-6xl mx-auto px-4">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold mb-2" style={{ color: currentTheme.colors.textPrimary }}>
+            {t("nav_settings")}
           </h1>
-          <div className="w-10" />
+          <p style={{ color: currentTheme.colors.textSecondary }}>
+            Gérez vos préférences, consulez votre historique et explorez plus
+          </p>
         </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="md:col-span-1">
-            <div className="space-y-2">
-              {settingsSections.map((section) => {
-                const Icon = section.icon
-                return (
-                  <motion.button
-                    key={section.id}
-                    whileHover={{ x: 4 }}
-                    onClick={() => setActiveSection(section.id)}
-                    className="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-all"
-                    style={{
-                      backgroundColor: activeSection === section.id 
-                        ? `${currentTheme.colors.accentPrimary}20`
-                        : 'transparent',
-                      borderLeft: activeSection === section.id
-                        ? `3px solid ${currentTheme.colors.accentPrimary}`
-                        : 'none',
-                      color: currentTheme.colors.textPrimary
-                    }}
-                  >
-                    <Icon className="w-5 h-5" style={{ color: currentTheme.colors.accentPrimary }} />
-                    <span className="font-medium text-sm">{t(section.title)}</span>
-                  </motion.button>
-                )
-              })}
-              
-              <motion.button
-                whileHover={{ x: 4 }}
-                className="w-full text-left px-4 py-3 rounded-lg flex items-center gap-3 transition-all mt-6"
-                style={{ color: '#ef4444' }}
-              >
-                <LogOut className="w-5 h-5" />
-                <span className="font-medium text-sm">{lang === 'fr' ? 'Déconnexion' : 'Logout'}</span>
-              </motion.button>
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="md:col-span-3">
-            {settingsSections.map((section) => {
-              if (section.id !== activeSection) return null
-
-              return (
-                <motion.div
-                  key={section.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+        {/* Tabs Navigation */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id as Tab)}
+              className={cn(
+                "flex flex-col items-center gap-2 px-4 py-3 rounded-lg transition-all",
+                activeTab === tab.id
+                  ? "ring-2"
+                  : ""
+              )}
+              style={{
+                backgroundColor: activeTab === tab.id ? `${currentTheme.colors.accentPrimary}20` : `${currentTheme.colors.accentPrimary}05`,
+                color: activeTab === tab.id ? currentTheme.colors.accentPrimary : currentTheme.colors.textSecondary,
+                ringColor: currentTheme.colors.accentPrimary
+              }}
+            >
+              <span className="text-2xl">{tab.icon}</span>
+              <span className="text-xs md:text-sm font-medium text-center">{tab.label}</span>
+              {tab.id === "notifications" && unreadCount > 0 && (
+                <span
+                  className="inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold text-white"
+                  style={{ backgroundColor: "#ef4444" }}
                 >
-                  <h2 className="text-3xl font-bold mb-8" style={{ color: currentTheme.colors.accentPrimary }}>
-                    {t(section.title)}
-                  </h2>
+                  {unreadCount}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
 
-                  {/* Preferences Section - Language & Theme */}
-                  {section.id === 'preferences' && (
-                    <>
-                      {/* Language Section */}
-                      <div className="mb-12">
-                        <h3 className="text-xl font-bold mb-6" style={{ color: currentTheme.colors.textPrimary }}>
-                          {lang === 'fr' ? 'Langue' : 'Language'}
-                        </h3>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                          {languages.map((language) => (
-                            <motion.button
-                              key={language.code}
-                              onClick={() => {
-                                useLanguage().setLanguage(language.code)
-                              }}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="p-4 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
-                              style={{
-                                backgroundColor: currentLanguage.code === language.code 
-                                  ? currentTheme.colors.accentPrimary
-                                  : `${currentTheme.colors.accentPrimary}20`,
-                                color: currentLanguage.code === language.code
-                                  ? currentTheme.colors.background
-                                  : currentTheme.colors.textPrimary,
-                                border: currentLanguage.code === language.code
-                                  ? `2px solid ${currentTheme.colors.accentPrimary}`
-                                  : `2px solid ${currentTheme.colors.accentPrimary}20`
-                              }}
-                            >
-                              <span className="text-lg">{language.flag}</span>
-                              <span>{language.code.toUpperCase()}</span>
-                            </motion.button>
-                          ))}
-                        </div>
+        {/* Tab Content */}
+        <AnimatePresence mode="wait">
+          {activeTab === "preferences" && (
+            <motion.div
+              key="preferences"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="space-y-8"
+            >
+              {/* Language */}
+              <div className="p-6 rounded-xl" style={{ backgroundColor: `${currentTheme.colors.accentPrimary}05`, border: `1px solid ${currentTheme.colors.accentPrimary}20` }}>
+                <h3 className="text-xl font-bold mb-4" style={{ color: currentTheme.colors.textPrimary }}>
+                  Langue
+                </h3>
+                <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => setLanguage(lang.code)}
+                      className={cn(
+                        "py-3 rounded-lg text-sm font-medium transition-all",
+                        currentLanguage.code === lang.code
+                          ? "ring-2"
+                          : ""
+                      )}
+                      style={{
+                        backgroundColor: currentLanguage.code === lang.code ? currentTheme.colors.accentPrimary : `${currentTheme.colors.accentPrimary}15`,
+                        color: currentLanguage.code === lang.code ? currentTheme.colors.background : currentTheme.colors.textSecondary,
+                        ringColor: currentTheme.colors.accentPrimary
+                      }}
+                    >
+                      {lang.flag} {lang.code.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Theme */}
+              <div className="p-6 rounded-xl" style={{ backgroundColor: `${currentTheme.colors.accentPrimary}05`, border: `1px solid ${currentTheme.colors.accentPrimary}20` }}>
+                <h3 className="text-xl font-bold mb-4" style={{ color: currentTheme.colors.textPrimary }}>
+                  Thème
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {themes.map((theme) => (
+                    <button
+                      key={theme.id}
+                      onClick={() => setTheme(theme.id)}
+                      className="p-4 rounded-lg transition-all text-left"
+                      style={{
+                        backgroundColor: theme.colors.background,
+                        border: currentTheme.id === theme.id ? `2px solid ${theme.colors.accentPrimary}` : `1px solid ${theme.colors.accentPrimary}20`
+                      }}
+                    >
+                      <div className="text-xs font-semibold mb-3" style={{ color: theme.colors.textPrimary }}>
+                        {theme.name}
                       </div>
-
-                      {/* Theme Section */}
-                      <div>
-                        <h3 className="text-xl font-bold mb-6" style={{ color: currentTheme.colors.textPrimary }}>
-                          {lang === 'fr' ? 'Thème' : 'Theme'}
-                        </h3>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                          {themes.map((theme) => (
-                            <motion.button
-                              key={theme.name}
-                              onClick={() => {
-                                useTheme().setTheme(theme.name)
-                              }}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="p-6 rounded-lg transition-all flex flex-col items-center gap-3"
-                              style={{
-                                backgroundColor: currentTheme.name === theme.name
-                                  ? `${currentTheme.colors.accentPrimary}20`
-                                  : 'transparent',
-                                border: currentTheme.name === theme.name
-                                  ? `2px solid ${currentTheme.colors.accentPrimary}`
-                                  : `2px solid ${currentTheme.colors.accentPrimary}30`
-                              }}
-                            >
-                              <div className="flex gap-2">
-                                {Object.values(theme.colors).slice(0, 2).map((color: any, idx: number) => (
-                                  <div
-                                    key={idx}
-                                    className="w-6 h-6 rounded-full"
-                                    style={{ backgroundColor: color }}
-                                  />
-                                ))}
-                              </div>
-                              <span className="text-sm font-medium capitalize" style={{ color: currentTheme.colors.textPrimary }}>
-                                {theme.name}
-                              </span>
-                            </motion.button>
-                          ))}
-                        </div>
+                      <div className="flex gap-2">
+                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: theme.colors.accentPrimary }} />
+                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: theme.colors.accentSecondary }} />
+                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: theme.colors.background }} />
                       </div>
-                    </>
-                  )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
 
-                  {/* Other Settings */}
-                  {section.id !== 'preferences' && (
-                    <div className="space-y-4">
-                      {section.items.map((item, idx) => (
-                        <motion.div
-                          key={idx}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: idx * 0.1 }}
-                          className="p-6 rounded-xl cursor-pointer transition-all hover:scale-102"
-                          style={{
-                            backgroundColor: `${currentTheme.colors.accentPrimary}10`,
-                            border: `1px solid ${currentTheme.colors.accentPrimary}30`,
-                          }}
-                        >
-                          <div className="flex items-center justify-between">
-                            <span style={{ color: currentTheme.colors.textPrimary }} className="font-medium">
-                              {t(item)}
-                            </span>
-                            <span style={{ color: currentTheme.colors.textSecondary }}>→</span>
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  )}
+          {activeTab === "fashion" && (
+            <motion.div
+              key="fashion"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="p-8 rounded-xl"
+              style={{ backgroundColor: `${currentTheme.colors.accentPrimary}10` }}
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <span className="text-5xl">👗</span>
+                <div>
+                  <h3 className="text-2xl font-bold" style={{ color: currentTheme.colors.textPrimary }}>
+                    Mode ISOLELE
+                  </h3>
+                  <p style={{ color: currentTheme.colors.textSecondary }}>
+                    Explorez notre collection de mode exclusive
+                  </p>
+                </div>
+              </div>
+              <p className="mb-6" style={{ color: currentTheme.colors.textSecondary }}>
+                Découvrez les tenues inspirées de l'univers ISOLELE. Chaque pièce raconte une histoire du Kongo et célèbre le style africain moderne.
+              </p>
+              <Link
+                href="/fashion"
+                className="inline-block px-6 py-3 rounded-lg font-semibold transition-all"
+                style={{
+                  backgroundColor: currentTheme.colors.accentPrimary,
+                  color: currentTheme.colors.background
+                }}
+              >
+                Voir la collection complète
+              </Link>
+            </motion.div>
+          )}
 
-                  {/* Additional Settings Info */}
-                  <div className="mt-12 p-8 rounded-xl" style={{
-                    backgroundColor: `${currentTheme.colors.accentPrimary}05`,
-                    border: `1px solid ${currentTheme.colors.accentPrimary}20`
-                  }}>
-                    <h3 className="font-bold mb-4" style={{ color: currentTheme.colors.textPrimary }}>
-                      {lang === 'fr' ? 'À Propos de Vos Données' : 'About Your Data'}
-                    </h3>
-                    <p style={{ color: currentTheme.colors.textSecondary }} className="leading-relaxed">
-                      {lang === 'fr'
-                        ? 'Votre confidentialité est notre priorité. Vos données sont chiffrées et ne sont jamais partagées avec des tiers sans votre consentement.'
-                        : 'Your privacy is our priority. Your data is encrypted and never shared with third parties without your consent.'}
+          {activeTab === "shop" && (
+            <motion.div
+              key="shop"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="p-8 rounded-xl"
+              style={{ backgroundColor: `${currentTheme.colors.accentPrimary}10` }}
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <span className="text-5xl">🛍️</span>
+                <div>
+                  <h3 className="text-2xl font-bold" style={{ color: currentTheme.colors.textPrimary }}>
+                    Boutique ISOLELE
+                  </h3>
+                  <p style={{ color: currentTheme.colors.textSecondary }}>
+                    Tous nos produits en un seul endroit
+                  </p>
+                </div>
+              </div>
+              <p className="mb-6" style={{ color: currentTheme.colors.textSecondary }}>
+                Bandes dessinées, jeux KUFU, accessoires, vêtements et bien plus. Retrouvez tous les produits de l'univers ISOLELE avec livraison rapide.
+              </p>
+              <Link
+                href="/shop"
+                className="inline-block px-6 py-3 rounded-lg font-semibold transition-all"
+                style={{
+                  backgroundColor: currentTheme.colors.accentPrimary,
+                  color: currentTheme.colors.background
+                }}
+              >
+                Aller à la boutique
+              </Link>
+            </motion.div>
+          )}
+
+          {activeTab === "bill-history" && (
+            <motion.div
+              key="bill-history"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+            >
+              {bills.length === 0 ? (
+                <div className="text-center py-16">
+                  <Clock size={64} className="mx-auto mb-4" style={{ color: currentTheme.colors.textSecondary, opacity: 0.3 }} />
+                  <p className="text-xl" style={{ color: currentTheme.colors.textSecondary }}>
+                    Aucun achat pour le moment
+                  </p>
+                  <p className="text-sm mt-2" style={{ color: currentTheme.colors.textSecondary }}>
+                    Commencez à explorer la boutique pour voir vos achats ici
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-8 p-6 rounded-xl" style={{ backgroundColor: `${currentTheme.colors.accentPrimary}10` }}>
+                    <p className="text-sm" style={{ color: currentTheme.colors.textSecondary }}>
+                      Total dépensé
+                    </p>
+                    <p className="text-4xl font-bold mt-2" style={{ color: currentTheme.colors.accentPrimary }}>
+                      ${bills.filter(b => b.status === "completed").reduce((sum, b) => sum + b.price * b.quantity, 0).toFixed(2)}
                     </p>
                   </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
+                  <div className="space-y-4">
+                    {bills.map((bill) => (
+                      <div
+                        key={bill.id}
+                        className="p-4 rounded-lg border"
+                        style={{
+                          backgroundColor: `${currentTheme.colors.accentPrimary}05`,
+                          borderColor: `${currentTheme.colors.accentPrimary}20`
+                        }}
+                      >
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <h4 className="font-semibold" style={{ color: currentTheme.colors.textPrimary }}>
+                              {bill.bookTitle}
+                            </h4>
+                            <p className="text-xs mt-1" style={{ color: currentTheme.colors.textSecondary }}>
+                              {new Date(bill.purchaseDate).toLocaleDateString('fr-FR')}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-bold" style={{ color: currentTheme.colors.accentPrimary }}>
+                              ${(bill.price * bill.quantity).toFixed(2)}
+                            </p>
+                            <p className="text-xs" style={{ color: currentTheme.colors.textSecondary }}>
+                              Quantité: {bill.quantity}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span
+                            className="text-xs px-3 py-1 rounded-full font-medium"
+                            style={{
+                              backgroundColor: bill.status === "completed" ? "#10b98120" : "#f59e0b20",
+                              color: bill.status === "completed" ? "#10b981" : "#f59e0b"
+                            }}
+                          >
+                            {bill.status === "completed" ? "✓ Complété" : "⏳ En attente"}
+                          </span>
+                          <p className="text-xs" style={{ color: currentTheme.colors.textSecondary }}>
+                            {bill.paymentMethod}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+            </motion.div>
+          )}
+
+          {activeTab === "notifications" && (
+            <motion.div
+              key="notifications"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+            >
+              {unreadCount > 0 && (
+                <button
+                  onClick={markAllAsRead}
+                  className="w-full mb-6 px-4 py-3 rounded-lg text-sm font-semibold transition-all"
+                  style={{
+                    backgroundColor: `${currentTheme.colors.accentPrimary}20`,
+                    color: currentTheme.colors.accentPrimary
+                  }}
+                >
+                  Marquer tout comme lu ({unreadCount})
+                </button>
+              )}
+              {notifications.length === 0 ? (
+                <div className="text-center py-16">
+                  <Bell size={64} className="mx-auto mb-4" style={{ color: currentTheme.colors.textSecondary, opacity: 0.3 }} />
+                  <p className="text-xl" style={{ color: currentTheme.colors.textSecondary }}>
+                    Aucune notification
+                  </p>
+                  <p className="text-sm mt-2" style={{ color: currentTheme.colors.textSecondary }}>
+                    Vous recevrez des notifications ici
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {notifications.map((notification) => (
+                    <div
+                      key={notification.id}
+                      onClick={() => !notification.read && markAsRead(notification.id)}
+                      className="p-4 rounded-lg border cursor-pointer transition-all hover:border-opacity-100"
+                      style={{
+                        backgroundColor: !notification.read ? `${currentTheme.colors.accentPrimary}15` : "transparent",
+                        borderColor: !notification.read ? `${currentTheme.colors.accentPrimary}50` : `${currentTheme.colors.accentPrimary}20`,
+                        opacity: notification.read ? 0.7 : 1
+                      }}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div
+                          className="w-2.5 h-2.5 rounded-full mt-1.5 flex-shrink-0"
+                          style={{
+                            backgroundColor:
+                              notification.type === "success" ? "#10b981" :
+                              notification.type === "error" ? "#ef4444" :
+                              notification.type === "warning" ? "#f59e0b" :
+                              currentTheme.colors.accentPrimary
+                          }}
+                        />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-sm" style={{ color: currentTheme.colors.textPrimary }}>
+                            {notification.title}
+                          </h4>
+                          <p className="text-sm mt-1" style={{ color: currentTheme.colors.textSecondary }}>
+                            {notification.message}
+                          </p>
+                          <p className="text-xs mt-2" style={{ color: currentTheme.colors.textSecondary }}>
+                            {new Date(notification.timestamp).toLocaleTimeString('fr-FR')}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </main>
+    </div>
   )
 }
+
