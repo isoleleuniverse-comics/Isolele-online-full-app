@@ -276,7 +276,7 @@ export function CharactersSection() {
                   {character.name}
                 </h3>
                 <p 
-                  className="text-xs font-medium mb-3 whitespace-nowrap"
+                  className="text-xs font-medium mb-3 line-clamp-2"
                   style={{ color: character.color }}
                 >
                   {typeof character.title === 'string' ? character.title : (character.title as any)[lang] || (character.title as any).en}
