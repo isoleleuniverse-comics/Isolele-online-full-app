@@ -56,7 +56,7 @@ const characters = [
       ln: "BOKONZI OYO OYA NGUVU KAKHULU ya Biso"
     },
     description: "Warrior empress whose royal court holds the destiny of the continent in her hands.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/9d1fd3c1-8795-450c-9685-e3afa6bb5904.jpeg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260323-WA0012-2zfYaTNiUmh8XgNPMwbkLcKExGX65Q.jpg",
     color: "#C0392B",
   },
   {
