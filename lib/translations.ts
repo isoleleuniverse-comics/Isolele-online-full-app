@@ -1182,6 +1182,7 @@ export const translations: Record<Language, TranslationKeys> = {
   },
   
   sw: {
+    // Navigation
     nav_home: "Nyumbani",
     nav_about: "Kuhusu",
     nav_founder: "Mwanzilishi",
@@ -1190,17 +1191,79 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_shop: "Duka",
     nav_supporters: "Wafuasi",
     nav_contact: "Wasiliana",
+    nav_games: "Michezo",
     nav_all_characters: "Wahusika Wote",
     nav_become_supporter: "Kuwa Mfuasi",
     nav_partners: "Washirika",
     nav_restaurant: "Mkahawa Mshirika",
-    hero_title: "ZAIIRE - MWANA WA MFALME WA KONGO",
+    nav_fashion: "Mitindo",
+    nav_settings: "Mipangilio",
+    
+    // Hero Section
+    hero_title: "ZAÏRE - MKUU WA KONGO",
     hero_subtitle: "Mkufu wa Hatima",
-    hero_description: "Safari ya kusisimua yenye hatua inayoakisi roho ya Simba Mfalme na Black Panther.",
+    hero_description: "Safari ya kusisimua yenye nguvu inayoakisi roho ya Simba Mfalme na Black Panther, wakati wa kujiuliza watoto wageni ujifunze urithi, ujasiri na kujitambua.",
     hero_buy_now: "NUNUA SASA",
     hero_discover: "GUNDUA HADITHI",
-    hero_preorder: "Agiza mapema",
-    hero_launch_price: "Bei ya uzinduzi",
+    hero_preorder: "Agiza Mapema",
+    hero_launch_price: "Bei ya Uzinduzi",
+    
+    // Book Slides
+    book_welcome_tag: "KARIBU KWA ISOLELE",
+    book_chosen_ones_title: "WACHAGUZI",
+    book_chosen_ones_subtitle: "Ulimwengu mzima umzaliwa kutoka kwenye mizizi ya Kongo...",
+    book_chosen_ones_desc: "Isolele ni ulimwengu wenye mawazo umzaliwa kurudisha roho ya hadithi za Kiafrika, nchi ya hadithi ambapo wabunga wakamatwa na bahati, falme hazisahauliwi, na nguvu za wazazi ziko hai katika kila ukurasa, kila kauli ya kaida, kila vita. Kila mtoto anayesoma Isolele atakuta wabunga wanaofanana naye, wanazungumza lugha yake, wanalinda ardhi yake, na kuheshimu wazazi wake. Hii ni kwa kizazi kinachofuata cha wafalme, wafalme, wapiganaji, wajenzi, na wazazi wa hadithi.",
+    book_explore_universe: "GUNDUA ULIMWENGU",
+
+    book_makanda_tag: "UKOO WA MAKANDA — KITABU I",
+    book_makanda_title: "MAKANDA",
+    book_makanda_subtitle: "Nchi Yenye Nguvu Zaidi Tangu Ensi Haikupotea. Ilijificha Kwa Makusudi.",
+    book_makanda_desc: "Katikati ya Afrika ya Kati kulikuwa na tamaduni ulimwengu ulihifadhiwa asiwe najua. Iliyoamkia kiroho. Iliyoendelea kwa teknolojia. Iliyolindwa na Moto Mtakatifu. Wakati Nguvu za Nje zikaja kwa nini lilikuwa lao, Makanda hawakukufa. Walianguka. Jiji lao halilipotea. Ilikuwa ikingoja yule ambaye alizaliwa kuuzisha Moto tena.",
+    book_discover_makanda: "GUNDUA MAKANDA",
+
+    book_bambula_tag: "BAMBULA: MTOTO WA RITMU",
+    book_bambula_title: "BAMBULA",
+    book_bambula_subtitle: "SURA I · NGOMA MTAKATIFU",
+    book_bambula_desc: "Kabla ya maneno, kulikuwa na ritmu. Bambula alikuwa mtoto aliyesikia kila kitu. Wakati ngoma zilichukuliwa na ardhi ikatulia, akaendelea na ritmu ndani yake. Akiwa na ngoma mtakatifu, anatembea kati ya ulimwengu wa roho na wahai. Hajapigania kufa. Analinda kuanzia.",
+    book_discover_bambula: "GUNDUA BAMBULA",
+
+    book_mokele_tag: "MOKELE: UMZALIWA KATIKA KUPINGA",
+    book_mokele_title: "MOKELE",
+    book_mokele_subtitle: "Kutoka Mtoto hadi Bwana wa Kinshasa",
+    book_mokele_desc: "Mokele hajazaliwa mkuu. Anazaliwa katika kupinga. Barabara za Kinshasa zina mufti kabla shule inaweza, mahali ambapo kuaminiana ni laini, vurugu ni kawaida, na kuokoa ni kila kitu. Kutoka mtoto hadi mlipuko hadi bwana. Anajenga nguvu, pesa, na heshima. Kinshasa, mtu yeyote akula... au unakuwa mbu.",
+    book_discover_mokele: "GUNDUA MOKELE",
+
+    book_zaiire_tag: "ZAÏRE: MKUU WA KONGO",
+    book_zaiire_title: "MKUU WA KONGO",
+    book_zaiire_subtitle: "Mkufu wa Hatima",
+    book_zaiire_desc: "Kuweka katikati ya Nchi ya Kongo, Mkufu wa Hatima haikutengenezwa kuwa kilvatu. Ilitengenezwa kuchagua. Ilipita katika karne za moto, vita, na kimya, inauzisha roho ya kila mkuu aliyeharisha kwa watu wake na kila malkia aliyeweka dunia yote kwa mikono tupu. Wakati inapata Zaïre, hiyo hailangiki. Itakamka.",
+    book_discover_zaiire: "GUNDUA ZAÏRE",
+
+    book_kufu_tag: "KUFU: MCHEZO WA TAAJ",
+    book_kufu_title: "KUFU",
+    book_kufu_subtitle: "MCHEZO WA RASMI WA ULIMWENGU WA ISOLELE",
+    book_kufu_desc: "Hii sio tu mchezo wa kadi. Ni sherehe. Kwa pamoja na wapiganaji wako. Jenga nchi yako. Shangia kila mpinzani katika meza. Lakini kuishi taaj kuna njia moja tu ya kushinda. Lazima kuinua sauti yako na kusema jina la mkuu kwa sauti. Kisha mtu akavweka kapu juu ya kichwa chako. Sio kwa mkono wako. Kwa mkono wa mtu mwingine. Kwa sababu mkuu wa kweli hakuishi peke yake. Kufu ni mahali ambapo ukoo wa Kiafrika unakuwa kitu unakirasa kwa mikono yako, kusikia kwa sauti yako, na kuuvaa kuzunguka shingo yako. Kila mchezo ni sherehe ya taaj. Kila mshindi ni mkuu.",
+    book_explore_game: "GUNDUA MCHEZO",
+
+    book_amara_tag: "AMARA: MALKIA WA BAHARI",
+    book_amara_title: "AMARA",
+    book_amara_subtitle: "SURA I · MALKIA WA WAPICHA WA AMAZON",
+    book_amara_desc: "Kila picha anachohesabu bahari. Amara inamiliki. Anaweza kuwa Malkia wa Bahari. Mkapteni anachokamatwa zaidi katika kila maji ya ulimwengu. Hakuna meli iliyomshinda. Hakuna mkuu aliyemshinda kwa hila. Hakuna jeshi lililo zidisha jeshi lake. Lakini Amara hatembei peke yake. Kwa upande wake kuna wanawake wanne wamuunganisha kwa damu, kuaminiana na kaida. Wafalme watano wa bahari wanayobeba nguvu itayumba kila taaj lililo kiganja. Kutoka kwa kuunganisha kwao ukoo wa Agojie unazaliwa. Na kutoka ukoo hilo wafalme watano wa kike wanatakuja kuzabuni mwendo wa tarehe ya Kiafrika kwa milele. Hii sio hadithi ya wapicha tu. Hii ni mahali ambapo ukoo mkuu wa kike wa ulimwengu wa ISOLELE unaanza.",
+    book_discover_amara: "GUNDUA AMARA",
+
+    book_zattar_tag: "ZATTAR: MKUU WA ULIMWENGU",
+    book_zattar_title: "ZATTAR",
+    book_zattar_subtitle: "Mkamata wa Taaj",
+    book_zattar_desc: "Wakati Hatimaye Ilikataa Nchi Moja, Alifanya Maamuzi ya Kuchukua Zote Zote. Mkuu Zattar alizaliwa kurithi taaj ya Bapindi. Lakini wakati Babu walichagua nyingine, kitu kila Zattar habakufa. Ilianza. Anasoma Vita vya Kwanza na Vya Pili vya Vegas, hadithi za uharibifu ambazo zilitikisa ulimwengu kabla ajazaliwa. Mahali ambapo wengine walijua onyo, Zattar alijua ramani. Alianza Vita vya Tatu vya Vegas. Sio kwa wazimu. Sio kwa maumivu. Lakini kwa sababu alitazama ulimwengu mzima na kwankuanzia hitimisho: Inamjua mtu. Na yule mtu ni Zattar. Hakuchaguliwa. Kwa hiyo akachagua ulimwengu badala yake.",
+    book_discover_zattar: "GUNDUA ZATTAR",
+
+    book_zaiko_tag: "ZAÏKO: MKUU WA MWISHO WA BARABARA ZA KIVUS",
+    book_zaiko_title: "HADITHI YA ZAÏKO",
+    book_zaiko_subtitle: "Hakuja Kutoka Barabara. Aliziegeuzilia.",
+    book_zaiko_desc: "Umzaliwa Kaskazini mwa Kivu. Kutengana Kinshasa. Zaïko alikuwa hajafanikiwa kuokoa. Lakini kuokoa hakuwa wa kutosha. Katika ulimwengu unaotawaliwa na nguvu, pesa, na woga, anakuja kutoka wala kitu. Sio kama mbinguni. Lakini kama nguvu. Na kwa ndugu wake, anajenga nchi inayoachokamatwa zaidi Kivus inayofahamika. Hakuna taaj iliyotolewa. Hakuna kaida iliyoandikwa. Kila kitu kilichukuwa.",
+    book_discover_zaiko: "GUNDUA ZAÏKO",
+    
+    // Universe Section
     universe_title: "ULIMWENGU WA ISOLELE",
     universe_subtitle: "Waliochaguliwa",
     universe_description: "Isolele ni ulimwengu wa maono uliozaliwa kurudisha roho ya hadithi za Kiafrika.",
@@ -1227,19 +1290,24 @@ export const translations: Record<Language, TranslationKeys> = {
     news_read_more: "SOMA MAKALA",
     news_minutes_read: "dakika za kusoma",
     news_published: "Imechapishwa",
+    
+    // CTA Section
     cta_title: "JIUNGE NA HADITHI",
+    cta_join_legend: "JIUNGE NA HADITHI",
     cta_description: "Kuwa sehemu ya ulimwengu wa katuni unaobadilisha unaosherehekea urithi wa Kiafrika.",
-    cta_explore: "CHUNGUZA ULIMWENGU",
-    cta_newsletter: "JIANDIKISHE KWA JARIDA",
-    footer_description: "Isolele ni ulimwengu wa maono uliozaliwa kurudisha roho ya hadithi za Kiafrika.",
-    footer_explore: "CHUNGUZA",
+    cta_explore: "GUNDUA ULIMWENGU",
+    cta_newsletter: "JIANDIKISHE KWA HABARI",
+    
+    // Footer
+    footer_description: "Isolele ni ulimwengu wa mawazo umzaliwa kurudisha roho ya hadithi za Kiafrika.",
+    footer_explore: "GUNDUA",
     footer_resources: "RASILIMALI",
-    footer_newsletter_title: "ENDELEA KUFAHAMU",
-    footer_newsletter_desc: "Jiandikishe kupokea sasisho za kipekee.",
+    footer_newsletter_title: "KUWA MJIFUNZE",
+    footer_newsletter_desc: "Jiandikishe kupokea habari za kipekee kuhusu uzinduzi mpya, matangazo, na bia maalum.",
     footer_email_placeholder: "Anwani yako ya barua pepe",
     footer_subscribe: "JIANDIKISHE",
     footer_thank_you: "ASANTE!",
-    footer_copyright: "2026 Isolele. Haki zote zimehifadhiwa. Mpango wa We Love Congo.",
+    footer_copyright: "© 2026 Isolele. Haki zote zimehifadhiwa. Mpango wa We Love Congo.",
     footer_press: "Vyombo vya habari",
     footer_careers: "Kazi",
     footer_contact: "Wasiliana Nasi",
