@@ -370,11 +370,11 @@ export const translations: Record<Language, TranslationKeys> = {
     // Universe Section
     universe_title: "L'UNIVERS ISOLELE",
     universe_subtitle: "Les Elus",
-    universe_description: "Isolele est un univers visionnaire ne pour restaurer l'ame du storytelling africain - un empire mythologique ou les Superheros sont choisis par le destin, les royaumes jamais oublies, et le pouvoir ancestral est vivant dans chaque page, chaque prophetie, chaque bataille.",
-    universe_destiny_title: "La Destinee n'est pas un Choix",
-    universe_destiny_desc: "C'est un Appel. Chaque personnage est invoque par les lignees sanguines, les esprits anciens et les histoires inachevees de leurs ancetres.",
-    universe_heritage_title: "Les Lignees Royales Portent un Pouvoir Ancien",
-    universe_heritage_desc: "Le sang royal transporte la memoire et la puissance des royaumes oublies, attendant d'etre reveillees par les elus.",
+    universe_description: "Isolele est un univers visionnaire né pour restaurer l'âme du storytelling africain - un empire mythologique où les Superheros sont choisis par le destin, les royaumes jamais oubliés, et le pouvoir ancestral est vivant dans chaque page, chaque prophétie, chaque bataille.",
+    universe_destiny_title: "La Destinée n'est pas un Choix",
+    universe_destiny_desc: "C'est un Appel. Chaque personnage est invoqué par les lignées sanguines, les esprits anciens et les histoires inachevées de leurs ancêtres.",
+    universe_heritage_title: "Les Lignées Royales Portent un Pouvoir Ancien",
+    universe_heritage_desc: "Le sang royal transporte la mémoire et la puissance des royaumes oubliés, attendant d'être réveillées par les élus.",
     universe_resurrection_title: "Les Esprits Ancestraux ne Meurent Jamais",
     universe_resurrection_desc: "L'Afrique n'a jamais été impuissante. La prophetie est revenue, et avec elle, la resurrection des mythes enterrés.",
     
@@ -407,7 +407,7 @@ export const translations: Record<Language, TranslationKeys> = {
     cta_newsletter: "S'ABONNER A LA NEWSLETTER",
     
     // Footer
-    footer_description: "Isolele est un univers visionnaire ne pour restaurer l'ame du storytelling africain - un empire mythologique ou les Superheros sont choisis par le destin, les royaumes jamais oublies, et le pouvoir ancestral est vivant dans chaque page, chaque prophetie, chaque bataille.",
+    footer_description: "Isolele est un univers visionnaire né pour restaurer l'âme du storytelling africain - un empire mythologique où les Superheros sont choisis par le destin, les royaumes jamais oubliés, et le pouvoir ancestral est vivant dans chaque page, chaque prophétie, chaque bataille.",
     footer_explore: "EXPLORER",
     footer_resources: "RESSOURCES",
     footer_newsletter_title: "RESTEZ INFORME",
@@ -470,7 +470,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_pillar3_title: "Une Renovation Culturelle",
     about_pillar3_desc: "Isolele fait partie d'une plus grande renaissance - un mouvement pour recuperer, celebrer et reimaginer l'identite royale, mythique et divine de l'Afrique.",
     about_pillar4_title: "Un Moteur d'Heritage",
-    about_pillar4_desc: "Chaque enfant qui lit Isolele decouvrira des super-heros qui leur ressemblent, parlent leur langue, protegent leur terre et honorent leurs ancetres.",
+    about_pillar4_desc: "Chaque enfant qui lit Isolele découvrira des super-heros qui leur ressemblent, parlent leur langue, protègent leur terre et honorent leurs ancêtres.",
     
     // Founder Page
     founder_title: "LE FONDATEUR",
