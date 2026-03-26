@@ -376,7 +376,7 @@ export const translations: Record<Language, TranslationKeys> = {
     universe_heritage_title: "Les Lignees Royales Portent un Pouvoir Ancien",
     universe_heritage_desc: "Le sang royal transporte la memoire et la puissance des royaumes oublies, attendant d'etre reveillees par les elus.",
     universe_resurrection_title: "Les Esprits Ancestraux ne Meurent Jamais",
-    universe_resurrection_desc: "L'Afrique n'a jamais ete impuissante. La prophetie est revenue, et avec elle, la resurrection des mythes enterres.",
+    universe_resurrection_desc: "L'Afrique n'a jamais été impuissante. La prophetie est revenue, et avec elle, la resurrection des mythes enterrés.",
     
     // Characters Section
     characters_title: "LES ELUS",
