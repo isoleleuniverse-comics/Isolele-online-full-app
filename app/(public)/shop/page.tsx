@@ -1,19 +1,13 @@
 'use client'
 
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Heart, MessageCircle, Share2, Home, ShoppingBag, Search, Filter, X } from 'lucide-react'
 import { useLanguage } from '@/lib/language-context'
 import { useTheme } from '@/lib/theme-context'
-import dynamic from 'next/dynamic'
-
-// Dynamically load Stripe to improve initial load time
-const loadStripe = dynamic(() => import('@stripe/js').then(mod => ({ default: mod.loadStripe })), {
-  ssr: false,
-  loading: () => null
-})
+import { loadStripe } from '@stripe/js'
 
 // Product data
 const products = [
@@ -200,22 +194,17 @@ export default function ShopPage() {
   }
 
   const handleCheckout = async () => {
-    try {
-      const { loadStripe: stripe } = await import('@stripe/js')
-      const stripeInstance = await stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
-      const cartProducts = cart.map(id => products.find(p => p.id === id)).filter(Boolean)
-      
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ products: cartProducts }),
-      })
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+    const cartProducts = cart.map(id => products.find(p => p.id === id)).filter(Boolean)
+    
+    const response = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ products: cartProducts }),
+    })
 
-      const session = await response.json()
-      await stripeInstance?.redirectToCheckout({ sessionId: session.id })
-    } catch (error) {
-      console.error('Checkout error:', error)
-    }
+    const session = await response.json()
+    stripe?.redirectToCheckout({ sessionId: session.id })
   }
 
   const filteredProducts = products.filter(p => {
@@ -321,14 +310,7 @@ export default function ShopPage() {
       {/* Products Grid */}
       <section className="max-w-7xl mx-auto px-4 py-12">
         <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredProducts.length === 0 ? (
-            <div className="col-span-full text-center py-12">
-              <p style={{ color: currentTheme.colors.textSecondary }}>
-                {lang === 'fr' ? 'Aucun produit trouvé' : 'No products found'}
-              </p>
-            </div>
-          ) : (
-          filteredProducts.map((product, idx) => {
+          {filteredProducts.map((product, idx) => {
             const interaction = interactions.get(product.id) || {
               id: product.id,
               liked: false,
@@ -424,8 +406,7 @@ export default function ShopPage() {
                 </div>
               </motion.div>
             )
-          })
-          )}
+          })}
         </motion.div>
       </section>
 

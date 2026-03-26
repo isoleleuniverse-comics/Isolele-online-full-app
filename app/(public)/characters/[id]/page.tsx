@@ -48,7 +48,7 @@ During their reunion, his mother entrusts him with a powerful and ancient relic.
     name: "KIMOYA",
     title: "The Rising Kandake",
     color: "#C0392B",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260323-WA0012-2zfYaTNiUmh8XgNPMwbkLcKExGX65Q.jpg",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
     fullDescription:
       "Kimoya is a Kandake (ancient Nubian queen-warrior) whose royal court holds the destiny of an entire continent. With wisdom beyond her years and power beyond measure, she rules with both justice and strength.",
     powers: ["Royal Authority", "Strategic Mastery", "Healing Magic", "Empire Control"],
