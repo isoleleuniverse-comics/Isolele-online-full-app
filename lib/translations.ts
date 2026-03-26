@@ -50,6 +50,61 @@ export interface TranslationKeys {
   hero_discover: string
   hero_preorder: string
   hero_launch_price: string
+
+  // Book Slides
+  book_welcome_tag: string
+  book_chosen_ones_title: string
+  book_chosen_ones_subtitle: string
+  book_chosen_ones_desc: string
+  book_explore_universe: string
+
+  book_makanda_tag: string
+  book_makanda_title: string
+  book_makanda_subtitle: string
+  book_makanda_desc: string
+  book_discover_makanda: string
+
+  book_bambula_tag: string
+  book_bambula_title: string
+  book_bambula_subtitle: string
+  book_bambula_desc: string
+  book_discover_bambula: string
+
+  book_mokele_tag: string
+  book_mokele_title: string
+  book_mokele_subtitle: string
+  book_mokele_desc: string
+  book_discover_mokele: string
+
+  book_zaiire_tag: string
+  book_zaiire_title: string
+  book_zaiire_subtitle: string
+  book_zaiire_desc: string
+  book_discover_zaiire: string
+
+  book_kufu_tag: string
+  book_kufu_title: string
+  book_kufu_subtitle: string
+  book_kufu_desc: string
+  book_explore_game: string
+
+  book_amara_tag: string
+  book_amara_title: string
+  book_amara_subtitle: string
+  book_amara_desc: string
+  book_discover_amara: string
+
+  book_zattar_tag: string
+  book_zattar_title: string
+  book_zattar_subtitle: string
+  book_zattar_desc: string
+  book_discover_zattar: string
+
+  book_zaiko_tag: string
+  book_zaiko_title: string
+  book_zaiko_subtitle: string
+  book_zaiko_desc: string
+  book_discover_zaiko: string
   
   // Universe Section
   universe_title: string
@@ -209,6 +264,61 @@ export const translations: Record<Language, TranslationKeys> = {
     hero_preorder: "Pre-order",
     hero_launch_price: "Launch price",
     
+    // Book Slides
+    book_welcome_tag: "WELCOME TO ISOLELE",
+    book_chosen_ones_title: "THE CHOSEN ONES",
+    book_chosen_ones_subtitle: "An entire universe born from the roots of Kongo...",
+    book_chosen_ones_desc: "Isolele is a visionary universe born to restore the soul of African storytelling, a mythological empire where superheroes are chosen by destiny, kingdoms never forgotten, and ancestral power is alive in every page, every prophecy, every battle. Every child who reads Isolele will discover superheroes who look like them, speak their language, protect their land, and honor their ancestors. This is for the next generation of kings, queens, warriors, inventors, and storytellers.",
+    book_explore_universe: "EXPLORE THE UNIVERSE",
+
+    book_makanda_tag: "THE MAKANDA DYNASTY — BOOK I",
+    book_makanda_title: "MAKANDA",
+    book_makanda_subtitle: "The Most Powerful Empire in History Was Not Lost. It Was Hidden On Purpose.",
+    book_makanda_desc: "Deep within Central Africa existed a civilization the world was never meant to know about. Spiritually awakened. Technologically advanced. Protected by the Sacred Flame. When outside forces came for what was theirs, the Makanda did not fall. They disappeared. Their city was never lost. It was waiting for the one born to carry the flame again.",
+    book_discover_makanda: "DISCOVER MAKANDA",
+
+    book_bambula_tag: "BAMBULA: CHILD OF RHYTHM",
+    book_bambula_title: "BAMBULA",
+    book_bambula_subtitle: "CHAPTER I · THE SACRED DRUM",
+    book_bambula_desc: "Before words, there was rhythm. Bambula was the child who heard everything. When the drums were taken and the land went silent, he kept the rhythm alive inside him. Armed with the sacred drum, he walks between the spirit world and the living. He does not fight to destroy. He protects to remember.",
+    book_discover_bambula: "DISCOVER BAMBULA",
+
+    book_mokele_tag: "MOKELE: BORN INTO STRUGGLE",
+    book_mokele_title: "MOKELE",
+    book_mokele_subtitle: "From Child to Lord of Kinshasa",
+    book_mokele_desc: "Mokele is not born a king. He is born into struggle. The streets of Kinshasa teach him before school ever could, where loyalty is fragile, violence is normal, and survival is everything. From child to hustler to lord. He builds power, money, and respect. In Kinshasa, you either get eaten... or you become the predator.",
+    book_discover_mokele: "DISCOVER MOKELE",
+
+    book_zaiire_tag: "ZAIIRE: THE PRINCE OF KONGO",
+    book_zaiire_title: "THE PRINCE OF KONGO",
+    book_zaiire_subtitle: "The Necklace of Destiny",
+    book_zaiire_desc: "Forged in the heart of the Kongo Kingdom, the Necklace of Destiny was never made to be worn. It was made to choose. Passed through centuries of fire, war, and silence, it carries the soul of every king who bled for their people and every queen who held the world together with bare hands. When it finds Zaiire, it does not shine. It awakens.",
+    book_discover_zaiire: "DISCOVER ZAIIRE",
+
+    book_kufu_tag: "KUFU: THE CROWN GAME",
+    book_kufu_title: "KUFU",
+    book_kufu_subtitle: "THE OFFICIAL GAME OF THE ISOLELE UNIVERSE",
+    book_kufu_desc: "This is not just a card game. It is a ceremony. Gather your warriors. Build your kingdom. Outplay every opponent at the table. But to claim the crown there is only one way to win. You must raise your voice and speak the name of the king out loud. Then someone places the necklace over your head. Not by your own hand. By another. Because a true king is not crowned alone. KUFU is where African royalty becomes something you feel in your hands, hear in your voice, and carry around your neck. Every game is a coronation. Every winner is a king.",
+    book_explore_game: "EXPLORE THE GAME",
+
+    book_amara_tag: "AMARA: QUEEN OF THE SEAS",
+    book_amara_title: "AMARA",
+    book_amara_subtitle: "CHAPTER I · QUEEN OF THE PIRATES OF AMAZON",
+    book_amara_desc: "Every pirate fears the ocean. Amara owns it. She is the Queen of the Seas. The most feared captain on every water in the world. No ship has outrun her. No king has outsmarted her. No army has stopped her fleet. But Amara does not sail alone. Beside her stand four women bound by blood, loyalty and destiny. Five queens of the sea who together carry a power that will shake every throne on the continent. From their union the Agojie dynasty is born. And from that dynasty rise the five women kings who will change the course of African history forever. This is not just a pirate story. This is where the greatest female dynasty in the ISOLELE universe begins.",
+    book_discover_amara: "DISCOVER AMARA",
+
+    book_zattar_tag: "ZATTAR: THE PRINCE OF THE UNIVERSE",
+    book_zattar_title: "ZATTAR",
+    book_zattar_subtitle: "The Conqueror of Thrones",
+    book_zattar_desc: "When Destiny Refused Him One Kingdom, He Decided to Take Them All. Prince Zattar was born to inherit the throne of Bapindi. But when the Ancestors chose another, something inside him did not break. It ignited. He studied the First and Second Wars of Vegas, legends of devastation that shook the world before he was even born. Where others saw warning, Zattar saw a map. He started the Third War of Vegas. Not out of madness. Not out of pain. But because he looked at the entire universe and reached one conclusion: It belongs to someone. And that someone is Zattar. He was not chosen. So he chose the universe instead.",
+    book_discover_zattar: "DISCOVER ZATTAR",
+
+    book_zaiko_tag: "ZAÏKO: LAST KING OF THE STREETS OF KIVUS",
+    book_zaiko_title: "THE LEGEND OF ZAÏKO",
+    book_zaiko_subtitle: "He Did Not Rise From the Streets. He Conquered Them.",
+    book_zaiko_desc: "Born in North Kivu. Forged in Kinshasa. Zaïko was never meant to survive. But survival was never enough. In a world ruled by power, money, and fear, he rises from nothing. Not as a hero. But as a force. With his brother, he builds the most feared empire the Kivus have ever known. No crown was given. No destiny was written. Everything was taken.",
+    book_discover_zaiko: "DISCOVER ZAÏKO",
+    
     // Universe Section
     universe_title: "THE ISOLELE UNIVERSE",
     universe_subtitle: "The Chosen Ones",
@@ -366,6 +476,61 @@ export const translations: Record<Language, TranslationKeys> = {
     hero_discover: "DÉCOUVRIR L'HISTOIRE",
     hero_preorder: "Pré-commande",
     hero_launch_price: "Prix de lancement",
+    
+    // Book Slides
+    book_welcome_tag: "BIENVENUE À ISOLELE",
+    book_chosen_ones_title: "LES ÉLUS",
+    book_chosen_ones_subtitle: "Un univers entier né des racines du Kongo...",
+    book_chosen_ones_desc: "Isolele est un univers visionnaire né pour restaurer l'âme du storytelling africain, un empire mythologique où les superhéros sont choisis par le destin, les royaumes jamais oubliés, et le pouvoir ancestral est vivant dans chaque page, chaque prophétie, chaque bataille. Chaque enfant qui lit Isolele découvrira des superhéros qui lui ressemblent, parlent sa langue, protègent sa terre et honorent ses ancêtres. C'est pour la prochaine génération de rois, reines, guerriers, inventeurs et conteurs.",
+    book_explore_universe: "EXPLORER L'UNIVERS",
+
+    book_makanda_tag: "LA DYNASTIE MAKANDA — LIVRE I",
+    book_makanda_title: "MAKANDA",
+    book_makanda_subtitle: "L'Empire le Plus Puissant de l'Histoire n'a Pas Été Perdu. Il a Été Caché à Dessein.",
+    book_makanda_desc: "Au cœur de l'Afrique centrale existait une civilisation que le monde ne devait jamais connaître. Spirituellement éveillée. Technologiquement avancée. Protégée par la Flamme Sacrée. Quand les forces extérieures sont venues pour ce qui était à eux, les Makanda n'ont pas chuté. Ils ont disparu. Leur ville n'a jamais été perdue. Elle attendait celui né pour porter la flamme à nouveau.",
+    book_discover_makanda: "DÉCOUVRIR MAKANDA",
+
+    book_bambula_tag: "BAMBULA: ENFANT DU RYTHME",
+    book_bambula_title: "BAMBULA",
+    book_bambula_subtitle: "CHAPITRE I · LE TAMBOUR SACRÉ",
+    book_bambula_desc: "Avant les mots, il y avait le rythme. Bambula était l'enfant qui entendait tout. Quand les tambours ont été pris et la terre s'est tue, il a gardé le rythme vivant en lui. Armé du tambour sacré, il marche entre le monde des esprits et les vivants. Il ne combat pas pour détruire. Il protège pour se souvenir.",
+    book_discover_bambula: "DÉCOUVRIR BAMBULA",
+
+    book_mokele_tag: "MOKELE: NÉ DANS LA LUTTE",
+    book_mokele_title: "MOKELE",
+    book_mokele_subtitle: "De l'Enfant au Seigneur de Kinshasa",
+    book_mokele_desc: "Mokele n'est pas né roi. Il est né dans la lutte. Les rues de Kinshasa lui enseignent avant que l'école n'en ait l'occasion, où la loyauté est fragile, la violence est normale, et la survie est tout. De l'enfant au hustler au seigneur. Il construit le pouvoir, l'argent et le respect. À Kinshasa, soit tu te fais manger... soit tu deviens le prédateur.",
+    book_discover_mokele: "DÉCOUVRIR MOKELE",
+
+    book_zaiire_tag: "ZAÏRE: LE PRINCE DU KONGO",
+    book_zaiire_title: "LE PRINCE DU KONGO",
+    book_zaiire_subtitle: "Le Collier de la Destinée",
+    book_zaiire_desc: "Forgé au cœur du Royaume du Kongo, le Collier de la Destinée n'a jamais été conçu pour être porté. Il a été conçu pour choisir. Passé à travers des siècles de feu, de guerre et de silence, il porte l'âme de chaque roi qui a saigné pour son peuple et chaque reine qui a tenu le monde ensemble avec des mains nues. Quand il trouve Zaïre, il ne brille pas. Il s'éveille.",
+    book_discover_zaiire: "DÉCOUVRIR ZAÏRE",
+
+    book_kufu_tag: "KUFU: LE JEU DE LA COURONNE",
+    book_kufu_title: "KUFU",
+    book_kufu_subtitle: "LE JEU OFFICIEL DE L'UNIVERS ISOLELE",
+    book_kufu_desc: "Ce n'est pas juste un jeu de cartes. C'est une cérémonie. Rassembles tes guerriers. Construis ton royaume. Surpasse chaque adversaire à la table. Mais pour réclamer la couronne, il n'y a qu'un seul moyen de gagner. Tu dois élever ta voix et prononcer le nom du roi à haute voix. Puis quelqu'un place le collier sur ta tête. Pas de ta propre main. Par une autre. Car un vrai roi n'est pas couronné seul. KUFU est là où la royauté africaine devient quelque chose que tu sens dans tes mains, entends dans ta voix et porte autour de ton cou. Chaque jeu est une couronnement. Chaque gagnant est un roi.",
+    book_explore_game: "EXPLORER LE JEU",
+
+    book_amara_tag: "AMARA: REINE DES MERS",
+    book_amara_title: "AMARA",
+    book_amara_subtitle: "CHAPITRE I · REINE DES PIRATES DE L'AMAZONE",
+    book_amara_desc: "Chaque pirate craint l'océan. Amara le possède. Elle est la Reine des Mers. La capitaine la plus redoutée sur chaque eau du monde. Aucun navire ne l'a surpassée. Aucun roi ne l'a surpassée en ruse. Aucune armée n'a arrêté sa flotte. Mais Amara ne navigue pas seule. À côté d'elle se tiennent quatre femmes liées par le sang, la loyauté et le destin. Cinq reines de la mer qui ensemble portent un pouvoir qui ébranlerait chaque trône du continent. De leur union naît la dynastie Agojie. Et de cette dynastie surgissent les cinq reines femmes qui changeront à jamais le cours de l'histoire africaine. Ce n'est pas juste une histoire de pirates. C'est là où commence la plus grande dynastie féminine de l'univers ISOLELE.",
+    book_discover_amara: "DÉCOUVRIR AMARA",
+
+    book_zattar_tag: "ZATTAR: LE PRINCE DE L'UNIVERS",
+    book_zattar_title: "ZATTAR",
+    book_zattar_subtitle: "Le Conquérant des Trônes",
+    book_zattar_desc: "Quand le Destin lui a Refusé un Royaume, il a Décidé de les Prendre Tous. Le Prince Zattar est né pour hériter du trône de Bapindi. Mais quand les Ancêtres en ont choisi un autre, quelque chose en lui ne s'est pas brisé. Cela s'est enflammé. Il a étudié les Première et Deuxième Guerres de Vegas, des légendes de dévastation qui ont secoué le monde avant même qu'il ne soit né. Où d'autres voyaient un avertissement, Zattar voyait une carte. Il a lancé la Troisième Guerre de Vegas. Pas par folie. Pas par douleur. Mais parce qu'il a regardé l'univers entier et est arrivé à une conclusion: Il appartient à quelqu'un. Et ce quelqu'un est Zattar. Il n'a pas été choisi. Alors il a choisi l'univers à la place.",
+    book_discover_zattar: "DÉCOUVRIR ZATTAR",
+
+    book_zaiko_tag: "ZAÏKO: DERNIER ROI DES RUES DE KIVUS",
+    book_zaiko_title: "LA LÉGENDE DE ZAÏKO",
+    book_zaiko_subtitle: "Il n'a Pas Émergé des Rues. Il les a Conquises.",
+    book_zaiko_desc: "Né au Nord-Kivu. Forgé à Kinshasa. Zaïko n'était jamais destiné à survivre. Mais la survie n'était jamais suffisante. Dans un monde gouverné par le pouvoir, l'argent et la peur, il surgit de rien. Pas comme un héros. Mais comme une force. Avec son frère, il construit l'empire le plus redouté que les Kivus n'aient jamais connu. Aucune couronne n'a été donnée. Aucun destin n'a été écrit. Tout a été pris.",
+    book_discover_zaiko: "DÉCOUVRIR ZAÏKO",
     
     // Universe Section
     universe_title: "L'UNIVERS ISOLELE",
