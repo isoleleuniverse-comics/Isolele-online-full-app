@@ -11,14 +11,14 @@ export interface Language {
 }
 
 export const languages: Language[] = [
+  { code: "ln", name: "Lingala", nativeName: "Lingála", flag: languageFlags.ln },
+  { code: "sw", name: "Swahili", nativeName: "Kiswahili", flag: languageFlags.sw },
+  { code: "zu", name: "Zulu", nativeName: "isiZulu", flag: languageFlags.zu },
   { code: "en", name: "English", nativeName: "English", flag: languageFlags.en },
   { code: "fr", name: "French", nativeName: "Français", flag: languageFlags.fr },
   { code: "pt", name: "Portuguese", nativeName: "Português", flag: languageFlags.pt },
   { code: "es", name: "Spanish", nativeName: "Español", flag: languageFlags.es },
-  { code: "zu", name: "Zulu", nativeName: "isiZulu", flag: languageFlags.zu },
   { code: "xh", name: "Xhosa", nativeName: "isiXhosa", flag: languageFlags.zu },
-  { code: "sw", name: "Swahili", nativeName: "Kiswahili", flag: languageFlags.sw },
-  { code: "ln", name: "Lingala", nativeName: "Lingála", flag: languageFlags.ln },
 ]
 
 interface LanguageContextType {
