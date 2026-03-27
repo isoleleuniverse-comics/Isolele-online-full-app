@@ -9,6 +9,7 @@ import { useLanguage, languages } from "@/lib/language-context"
 import { useNotifications } from "@/lib/notifications-context"
 import { useBillHistory } from "@/lib/bill-history-context"
 import { cn } from "@/lib/utils"
+import { SettingsIcon, NotificationIcon } from "@/components/icons/elegant-icons"
 
 type Tab = "preferences" | "fashion" | "shop" | "bill-history" | "notifications"
 
@@ -258,12 +259,30 @@ export default function SettingsPage() {
     settingsTranslations.en[key]
 
   const tabs = [
-    { id: "preferences", label: st("preferences"), icon: "⚙️" },
-    { id: "fashion", label: st("fashion"), icon: "👗" },
-    { id: "shop", label: st("shop"), icon: "🛍️" },
-    { id: "bill-history", label: st("billHistory"), icon: "📋" },
-    { id: "notifications", label: st("notifications"), icon: "🔔" },
+    { id: "preferences", label: st("preferences"), icon: "settings" },
+    { id: "fashion", label: st("fashion"), icon: "fashion" },
+    { id: "shop", label: st("shop"), icon: "shop" },
+    { id: "bill-history", label: st("billHistory"), icon: "bill" },
+    { id: "notifications", label: st("notifications"), icon: "notifications" },
   ] as const
+
+  // Icon renderer component
+  const TabIcon = ({ type }: { type: string }) => {
+    switch (type) {
+      case "settings":
+        return <SettingsIcon className="w-5 h-5" />
+      case "fashion":
+        return <Shirt className="w-5 h-5" />
+      case "shop":
+        return <ShoppingBag className="w-5 h-5" />
+      case "bill":
+        return <Clock className="w-5 h-5" />
+      case "notifications":
+        return <NotificationIcon className="w-5 h-5" />
+      default:
+        return null
+    }
+  }
 
   return (
     <div className="min-h-screen pt-24 pb-32" style={{ backgroundColor: currentTheme.colors.background }}>
@@ -296,7 +315,7 @@ export default function SettingsPage() {
                 ringColor: currentTheme.colors.accentPrimary
               }}
             >
-              <span className="text-2xl">{tab.icon}</span>
+              <TabIcon type={tab.icon} />
               <span className="text-xs md:text-sm font-medium text-center">{tab.label}</span>
               {tab.id === "notifications" && unreadCount > 0 && (
                 <span

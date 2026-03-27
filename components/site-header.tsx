@@ -4,12 +4,13 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, Menu, X, ShoppingBag, Settings, Home, Users, Zap, Gamepad2, Bell } from "lucide-react"
+import { ChevronDown, Menu, X, Bell, Zap } from "lucide-react"
 import { useTheme, themes } from "@/lib/theme-context"
 import { useLanguage, languages } from "@/lib/language-context"
 import { useCart } from "@/lib/cart-context"
 import { useNotifications } from "@/lib/notifications-context"
 import { cn } from "@/lib/utils"
+import { HomeIcon, ComicsIcon, ShopIcon, GameIcon, StoryNewsIcon, SettingsIcon } from "@/components/icons/elegant-icons"
 
 const characterLinks = [
   { name: "ZAIRE - PRINCE DU KONGO", href: "/characters/zaire" },
@@ -17,6 +18,35 @@ const characterLinks = [
   { name: "KING KUFULULA - LE ROI", href: "/characters/kufulula" },
   { name: "MOKELE - LE PRINCE", href: "/characters/mokele" },
 ]
+
+// Animated Game Icon that cycles through different game-related icons
+const AnimatedGameIcon = () => {
+  const [cycleIndex, setcycleIndex] = useState(0)
+  const icons = [
+    { id: 'controller', path: 'M6 8c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2V8Z' },
+    { id: 'ball', path: 'M12 1a11 11 0 0 1 0 22 11 11 0 0 1 0-22M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8' },
+    { id: 'map', path: 'M3 6v14c0 1 .5 2 1.5 2.5L12 20l7.5 2.5c1 .5 1.5-.5 1.5-2.5V6L12 3.5 3 6Z' },
+    { id: 'saxophone', path: 'M8 5c1 0 2 1 2 2v3c0 1-1 2-2 2h3v4h2V5c0-1 1-2 2-2h2v2h-2v10h2v-2h2v2c0 1-1 2-2 2h-4c-1 0-2-1-2-2v-3' },
+    { id: 'dice', path: 'M4 4h12v12H4V4M6 7c-.5 0-1 .5-1 1s.5 1 1 1 1-.5 1-1-.5-1-1-1M14 12c-.5 0-1 .5-1 1s.5 1 1 1 1-.5 1-1-.5-1-1-1M10 10c-.5 0-1 .5-1 1s.5 1 1 1 1-.5 1-1-.5-1-1-1' }
+  ]
+  
+  return (
+    <motion.svg
+      className="w-6 h-6"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      animate={{ rotateZ: 360 }}
+      transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
+      onAnimationComplete={() => setcycleIndex((i) => (i + 1) % icons.length)}
+    >
+      <path d={icons[cycleIndex].path} />
+    </motion.svg>
+  )
+}
 
 export function SiteHeader() {
   const { currentTheme, setTheme } = useTheme()
@@ -181,6 +211,7 @@ export function SiteHeader() {
       </header>
 
       {/* MOBILE BOTTOM NAV - VISIBLE on mobile, HIDDEN on lg+ */}
+      {/* New elegant navigation with: Home, Comics, Shop, Games, Story/News, Settings */}
       <motion.div
         initial={{ y: 100 }}
         animate={{ y: 0 }}
@@ -196,7 +227,7 @@ export function SiteHeader() {
           }}
         >
           {/* Home */}
-          <Link href="/">
+          <Link href="/" title="Home">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -206,12 +237,12 @@ export function SiteHeader() {
                 color: currentTheme.colors.accentPrimary,
               }}
             >
-              <Home size={24} />
+              <HomeIcon className="w-6 h-6" />
             </motion.button>
           </Link>
 
-          {/* Characters */}
-          <Link href="/characters">
+          {/* Comics/Characters */}
+          <Link href="/characters" title="Comics">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -221,12 +252,12 @@ export function SiteHeader() {
                 color: currentTheme.colors.accentPrimary,
               }}
             >
-              <Users size={24} />
+              <ComicsIcon className="w-6 h-6" />
             </motion.button>
           </Link>
 
           {/* Shop */}
-          <Link href="/shop">
+          <Link href="/shop" title="Shop">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -236,12 +267,12 @@ export function SiteHeader() {
                 color: currentTheme.colors.accentPrimary,
               }}
             >
-              <ShoppingBag size={24} />
+              <ShopIcon className="w-6 h-6" />
             </motion.button>
           </Link>
 
           {/* Games */}
-          <Link href="/kufu-game">
+          <Link href="/kufu-game" title="Games">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -251,12 +282,12 @@ export function SiteHeader() {
                 color: currentTheme.colors.accentPrimary,
               }}
             >
-              <Gamepad2 size={24} />
+              <AnimatedGameIcon />
             </motion.button>
           </Link>
 
-          {/* Settings/Notifications */}
-          <Link href="/settings" className="relative">
+          {/* Story/News */}
+          <Link href="/news" title="News">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -266,7 +297,22 @@ export function SiteHeader() {
                 color: currentTheme.colors.accentPrimary,
               }}
             >
-              <Bell size={24} />
+              <StoryNewsIcon className="w-6 h-6" />
+            </motion.button>
+          </Link>
+
+          {/* Settings */}
+          <Link href="/settings" className="relative" title="Settings">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-3 rounded-2xl transition-all"
+              style={{
+                backgroundColor: `${currentTheme.colors.accentPrimary}15`,
+                color: currentTheme.colors.accentPrimary,
+              }}
+            >
+              <SettingsIcon className="w-6 h-6" />
               {unreadCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                   {unreadCount}
