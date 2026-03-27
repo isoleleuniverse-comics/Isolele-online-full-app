@@ -7,7 +7,9 @@ import Link from 'next/link'
 import { Heart, MessageCircle, Share2, Home, ShoppingBag, Search, Filter, X } from 'lucide-react'
 import { useLanguage } from '@/lib/language-context'
 import { useTheme } from '@/lib/theme-context'
+import { logOperation } from '@/lib/database-operations'
 import dynamic from 'next/dynamic'
+import { ProductNegotiationWidget } from '@/components/product-negotiation-widget'
 
 // Dynamically load Stripe to improve initial load time
 const loadStripe = dynamic(() => import('@stripe/js').then(mod => ({ default: mod.loadStripe })), {
@@ -172,6 +174,16 @@ export default function ShopPage() {
     if (stored) setInteractions(new Map(JSON.parse(stored)))
     const cartStored = localStorage.getItem('shop_cart')
     if (cartStored) setCart(JSON.parse(cartStored))
+
+    // Log shop page visit
+    logOperation({
+      operation_type: 'page_visit',
+      page_name: 'shop',
+      description: 'User visited shop page',
+      action_details: {
+        timestamp: new Date().toISOString(),
+      },
+    })
   }, [])
 
   const updateInteraction = (productId: number, action: 'like' | 'comment') => {
@@ -428,6 +440,15 @@ export default function ShopPage() {
           )}
         </motion.div>
       </section>
+
+      {/* Product Negotiation Widget */}
+      {filteredProducts.length > 0 && filteredProducts[0] && (
+        <ProductNegotiationWidget
+          productName={t(filteredProducts[0].name)}
+          productId={String(filteredProducts[0].id)}
+          originalPrice={filteredProducts[0].price}
+        />
+      )}
 
       {/* Cart Modal */}
       {isCartOpen && (

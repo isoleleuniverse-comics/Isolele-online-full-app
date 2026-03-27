@@ -21,30 +21,23 @@ const characterLinks = [
 
 // Animated Game Icon that cycles through different game-related icons
 const AnimatedGameIcon = () => {
-  const [cycleIndex, setcycleIndex] = useState(0)
-  const icons = [
-    { id: 'controller', path: 'M6 8c0-1.1.9-2 2-2h8c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2V8Z' },
-    { id: 'ball', path: 'M12 1a11 11 0 0 1 0 22 11 11 0 0 1 0-22M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8' },
-    { id: 'map', path: 'M3 6v14c0 1 .5 2 1.5 2.5L12 20l7.5 2.5c1 .5 1.5-.5 1.5-2.5V6L12 3.5 3 6Z' },
-    { id: 'saxophone', path: 'M8 5c1 0 2 1 2 2v3c0 1-1 2-2 2h3v4h2V5c0-1 1-2 2-2h2v2h-2v10h2v-2h2v2c0 1-1 2-2 2h-4c-1 0-2-1-2-2v-3' },
-    { id: 'dice', path: 'M4 4h12v12H4V4M6 7c-.5 0-1 .5-1 1s.5 1 1 1 1-.5 1-1-.5-1-1-1M14 12c-.5 0-1 .5-1 1s.5 1 1 1 1-.5 1-1-.5-1-1-1M10 10c-.5 0-1 .5-1 1s.5 1 1 1 1-.5 1-1-.5-1-1-1' }
-  ]
+  const [currentIcon, setCurrentIcon] = useState(0)
   
+  const gameIcons = [
+    <svg key="controller" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 9c0-1 1-2 2-2h8c1 0 2 1 2 2v6c0 1-1 2-2 2H8c-1 0-2-1-2-2V9z" /><circle cx="9" cy="12" r="0.5" fill="currentColor" /><circle cx="15" cy="12" r="0.5" fill="currentColor" /></svg>,
+    <svg key="ball" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><path d="M12 2v20M2 12h20" /></svg>,
+    <svg key="map" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z" /></svg>,
+    <svg key="dice" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="4" y="4" width="16" height="16" rx="2" /><circle cx="8" cy="8" r="1" fill="currentColor" /><circle cx="12" cy="12" r="1" fill="currentColor" /><circle cx="16" cy="16" r="1" fill="currentColor" /></svg>,
+  ]
+
   return (
-    <motion.svg
-      className="w-6 h-6"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      animate={{ rotateZ: 360 }}
-      transition={{ duration: 8, repeat: Infinity, repeatType: "reverse" }}
-      onAnimationComplete={() => setcycleIndex((i) => (i + 1) % icons.length)}
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+      onAnimationComplete={() => setCurrentIcon((i) => (i + 1) % gameIcons.length)}
     >
-      <path d={icons[cycleIndex].path} />
-    </motion.svg>
+      {gameIcons[currentIcon]}
+    </motion.div>
   )
 }
 
