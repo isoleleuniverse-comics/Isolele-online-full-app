@@ -10,7 +10,7 @@ import { useLanguage, languages } from "@/lib/language-context"
 import { useCart } from "@/lib/cart-context"
 import { useNotifications } from "@/lib/notifications-context"
 import { cn } from "@/lib/utils"
-import { HomeIcon, ComicsIcon, ShopIcon, GameIcon, StoryNewsIcon, SettingsIcon } from "@/components/icons/elegant-icons"
+import { HomeIcon, ComicsIcon, ShopIcon, StoryNewsIcon, SettingsIcon } from "@/components/icons/elegant-icons"
 
 const characterLinks = [
   { name: "ZAIRE - PRINCE DU KONGO", href: "/characters/zaire" },
