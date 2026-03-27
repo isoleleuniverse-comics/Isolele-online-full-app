@@ -12,6 +12,97 @@ import { cn } from "@/lib/utils"
 
 type Tab = "preferences" | "fashion" | "shop" | "bill-history" | "notifications"
 
+const settingsTranslations: Record<string, Record<string, string>> = {
+  en: {
+    title: "Settings",
+    subtitle: "Manage your preferences, view your history and explore more",
+    preferences: "Preferences",
+    fashion: "Fashion",
+    shop: "Shop",
+    billHistory: "Bills",
+    notifications: "Notifications",
+    language: "Language",
+    theme: "Theme",
+  },
+  fr: {
+    title: "Paramètres",
+    subtitle: "Gérez vos préférences, consultez votre historique et explorez plus",
+    preferences: "Paramètres",
+    fashion: "Mode",
+    shop: "Boutique",
+    billHistory: "Factures",
+    notifications: "Notifications",
+    language: "Langue",
+    theme: "Thème",
+  },
+  pt: {
+    title: "Configurações",
+    subtitle: "Gerencie suas preferências, visualize seu histórico e explore mais",
+    preferences: "Preferências",
+    fashion: "Moda",
+    shop: "Loja",
+    billHistory: "Faturas",
+    notifications: "Notificações",
+    language: "Idioma",
+    theme: "Tema",
+  },
+  es: {
+    title: "Configuración",
+    subtitle: "Administra tus preferencias, visualiza tu historial y explora más",
+    preferences: "Preferencias",
+    fashion: "Moda",
+    shop: "Tienda",
+    billHistory: "Facturas",
+    notifications: "Notificaciones",
+    language: "Idioma",
+    theme: "Tema",
+  },
+  zu: {
+    title: "Izilungiselelo",
+    subtitle: "Phatha izintandokazi zako, buka umlando wakho futhi ukuhlola okukhonjiswe",
+    preferences: "Izilungiselelo",
+    fashion: "Izambatho",
+    shop: "Ifasitela",
+    billHistory: "Iziliphu",
+    notifications: "Izaziso",
+    language: "Ulimi",
+    theme: "Itheme",
+  },
+  xh: {
+    title: "Izilungiselelo",
+    subtitle: "Phatha izintandokazi zako, buka umlando wakho futhi ukuhlola okukhonjiswe",
+    preferences: "Izilungiselelo",
+    fashion: "Izambatho",
+    shop: "Ifasitela",
+    billHistory: "Iziliphu",
+    notifications: "Izaziso",
+    language: "Ulimi",
+    theme: "Itheme",
+  },
+  sw: {
+    title: "Mipangilio",
+    subtitle: "Simamia mapendeleo yako, angalia historia yako na tukuza zaidi",
+    preferences: "Mapendeleo",
+    fashion: "Mitindo",
+    shop: "Duka",
+    billHistory: "Bili",
+    notifications: "Arifa",
+    language: "Lugha",
+    theme: "Mandharaka",
+  },
+  ln: {
+    title: "Milamuza",
+    subtitle: "Salamua makambu moa, lolaka buku bua matino mpe kanisa kala",
+    preferences: "Milamuza",
+    fashion: "Bilamba",
+    shop: "Betumuki",
+    billHistory: "Belu",
+    notifications: "Bongo",
+    language: "Lokota",
+    theme: "Mitindo",
+  },
+}
+
 export default function SettingsPage() {
   const { currentTheme, setTheme } = useTheme()
   const { currentLanguage, setLanguage, t } = useLanguage()
@@ -19,12 +110,16 @@ export default function SettingsPage() {
   const { bills } = useBillHistory()
   const [activeTab, setActiveTab] = useState<Tab>("preferences")
 
+  const st = (key: keyof typeof settingsTranslations.en) => 
+    settingsTranslations[currentLanguage.code as keyof typeof settingsTranslations]?.[key] || 
+    settingsTranslations.en[key]
+
   const tabs = [
-    { id: "preferences", label: "Paramètres", icon: "⚙️" },
-    { id: "fashion", label: "Mode", icon: "👗" },
-    { id: "shop", label: "Boutique", icon: "🛍️" },
-    { id: "bill-history", label: "Factures", icon: "📋" },
-    { id: "notifications", label: "Notifications", icon: "🔔" },
+    { id: "preferences", label: st("preferences"), icon: "⚙️" },
+    { id: "fashion", label: st("fashion"), icon: "👗" },
+    { id: "shop", label: st("shop"), icon: "🛍️" },
+    { id: "bill-history", label: st("billHistory"), icon: "📋" },
+    { id: "notifications", label: st("notifications"), icon: "🔔" },
   ] as const
 
   return (
@@ -33,10 +128,10 @@ export default function SettingsPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2" style={{ color: currentTheme.colors.textPrimary }}>
-            {t("nav_settings")}
+            {st("title")}
           </h1>
           <p style={{ color: currentTheme.colors.textSecondary }}>
-            Gérez vos préférences, consulez votre historique et explorez plus
+            {st("subtitle")}
           </p>
         </div>
 
@@ -86,7 +181,7 @@ export default function SettingsPage() {
               {/* Language */}
               <div className="p-6 rounded-xl" style={{ backgroundColor: `${currentTheme.colors.accentPrimary}05`, border: `1px solid ${currentTheme.colors.accentPrimary}20` }}>
                 <h3 className="text-xl font-bold mb-4" style={{ color: currentTheme.colors.textPrimary }}>
-                  Langue
+                  {st("language")}
                 </h3>
                 <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
                   {languages.map((lang) => (
@@ -114,7 +209,7 @@ export default function SettingsPage() {
               {/* Theme */}
               <div className="p-6 rounded-xl" style={{ backgroundColor: `${currentTheme.colors.accentPrimary}05`, border: `1px solid ${currentTheme.colors.accentPrimary}20` }}>
                 <h3 className="text-xl font-bold mb-4" style={{ color: currentTheme.colors.textPrimary }}>
-                  Thème
+                  {st("theme")}
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {themes.map((theme) => (
