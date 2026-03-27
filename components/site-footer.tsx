@@ -256,8 +256,7 @@ export function SiteFooter() {
             className="text-sm text-center md:text-left flex items-center gap-2"
             style={{ color: currentTheme.colors.textSecondary }}
           >
-            <span>©</span>
-            <span>{new Date().getFullYear()} ISOLELE. All rights reserved. A Congolese Heritage Initiative</span>
+            {t("footer_copyright")}
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-sm">
             <Link
