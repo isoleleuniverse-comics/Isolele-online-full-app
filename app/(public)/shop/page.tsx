@@ -10,12 +10,6 @@ import { useTheme } from '@/lib/theme-context'
 import dynamic from 'next/dynamic'
 import { ProductNegotiationWidget } from '@/components/product-negotiation-widget'
 
-// Dynamically load Stripe to improve initial load time
-const loadStripe = dynamic(() => import('@stripe/js').then(mod => ({ default: mod.loadStripe })), {
-  ssr: false,
-  loading: () => null
-})
-
 // Product data
 const products = [
   {
