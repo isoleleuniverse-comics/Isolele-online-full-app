@@ -10,7 +10,6 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { LoadingScreen } from "@/components/loading-screen"
 import { CartDrawer } from "@/components/cart-drawer"
-import { Chatbot } from "@/components/chatbot"
 import { AnalyticsProvider } from "@/components/analytics-provider"
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
@@ -56,7 +55,6 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
                   </main>
                   <SiteFooter />
                   <CartDrawer />
-                  <Chatbot />
                 </div>
               </AnalyticsProvider>
             </BillHistoryProvider>

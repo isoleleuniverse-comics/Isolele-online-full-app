@@ -41,6 +41,13 @@ html {
   height: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  /* Default theme colors - Ancestral Kingdom (dark mode) */
+  --isolele-bg: #0A0A0A;
+  --isolele-bg-secondary: #1A120B;
+  --isolele-accent: #D4AF37;
+  --isolele-accent-secondary: #B3541E;
+  --isolele-text: #F5F5DC;
+  --isolele-text-secondary: #D3D3C7;
 }
 
 body {
