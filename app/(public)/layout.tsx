@@ -8,27 +8,15 @@ import { NotificationsProvider } from "@/lib/notifications-context"
 import { BillHistoryProvider } from "@/lib/bill-history-context"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { LoadingScreen } from "@/components/loading-screen"
 import { CartDrawer } from "@/components/cart-drawer"
 import { AnalyticsProvider } from "@/components/analytics-provider"
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
-  const [isLoading, setIsLoading] = useState(true)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    // Check if user has visited before
-    const hasVisited = sessionStorage.getItem("isolele-visited")
-    if (hasVisited) {
-      setIsLoading(false)
-    }
   }, [])
-
-  const handleLoadingComplete = () => {
-    setIsLoading(false)
-    sessionStorage.setItem("isolele-visited", "true")
-  }
 
   if (!mounted) {
     return null
@@ -41,7 +29,6 @@ export default function PublicLayout({ children }: { children: ReactNode }) {
           <NotificationsProvider>
             <BillHistoryProvider>
               <AnalyticsProvider>
-                {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
                 <div 
                   className="w-screen min-h-screen flex flex-col transition-colors duration-800 overflow-x-hidden"
                   style={{ 
