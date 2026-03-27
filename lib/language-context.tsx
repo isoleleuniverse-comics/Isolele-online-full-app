@@ -18,7 +18,7 @@ export const languages: Language[] = [
   { code: "zu", name: "Zulu", nativeName: "isiZulu", flag: languageFlags.zu },
   { code: "xh", name: "Xhosa", nativeName: "isiXhosa", flag: languageFlags.zu },
   { code: "sw", name: "Swahili", nativeName: "Kiswahili", flag: languageFlags.sw },
-  { code: "ln", name: "Lingala", nativeName: "Lingála", flag: languageFlags.pt },
+  { code: "ln", name: "Lingala", nativeName: "Lingála", flag: languageFlags.ln },
 ]
 
 interface LanguageContextType {
