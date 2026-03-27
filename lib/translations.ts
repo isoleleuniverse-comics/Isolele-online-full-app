@@ -1,6 +1,6 @@
 "use client"
 
-export type Language = "en" | "fr" | "pt" | "es" | "zu" | "xh" | "sw" | "ln" | "zh" | "hi" | "ru" | "ja" | "ar" | "bn" | "ur" | "om" | "ha" | "yo" | "sn" | "ig" | "am"
+export type Language = "en" | "fr" | "pt" | "es" | "zu" | "xh" | "sw" | "ln"
 
 export const languageNames: Record<Language, string> = {
   en: "English",
@@ -11,19 +11,6 @@ export const languageNames: Record<Language, string> = {
   xh: "Xhosa",
   sw: "Swahili",
   ln: "Lingala",
-  zh: "Chinese",
-  hi: "Hindi",
-  ru: "Russian",
-  ja: "Japanese",
-  ar: "Arabic",
-  bn: "Bengali",
-  ur: "Urdu",
-  om: "Oromo",
-  ha: "Hausa",
-  yo: "Yoruba",
-  sn: "Shona",
-  ig: "Igbo",
-  am: "Amharic",
 }
 
 export const languageFlags: Record<Language, string> = {
@@ -35,19 +22,6 @@ export const languageFlags: Record<Language, string> = {
   xh: "🇿🇦",
   sw: "🇹🇿",
   ln: "🇨🇩",
-  zh: "🇨🇳",
-  hi: "🇮🇳",
-  ru: "🇷🇺",
-  ja: "🇯🇵",
-  ar: "🇸🇦",
-  bn: "🇧🇩",
-  ur: "🇵🇰",
-  om: "🇪🇹",
-  ha: "🇳🇪",
-  yo: "🇳🇬",
-  sn: "🇿🇼",
-  ig: "🇳🇬",
-  am: "🇪🇹",
 }
 
 export interface TranslationKeys {
@@ -2258,7 +2232,7 @@ export const translations: Record<Language, TranslationKeys> = {
     cta_title: "加入传奇", cta_join_legend: "成为传奇的一部分", cta_description: "发现孤独灵魂宇宙中的故事",
     cta_explore: "探索", cta_newsletter: "通讯",
     footer_description: "孤独灵魂：恢复非洲叙事的灵魂", footer_explore: "探索", footer_resources: "资源",
-    footer_newsletter_title: "订阅我们的通讯", footer_newsletter_desc: "了解最新故事和更新",
+    footer_newsletter_title: "订阅我们的���讯", footer_newsletter_desc: "了解最新故事和更新",
     footer_email_placeholder: "输入您的电子邮件", footer_subscribe: "订阅", footer_copyright: "版权所有",
     footer_press: "新闻", footer_careers: "职业", footer_contact: "联系", footer_faq: "常见问题",
     footer_terms: "条款", footer_privacy: "隐私", shop_title: "商店", shop_subtitle: "购买独家商品",
@@ -2340,7 +2314,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_title: "आइसलेल के बारे में", about_what_is: "आइसलेल क्या है?",
     about_vision_title: "दृष्टि", about_vision_desc: "अफ्रीका को कहानी, कल्पना और शक्ति के स्रोत के रूप में बहाल करना।",
     about_pillars_title: "आइसलेल के चार स्तंभ", about_pillar1_title: "आध्यात्मिक दुनिया",
-    about_pillar1_desc: "पूरे अफ्रीका पर शासन करने के लिए पर्याप्त राजाओं और रानियों से भरा हुआ।",
+    about_pillar1_desc: "पूरे अफ्रीका पर शासन करने के लिए पर्याप्त राजाओं और रानियों से भरा हुआ��",
     about_pillar2_title: "रचनात्मक प्रकाशन और स्थानीयकरण", about_pillar2_desc: "कहानी से सोच तक, खेल से सिनेमा तक, आइसलेल अफ्रीकी रचनात्मक कार्यकर्ताओं के लिए एक मंच बनाता है।",
     about_pillar3_title: "मानव जागृति", about_pillar3_desc: "आइसलेल एक महान उद्देश्य का पहला हिस्सा है जिसका लक्ष्य अफ्रीका की रॉयल्टी, आत्मा और परे को खोजना, खोज करना और बहाल करना है।",
     about_pillar4_title: "बाल पदचिन्ह", about_pillar4_desc: "आइसलेल पढ़ने वाला बच्चा ऐसे संरक्षकों की खोज करेगा जो उसकी तरह दिखते हैं।",
@@ -2444,7 +2418,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_zattar_tag: "ザッター：宇宙の王子", book_zattar_title: "ザッター", book_zattar_subtitle: "玉座の征服者",
     book_zattar_desc: "運命が彼に一つの王国を拒んだとき、彼はすべてを征服することを決めました。", book_discover_zattar: "ザッターを発見",
     book_zaiko_tag: "ザイコ：キヴ地域の最後の王", book_zaiko_title: "ザイコの伝説",
-    book_zaiko_subtitle: "彼は通りから上がりませんでした。彼らを征服しました。", book_zaiko_desc: "北キヴで生まれました。",
+    book_zaiko_subtitle: "彼は通りから上がりませんでした。彼らを征服しました。", book_zaiko_desc: "北キヴで生まれました��",
     book_discover_zaiko: "ザイコを発見",
     universe_title: "ISOLELE宇宙", universe_subtitle: "選ばれし者たち", universe_description: "ISOLELEはアフリカのストーリーテリングの魂を取り戻すために生まれた先見的な宇宙です。",
     universe_destiny_title: "運命は選択ではありません", universe_destiny_desc: "それは呼びかけです。",
@@ -2558,7 +2532,7 @@ export const translations: Record<Language, TranslationKeys> = {
   bn: {
     nav_home: "হোম", nav_about: "সম্পর্কে", nav_founder: "প্রতিষ্ঠাতা", nav_news: "সংবাদ", nav_characters: "চরিত্র",
     nav_shop: "দোকান", nav_supporters: "সমর্থক", nav_contact: "যোগাযোগ", nav_games: "গেম", nav_all_characters: "সমস্ত অক্ষর",
-    nav_become_supporter: "সমর্থক হন", nav_partners: "অংশীদার", nav_restaurant: "অংশীদার রেস্তোরাঁ", nav_fashion: "ফ্যাশন", nav_settings: "সেটিংস",
+    nav_become_supporter: "সমর্থক হন", nav_partners: "অংশীদার", nav_restaurant: "অং��ীদার রেস্তোরাঁ", nav_fashion: "ফ্যাশন", nav_settings: "সেটিংস",
     hero_title: "জায়ের - কঙ্গোর রাজকুমার", hero_subtitle: "ভাগ্যের হার", hero_description: "একটি অনুপ্রেরণামূলক অ্যাকশন-প্যাকড অ্যাডভেঞ্চার যা লায়ন কিং এবং ব্ল্যাক প্যান্থারের আত্মার সাথে অনুরণিত হয়।",
     hero_buy_now: "এখনই কিনুন", hero_discover: "গল্প আবিষ্কার করুন", hero_preorder: "প্রাক-অর্ডার", hero_launch_price: "লঞ্চ মূল্য",
     book_welcome_tag: "ইসোলেলে স্বাগতম", book_chosen_ones_title: "নির্বাচিত", book_chosen_ones_subtitle: "কঙ্গোর শিকড় থেকে জন্ম নেওয়া একটি সম্পূর্ণ মহাবিশ্ব...",
@@ -2583,7 +2557,7 @@ export const translations: Record<Language, TranslationKeys> = {
     universe_title: "ইসোলেল মহাবিশ্ব", universe_subtitle: "নির্বাচিত", universe_description: "ইসোলেল একটি দূরদর্শী মহাবিশ্ব যা আফ্রিকান বর্ণনার আত্মা পুনরুদ্ধার করতে জন্ম নিয়েছিল।",
     universe_destiny_title: "ভাগ্য একটি পছন্দ নয়", universe_destiny_desc: "এটি একটি আহ্বান।",
     universe_heritage_title: "রাজকীয় রক্ত প্রাচীন শক্তি বহন করে", universe_heritage_desc: "রাজকীয় রক্ত ভুলে যাওয়া সাম্রাজ্যের স্মৃতি এবং শক্তি বহন করে।",
-    universe_resurrection_title: "পূর্বপুরুষের আত্মা কখনও মৃত্যু পায় না", universe_resurrection_desc: "আফ্রিকা কখনই সহায়কহীন ছিল না।",
+    universe_resurrection_title: "পূর্বপুরুষের আ��্মা কখনও মৃত্যু পায় না", universe_resurrection_desc: "আফ্রিকা কখনই সহায়কহীন ছিল না।",
     characters_title: "নির্বাচিত", characters_subtitle: "ইসোলেল মহাবিশ্বের বীর, কিংবদন্তি এবং অভিভাবকদের দেখা করুন",
     characters_discover: "আবিষ্কার করুন", characters_zaire_title: "কঙ্গোর রাজকুমার", characters_zaire_desc: "বিদ্যুত এবং রাজকীয়তার পুত্র।",
     characters_kimoya_title: "কিমোয়া", characters_kimoya_desc: "আগুনের মহিলা দ্বারা ক্ষমতাপ্রাপ্ত যোদ্ধা।", characters_zattar_title: "জাত্তার",
