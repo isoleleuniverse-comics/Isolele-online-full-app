@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, type ReactNode } from "react"
+import type { ReactNode } from "react"
 import { ThemeProvider } from "@/lib/theme-context"
 import { LanguageProvider } from "@/lib/language-context"
 import { CartProvider } from "@/lib/cart-context"
@@ -12,16 +12,6 @@ import { CartDrawer } from "@/components/cart-drawer"
 import { AnalyticsProvider } from "@/components/analytics-provider"
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return null
-  }
-
   return (
     <ThemeProvider>
       <LanguageProvider>
