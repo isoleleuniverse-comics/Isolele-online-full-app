@@ -1,6 +1,6 @@
 "use client"
 
-export type Language = "en" | "fr" | "pt" | "es" | "zu" | "xh" | "sw" | "ln"
+export type Language = "en" | "fr" | "pt" | "es" | "zu" | "xh" | "sw" | "ln" | "zh" | "hi" | "ru" | "ja" | "ar" | "bn" | "ur" | "om" | "ha" | "yo" | "sn" | "ig" | "am"
 
 export const languageNames: Record<Language, string> = {
   en: "English",
@@ -11,6 +11,19 @@ export const languageNames: Record<Language, string> = {
   xh: "Xhosa",
   sw: "Swahili",
   ln: "Lingala",
+  zh: "Chinese",
+  hi: "Hindi",
+  ru: "Russian",
+  ja: "Japanese",
+  ar: "Arabic",
+  bn: "Bengali",
+  ur: "Urdu",
+  om: "Oromo",
+  ha: "Hausa",
+  yo: "Yoruba",
+  sn: "Shona",
+  ig: "Igbo",
+  am: "Amharic",
 }
 
 export const languageFlags: Record<Language, string> = {
@@ -22,6 +35,19 @@ export const languageFlags: Record<Language, string> = {
   xh: "🇿🇦",
   sw: "🇹🇿",
   ln: "🇨🇩",
+  zh: "🇨🇳",
+  hi: "🇮🇳",
+  ru: "🇷🇺",
+  ja: "🇯🇵",
+  ar: "🇸🇦",
+  bn: "🇧🇩",
+  ur: "🇵🇰",
+  om: "🇪🇹",
+  ha: "🇳🇪",
+  yo: "🇳🇬",
+  sn: "🇿🇼",
+  ig: "🇳🇬",
+  am: "🇪🇹",
 }
 
 export interface TranslationKeys {
