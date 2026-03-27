@@ -140,6 +140,15 @@ const products = [
     image: '/shop/product-16.jpg',
     description: { en: 'Premium gold essence', fr: 'Essence or premium' },
   },
+  {
+    id: 17,
+    name: { en: 'ZAIIRE The Prince Of Kongo: Necklace Of Destiny', fr: 'ZAIIRE Le Prince Du Kongo: Collier De Destinée' },
+    price: 36.99,
+    category: 'collectibles',
+    image: '/shop/product-17.jpg',
+    description: { en: 'Legendary necklace of the Prince', fr: 'Le collier légendaire du Prince' },
+    stripeLink: 'https://buy.stripe.com/14A5kD44Z6yM2zR6qh6Zy0c',
+  },
 ]
 
 interface ProductInteraction {
@@ -410,11 +419,19 @@ export default function ShopPage() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => addToCart(product.id)}
+                    onClick={() => {
+                      if ((product as any).stripeLink) {
+                        window.open((product as any).stripeLink, '_blank')
+                      } else {
+                        addToCart(product.id)
+                      }
+                    }}
                     className="w-full py-2 rounded font-bold text-white"
                     style={{ backgroundColor: currentTheme.colors.accentPrimary }}
                   >
-                    {lang === 'fr' ? 'Acheter' : 'Buy'}
+                    {(product as any).stripeLink 
+                      ? (lang === 'fr' ? 'Acheter Maintenant' : 'Buy Now')
+                      : (lang === 'fr' ? 'Acheter' : 'Buy')}
                   </motion.button>
                 </div>
               </motion.div>
