@@ -6,70 +6,152 @@ import { useLanguage } from "@/lib/language-context"
 import { ArrowLeft, ShoppingCart, BookOpen } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { useState, useEffect } from "react"
 
-const booksData: Record<string, any> = {
+interface BookData {
+  titleEn: string
+  subtitleEn: string
+  descriptionEn: string
+  summaryEn: string
+  color: string
+  coverImage: string
+  year: number
+  pages: number
+  rating: number
+  chapters: number
+  mainCharactersEn: string[]
+  themesEn: string[]
+  price: string
+  availability: string
+  // Translated versions
+  title?: string
+  subtitle?: string
+  description?: string
+  summary?: string
+  mainCharacters?: string[]
+  themes?: string[]
+}
+
+const booksData: Record<string, BookData> = {
   zaiire: {
-    title: "The Prince of Kongo",
-    subtitle: "Book 1: The Chosen Ones Awakening",
+    titleEn: "The Prince of Kongo",
+    subtitleEn: "Book 1: The Chosen Ones Awakening",
     color: "#F6B800",
     coverImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg",
     year: 2026,
     pages: 340,
     rating: 4.8,
-    description:
+    descriptionEn:
       "In the heart of the ancient Kongo Kingdom, a young prince awakens to his true destiny. Zaiïre discovers the legendary Collier du Destin and learns that he is not alone in his power. With destiny calling and ancestral spirits guiding him, he must unite the chosen ones to save both worlds.",
-    summary:
+    summaryEn:
       "The first book in the ISOLELE series follows Zaiïre as he discovers his royal birthright and becomes the bridge between the mortal and spiritual realms. As danger threatens both worlds, he must find the other chosen ones and fulfill an ancient prophecy.",
     chapters: 18,
-    mainCharacters: ["Zaiïre", "Bambula", "King Kufulula", "The Spirit Council"],
-    themes: ["Destiny", "Heritage", "Power", "Unity", "Awakening"],
+    mainCharactersEn: ["Zaiïre", "Bambula", "King Kufulula", "The Spirit Council"],
+    themesEn: ["Destiny", "Heritage", "Power", "Unity", "Awakening"],
     price: "$14.99",
     availability: "In Stock",
   },
   kandake: {
-    title: "The Kandake's Court",
-    subtitle: "Book 2: Empire of Ancient Queens",
+    titleEn: "The Kandake's Court",
+    subtitleEn: "Book 2: Empire of Ancient Queens",
     color: "#C0392B",
     coverImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
     year: 2026,
     pages: 380,
     rating: 4.9,
-    description:
+    descriptionEn:
       "Kimoya, the rising Kandake of ancient Nubia, commands the most powerful court in Africa. When the chosen ones arrive seeking her counsel, ancient rivalries resurface and the balance of power shifts. She must decide whether to join the fight or protect her realm.",
-    summary:
+    summaryEn:
       "The second installment expands the ISOLELE universe with the story of Kimoya and the ancient kingdoms of Nubia and Egypt. Political intrigue, ancient magic, and epic battles shape the fate of a continent.",
     chapters: 20,
-    mainCharacters: ["Kimoya", "Zaiïre", "Ancient Councils", "The Kandake Guard"],
-    themes: ["Leadership", "Tradition", "Power Dynamics", "Ancient Wisdom"],
+    mainCharactersEn: ["Kimoya", "Zaiïre", "Ancient Councils", "The Kandake Guard"],
+    themesEn: ["Leadership", "Tradition", "Power Dynamics", "Ancient Wisdom"],
     price: "$14.99",
     availability: "In Stock",
   },
   streets: {
-    title: "Crowned by the Streets",
-    subtitle: "Book 3: Urban Legends Rise",
+    titleEn: "Crowned by the Streets",
+    subtitleEn: "Book 3: Urban Legends Rise",
     color: "#4169E1",
     coverImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mokele-lZToplq4eNUuy08B5V6faXETr5YnKg.jpg",
     year: 2026,
     pages: 360,
     rating: 4.7,
-    description:
+    descriptionEn:
       "Mokele grows up in the concrete jungles where tradition meets modernity. When he discovers his royal bloodline, his life changes forever. He becomes a bridge between the old world and the new, proving that ancestral power lives anywhere.",
-    summary:
+    summaryEn:
       "The third book brings the ISOLELE story to the modern urban landscape. Mokele's journey shows that the chosen ones are everywhere, and heritage transcends geography and class.",
     chapters: 19,
-    mainCharacters: ["Mokele", "Urban Warriors", "Street Community", "Ancestral Guardians"],
-    themes: ["Identity", "Modernity vs Tradition", "Community", "Hidden Power"],
+    mainCharactersEn: ["Mokele", "Urban Warriors", "Street Community", "Ancestral Guardians"],
+    themesEn: ["Identity", "Modernity vs Tradition", "Community", "Hidden Power"],
     price: "$14.99",
     availability: "Coming Soon",
   },
 }
 
 export default function BookPage({ params }: { params: { id: string } }) {
-  const book = booksData[params.id as keyof typeof booksData]
+  const bookBase = booksData[params.id as keyof typeof booksData]
   const { currentTheme } = useTheme()
-  const { t } = useLanguage()
+  const { currentLanguage, translateText } = useLanguage()
+  const [book, setBook] = useState<BookData | null>(null)
+
+  useEffect(() => {
+    async function translateBook() {
+      if (!bookBase) return
+      
+      const translated = { ...bookBase }
+      
+      // Only translate if not English
+      if (currentLanguage.code !== "en") {
+        console.log("[v0] Translating book to", currentLanguage.code)
+        try {
+          translated.title = await translateText(bookBase.titleEn, currentLanguage.code)
+          translated.subtitle = await translateText(bookBase.subtitleEn, currentLanguage.code)
+          translated.description = await translateText(bookBase.descriptionEn, currentLanguage.code)
+          translated.summary = await translateText(bookBase.summaryEn, currentLanguage.code)
+          translated.mainCharacters = await Promise.all(
+            bookBase.mainCharactersEn.map(char => translateText(char, currentLanguage.code))
+          )
+          translated.themes = await Promise.all(
+            bookBase.themesEn.map(theme => translateText(theme, currentLanguage.code))
+          )
+        } catch (error) {
+          console.error("[v0] Translation failed:", error)
+          // Fallback to English
+          translated.title = bookBase.titleEn
+          translated.subtitle = bookBase.subtitleEn
+          translated.description = bookBase.descriptionEn
+          translated.summary = bookBase.summaryEn
+          translated.mainCharacters = bookBase.mainCharactersEn
+          translated.themes = bookBase.themesEn
+        }
+      } else {
+        // Use English versions
+        translated.title = bookBase.titleEn
+        translated.subtitle = bookBase.subtitleEn
+        translated.description = bookBase.descriptionEn
+        translated.summary = bookBase.summaryEn
+        translated.mainCharacters = bookBase.mainCharactersEn
+        translated.themes = bookBase.themesEn
+      }
+      
+      setBook(translated)
+    }
+    
+    translateBook()
+  }, [currentLanguage.code, bookBase, translateText])
 
   if (!book) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: currentTheme.colors.background }}>
+        <div className="text-center">
+          <p style={{ color: currentTheme.colors.textSecondary }}>Loading...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!bookBase) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: currentTheme.colors.background }}>
         <div className="text-center">

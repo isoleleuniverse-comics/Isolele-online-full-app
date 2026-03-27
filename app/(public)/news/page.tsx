@@ -9,15 +9,36 @@ import { BreadcrumbJsonLd } from "@/components/json-ld"
 const articles = [
   {
     id: "makanda-wakanda",
-    category: { en: "HISTORY UNVEILED", fr: "HISTOIRE DEVOILEE" },
+    category: {
+      en: "HISTORY UNVEILED",
+      fr: "HISTOIRE DÉVOILÉE",
+      pt: "HISTÓRIA REVELADA",
+      es: "HISTORIA REVELADA",
+      zu: "UMLANDO OKHANGELWE",
+      xh: "UMLANDO OKHANGELWE",
+      sw: "HISTORIA ILIYOFUNULIWA",
+      ln: "MOTANGO EYOBONDI"
+    },
     categoryColor: "#D4AF37",
     title: {
       en: "The Lost Tribe Behind Wakanda Was Real: Meet the Makanda of Congo",
-      fr: "La tribu perdue derriere Wakanda etait reelle : Rencontrez les Makanda du Congo"
+      fr: "La tribu perdue derrière Wakanda était réelle : Rencontrez les Makanda du Congo",
+      pt: "A tribo perdida por trás de Wakanda era real: Conheça os Makanda do Congo",
+      es: "La tribu perdida detrás de Wakanda era real: Conoce a los Makanda del Congo",
+      zu: "Isikhulu esasalahlekile sisemva kwe-Wakanda Kwakuzinjalo: Hlangana neeMakanda zeKongo",
+      xh: "Isikhulu esasalahlekile sisemva kwe-Wakanda Kwakuzinjalo: Hlangana neeMakanda zeKongo",
+      sw: "Kabila lililoliyopoteza nyuma ya Wakanda lilikuwa halisi: Kamatia Makanda wa Congo",
+      ln: "Lia lililoliyopoteza nyuma ya Wakanda lilikuwa halisi: Kamatia Makanda wa Congo"
     },
     excerpt: {
       en: "A new wave of historians and cultural leaders are shining a light on Makanda — a once-hidden Congolese empire believed to hold the true heritage behind the Wakanda myth.",
-      fr: "Une nouvelle vague d'historiens et de leaders culturels met en lumiere Makanda — un empire congolais autrefois cache qui detiendrait le veritable heritage derriere le mythe de Wakanda."
+      fr: "Une nouvelle vague d'historiens et de leaders culturels met en lumière Makanda — un empire congolais autrefois caché qui détiendrait le véritable héritage derrière le mythe de Wakanda.",
+      pt: "Uma nova onda de historiadores e líderes culturais está iluminando Makanda — um império congolês outrora oculto que se acredita ser o verdadeiro patrimônio por trás do mito de Wakanda.",
+      es: "Una nueva ola de historiadores y líderes culturales está iluminando Makanda — un imperio congoleño otrora oculto que se cree que tiene el verdadero patrimonio detrás del mito de Wakanda.",
+      zu: "Isikhulu esisha seengcali zesimungulu nabalumbi benkuleko besikhanyisiwe iMakanda — ubukhosi beKongo obawo bayeyonakele okokuqala okukholelwa ukuba isinabeso sangempela sesintsomi seWakanda.",
+      xh: "Isikhulu esisha seengcali zesimungulu nabalumbi benkuleko besikhanyisiwe iMakanda — ubukhosi beKongo obawo bayeyonakele okokuqala okukholelwa ukuba isinabeso sangempela sesintsomi seWakanda.",
+      sw: "Wimbi jipya la wahistoria na viongozi wa kitamaduni wanang'aza iMakanda — falme ya Kongo iliyosifiwa hapo awali inachukuliwa kuwa na urithi wa kweli nyuma ya hadithi ya Wakanda.",
+      ln: "Wimbi jipya la wahistoria na viongozi wa kitamaduni wanang'aza iMakanda — falme ya Kongo iliyosifiwa hapo awali inachukuliwa kuwa na urithi wa kweli nyuma ya hadithi ya Wakanda."
     },
     readTime: "5 min",
     date: "March 2025",
@@ -25,90 +46,47 @@ const articles = [
   },
   {
     id: "reclaiming-memory",
-    category: { en: "CULTURAL COMMENTARY", fr: "COMMENTAIRE CULTUREL" },
+    category: {
+      en: "CULTURAL COMMENTARY",
+      fr: "COMMENTAIRE CULTUREL",
+      pt: "COMENTÁRIO CULTURAL",
+      es: "COMENTARIO CULTURAL",
+      zu: "UMCEBISO WENKULEKO",
+      xh: "UMCEBISO WENKULEKO",
+      sw: "MAONI YA KITAMADUNI",
+      ln: "MALOBA MA BOYOKOLI"
+    },
     categoryColor: "#B3541E",
     title: {
       en: "How the Isolele Universe Reclaims African Memory",
-      fr: "Comment l'Univers Isolele Recupere la Memoire Africaine"
+      fr: "Comment l'Univers Isolele Récupère la Mémoire Africaine",
+      pt: "Como o Universo Isolele Recupera a Memória Africana",
+      es: "Cómo el Universo Isolele Recupera la Memoria Africana",
+      zu: "Indlela I-Isolele Universe Ibuylbulula I-African Memory",
+      xh: "Indlela I-Isolele Universe Ibuylbulula I-African Memory",
+      sw: "Jinsi Ulimwengu wa Isolele Unavyorejeza Kumbukumbu ya Afrika",
+      ln: "Ndenge Bambwe ya Isolele Ibuylbulula Mopeseli ya Afrika"
     },
     excerpt: {
       en: '"Colonialism didn\'t erase our greatness. It buried it under its own myth." A blueprint for the restoration of Africa\'s suppressed imagination.',
-      fr: '"Le colonialisme n\'a pas efface notre grandeur. Il l\'a enterree sous son propre mythe." Un plan pour la restauration de l\'imagination supprimee de l\'Afrique.'
+      fr: '"Le colonialisme n\'a pas effacé notre grandeur. Il l\'a enterrée sous son propre mythe." Un plan pour la restauration de l\'imagination supprimée de l\'Afrique.',
+      pt: '"O colonialismo não apagou nossa grandeza. Enterrou sob seu próprio mito." Um plano para a restauração da imaginação suprimida da África.',
+      es: '"El colonialismo no borró nuestra grandeza. La enterró bajo su propio mito." Un plan para la restauración de la imaginación suprimida de África.',
+      zu: '"IKolonialibhmu ayikhasulizanga ubukhulu bethu. Yayibulala ngaphansi kwengcutshelo yayo." Isikebesi sokubuyelisela izikhulu ezicindezelwe zase-Afrika.',
+      xh: '"IKolonialibhmu ayikhasulizanga ubukhulu bethu. Yayibulala ngaphansi kwengcutshelo yayo." Isikebesi sokubuyelisela izikhulu ezicindezelwe zase-Afrika.',
+      sw: '"Utokamatiani haukusambaza ukubwa wetu. Ulizikia chini ya hadithi yake yenyewe." Mpango wa kurejeza akili iliyozuia ya Afrika.',
+      ln: '"Utokamatiani haukusambaza ukubwa wetu. Ulizikia chini ya hadithi yake yenyewe." Mpango wa kurejeza akili iliyozuia ya Afrika.'
     },
     readTime: "8 min",
     date: "February 2025",
     featured: true
-  },
-  {
-    id: "mapping-makanda",
-    category: { en: "RESEARCH", fr: "RECHERCHE" },
-    categoryColor: "#00CED1",
-    title: {
-      en: "From Myth to Manuscript: Mapping the Makanda Empire",
-      fr: "Du Mythe au Manuscrit : Cartographier l'Empire Makanda"
-    },
-    excerpt: {
-      en: "A cartographic journey through an erased African civilization whose memory survived in symbols, not borders.",
-      fr: "Un voyage cartographique a travers une civilisation africaine effacee dont la memoire a survecu dans des symboles, pas dans des frontieres."
-    },
-    readTime: "6 min",
-    date: "January 2025",
-    featured: false
-  },
-  {
-    id: "zaire-journey",
-    category: { en: "BEHIND THE STORY", fr: "DERRIERE L'HISTOIRE" },
-    categoryColor: "#9370DB",
-    title: {
-      en: "The Journey of Zaiire: Creating a New African Superhero",
-      fr: "Le Voyage de Zaiire : Creer un Nouveau Super-Heros Africain"
-    },
-    excerpt: {
-      en: "From concept to comic page — the creative process behind bringing the Prince of Kongo to life.",
-      fr: "Du concept a la page de bande dessinee — le processus creatif derriere la creation du Prince du Kongo."
-    },
-    readTime: "7 min",
-    date: "December 2024",
-    featured: false
-  },
-  {
-    id: "african-mythology",
-    category: { en: "MYTHOLOGY", fr: "MYTHOLOGIE" },
-    categoryColor: "#D4AF37",
-    title: {
-      en: "The Gods of the Kongo: Ancient Deities in Modern Comics",
-      fr: "Les Dieux du Kongo : Divinites Anciennes dans les Comics Modernes"
-    },
-    excerpt: {
-      en: "Exploring the rich pantheon of Kongolese mythology and how it shapes the Isolele universe.",
-      fr: "Explorer le riche pantheon de la mythologie kongolaise et comment il facon l'univers Isolele."
-    },
-    readTime: "10 min",
-    date: "November 2024",
-    featured: false
-  },
-  {
-    id: "diaspora-creators",
-    category: { en: "COMMUNITY", fr: "COMMUNAUTE" },
-    categoryColor: "#B3541E",
-    title: {
-      en: "Diaspora Creators: Building the Future of African Comics",
-      fr: "Createurs de la Diaspora : Construire l'Avenir des Comics Africains"
-    },
-    excerpt: {
-      en: "Meet the artists, writers and visionaries bringing African stories to the global stage.",
-      fr: "Rencontrez les artistes, ecrivains et visionnaires qui amenent les histoires africaines sur la scene mondiale."
-    },
-    readTime: "6 min",
-    date: "October 2024",
-    featured: false
   }
 ]
 
 export default function NewsPage() {
   const { currentLanguage } = useLanguage()
   const lang = currentLanguage.code
-  const t = (obj: { en: string; fr: string }) => obj[lang as 'en' | 'fr'] || obj.en
+  const t = (obj: any) => obj[lang as any] || obj.en
   const language = currentLanguage.code; // Declare the language variable
 
   const featuredArticles = articles.filter(a => a.featured)

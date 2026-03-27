@@ -15,8 +15,10 @@ export const languages: Language[] = [
   { code: "fr", name: "French", nativeName: "Français", flag: languageFlags.fr },
   { code: "pt", name: "Portuguese", nativeName: "Português", flag: languageFlags.pt },
   { code: "es", name: "Spanish", nativeName: "Español", flag: languageFlags.es },
-  { code: "zu", name: "Zulu", nativeName: "Zulu", flag: languageFlags.zu },
+  { code: "zu", name: "Zulu", nativeName: "isiZulu", flag: languageFlags.zu },
+  { code: "xh", name: "Xhosa", nativeName: "isiXhosa", flag: languageFlags.zu },
   { code: "sw", name: "Swahili", nativeName: "Kiswahili", flag: languageFlags.sw },
+  { code: "ln", name: "Lingala", nativeName: "Lingála", flag: languageFlags.pt },
 ]
 
 interface LanguageContextType {
