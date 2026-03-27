@@ -2,7 +2,12 @@ import { NextRequest, NextResponse } from "next/server"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { getTranslation, saveTranslation } from "@/lib/database-operations"
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY || "")
+const apiKey = process.env.GOOGLE_GEMINI_API_KEY
+if (!apiKey) {
+  console.error("[v0] GOOGLE_GEMINI_API_KEY environment variable is not set")
+}
+
+const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null
 
 const languageMap: Record<string, string> = {
   en: "English",

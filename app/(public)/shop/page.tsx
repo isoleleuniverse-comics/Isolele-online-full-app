@@ -10,6 +10,17 @@ import { useTheme } from '@/lib/theme-context'
 import dynamic from 'next/dynamic'
 import { ProductNegotiationWidget } from '@/components/product-negotiation-widget'
 
+// Product Type Definition
+interface Product {
+  id: number
+  name: { en: string; fr: string }
+  price: number
+  category: string
+  image: string
+  description: { en: string; fr: string }
+  stripeLink?: string
+}
+
 // Product data
 const products = [
   {
@@ -420,8 +431,9 @@ export default function ShopPage() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => {
-                      if ((product as any).stripeLink) {
-                        window.open((product as any).stripeLink, '_blank')
+                      const prod = product as Product
+                      if (prod.stripeLink) {
+                        window.open(prod.stripeLink, '_blank')
                       } else {
                         addToCart(product.id)
                       }
@@ -429,7 +441,7 @@ export default function ShopPage() {
                     className="w-full py-2 rounded font-bold text-white"
                     style={{ backgroundColor: currentTheme.colors.accentPrimary }}
                   >
-                    {(product as any).stripeLink 
+                    {(product as Product).stripeLink 
                       ? (lang === 'fr' ? 'Acheter Maintenant' : 'Buy Now')
                       : (lang === 'fr' ? 'Acheter' : 'Buy')}
                   </motion.button>

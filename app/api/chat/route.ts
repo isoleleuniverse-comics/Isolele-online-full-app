@@ -1,10 +1,22 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"
 import { NextRequest, NextResponse } from "next/server"
 
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY || "")
+const apiKey = process.env.GOOGLE_GEMINI_API_KEY
+if (!apiKey) {
+  console.error("[v0] GOOGLE_GEMINI_API_KEY environment variable is not set")
+}
+
+const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null
 
 export async function POST(request: NextRequest) {
   try {
+    if (!genAI || !apiKey) {
+      return NextResponse.json(
+        { error: 'AI service is not configured. Please set GOOGLE_GEMINI_API_KEY environment variable.' },
+        { status: 503 }
+      )
+    }
+
     const { messages } = await request.json()
 
     if (!messages || !Array.isArray(messages)) {
