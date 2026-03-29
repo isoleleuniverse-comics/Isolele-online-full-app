@@ -52,6 +52,7 @@ export function SiteHeader() {
   const navItems = [
     { key: "nav_home", href: "/" },
     { key: "nav_about", href: "/about" },
+    { key: "nav_comics", href: "/comics" },
     { key: "nav_founder", href: "/founder" },
     { key: "nav_characters", href: "/characters", hasDropdown: true },
     { key: "nav_shop", href: "/shop" },

@@ -28,6 +28,7 @@ export interface TranslationKeys {
   // Navigation
   nav_home: string
   nav_about: string
+  nav_comics: string
   nav_founder: string
   nav_news: string
   nav_characters: string
@@ -257,6 +258,7 @@ export const translations: Record<Language, TranslationKeys> = {
     // Navigation
     nav_home: "Home",
     nav_about: "About",
+    nav_comics: "Comics",
     nav_founder: "Founder",
     nav_news: "Comics News",
     nav_characters: "Characters",
@@ -486,6 +488,7 @@ export const translations: Record<Language, TranslationKeys> = {
     // Navigation
     nav_home: "Accueil",
     nav_about: "À Propos",
+    nav_comics: "Comics",
     nav_founder: "Fondateur",
     nav_news: "Actualités BD",
     nav_characters: "Personnages",
@@ -1234,7 +1237,7 @@ export const translations: Record<Language, TranslationKeys> = {
     characters_zattar_desc: "宇宙的征服者。", characters_twins_title: "双胞胎", characters_twins_desc: "命运的守护者。",
     characters_imvula_title: "因夫拉", characters_imvula_desc: "雨的女人。",
     news_title: "新闻", news_read_more: "阅读更多", news_minutes_read: "分钟阅读", news_published: "发布于",
-    cta_title: "加入传奇", cta_join_legend: "成为传奇的一部分", cta_description: "发现孤独灵魂宇宙中的故事",
+    cta_title: "加入传奇", cta_join_legend: "成为传奇的一部��", cta_description: "发现孤独灵魂宇宙中的故事",
     cta_explore: "探索", cta_newsletter: "通讯",
     footer_description: "孤独灵魂：恢复非洲叙事的灵魂", footer_explore: "探索", footer_resources: "资源",
     footer_newsletter_title: "订阅我们的���讯", footer_newsletter_desc: "了解最新故事和更新",
@@ -1255,7 +1258,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_pillar1_desc: "充满了足够的国王和皇后来统治整个非洲，从刚果王位到库什，再到阿克苏姆。",
     about_pillar2_title: "创意出版和本地化", about_pillar2_desc: "从故事到思想，从游戏到电影，孤独灵魂为非洲创意工作者创建了一个平台。",
     about_pillar3_title: "人类觉醒", about_pillar3_desc: "孤独灵魂是一个伟大的目标的第一部分，旨在发现、探索和恢复非洲的皇族、精神和超越。",
-    about_pillar4_title: "儿童脚步", about_pillar4_desc: "阅读孤独灵魂的儿童将发现看起来像他们的保护者，讲他们的语言，保护他们的土地，尊重他们的祖先。",
+    about_pillar4_title: "��童脚步", about_pillar4_desc: "阅读孤独灵魂的儿童将发现看起来像他们的保护者，讲他们的语言，保护他们的土地，尊重他们的祖先。",
     founder_title: "创始人", founder_name: "库夫鲁鲁国王陛下", founder_role: "孤独灵魂宇宙的创造者和建筑师",
     founder_bio: "孤独灵魂背后的远见者，致力于恢复非洲叙事的灵魂和庆祝非洲皇族身份。",
     language: "语言", theme: "主题", discover: "发现", latestNews: "最新新闻", loading: "加载中...",
@@ -1324,7 +1327,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_pillar3_title: "मानव जागृति", about_pillar3_desc: "आइसलेल एक महान उद्देश���य का पहला हिस्सा है जिसका लक्ष्य अफ्रीका की रॉयल्टी, आत्मा और परे को खोजना, खोज करना और बहाल करना है।",
     about_pillar4_title: "बाल पदचिन्ह", about_pillar4_desc: "आइसलेल पढ़ने वाला बच्चा ऐसे संरक्षकों की खोज करेगा जो उसकी तरह दिखते हैं।",
     founder_title: "संस्थापक", founder_name: "राजा कुफुलुला महामहिम", founder_role: "आइसलेल ब्रह्मांड के निर्माता और आर्किटेक्ट",
-    founder_bio: "आइसलेल के पीछे दूरदर्शी, अफ्रीकी कथा की आत्मा को बहाल करने और अफ्रीकी राजकीय पहचान का जश्न मनाने के लिए प्रतिबद्ध।",
+    founder_bio: "आइसलेल के पीछे दूरदर्शी, अफ्रीकी कथा की आत्मा को बहाल ��रने और अफ्रीकी राजकीय पहचान का जश्न मनाने के लिए प्रतिबद्ध।",
     language: "भाषा", theme: "विषय", discover: "खोज करें", latestNews: "नवीनतम समाचार", loading: "लोड हो रहा है...",
     error: "त्रुटि", success: "सफलता", cancel: "रद्द करें", save: "सहेजें", edit: "संपादित करें", delete: "हटाएं",
     search: "खोज", search_placeholder: "खोज...", view_all: "सभी देखें", learn_more: "और जानें",
@@ -1340,7 +1343,7 @@ export const translations: Record<Language, TranslationKeys> = {
     hero_title: "ЗАИР - ПРИНЦ КОНГО", hero_subtitle: "Ожерелье Судьбы", hero_description: "Вдохновляющая полная экшена приключенческая история, которая резонирует с духом «Короля льва» и «Черной пантеры».",
     hero_buy_now: "КУПИТЬ СЕЙЧАС", hero_discover: "ОТКРОЙТЕ ИСТОРИЮ", hero_preorder: "Предзаказ", hero_launch_price: "Цена запуска",
     book_welcome_tag: "ДОБРО ПОЖАЛОВАТЬ В ISOLELE", book_chosen_ones_title: "ИЗБРАННЫЕ", book_chosen_ones_subtitle: "Целая вселенная, рожденная из корней Конго...",
-    book_chosen_ones_desc: "Isolele - это дальновидная вселенная, созданная для восстановления души африканского повествования.",
+    book_chosen_ones_desc: "Isolele - это дальновидная всел��нная, созданная для восстановления души африканского повествования.",
     book_explore_universe: "ИССЛЕДУЙТЕ ВСЕЛЕННУЮ", book_makanda_tag: "ДИНАСТИЯ МАКАНА - КНИГА I", book_makanda_title: "МАКАНА",
     book_makanda_subtitle: "Самая мощная империя в истории была не потеряна. Она была намеренно спрятана.", book_makanda_desc: "Глубоко в Центральной Африке существовала цивилизация, о которой миру никогда не следовало узнавать.",
     book_discover_makanda: "ОТКРОЙТЕ МАКАНА", book_bambula_tag: "БАМБУЛА: ДИТЯ РИТМА", book_bambula_title: "БАМБУЛА",
@@ -1421,7 +1424,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_amara_tag: "アマラ：海の女王", book_amara_title: "アマラ", book_amara_subtitle: "第I章・アマゾン海賊の女王",
     book_amara_desc: "すべての海賊は海を恐れます。", book_discover_amara: "アマラを発見",
     book_zattar_tag: "ザッター：宇宙の王子", book_zattar_title: "ザッター", book_zattar_subtitle: "玉座の征服者",
-    book_zattar_desc: "運命が彼に一つの王国を拒んだとき、彼はすべてを征服することを決めました。", book_discover_zattar: "ザッターを発見",
+    book_zattar_desc: "運命が彼に一つの王国を拒んだとき、彼はすべてを征服することを決めまし���。", book_discover_zattar: "ザッターを発見",
     book_zaiko_tag: "ザイコ：キヴ地域の最後の王", book_zaiko_title: "ザイコの伝説",
     book_zaiko_subtitle: "彼は通りから上がりませんでした。彼らを征服しました。", book_zaiko_desc: "北キヴで生まれました��",
     book_discover_zaiko: "ザイコを発見",
@@ -1438,7 +1441,7 @@ export const translations: Record<Language, TranslationKeys> = {
     cta_title: "伝説に参加", cta_join_legend: "伝説の一部になる", cta_description: "ISOLELE宇宙のストーリーを発見",
     cta_explore: "探索", cta_newsletter: "ニュースレター",
     footer_description: "ISOLELE：アフリカのストーリーテリングの魂を取り戻す", footer_explore: "探索", footer_resources: "リソース",
-    footer_newsletter_title: "ニュースレターを購読", footer_newsletter_desc: "最新のストーリーとアップデートを入手",
+    footer_newsletter_title: "ニュースレターを購読", footer_newsletter_desc: "最新のストーリーとアップデートを入���",
     footer_email_placeholder: "メールアドレスを入力", footer_subscribe: "購読", footer_copyright: "著作権",
     footer_press: "プレス", footer_careers: "キャリア", footer_contact: "お問い合わせ", footer_faq: "よくある質問",
     footer_terms: "利用規約", footer_privacy: "プライバシー", shop_title: "ショップ", shop_subtitle: "限定商品を購入",
@@ -1535,7 +1538,7 @@ export const translations: Record<Language, TranslationKeys> = {
 
   // Bengali (bn) - Abbreviated for brevity
   bn: {
-    nav_home: "হোম", nav_about: "সম্পর্কে", nav_founder: "প্রতিষ্ঠাতা", nav_news: "সংবাদ", nav_characters: "চরিত্র",
+    nav_home: "হোম", nav_about: "সম্পর্কে", nav_founder: "প্রতিষ্ঠাতা", nav_news: "সংবাদ", nav_characters: "চ��িত্র",
     nav_shop: "দোকান", nav_supporters: "সমর্থক", nav_contact: "যোগাযোগ", nav_games: "গেম", nav_all_characters: "সমস্ত অক্ষর",
     nav_become_supporter: "সমর্থক হন", nav_partners: "অংশীদার", nav_restaurant: "অং��ীদার রেস্তোরাঁ", nav_fashion: "ফ্যাশন", nav_settings: "সেটিংস",
     hero_title: "জায়ের - কঙ্গোর রাজকুমার", hero_subtitle: "ভাগ্যের হার", hero_description: "একটি অনুপ্রেরণামূলক অ্যাকশন-প্যাকড অ্যাডভেঞ্চার যা লায়ন কিং এবং ব্ল্যাক প্যান্থারের আত্মার সাথে অনুরণিত হয়।",
@@ -1555,7 +1558,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_amara_tag: "অমারা: সমুদ্রের রানী", book_amara_title: "অমারা", book_amara_subtitle: "অধ্যায় I · আমাজন জলদস্যুদের রানী",
     book_amara_desc: "প্রতিটি জলদস্যু সমুদ্রকে ভয় করে।", book_discover_amara: "অমারা আবিষ্কার করুন",
     book_zattar_tag: "জাত্তার: মহাবিশ্বের রাজকুমার", book_zattar_title: "জাত্তার", book_zattar_subtitle: "সিংহাসনের জয়ী",
-    book_zattar_desc: "যখন ভাগ্য তাকে একটি রাজ্য অস্বীকার করেছিল, তিনি সেগুলি সব নিতে সিদ্ধান্ত নিয়েছিলেন।", book_discover_zattar: "জাত্তার আবিষ্কার করুন",
+    book_zattar_desc: "যখন ভাগ্য তাকে একটি রাজ্য অস্বীকার করেছিল, তিনি সেগুলি সব নিতে সিদ্ধান্ত ন���য়েছিলেন।", book_discover_zattar: "জাত্তার আবিষ্কার করুন",
     book_zaiko_tag: "জায়কো: কিভু রাস্তার শেষ রাজা", book_zaiko_title: "জায়কোর কিংবদন্তি",
     book_zaiko_subtitle: "তিনি রাস্তা থেকে উঠেন নি। তিনি তাদের জয় করেছেন।", book_zaiko_desc: "উত্তর কিভুতে জন্মেছেন।",
     book_discover_zaiko: "জায়কো আবিষ্কার করুন",
@@ -1592,7 +1595,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_pillar3_title: "মানবতার জাগরণ", about_pillar3_desc: "ইসোলেল একটি মহৎ উদ্দেশ্যের প্রথম অংশ যা আফ্রিকীয় রাজকীয়, আধ��যাত্মিকতা আবিষ্কার, অন্বেষণ এবং পুনরুদ্ধার করতে লক্ষ্য করে।",
     about_pillar4_title: "শিশুর পদচিহ্ন", about_pillar4_desc: "ইসোলেল পড়ার একটি শিশু এমন অভিভাবক আবিষ্কার করবে যারা তার মতো দেখায়।",
     founder_title: "প্রতিষ��ঠাতা", founder_name: "রাজা কুফুলুলার মহারাজ", founder_role: "ইসোলেল মহাবিশ্বের নির্মাতা এবং স্থপতি",
-    founder_bio: "ইসোলেলের পিছনে দূরদর্শী, আফ্রিকান বর্ণনার আত্মা পুনরুদ্ধার এবং আফ্রিকান রাজকীয় পরিচয় উদযাপন করতে প্রতিশ্রুতিবদ্ধ।",
+    founder_bio: "ইসোলেলের পিছনে দূরদর্শী, আফ্রিকান বর্ণনার আত্মা পুনরুদ���ধার এবং আফ্রিকান রাজকীয় পরিচয় উদযাপন করতে প্রতিশ্রুতিবদ্ধ।",
     language: "ভাষা", theme: "থিম", discover: "আবিষ্কার করুন", latestNews: "সর্বশেষ সংবাদ", loading: "লোড হচ্ছে...",
     error: "ত্রুটি", success: "সাফল্য", cancel: "বাতিল করুন", save: "সংরক্ষণ করুন", edit: "সম্পাদনা করুন", delete: "মুছুন",
     search: "অনুসন্ধান", search_placeholder: "অনুসন্ধান...", view_all: "সব দেখুন", learn_more: "আরও জানুন",
@@ -1641,7 +1644,7 @@ export const translations: Record<Language, TranslationKeys> = {
     footer_description: "ISOLELE: افریقی داستان کی روح کو بحال کرنا", footer_explore: "دریافت کریں", footer_resources: "وسائل",
     footer_newsletter_title: "ہمارے نیوز لیٹر کو سبسکرائب کریں", footer_newsletter_desc: "تازہ ترین کہانیں اور اپ ڈیٹس حاصل کریں",
     footer_email_placeholder: "اپنا ای میل درج کریں", footer_subscribe: "سبسکرائب کریں", footer_copyright: "کاپی رائٹ",
-    footer_press: "پریس", footer_careers: "کیریئر", footer_contact: "رابطہ", footer_faq: "عام سوالات",
+    footer_press: "پ��یس", footer_careers: "کیریئر", footer_contact: "رابطہ", footer_faq: "عام سوالات",
     footer_terms: "شرائط", footer_privacy: "رازداری", shop_title: "دکان", shop_subtitle: "خصوصی مصنوعات خریدیں",
     shop_add_to_cart: "ڈبے میں شامل کریں", shop_buy_now: "ابھی خریدیں", shop_price: "قیمت", shop_sale: "فروخت",
     shop_new: "نیا", shop_bestseller: "سب سے زیادہ فروخت", cart_title: "ڈبہ", cart_empty: "آپ کا ڈبہ خالی ہے",
@@ -1969,7 +1972,7 @@ export const translations: Record<Language, TranslationKeys> = {
     cta_title: "Sonye na akụkọ", cta_join_legend: "Bụrụ akụkọ", cta_description: "Chọta akụkọ na ụwa ISOLELE",
     cta_explore: "Nyochaa", cta_newsletter: "Odeideere",
     footer_description: "ISOLELE: Ịbugharị ụmụ obi nke akụkọ Afrịka", footer_explore: "Nyochaa", footer_resources: "Ihe ekwesiri inwe",
-    footer_newsletter_title: "Tinye aha gị na odeideere nke anyị", footer_newsletter_desc: "Pụta akụkọ na mgbanwe ọhụrụ",
+    footer_newsletter_title: "Tinye aha gị na odeideere nke anyị", footer_newsletter_desc: "Pụta akụkọ na mgbanwe ọhụr���",
     footer_email_placeholder: "Tinyenụ imeelụ gị", footer_subscribe: "Tinye aha", footer_copyright: "Ikike onyewu",
     footer_press: "Owerụ akụkọ", footer_careers: "Ọrụ", footer_contact: "Ibe ụzọ", footer_faq: "Ajụjụ na-adịghị ka njedebe",
     footer_terms: "Nke okwu", footer_privacy: "Nzuzo", shop_title: "Ụlọ Azụ", shop_subtitle: "Zụta ihe pụrụ iche",
@@ -2053,7 +2056,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_pillar1_desc: "አፍሪካ ሙሉ አስተዳደር ሥልጣኔ እና ንግዝት ሙሉ.",
     about_pillar2_title: "ፈጠራ ወታጁ ስራ ለማን", about_pillar2_desc: "ታሪክ ሳይንስ, ጀበዋ ወደ ሆሊዉድ, ISOLELE ሥራ ዩ ሴት አፍሪካ",
     about_pillar3_title: "ሥወር ብስ", about_pillar3_desc: "ISOLELE ታሪክ ገጽታ ፣ ታሪክ ፍለጋ ፣ ሥሪታ አሜሪካ ታሪክ ፣ መንፈስ ወደ ተመለሱ.",
-    about_pillar4_title: "ደጀ እግር", about_pillar4_desc: "ISOLELE ልጅ በሮ ወገኖች ተገኝ ይሆናል.",
+    about_pillar4_title: "ደጀ እግር", about_pillar4_desc: "ISOLELE ልጅ ��ሮ ወገኖች ተገኝ ይሆናል.",
     founder_title: "ተመስርቶ", founder_name: "ንጉሠ ፊዙ", founder_role: "ISOLELE አለም ተመስርቶ ሕንጻ",
     founder_bio: "ISOLELE ርቀ, ውሻ ተረት አፍሪካ ወደ ተመለሰ ለመስጠት የታሪክ ራኔ ታሪክ ተነሣሪ.",
     language: "ቋንቋ", theme: "ሙያ", discover: "ይግኙ", latestNews: "የቅርብ ዜና", loading: "ጫና...",
