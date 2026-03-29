@@ -122,6 +122,98 @@ const characters = [
     ],
     color: "#9370DB",
     kingdom: { en: "Skyfall Islands", fr: "Îles Skyfall", pt: "Ilhas Skyfall", es: "Islas Skyfall", zu: "Iziqalo zeSkyfall", xh: "Iziqalo zeSkyfall", sw: "Visiwa vya Skyfall", ln: "Bikoko bya Skyfall" }
+  },
+  {
+    id: "bambula",
+    name: "BAMBULA",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
+    title: { en: "Guardian of the Savanna", fr: "Gardienne de la Savane", pt: "Guardiã da Savana", es: "Guardiana de la Sabana", zu: "Umlindi weSavana", xh: "Umlindi weSavana", sw: "Mlindi wa Savana", ln: "Mwali wa Savana" },
+    description: {
+      en: "A fearless warrior of the savanna, mastering sacred fire and the wild nature of Africa. She is the protector of the land and its people.",
+      fr: "Une guerrière intrépide de la savane, maîtrisant le feu sacré et la nature sauvage de l'Afrique. Elle est la protectrice de la terre et de son peuple.",
+      pt: "Uma guerreira destemida da savana, dominando o fogo sagrado e a natureza selvagem da África. Ela é a protetora da terra e seu povo.",
+      es: "Una guerrera intrépida de la sabana, dominando el fuego sagrado y la naturaleza salvaje de África. Ella es la protectora de la tierra y su pueblo.",
+      zu: "Umuntu osilela womuva womvikeleli opethemulayo ofa omvu nokuvela ngamafire womuntu",
+      xh: "Umuntu osilela womuva womvikeleli opethemulayo ofa omvu nokuvela ngamafire womuntu",
+      sw: "Mpigania jasiri wa savana, shahiri wa moto takatifu na asili ya Afrika. Yeye ni mlindi wa ardhi na watu wake.",
+      ln: "Mwali ya motema ya savana, ndolo ya moto masantu mpe na nzambe. Ayi mulindi wa nzambe mpe bavatu."
+    },
+    powers: [
+      { icon: Flame, name: { en: "Fire Mastery", fr: "Maîtrise du Feu", pt: "Domínio do Fogo", es: "Dominio del Fuego", zu: "Ubugcweletsheni bomvu", xh: "Ubugcweletsheni bomvu", sw: "Ustadi wa Moto", ln: "Litebi la Moto" } },
+      { icon: Shield, name: { en: "Nature Control", fr: "Contrôle de la Nature", pt: "Controle da Natureza", es: "Control de la Naturaleza", zu: "Ukulawula Isikathi", xh: "Ukulawula Isikathi", sw: "Kudhibiti Asili", ln: "Kosunga Nzambe" } },
+      { icon: Sword, name: { en: "Combat Excellence", fr: "Excellence au Combat", pt: "Excelência em Combate", es: "Excelencia en Combate", zu: "Ubugcweletsheni behuluza", xh: "Ubugcweletsheni behuluza", sw: "Ustadi wa Vita", ln: "Litebi la Molɔnɔ" } }
+    ],
+    color: "#B3541E",
+    kingdom: { en: "Savanna Realm", fr: "Royaume de la Savane", pt: "Reino da Savana", es: "Reino de la Sabana", zu: "Umbuso Wesavana", xh: "Umbuso Wesavana", sw: "Nchi ya Savana", ln: "Bokonzi bya Savana" }
+  },
+  {
+    id: "mokele",
+    name: "MOKELE",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mokele-lZToplq4eNUuy08B5V6faXETr5YnKg.jpg",
+    title: { en: "Crowned by the Streets", fr: "Couronné par les Rues", pt: "Coroado pelas Ruas", es: "Coronado por las Calles", zu: "Umkosi Westreets", xh: "Umkosi Westreets", sw: "Mfalme wa Mitaa", ln: "Mokonzi wa Basangu" },
+    description: {
+      en: "The heir of urban chaos and ancestral power. Born in the concrete jungles where tradition meets modernity, he bridges the gap between ancient heritage and contemporary struggle.",
+      fr: "L'héritier du chaos urbain et du pouvoir ancestral. Né dans les jungles de béton où la tradition rencontre la modernité, il comble le fossé entre l'héritage ancien et la lutte contemporaine.",
+      pt: "O herdeiro do caos urbano e do poder ancestral. Nascido nas selvas de concreto onde a tradição encontra a modernidade, ele preenche a lacuna entre a herança antiga e a luta contemporânea.",
+      es: "El heredero del caos urbano y del poder ancestral. Nacido en las junglas de concreto donde la tradición se encuentra con la modernidad, él cubre la brecha entre la herencia antigua y la lucha contemporánea.",
+      zu: "Ingane yomkosi womubuso nesiyaya. Bezaliwe emhlabeni wezithandane komuntu nendlela kamuva",
+      xh: "Ingane yomkosi womubuso nesiyaya. Bezaliwe emhlabeni wezithandane komuntu nendlela kamuva",
+      sw: "Mrithi wa machafuko ya jiji na nguvu ya mzazi. Alizaliwa katika jangwa la chuma ambapo jadi hukutana na kisasa.",
+      ln: "Ingane ya bolokoli bya batu mpe makambu ma bakoko. Alavanga na molongo ya makaya oyo mya batu."
+    },
+    powers: [
+      { icon: Zap, name: { en: "Urban Mastery", fr: "Maîtrise Urbaine", pt: "Domínio Urbano", es: "Dominio Urbano", zu: "Ubugcweletsheni beGradi", xh: "Ubugcweletsheni beGradi", sw: "Ustadi wa Jiji", ln: "Litebi la Bapela" } },
+      { icon: Shield, name: { en: "Ancestral Heritage", fr: "Héritage Ancestral", pt: "Herança Ancestral", es: "Herencia Ancestral", zu: "Ibusika lezintandane", xh: "Ibusika lezintandane", sw: "Urithi wa Mzazi", ln: "Ibeka la Bakoko" } },
+      { icon: Eye, name: { en: "Street Wisdom", fr: "Sagesse des Rues", pt: "Sabedoria das Ruas", es: "Sabiduría de las Calles", zu: "Uxolo olusisiziwe", xh: "Uxolo olusisiziwe", sw: "Hekima ya Mitaa", ln: "Bonsomi ya Basangu" } }
+    ],
+    color: "#4169E1",
+    kingdom: { en: "Urban Kingdom", fr: "Royaume Urbain", pt: "Reino Urbano", es: "Reino Urbano", zu: "Umbuso weGradi", xh: "Umbuso weGradi", sw: "Nchi ya Jiji", ln: "Bokonzi bya Bapela" }
+  },
+  {
+    id: "zattar",
+    name: "ZATTAR",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260106-WA0011-UqXFP6gWl4Khrn6sXFwj5ZtTTbvkiP.jpg",
+    title: { en: "The Blood Architect", fr: "L'Architecte de Sang", pt: "O Arquiteto de Sangue", es: "El Arquitecto de Sangue", zu: "Umkhi weGazi", xh: "Umkhi weGazi", sw: "Mwalimu wa Damu", ln: "Mokambi wa Makila" },
+    description: {
+      en: "Cursed genius of forbidden technology. Master of techno-mystical constructs that blur the line between science and ancient magic.",
+      fr: "Génie maudit de la technologie interdite. Maître des constructions techno-mystiques qui brouillent la frontière entre science et magie ancienne.",
+      pt: "Gênio amaldiçoado da tecnologia proibida. Mestre de construtos tecno-místicos que borram a linha entre ciência e magia antiga.",
+      es: "Genio maldito de la tecnología prohibida. Maestro de construcciones tecno-místicas que difuminan la línea entre ciencia y magia antigua.",
+      zu: "Ongciwane onembezi eyinzululwazi iyinqumo",
+      xh: "Ongciwane onembezi eyinzululwazi iyinqumo",
+      sw: "Bahati mbaya ya teknolohiji iliyokataliwa. Mwalimu wa muundo wa umeme-kichawi.",
+      ln: "Molendo mwanso wa tetekeli ya likimi"
+    },
+    powers: [
+      { icon: Flame, name: { en: "Blood Technology", fr: "Technologie de Sang", pt: "Tecnologia de Sangue", es: "Tecnología de Sangue", zu: "Tetekeli ya Gazi", xh: "Tetekeli ya Gazi", sw: "Teknolohiji ya Damu", ln: "Litebi la Makila" } },
+      { icon: Shield, name: { en: "Construct Creation", fr: "Création de Constructs", pt: "Criação de Construtos", es: "Creación de Constructos", zu: "Ukwakha Izakhi", xh: "Ukwakha Izakhi", sw: "Ujenzi wa Miundo", ln: "Lisantu la Makama" } },
+      { icon: Eye, name: { en: "Pattern Vision", fr: "Vision des Motifs", pt: "Visão de Padrões", es: "Visión de Patrones", zu: "Ukubona Amaphathini", xh: "Ukubona Amaphathini", sw: "Macho ya Mifumo", ln: "Longi la Mbapo" } }
+    ],
+    color: "#8B0000",
+    kingdom: { en: "Iron Desert of Tsoro", fr: "Désert de Fer de Tsoro", pt: "Deserto de Ferro de Tsoro", es: "Desierto de Hierro de Tsoro", zu: "Inzungu Yesinyamazane yeTsoro", xh: "Inzungu Yesinyamazane yeTsoro", sw: "Jangwa la Chuma la Tsoro", ln: "Eliki ya Fele ya Tsoro" }
+  },
+  {
+    id: "jumeaux-njoko",
+    name: { en: "THE NJOKO TWINS", fr: "LES JUMEAUX NJOKO", pt: "OS GÊMEOS NJOKO", es: "LOS GEMELOS NJOKO", zu: "IZINTANDANE ZIKANJOKO", xh: "IZINTANDANE ZIKANJOKO", sw: "WAJUMBE WA NJOKO", ln: "BANA MBILELI NJOKO" },
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260106-WA0012-HZAFyQIAHjVxMaTAyLn0TKRpvB9DPc.jpg",
+    title: { en: "Orphan Prophets", fr: "Prophètes Orphelins", pt: "Profetas Órfãos", es: "Profetas Huérfanos", zu: "Abaphrofesithi Abafileyo", xh: "Abaphrofesithi Abafileyo", sw: "Manabii wazimu", ln: "Banyimi ba Boyikoli" },
+    description: {
+      en: "Orphan prophets who speak with rivers and stars. Their dual nature connects the physical realm to the spirit world.",
+      fr: "Prophètes orphelins qui parlent avec les rivières et les étoiles. Leur double nature connecte le royaume physique au monde des esprits.",
+      pt: "Profetas órfãos que falam com rios e estrelas. Sua natureza dual conecta o reino físico ao mundo dos espíritos.",
+      es: "Profetas huérfanos que hablan con ríos y estrellas. Su naturaleza dual conecta el reino físico con el mundo de los espíritus.",
+      zu: "Abaphrofesithi ababileleyo abakhokhisana nezifula nazikhwezi",
+      xh: "Abaphrofesithi ababileleyo abakhokhisana nezifula nazikhwezi",
+      sw: "Manabii wazimu wanazungumza na mito na nyota",
+      ln: "Banyimi ba boyikoli ba monwani lokola minzoto mpe minzita"
+    },
+    powers: [
+      { icon: Droplets, name: { en: "Water Communion", fr: "Communion Aquatique", pt: "Comunhão Aquática", es: "Comunión Acuática", zu: "Inxwaneleano Yamanzi", xh: "Inxwaneleano Yamanzi", sw: "Urafiki wa Maji", ln: "Lisantu la Minzoto" } },
+      { icon: Eye, name: { en: "Star Reading", fr: "Lecture des Étoiles", pt: "Leitura de Estrelas", es: "Lectura de Estrellas", zu: "Ukufunda Izakhiwo", xh: "Ukufunda Izakhiwo", sw: "Kusoma Nyota", ln: "Kolisa Minzita" } },
+      { icon: Shield, name: { en: "Twin Bond", fr: "Lien Gemellaire", pt: "Vínculo Gêmeo", es: "Vínculo Gemelo", zu: "Isibopho SezintandanE", xh: "Isibopho SezintandanE", sw: "Uhusiano wa Wajumbe", ln: "Libakeli la Bana" } }
+    ],
+    color: "#00CED1",
+    kingdom: { en: "Oracle Nation of M'Bara", fr: "Nation Oracle de M'Bara", pt: "Nação Oráculo de M'Bara", es: "Nación Oráculo de M'Bara", zu: "Isizwe seOracle saseM'Bara", xh: "Isizwe seOracle saseM'Bara", sw: "Taifa la Mtaalam wa M'Bara", ln: "Lisantu la Banyimi bya M'Bara" }
   }
 ]
 
@@ -213,7 +305,7 @@ export default function CharactersPage() {
 
                 <div className="flex flex-wrap gap-4 pt-2">
                   <Link
-                    href="/founder"
+                    href="/characters/kufulula"
                     className="inline-flex items-center gap-2 px-8 py-4 rounded-lg font-bold transition-all hover:scale-105"
                     style={{ backgroundColor: '#D4AF37', color: '#000' }}
                   >
