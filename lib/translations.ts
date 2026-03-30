@@ -1377,15 +1377,6 @@ export const translations: Record<Language, TranslationKeys> = {
     product_badge_limited: "BILAMBA MOKE",
     product_badge_new: "ONJE",
     
-    // Founder Preview
-    founder_title: "H.R.M MOKONZI KUFULULA",
-    founder_subtitle: "Motongaki wa ISOLELE",
-    founder_location: "Mokonzi Kufulula — New York",
-    founder_description: "Omekani wa bambonga mpe mwami wa masini, Mokonzi Kufulula atongaki ISOLELE mpo kopanga molinga ma Afrika. Liyebi ya ye ezali kobumba empilisi ya basikandaka oyo bakoya uta libota ya kala, te uta masini oyo bakolangwaki.",
-    founder_quote: "Tobumbi kaka basikandaka te. Tobumbi likota. Tobumbi likolo.",
-    founder_cta: "Kumona Motongaki",
-    founder_creator_author: "Motongaki & Muhairi",
-    
     // Common
     language: "Lokuta",
     theme: "Litara",
@@ -1742,7 +1733,7 @@ export const translations: Record<Language, TranslationKeys> = {
   hi: {
     nav_home: "होम", nav_about: "परिचय", nav_founder: "संस्थापक", nav_news: "समाचार", nav_characters: "पात्र",
     nav_shop: "दुकान", nav_supporters: "समर्थक", nav_contact: "संपर्क", nav_games: "खेल", nav_all_characters: "सभी पात्र",
-    nav_become_supporter: "समर्थक बनें", nav_partners: "भागीदार", nav_restaurant: "भागीदार रेस्तरां", nav_fashion: "फैशन", nav_settings: "सेटिं���्स",
+    nav_become_supporter: "समर्थ��� बनें", nav_partners: "भागीदार", nav_restaurant: "भागीदार रेस्तरां", nav_fashion: "फैशन", nav_settings: "सेटिं���्स",
     hero_title: "जायरे - कांगो के ���ाजकुमा���", hero_subtitle: "नियति का हार", hero_description: "एक प्रेरणादायक कार्य-संचालित साहसिक कथा जो द लायन किंग और ब्लैक पैंथर की भावना को प्रतिध्वन��त करती है।",
     hero_buy_now: "अभी खरीदें", hero_discover: "कहानी की खोज करें", hero_preorder: "पूर्व-ऑर्डर करें", hero_launch_price: "लॉन्च मूल्य",
     book_welcome_tag: "आइसलेल में स्वागत है", book_chosen_ones_title: "चुने हुए", book_chosen_ones_subtitle: "कांगो की जड़ों से जन्मी एक पूरी दुनिया...",
@@ -1922,7 +1913,7 @@ export const translations: Record<Language, TranslationKeys> = {
     payment_title: "お支払い", payment_card: "クレジットカード", payment_google_pay: "Google Pay",
     payment_card_number: "カード番号", payment_expiry: "有効期限", payment_cvv: "CVV",
     payment_name: "カード名義人", payment_email: "メール", payment_confirm: "支払いを確認",
-    payment_success: "支払い成功!", payment_receipt_sent: "領収書がメールで送信されました",
+    payment_success: "支払い成功!", payment_receipt_sent: "領収書��メールで送信されました",
     about_title: "ISOLELEについて", about_what_is: "ISOLELEとは？",
     about_vision_title: "ビジョン", about_vision_desc: "アフリカをストーリー、想像力、力の源として復活させる。",
     about_pillars_title: "ISOLELEの四本の柱", about_pillar1_title: "精神的な世界",
@@ -2102,7 +2093,7 @@ export const translations: Record<Language, TranslationKeys> = {
     universe_title: "ISOLELE کائنات", universe_subtitle: "منتخب", universe_description: "ISOLELE ایک دور اندیش کائنات ہے جو افریقی داستان کی روح کو بحال کرنے کے لیے پیدا ہوا۔",
     universe_destiny_title: "تقدیر ایک انتخاب نہیں ہے", universe_destiny_desc: "یہ ایک کال ہے۔",
     universe_heritage_title: "شاہی خون قدیم طاقت رکھتا ہے", universe_heritage_desc: "شاہی خون بھولی ہوئی سلطنتوں کی یادوں اور طاقت کو لے کر جاتا ہے۔",
-    universe_resurrection_title: "اجدادی روحیں کبھی نہیں مرتی", universe_resurrection_desc: "افریقہ کبھی بے طاقت نہیں تھا۔",
+    universe_resurrection_title: "اجدادی روحیں کبھی نہیں مرتی", universe_resurrection_desc: "ا��ریقہ کبھی بے طاقت نہیں تھا۔",
     characters_title: "منتخب", characters_subtitle: "ISOLELE کائنات کے ہیروز، افساں اور نگرانوں سے ملیں",
     characters_discover: "دریافت کریں", characters_zaire_title: "کانگو کا شہزادہ", characters_zaire_desc: "بجلی اور شاہی حکمرانی کا بیٹا۔",
     characters_kimoya_title: "کیموآ", characters_kimoya_desc: "آگ کی خاتون نے طاقت دی۔", characters_zattar_title: "زتار",
