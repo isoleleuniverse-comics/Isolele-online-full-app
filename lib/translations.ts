@@ -85,6 +85,52 @@ export interface TranslationKeys {
   product_badge_limited: string
   product_badge_new: string
 
+  // Character Pages
+  character_zaiire_name: string
+  character_zaiire_title: string
+  character_zaiire_short_desc: string
+  character_zaiire_long_desc: string
+  
+  character_kimoya_name: string
+  character_kimoya_title: string
+  character_kimoya_short_desc: string
+  character_kimoya_long_desc: string
+  
+  character_bambula_name: string
+  character_bambula_title: string
+  character_bambula_short_desc: string
+  character_bambula_long_desc: string
+  
+  character_mokele_name: string
+  character_mokele_title: string
+  character_mokele_short_desc: string
+  character_mokele_long_desc: string
+  
+  character_assemblee_name: string
+  character_assemblee_title: string
+  character_assemblee_short_desc: string
+  character_assemblee_long_desc: string
+  
+  character_kufulula_name: string
+  character_kufulula_title: string
+  character_kufulula_short_desc: string
+  character_kufulula_long_desc: string
+  
+  product_bambula_name: string
+  product_bambula_desc: string
+  product_mokele_name: string
+  product_mokele_desc: string
+  product_assemblee_name: string
+  product_assemblee_desc: string
+  product_kufulula_name: string
+  product_kufulula_desc: string
+  
+  // Common Page Elements
+  page_coming_soon: string
+  related_characters: string
+  discover_more: string
+  back_to_home: string
+
   // Book Slides
   book_welcome_tag: string
   book_chosen_ones_title: string
@@ -347,7 +393,53 @@ export const translations: Record<Language, TranslationKeys> = {
     product_badge_preorder: "PRE-ORDER",
     product_badge_limited: "LIMITED",
     product_badge_new: "NEW",
+
+    // Character Pages
+    character_zaiire_name: "Zaiire",
+    character_zaiire_title: "The Prince of Kongo",
+    character_zaiire_short_desc: "A young prince destined to restore the glory of Kongo",
+    character_zaiire_long_desc: "Zaiire is the protagonist of The Necklace of Destiny. Born into the royal lineage of Kongo, he discovers his true destiny as he wears the ancient Necklace. His journey spans the mythical empire where African superheroes rise from authentic history.",
     
+    character_kimoya_name: "Kimoya",
+    character_kimoya_title: "The Rising Kandake",
+    character_kimoya_short_desc: "A warrior queen commanding the royal court",
+    character_kimoya_long_desc: "Kimoya rules with wisdom and power over the Rising Kandake kingdom. As a central figure in The Chosen Ones universe, she embodies strength, leadership, and the sacred connection to ancestral traditions.",
+    
+    character_bambula_name: "Bambula",
+    character_bambula_title: "Guardian of the Rebellion",
+    character_bambula_short_desc: "A fierce warrior leading the resistance",
+    character_bambula_long_desc: "Bambula represents the spirit of revolution and defiance. This character's story showcases the struggle for freedom and justice within the ISOLELE universe.",
+    
+    character_mokele_name: "Mokele",
+    character_mokele_title: "Ancient Protector",
+    character_mokele_short_desc: "The legendary guardian of ancient secrets",
+    character_mokele_long_desc: "Mokele embodies the wisdom of ancient African civilizations. This mystical character guards sacred knowledge and the paths of destiny that shape the ISOLELE universe.",
+    
+    character_assemblee_name: "Assemblée ISOLELE",
+    character_assemblee_title: "The Council of Power",
+    character_assemblee_short_desc: "The gathering of chosen ones",
+    character_assemblee_long_desc: "The Assemblée ISOLELE represents the united council of heroes and leaders within The Chosen Ones universe. Together, they form an unbreakable bond dedicated to restoring African storytelling.",
+    
+    character_kufulula_name: "King Kufulula",
+    character_kufulula_title: "The Visionary Founder",
+    character_kufulula_short_desc: "Creator and architect of ISOLELE",
+    character_kufulula_long_desc: "H.R.M King Kufulula is the cultural architect who founded ISOLELE to restore the soul of African storytelling. His vision created a mythological empire where African superheroes rise from authentic history, not borrowed myths.",
+    
+    product_bambula_name: "Bambula: Rise of the Warrior",
+    product_bambula_desc: "The epic story of rebellion and resistance",
+    product_mokele_name: "Mokele: Keeper of Secrets",
+    product_mokele_desc: "Ancient wisdom meets modern heroism",
+    product_assemblee_name: "Assemblée ISOLELE: The Chosen Council",
+    product_assemblee_desc: "Unite the heroes, unite the legacy",
+    product_kufulula_name: "The Founder's Legacy",
+    product_kufulula_desc: "The vision behind ISOLELE",
+    
+    // Common Page Elements
+    page_coming_soon: "Coming Soon",
+    related_characters: "Related Characters",
+    discover_more: "Discover More",
+    back_to_home: "Back to Home",
+
     // Book Slides
     book_welcome_tag: "WELCOME TO ISOLELE",
     book_chosen_ones_title: "THE CHOSEN ONES",
@@ -610,7 +702,53 @@ export const translations: Record<Language, TranslationKeys> = {
     product_badge_preorder: "PRECOMMANDE",
     product_badge_limited: "LIMITE",
     product_badge_new: "NOUVEAU",
+
+    // Character Pages
+    character_zaiire_name: "Zaiire",
+    character_zaiire_title: "Le Prince du Kongo",
+    character_zaiire_short_desc: "Un jeune prince destiné à restaurer la gloire du Kongo",
+    character_zaiire_long_desc: "Zaiire est le protagoniste du Collier de la Destinée. Né dans la lignée royale du Kongo, il découvre sa véritable destinée en portant le Collier ancien. Son voyage traverse l'empire mythique où les super-héros africains surgissent de l'histoire authentique.",
     
+    character_kimoya_name: "Kimoya",
+    character_kimoya_title: "La Kandake Montante",
+    character_kimoya_short_desc: "Une reine guerrière commandant la cour royale",
+    character_kimoya_long_desc: "Kimoya règne avec sagesse et puissance sur le royaume de la Kandake Montante. Figure centrale de l'univers des Élus, elle incarne la force, le leadership et la connexion sacrée aux traditions ancestrales.",
+    
+    character_bambula_name: "Bambula",
+    character_bambula_title: "Gardien de la Rébellion",
+    character_bambula_short_desc: "Une guerrière féroce menant la résistance",
+    character_bambula_long_desc: "Bambula représente l'esprit de révolution et de défi. L'histoire de ce personnage met en lumière la lutte pour la liberté et la justice dans l'univers ISOLELE.",
+    
+    character_mokele_name: "Mokele",
+    character_mokele_title: "Protecteur Ancien",
+    character_mokele_short_desc: "Le gardien légendaire des secrets anciens",
+    character_mokele_long_desc: "Mokele incarne la sagesse des civilisations africaines anciennes. Ce personnage mystique garde les connaissances sacrées et les chemins de la destinée qui façonnent l'univers ISOLELE.",
+    
+    character_assemblee_name: "Assemblée ISOLELE",
+    character_assemblee_title: "Le Conseil du Pouvoir",
+    character_assemblee_short_desc: "Le rassemblement des élus",
+    character_assemblee_long_desc: "L'Assemblée ISOLELE représente le conseil uni des héros et des leaders de l'univers des Élus. Ensemble, ils forment un lien indissoluble dédié à la restauration de la narration africaine.",
+    
+    character_kufulula_name: "Roi Kufulula",
+    character_kufulula_title: "Le Fondateur Visionnaire",
+    character_kufulula_short_desc: "Créateur et architecte d'ISOLELE",
+    character_kufulula_long_desc: "S.A.R. Roi Kufulula est l'architecte culturel qui a fondé ISOLELE pour restaurer l'âme de la narration africaine. Sa vision a créé un empire mythologique où les super-héros africains surgissent de l'histoire authentique.",
+    
+    product_bambula_name: "Bambula: L'Ascension de la Guerrière",
+    product_bambula_desc: "L'histoire épique de la rébellion et de la résistance",
+    product_mokele_name: "Mokele: Gardien des Secrets",
+    product_mokele_desc: "La sagesse ancienne rencontre l'héroïsme moderne",
+    product_assemblee_name: "Assemblée ISOLELE: Le Conseil Choisi",
+    product_assemblee_desc: "Unir les héros, unir l'héritage",
+    product_kufulula_name: "L'Héritage du Fondateur",
+    product_kufulula_desc: "La vision derrière ISOLELE",
+    
+    // Common Page Elements
+    page_coming_soon: "À Venir",
+    related_characters: "Personnages Liés",
+    discover_more: "Découvrir Plus",
+    back_to_home: "Retour à l'Accueil",
+
     // Book Slides
     book_welcome_tag: "BIENVENUE À ISOLELE",
     book_chosen_ones_title: "LES ÉLUS",
@@ -1745,7 +1883,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_discover_bambula: "बांबुला की खोज करें", book_mokele_tag: "मोकेल: संघर्ष में जन्मा",
     book_mokele_title: "मोकेल", book_mokele_subtitle: "बालक स��� किनशासा के प्रभु तक", book_mokele_desc: "मोकेल राजा के रूप में जन्मा नहीं।",
     book_discover_mokele: "मोकेल की खोज करें", book_zaiire_tag: "जायरे: कांगो का राजकुमार", book_zaiire_title: "कांगो का राजकुमार",
-    book_zaiire_subtitle: "नियति का हार", book_zaiire_desc: "कांगो साम्��ाज्य के दिल में बनाया गया।", book_discover_zaiire: "जायरे की खोज करें",
+    book_zaiire_subtitle: "नियति का हार", book_zaiire_desc: "कांग��� साम्��ाज्य के दिल में बनाया गया।", book_discover_zaiire: "जायरे की खोज करें",
     book_kufu_tag: "कुफु: ताज का खेल", book_kufu_title: "कुफु", book_kufu_subtitle: "आइसलेल ब्रह्मांड का आधिकारिक खेल",
     book_kufu_desc: "यह केवल एक कार्ड गेम नहीं है।", book_explore_game: "खेल की खोज करें",
     book_amara_tag: "अमारा: समुद्र की रानी", book_amara_title: "अमारा", book_amara_subtitle: "अध्याय I · अमेज़न के समुद्री डाकुओं की रानी",
@@ -1814,7 +1952,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_discover_mokele: "ОТКРОЙТЕ МОКЕЛЕ", book_zaiire_tag: "ЗАИР: ПРИНЦ КОНГО", book_zaiire_title: "ПРИНЦ КОНГО",
     book_zaiire_subtitle: "Ожерелье Судьбы", book_zaiire_desc: "Выкованное в сердце Королевст��а Конго, Ожерелье Судьбы никогда не предназначалось для ношения.", book_discover_zaiire: "ОТКРОЙТЕ ЗАИРА",
     book_kufu_tag: "КУФУ: ИГРА КОРОН", book_kufu_title: "КУФУ", book_kufu_subtitle: "ОФИЦИАЛЬНАЯ ИГРА ВСЕЛЕННОЙ ISOLELE",
-    book_kufu_desc: "Это не просто карточная игра. Это церемония.", book_explore_game: "ИССЛЕДУЙТЕ ИГ��У",
+    book_kufu_desc: "Это не пр��сто карточная игра. Это церемония.", book_explore_game: "ИССЛЕДУЙТЕ ИГ��У",
     book_amara_tag: "АМАРА: КОРОЛЕВА МОРЕЙ", book_amara_title: "АМАРА", book_amara_subtitle: "ГЛАВА I · КОРОЛЕВА ПИРАТОВ АМАЗОНКИ",
     book_amara_desc: "Каждый пират боится океана. Амара владеет им.", book_discover_amara: "ОТКРОЙТЕ АМАРА",
     book_zattar_tag: "ЗАТТАР: ПРИНЦ ВСЕЛЕННОЙ", book_zattar_title: "ЗАТТАР", book_zattar_subtitle: "Завоеватель тронов",
@@ -1918,7 +2056,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_vision_title: "ビジョン", about_vision_desc: "アフリカをストーリー、想像力、力の源として復活させる。",
     about_pillars_title: "ISOLELEの四本の柱", about_pillar1_title: "精神的な世界",
     about_pillar1_desc: "アフリカ全体��支配するのに十分な数の王と女王で満たされています。",
-    about_pillar2_title: "クリエイティブパブリッシングとローカライゼーション", about_pillar2_desc: "ストーリー���ら思想へ、ゲームから映画へ、ISOLELEはアフリカのクリエイティブワーカーのためのプラットフォームを作成します。",
+    about_pillar2_title: "クリエイティブパブリッシングとローカラ��ゼーション", about_pillar2_desc: "ストーリー���ら思想へ、ゲームから映画へ、ISOLELEはアフリカのクリエイティブワーカーのためのプラットフォームを作成します。",
     about_pillar3_title: "人間の覚醒", about_pillar3_desc: "ISOLELEは素晴らしい目的の最初の部分であり、アフリカの王族性、精神性を発見し、探索し、復活させることを目指しています。",
     about_pillar4_title: "子どもの足跡", about_pillar4_desc: "ISOLELEを読む子どもは、自分のように見える保護者を発見します。",
     founder_title: "創設者", founder_name: "クフルル国王陛下", founder_role: "ISOLELE宇宙の創造者および建築家",
@@ -2100,7 +2238,7 @@ export const translations: Record<Language, TranslationKeys> = {
     characters_zattar_desc: "کائنات کا فاتح۔", characters_twins_title: "جڑواں", characters_twins_desc: "تقدیر کے نگران۔",
     characters_imvula_title: "امویولا", characters_imvula_desc: "بارش کی خاتون۔",
     news_title: "خبریں", news_read_more: "مزید پڑھیں", news_minutes_read: "منٹ پڑھیں", news_published: "شائع کیا گیا",
-    cta_title: "افسانے میں شامل ہوں", cta_join_legend: "افسانے کا حصہ بنیں", cta_description: "ISOLELE کائنات میں کہانیوں کو دریافت کریں",
+    cta_title: "افسانے میں شا��ل ہوں", cta_join_legend: "افسانے کا حصہ بنیں", cta_description: "ISOLELE کائنات میں کہانیوں کو دریافت کریں",
     cta_explore: "دریافت کریں", cta_newsletter: "نیوز لیٹر",
     footer_description: "ISOLELE: افریقی داستان کی روح کو بحال کرنا", footer_explore: "دریافت کریں", footer_resources: "وسائل",
     footer_newsletter_title: "ہمارے نیوز لیٹر کو سبسکرائب کریں", footer_newsletter_desc: "تازہ ترین کہانیں اور اپ ڈیٹس حاصل کریں",
