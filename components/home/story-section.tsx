@@ -158,7 +158,7 @@ export function StorySection() {
               transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
             >
               <p className="text-sm font-bold">H.R.M KING KUFULULA</p>
-              <p className="text-xs opacity-80">Creator & Author</p>
+              <p className="text-xs opacity-80">{t('founder_creator_author')}</p>
             </motion.div>
           </motion.div>
 
