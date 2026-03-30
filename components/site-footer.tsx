@@ -172,33 +172,7 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Column 4: Fashion */}
-          <div>
-            <h3 
-              className="text-lg font-bold tracking-wider mb-4"
-              style={{ color: currentTheme.colors.accentPrimary }}
-            >
-              {t("nav_fashion")}
-            </h3>
-            <div className="grid grid-cols-2 gap-3">
-              {[1, 2, 3, 4].map((i) => (
-                <motion.div
-                  key={i}
-                  className="relative aspect-square rounded-lg overflow-hidden shadow-lg"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <Image
-                    src={`/fashion/fashion-${i}.jpg`}
-                    alt={`Fashion ${i}`}
-                    fill
-                    className="object-cover"
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Column 5: Newsletter */}
+          {/* Column 4: Newsletter */}
           <div>
             <h3 
               className="text-lg font-bold tracking-wider mb-6"
