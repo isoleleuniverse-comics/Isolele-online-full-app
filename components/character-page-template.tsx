@@ -19,6 +19,29 @@ export function CharacterPageTemplate({ characterKey }: CharacterPageProps) {
   const character = characterData[characterKey]
   const [activeTab, setActiveTab] = useState<'story' | 'book'>('story')
 
+  // Handle character not found
+  if (!character) {
+    return (
+      <main style={{ backgroundColor: currentTheme.colors.background }} className="min-h-screen flex items-center justify-center">
+        <div className="text-center px-4">
+          <h1 className="text-4xl font-black mb-4" style={{ color: currentTheme.colors.textPrimary }}>
+            Character Not Found
+          </h1>
+          <p className="text-lg mb-8" style={{ color: currentTheme.colors.textSecondary }}>
+            The character you're looking for doesn't exist.
+          </p>
+          <Link 
+            href="/"
+            className="px-6 py-3 rounded-lg font-bold inline-block"
+            style={{ backgroundColor: currentTheme.colors.accentPrimary, color: currentTheme.colors.background }}
+          >
+            Back to Characters
+          </Link>
+        </div>
+      </main>
+    )
+  }
+
   const relatedCharacters = Object.entries(characterData).filter(
     ([key]) => key !== characterKey
   ).slice(0, 3)
