@@ -33,6 +33,14 @@ const pillars = [
     href: "/characters/bambula",
     characterName: "Bambula",
   },
+  {
+    key: "founder",
+    icon: Crown,
+    titleKey: "universe_founder_title",
+    descriptionKey: "universe_founder_desc",
+    href: "/the-founder",
+    characterName: "King Kufulula",
+  },
 ]
 
 export function UniverseSection() {
@@ -91,7 +99,7 @@ export function UniverseSection() {
         </div>
 
         {/* Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {pillars.map((pillar, index) => (
             <motion.div
               key={pillar.key}
@@ -125,6 +133,41 @@ export function UniverseSection() {
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}
+                  />
+                )}
+                
+                {index === 1 && (
+                  <div 
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                    style={{
+                      backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/a1486131-34f6-4e8f-941d-1f1185ed8af7.jpeg')`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                )}
+                
+                {index === 2 && (
+                  <div 
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                    style={{
+                      backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/577207f9-ac97-4745-a175-9815c6c39313.jpeg')`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                )}
+
+                {index === 3 && (
+                  <div 
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                    style={{
+                      backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c1e14e48-7ad7-4311-8f7e-73b69263fd5f.jpeg')`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                )}
                   />
                 )}
                 

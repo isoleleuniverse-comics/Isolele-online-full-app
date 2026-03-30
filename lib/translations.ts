@@ -199,307 +199,10 @@ export interface TranslationKeys {
   universe_resurrection_title: string
   universe_resurrection_desc: string
   
-  // Characters Section
-  characters_title: string
-  characters_subtitle: string
-  characters_discover: string
-  characters_zaire_title: string
-  characters_zaire_desc: string
-  characters_kimoya_title: string
-  characters_kimoya_desc: string
-  characters_zattar_title: string
-  characters_zattar_desc: string
-  characters_twins_title: string
-  characters_twins_desc: string
-  characters_imvula_title: string
-  characters_imvula_desc: string
-  
-  // Zaiire Character Page
-  zaiire_title: string
-  zaiire_epic_subtitle: string
-  zaiire_intro_paragraph: string
-  zaiire_description_p1: string
-  zaiire_description_p2: string
-  zaiire_description_p3: string
-  zaiire_description_p4: string
-  zaiire_description_p5: string
-  zaiire_quote: string
-  
-  // News Section
-  news_title: string
-  news_read_more: string
-  news_minutes_read: string
-  news_published: string
-  
-  // CTA Section
-  cta_title: string
-  cta_join_legend: string
-  cta_description: string
-  cta_explore: string
-  cta_newsletter: string
-  
-  // Footer
-  footer_description: string
-  footer_explore: string
-  footer_resources: string
-  footer_newsletter_title: string
-  footer_newsletter_desc: string
-  footer_email_placeholder: string
-  footer_subscribe: string
-  footer_copyright: string
-  footer_press: string
-  footer_careers: string
-  footer_contact: string
-  footer_faq: string
-  footer_terms: string
-  footer_privacy: string
-  
-  // Shop
-  shop_title: string
-  shop_subtitle: string
-  shop_add_to_cart: string
-  shop_buy_now: string
-  shop_price: string
-  shop_sale: string
-  shop_new: string
-  shop_bestseller: string
-  
-  // Cart
-  cart_title: string
-  cart_empty: string
-  cart_subtotal: string
-  cart_shipping: string
-  cart_total: string
-  cart_checkout: string
-  cart_continue_shopping: string
-  cart_remove: string
-  cart_quantity: string
-  
-  // Payment
-  payment_title: string
-  payment_card: string
-  payment_google_pay: string
-  payment_card_number: string
-  payment_expiry: string
-  payment_cvv: string
-  payment_name: string
-  payment_email: string
-  payment_confirm: string
-  payment_success: string
-  payment_receipt_sent: string
-  
-  // About Page
-  about_title: string
-  about_what_is: string
-  about_vision_title: string
-  about_vision_desc: string
-  about_pillars_title: string
-  about_pillar1_title: string
-  about_pillar1_desc: string
-  about_pillar2_title: string
-  about_pillar2_desc: string
-  about_pillar3_title: string
-  about_pillar3_desc: string
-  about_pillar4_title: string
-  about_pillar4_desc: string
-  
-  // Founder Page
-  founder_title: string
-  founder_name: string
-  founder_role: string
-  founder_bio: string
-  
-  // Common
-  language: string
-  theme: string
-  discover: string
-  latestNews: string
-  loading: string
-  error: string
-  success: string
-  cancel: string
-  save: string
-  edit: string
-  delete: string
-  search: string
-  search_placeholder: string
-  view_all: string
-  learn_more: string
-  back: string
-  next: string
-  previous: string
-  site_map: string
-  accessibility: string
-  cookie_settings: string
-  footer_thank_you: string
-}
+  universe_founder_title: string
+  universe_founder_desc: string
 
-export const translations: Record<Language, TranslationKeys> = {
-  en: {
-    // Navigation
-    nav_home: "Home",
-    nav_about: "About",
-    nav_comics: "Comics",
-    nav_founder: "Founder",
-    nav_news: "Comics News",
-    nav_characters: "Characters",
-    nav_shop: "Shop",
-    nav_supporters: "Supporters",
-    nav_contact: "Contact",
-    nav_games: "Games",
-    nav_all_characters: "All Characters",
-    nav_become_supporter: "Become a Supporter",
-    nav_partners: "Partners",
-    nav_restaurant: "Partner Restaurant",
-    nav_fashion: "Fashion",
-    nav_settings: "Settings",
-    
-    // Hero Section
-    hero_title: "ZAIIRE - PRINCE OF KONGO",
-    hero_subtitle: "The Necklace of Destiny",
-    hero_prince_kongo: "Prince of Kongo",
-    hero_necklace_destiny: "The Necklace of Destiny",
-    hero_description: "An uplifting action-packed adventure that echoes the spirit of The Lion King and Black Panther, while offering young readers a celebration of heritage, courage and self-discovery.",
-    hero_buy_now: "BUY NOW",
-    hero_discover: "DISCOVER THE STORY",
-    hero_preorder: "Pre-order",
-    hero_launch_price: "Launch price",
-    
-    // Fashion Section
-    fashion_collection_title: "Fashion Collection",
-    fashion_collection_subtitle: "Discover our fashion collection inspired by the ISOLELE universe",
-    fashion_view_full: "View Full Collection",
-    fashion_fire_performance: "Fire Performance",
-    fashion_monument_power: "Monument of Power",
-    fashion_sacred_geometry: "Sacred Geometry",
-    fashion_runway_essence: "Runway Essence",
-
-    // Founder Preview
-    founder_title: "H.R.M KING KUFULULA",
-    founder_subtitle: "The Visionary Behind ISOLELE",
-    founder_location: "King Kufulula — New York",
-    founder_description: "A cultural architect and storyteller, King Kufulula founded ISOLELE to restore the soul of African storytelling. His vision is to create a mythological empire where African superheroes rise from authentic history, not borrowed myths.",
-    founder_quote: "We don't just create characters. We create a lineage. We create a legacy.",
-    founder_cta: "Meet the Founder",
-    founder_creator_author: "Motongaki & Mokomi",
-    
-    // Products Section
-    products_already_available: "ALREADY AVAILABLE",
-    products_subtitle: "Dive into the Isolele universe with our collection of comics and books",
-    product_zaiire_name: "Zaiire: The Necklace of Destiny",
-    product_zaiire_desc: "The epic first chapter of the ISOLELE Universe — ZAIIRE Le Prince du Kongo",
-    product_kimoya_name: "Kimoya: The Rising Kandake",
-    product_kimoya_desc: "Collector's edition — the royal court of the Rising Kandake",
-    product_art_name: "The Art of ISOLELE",
-    product_art_desc: "Behind the scenes artwork — The Chosen Ones universe poster edition",
-    product_badge_preorder: "PRE-ORDER",
-    product_badge_limited: "LIMITED",
-    product_badge_new: "NEW",
-
-    // Character Pages
-    character_zaiire_name: "Zaiire",
-    character_zaiire_title: "The Prince of Kongo",
-    character_zaiire_short_desc: "A young prince destined to restore the glory of Kongo",
-    character_zaiire_long_desc: "Zaiire is the protagonist of The Necklace of Destiny. Born into the royal lineage of Kongo, he discovers his true destiny as he wears the ancient Necklace. His journey spans the mythical empire where African superheroes rise from authentic history.",
-    
-    character_kimoya_name: "Kimoya",
-    character_kimoya_title: "The Rising Kandake",
-    character_kimoya_short_desc: "A warrior queen commanding the royal court",
-    character_kimoya_long_desc: "Kimoya rules with wisdom and power over the Rising Kandake kingdom. As a central figure in The Chosen Ones universe, she embodies strength, leadership, and the sacred connection to ancestral traditions.",
-    
-    character_bambula_name: "Bambula",
-    character_bambula_title: "Guardian of the Rebellion",
-    character_bambula_short_desc: "A fierce warrior leading the resistance",
-    character_bambula_long_desc: "Bambula represents the spirit of revolution and defiance. This character's story showcases the struggle for freedom and justice within the ISOLELE universe.",
-    
-    character_mokele_name: "Mokele",
-    character_mokele_title: "Ancient Protector",
-    character_mokele_short_desc: "The legendary guardian of ancient secrets",
-    character_mokele_long_desc: "Mokele embodies the wisdom of ancient African civilizations. This mystical character guards sacred knowledge and the paths of destiny that shape the ISOLELE universe.",
-    
-    character_assemblee_name: "Assemblée ISOLELE",
-    character_assemblee_title: "The Council of Power",
-    character_assemblee_short_desc: "The gathering of chosen ones",
-    character_assemblee_long_desc: "The Assemblée ISOLELE represents the united council of heroes and leaders within The Chosen Ones universe. Together, they form an unbreakable bond dedicated to restoring African storytelling.",
-    
-    character_kufulula_name: "King Kufulula",
-    character_kufulula_title: "The Visionary Founder",
-    character_kufulula_short_desc: "Creator and architect of ISOLELE",
-    character_kufulula_long_desc: "H.R.M King Kufulula is the cultural architect who founded ISOLELE to restore the soul of African storytelling. His vision created a mythological empire where African superheroes rise from authentic history, not borrowed myths.",
-    
-    product_bambula_name: "Bambula: Rise of the Warrior",
-    product_bambula_desc: "The epic story of rebellion and resistance",
-    product_mokele_name: "Mokele: Keeper of Secrets",
-    product_mokele_desc: "Ancient wisdom meets modern heroism",
-    product_assemblee_name: "Assemblée ISOLELE: The Chosen Council",
-    product_assemblee_desc: "Unite the heroes, unite the legacy",
-    product_kufulula_name: "The Founder's Legacy",
-    product_kufulula_desc: "The vision behind ISOLELE",
-    
-    // Common Page Elements
-    page_coming_soon: "Coming Soon",
-    related_characters: "Related Characters",
-    discover_more: "Discover More",
-    back_to_home: "Back to Home",
-    readArticle: "READ ARTICLE",
-    viewAllNews: "VIEW ALL NEWS",
-
-    // Book Slides
-    book_welcome_tag: "WELCOME TO ISOLELE",
-    book_chosen_ones_title: "THE CHOSEN ONES",
-    book_chosen_ones_subtitle: "An entire universe born from the roots of Kongo...",
-    book_chosen_ones_desc: "Isolele is a visionary universe born to restore the soul of African storytelling, a mythological empire where superheroes are chosen by destiny, kingdoms never forgotten, and ancestral power is alive in every page, every prophecy, every battle. Every child who reads Isolele will discover superheroes who look like them, speak their language, protect their land, and honor their ancestors. This is for the next generation of kings, queens, warriors, inventors, and storytellers.",
-    book_explore_universe: "EXPLORE THE UNIVERSE",
-
-    book_makanda_tag: "THE MAKANDA DYNASTY — BOOK I",
-    book_makanda_title: "MAKANDA",
-    book_makanda_subtitle: "The Most Powerful Empire in History Was Not Lost. It Was Hidden On Purpose.",
-    book_makanda_desc: "Deep within Central Africa existed a civilization the world was never meant to know about. Spiritually awakened. Technologically advanced. Protected by the Sacred Flame. When outside forces came for what was theirs, the Makanda did not fall. They disappeared. Their city was never lost. It was waiting for the one born to carry the flame again.",
-    book_discover_makanda: "DISCOVER MAKANDA",
-
-    book_bambula_tag: "BAMBULA: CHILD OF RHYTHM",
-    book_bambula_title: "BAMBULA",
-    book_bambula_subtitle: "CHAPTER I · THE SACRED DRUM",
-    book_bambula_desc: "Before words, there was rhythm. Bambula was the child who heard everything. When the drums were taken and the land went silent, he kept the rhythm alive inside him. Armed with the sacred drum, he walks between the spirit world and the living. He does not fight to destroy. He protects to remember.",
-    book_discover_bambula: "DISCOVER BAMBULA",
-
-    book_mokele_tag: "MOKELE: BORN INTO STRUGGLE",
-    book_mokele_title: "MOKELE",
-    book_mokele_subtitle: "From Child to Lord of Kinshasa",
-    book_mokele_desc: "Mokele is not born a king. He is born into struggle. The streets of Kinshasa teach him before school ever could, where loyalty is fragile, violence is normal, and survival is everything. From child to hustler to lord. He builds power, money, and respect. In Kinshasa, you either get eaten... or you become the predator.",
-    book_discover_mokele: "DISCOVER MOKELE",
-
-    book_zaiire_tag: "ZAIIRE: THE PRINCE OF KONGO",
-    book_zaiire_title: "THE PRINCE OF KONGO",
-    book_zaiire_subtitle: "The Necklace of Destiny",
-    book_zaiire_desc: "Forged in the heart of the Kongo Kingdom, the Necklace of Destiny was never made to be worn. It was made to choose. Passed through centuries of fire, war, and silence, it carries the soul of every king who bled for their people and every queen who held the world together with bare hands. When it finds Zaiire, it does not shine. It awakens.",
-    book_discover_zaiire: "DISCOVER ZAIIRE",
-
-    book_kufu_tag: "KUFU: THE CROWN GAME",
-    book_kufu_title: "KUFU",
-    book_kufu_subtitle: "THE OFFICIAL GAME OF THE ISOLELE UNIVERSE",
-    book_kufu_desc: "This is not just a card game. It is a ceremony. Gather your warriors. Build your kingdom. Outplay every opponent at the table. But to claim the crown there is only one way to win. You must raise your voice and speak the name of the king out loud. Then someone places the necklace over your head. Not by your own hand. By another. Because a true king is not crowned alone. KUFU is where African royalty becomes something you feel in your hands, hear in your voice, and carry around your neck. Every game is a coronation. Every winner is a king.",
-    book_explore_game: "EXPLORE THE GAME",
-
-    book_amara_tag: "AMARA: QUEEN OF THE SEAS",
-    book_amara_title: "AMARA",
-    book_amara_subtitle: "CHAPTER I · QUEEN OF THE PIRATES OF AMAZON",
-    book_amara_desc: "Every pirate fears the ocean. Amara owns it. She is the Queen of the Seas. The most feared captain on every water in the world. No ship has outrun her. No king has outsmarted her. No army has stopped her fleet. But Amara does not sail alone. Beside her stand four women bound by blood, loyalty and destiny. Five queens of the sea who together carry a power that will shake every throne on the continent. From their union the Agojie dynasty is born. And from that dynasty rise the five women kings who will change the course of African history forever. This is not just a pirate story. This is where the greatest female dynasty in the ISOLELE universe begins.",
-    book_discover_amara: "DISCOVER AMARA",
-
-    book_zattar_tag: "ZATTAR: THE PRINCE OF THE UNIVERSE",
-    book_zattar_title: "ZATTAR",
-    book_zattar_subtitle: "The Conqueror of Thrones",
-    book_zattar_desc: "When Destiny Refused Him One Kingdom, He Decided to Take Them All. Prince Zattar was born to inherit the throne of Bapindi. But when the Ancestors chose another, something inside him did not break. It ignited. He studied the First and Second Wars of Vegas, legends of devastation that shook the world before he was even born. Where others saw warning, Zattar saw a map. He started the Third War of Vegas. Not out of madness. Not out of pain. But because he looked at the entire universe and reached one conclusion: It belongs to someone. And that someone is Zattar. He was not chosen. So he chose the universe instead.",
-    book_discover_zattar: "DISCOVER ZATTAR",
-
-    book_zaiko_tag: "ZAÏKO: LAST KING OF THE STREETS OF KIVUS",
-    book_zaiko_title: "THE LEGEND OF ZAÏKO",
-    book_zaiko_subtitle: "He Did Not Rise From the Streets. He Conquered Them.",
-    book_zaiko_desc: "Born in North Kivu. Forged in Kinshasa. Zaïko was never meant to survive. But survival was never enough. In a world ruled by power, money, and fear, he rises from nothing. Not as a hero. But as a force. With his brother, he builds the most feared empire the Kivus have ever known. No crown was given. No destiny was written. Everything was taken.",
-    book_discover_zaiko: "DISCOVER ZAÏKO",
-    
-    // Universe Section
+  // Universe Section
     universe_title: "THE ISOLELE UNIVERSE",
     universe_subtitle: "The Chosen Ones",
     universe_description: "Isolele is a visionary universe born to restore the soul of African storytelling - a mythological empire where Superheroes are chosen by destiny, kingdoms never forgotten, and ancestral power lives in every page, every prophecy, every battle.",
@@ -509,6 +212,9 @@ export const translations: Record<Language, TranslationKeys> = {
     universe_heritage_desc: "Royal blood carries the memory and might of forgotten kingdoms, waiting to be awakened by the chosen ones.",
     universe_resurrection_title: "Ancestral Spirits Never Die",
     universe_resurrection_desc: "Africa was never powerless. The prophecy has returned, and with it, the resurrection of buried myths.",
+    
+    universe_founder_title: "The Visionary Founder",
+    universe_founder_desc: "King Kufulula founded ISOLELE to restore the soul of African storytelling and create a mythological empire where African superheroes rise from authentic history.",
     
     // Characters Section
     characters_title: "THE CHOSEN ONES",
@@ -834,6 +540,9 @@ export const translations: Record<Language, TranslationKeys> = {
     universe_heritage_desc: "Le sang royal transporte la mémoire et la puissance des royaumes oubliés, attendant d'être réveillées par les élus.",
     universe_resurrection_title: "Les Esprits Ancestraux ne Meurent Jamais",
     universe_resurrection_desc: "L'Afrique n'a jamais été impuissante. La prophétie est revenue, et avec elle, la résurrection des mythes enterrés.",
+    
+    universe_founder_title: "Le Fondateur Visionnaire",
+    universe_founder_desc: "Le Roi Kufulula a fondé ISOLELE pour restaurer l'âme de la narration africaine et créer un empire mythologique où les super-héros africains surgissent de l'histoire authentique.",
     
     // Characters Section
     characters_title: "LES ÉLUS",
@@ -1401,6 +1110,9 @@ export const translations: Record<Language, TranslationKeys> = {
     universe_heritage_desc: "Makila ma mokonzi ebamba yumbo mpe makambu ya likolo oyo elimbwaki, ilindaka kopimwa na baye na lisusu.",
     universe_resurrection_title: "Bazimu Ba Baboti Bakufa Te Kanti",
     universe_resurrection_desc: "Afrika eleki bulukhuni te kanti. Unabilo ubuyaki, mpe na yango molinga ya bazimu ebotamaki.",
+    
+    universe_founder_title: "Motonda Wa Motema Oyo Ayeba Sika",
+    universe_founder_desc: "Mokonzi Kufulula atondaki ISOLELE mpo na kolongola molinga ma masini ya mokonzi ya Afrika mpe kosala likolo oyo masini ya mokonzi ya Afrika ebakaka na molanga ya sika.",
     
     // Characters Section
     characters_title: "BAYE NA LISUSU",
@@ -2063,7 +1775,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_zattar_desc: "運命が���に一つの王国を拒んだとき、彼はすべてを征服することを決めまし���。", book_discover_zattar: "ザッターを発見",
     book_zaiko_tag: "ザイコ：キヴ地域の最後の王", book_zaiko_title: "ザイコの伝説",
     book_zaiko_subtitle: "彼は通りから上がりませんでした。彼らを征服しました。", book_zaiko_desc: "北キヴで生まれました��",
-    book_discover_zaiko: "ザイコを発見",
+    book_discover_zaiko: "ザイ���を発見",
     universe_title: "ISOLELE宇宙", universe_subtitle: "選ばれし者たち", universe_description: "ISOLELEはアフリカのストーリーテリングの魂を取り戻すために生まれた先見的な宇宙です。",
     universe_destiny_title: "運命は選択ではありません", universe_destiny_desc: "それは呼びかけです。",
     universe_heritage_title: "王族の血は古代の力を持ちます", universe_heritage_desc: "王族の血は忘れられた王国の記憶と力を担っています。",
@@ -2112,7 +1824,7 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_become_supporter: "كن مؤيدًا", nav_partners: "الشركاء", nav_restaurant: "مطعم الشريك", nav_fashion: "الموضة", nav_settings: "الإعدادات",
     hero_title: "زاير - أمير الكونغو", hero_subtitle: "قلادة المصير", hero_description: "قصة مغامرة ملحمية مليئة بالأكشن ترجع صدى روح الملك الأسد والفهد الأسود.",
     hero_buy_now: "اشتر الآن", hero_discover: "اكتشف القصة", hero_preorder: "طلب مسبق", hero_launch_price: "سعر الإطلاق",
-    book_welcome_tag: "أهلا وسهلا في إيسولايل", book_chosen_ones_title: "المختارون", book_chosen_ones_subtitle: "كون بأكمله وُلد من جذور الكونغو...",
+    book_welcome_tag: "أهلا وسهل�� في إيسولايل", book_chosen_ones_title: "المختارون", book_chosen_ones_subtitle: "كون بأكمله وُلد من جذور الكونغو...",
     book_chosen_ones_desc: "إيسولايل هو ��ون بعيد النظر وُلد لاستعادة روح السرد الأفريقي.",
     book_explore_universe: "استكشف الكون", book_makanda_tag: "سلالة ماكاندا - الكتاب الأول", book_makanda_title: "ماكاندا",
     book_makanda_subtitle: "أقوى إمبراطورية في التاريخ لم تُفقد. تم إخفاؤها عن قصد.", book_makanda_desc: "في أعماق أفريقيا الوسطى، كانت هناك حضارة لم يكن للعالم أن يعرفها.",
@@ -2202,7 +1914,7 @@ export const translations: Record<Language, TranslationKeys> = {
     universe_destiny_title: "ভাগ্য একটি পছন্দ নয়", universe_destiny_desc: "এটি একটি আহ্ব���ন।",
     universe_heritage_title: "রাজকীয় রক্ত প্রাচীন শক্তি বহন করে", universe_heritage_desc: "রাজকীয় রক্ত ভুলে যাওয়া সাম্রাজ���যের স্মৃতি এবং শক্তি বহন করে।",
     universe_resurrection_title: "পূর্বপুরুষের আ��্মা কখ��ও ম��ত্যু পায় না", universe_resurrection_desc: "আফ্রিকা কখনই সহায়কহীন ছিল না।",
-    characters_title: "নির্বাচিত", characters_subtitle: "ইসোলেল মহাবিশ্বের বীর, কিংবদন্তি এবং অভিভাবকদের দেখা করুন",
+    characters_title: "নির্বাচ��ত", characters_subtitle: "ইসোলেল মহাবিশ্বের বীর, কিংবদন্তি এবং অভিভাবকদের দেখা করুন",
     characters_discover: "আবিষ্কার করুন", characters_zaire_title: "কঙ্গোর ��াজকুমার", characters_zaire_desc: "বিদ্যুত এবং রাজকীয়তার পুত্র।",
     characters_kimoya_title: "কিমোয়া", characters_kimoya_desc: "আগুনের মহিলা দ্বারা ক্ষমতাপ্রাপ্ত যোদ্ধা।", characters_zattar_title: "জাত্তার",
     characters_zattar_desc: "মহাবিশ্বের জয়ী।", characters_twins_title: "যুবক", characters_twins_desc: "ভাগ্যের অভিভাবক।",
@@ -2293,7 +2005,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_title: "ISOLELE کے بارے میں", about_what_is: "ISOLELE کیا ہے؟",
     about_vision_title: "نقطہ نظر", about_vision_desc: "افریقہ کو کہانی، تخیل اور طاقت کے منبع کے طور پر بح���� کریں۔",
     about_pillars_title: "ISOLELE کے چار ستون", about_pillar1_title: "روحانی دنیا",
-    about_pillar1_desc: "پورے افریقہ پر حکمرانی کرنے کے لیے کافی بادشاہوں اور ملکہ سے بھرا ہوا۔",
+    about_pillar1_desc: "پورے افریقہ پر حکم��انی کرنے کے لیے کافی بادشاہوں اور ملکہ سے بھرا ہوا۔",
     about_pillar2_title: "تخلیقی اشاعت اور مقامی کاری", about_pillar2_desc: "کہانیوں سے خیالات تک، کھیلوں سے سنیما تک، ISOLELE افریقی تخلیقی کارکنوں کے لیے ایک منصہ بناتا ہے۔",
     about_pillar3_title: "انسانیت کی بیداری", about_pillar3_desc: "ISOLELE ایک عظیم مقصد کا پہلا حصہ ہے جو افریقی شاہی حکمرانی، روحانیت کو دریافت، دریافت اور بحال کرنے کا مقصد رکھتا ہے۔",
     about_pillar4_title: "بچے کے قدم", about_pillar4_desc: "ISOLELE پڑھنے والا بچہ ایسے نگران دریافت کرے گا جو اس جیسے نظر آتے ہوں۔",
@@ -2449,7 +2161,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_explore_universe: "WI AIYE", book_makanda_tag: "IDILE MAKANDA - ILORIN I", book_makanda_title: "MAKANDA",
     book_makanda_subtitle: "Awo-oniseye nla julọ ti itan ko si ti sonu. A pamo temi ni pe.", book_makanda_desc: "Ni inu Afirika, aye kan wa ti awọ aiye ko mo.",
     book_discover_makanda: "RIYAN MAKANDA", book_bambula_tag: "BAMBULA: OMO TI ORIN", book_bambula_title: "BAMBULA",
-    book_bambula_subtitle: "ÌPÌLẸ̀ KÌNNÍ · ADANDUN MIMALẸ", book_bambula_desc: "Ṣaaju ọrọ, orin wa ni.",
+    book_bambula_subtitle: "ÌPÌLẸ̀ K��NNÍ · ADANDUN MIMALẸ", book_bambula_desc: "Ṣaaju ọrọ, orin wa ni.",
     book_discover_bambula: "RIYAN BAMBULA", book_mokele_tag: "MOKELE: ABI NI LOOLDUN",
     book_mokele_title: "MOKELE", book_mokele_subtitle: "Lati omokubere si Baba ti Kinshasa", book_mokele_desc: "MOKELE ko bi oba.",
     book_discover_mokele: "RIYAN MOKELE", book_zaiire_tag: "ZAIIRE: ỌMỌ ỌLỌRUN KONGO", book_zaiire_title: "OMO ỌLỌRUN KONGO",
@@ -2643,7 +2355,7 @@ export const translations: Record<Language, TranslationKeys> = {
     hero_title: "ዛኢሬ - ኮንጎ ወንድ ልጅ", hero_subtitle: "የአዋጅ string", hero_description: "ተነሳሽ ድርጊት ጥሩ ታሪክ ከ Lion King እና Black Panther መንፈስ ጋር ይስማማል።",
     hero_buy_now: "አሁን ግዙ", hero_discover: "ታሪክ ያግኙ", hero_preorder: "ቅድ���ያ ማዘዝ", hero_launch_price: "ጅምር ሙጫ",
     book_welcome_tag: "ወደ ISOLELE እንኳን በደህ�� መጡ", book_chosen_ones_title: "የተመረጡ", book_chosen_ones_subtitle: "ኮንጎ ሥሮች ከተወለዱ የሙሉ አለም...",
-    book_chosen_ones_desc: "ISOLELE ፈላሚ የአለም ስር አፍሪካ ታሪክ ተረት ለማገድ የተወለደ ነው።",
+    book_chosen_ones_desc: "ISOLELE ፈላሚ የአለም ስር አፍሪካ ታሪክ ተረት ለማገድ የተወ��ደ ነው።",
     book_explore_universe: "አለምን ይቃኙ", book_makanda_tag: "MAKANDA መንግሥት - ታሪክ I", book_makanda_title: "MAKANDA",
     book_makanda_subtitle: "ታሪክ ውስጥ ከሚጠናከር ግዛት ጋር አልተጠፋም። ሰዎ ሳቅ አደረገቅ.", book_makanda_desc: "በመካከለኛ አፍሪካ ውስጥ, ሥልጣን አልታወቅም ቂሎ ነበር.",
     book_discover_makanda: "MAKANDA ይግኙ", book_bambula_tag: "BAMBULA: ሪ듬ወዛ", book_bambula_title: "BAMBULA",
