@@ -12,32 +12,32 @@ import Image from "next/image"
 const articles = [
   {
     id: 1,
-    category: "HISTORY UNVEILED",
+    categoryKey: "news_category_history",
     categoryColor: "#D4AF37",
-    title: "The Lost Tribe Behind Wakanda Was Real: Meet the Makanda of Congo",
-    excerpt: "A new wave of historians and cultural leaders sheds light on Makanda, a once-hidden Congolese empire that may hold the true heritage behind the myth of Wakanda.",
+    titleKey: "news_title_makanda",
+    excerptKey: "news_excerpt_makanda",
     readTime: "5 min",
-    date: "March 2025",
+    dateKey: "news_date_march",
     image: "/events/wakanda-makanda-royal.jpg",
   },
   {
     id: 2,
-    category: "CULTURAL COMMENTARY",
+    categoryKey: "news_category_cultural",
     categoryColor: "#B3541E",
-    title: "How the Isolele Universe Recovers African Memory",
-    excerpt: "\"Colonialism did not erase our greatness. It buried it under its own myth.\" A plan for the restoration of Africa's suppressed imagination.",
+    titleKey: "news_title_isolele_memory",
+    excerptKey: "news_excerpt_isolele_memory",
     readTime: "8 min",
-    date: "February 2025",
+    dateKey: "news_date_february",
     image: "/events/african-empire-luxury.jpg",
   },
   {
     id: 3,
-    category: "RESEARCH",
+    categoryKey: "news_category_research",
     categoryColor: "#4169E1",
-    title: "From Myth to Manuscript: Mapping the Makanda Empire",
-    excerpt: "A cartographic journey through an erased African civilization whose memory survived in symbols, not borders.",
+    titleKey: "news_title_makanda_manuscript",
+    excerptKey: "news_excerpt_makanda_manuscript",
     readTime: "6 min",
-    date: "January 2025",
+    dateKey: "news_date_january",
     image: "/events/courtroom-makanda.jpg",
   },
 ]
@@ -106,7 +106,7 @@ export function NewsSection() {
                         color: currentTheme.colors.background,
                       }}
                     >
-                      {article.category}
+                      {t(article.categoryKey)}
                     </span>
                   </div>
 
@@ -116,13 +116,13 @@ export function NewsSection() {
                       className="text-lg font-bold tracking-wide mb-3 line-clamp-2 transition-colors duration-300"
                       style={{ color: currentTheme.colors.textPrimary }}
                     >
-                      {article.title}
+                      {t(article.titleKey)}
                     </h3>
                     <p 
                       className="text-sm leading-relaxed mb-4 line-clamp-3"
                       style={{ color: currentTheme.colors.textSecondary }}
                     >
-                      {article.excerpt}
+                      {t(article.excerptKey)}
                     </p>
                     
                     {/* Meta */}
@@ -132,9 +132,9 @@ export function NewsSection() {
                         style={{ color: currentTheme.colors.textSecondary }}
                       >
                         <Clock className="w-4 h-4" />
-                        <span>{article.readTime} de lecture</span>
+                        <span>{article.readTime} {t('news_minutes_read')}</span>
                         <span>•</span>
-                        <span>{article.date}</span>
+                        <span>{t(article.dateKey)}</span>
                       </div>
                     </div>
 
