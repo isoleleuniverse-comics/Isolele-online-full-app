@@ -16,7 +16,7 @@ export function FashionPreview() {
   
   const lang = currentLanguage.code
   const fashionImages = [
-    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5344a139-a21c-4274-9a7a-a3a1adf9cfd7.jpeg', title: { en: 'Fire Performance', fr: 'Performance du Feu' } },
+    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/24b920d7-edfa-4aaf-aca5-b6954082c4f8.jpeg', title: { en: 'Fire Performance', fr: 'Performance du Feu' } },
     { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/b9cc3aca-9a1d-432a-8b14-85494aee7a0d.jpeg', title: { en: 'Monument of Power', fr: 'Monument du Pouvoir' } },
     { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/258a56b3-8a74-47ff-967c-61ff803cc20f.jpeg', title: { en: 'Sacred Geometry', fr: 'Géométrie Sacrée' } },
     { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/189adee8-e7b7-45ee-ba67-5c9b6ef5ab67.jpeg', title: { en: 'Runway Essence', fr: 'Essence de la Piste' } },
