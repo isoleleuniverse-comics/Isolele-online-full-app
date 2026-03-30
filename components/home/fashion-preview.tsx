@@ -9,7 +9,7 @@ import { useRef } from 'react'
 import { useInView } from 'framer-motion'
 
 export function FashionPreview() {
-  const lang = currentLanguage.code
+  const { currentTheme } = useTheme()
   const { t } = useLanguage()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
