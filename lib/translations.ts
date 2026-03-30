@@ -46,11 +46,22 @@ export interface TranslationKeys {
   // Hero Section
   hero_title: string
   hero_subtitle: string
+  hero_prince_kongo: string
+  hero_necklace_destiny: string
   hero_description: string
   hero_buy_now: string
   hero_discover: string
   hero_preorder: string
   hero_launch_price: string
+  
+  // Fashion Section
+  fashion_collection_title: string
+  fashion_collection_subtitle: string
+  fashion_view_full: string
+  fashion_fire_performance: string
+  fashion_monument_power: string
+  fashion_sacred_geometry: string
+  fashion_runway_essence: string
 
   // Book Slides
   book_welcome_tag: string
@@ -276,11 +287,22 @@ export const translations: Record<Language, TranslationKeys> = {
     // Hero Section
     hero_title: "ZAIIRE - PRINCE OF KONGO",
     hero_subtitle: "The Necklace of Destiny",
+    hero_prince_kongo: "Prince of Kongo",
+    hero_necklace_destiny: "The Necklace of Destiny",
     hero_description: "An uplifting action-packed adventure that echoes the spirit of The Lion King and Black Panther, while offering young readers a celebration of heritage, courage and self-discovery.",
     hero_buy_now: "BUY NOW",
     hero_discover: "DISCOVER THE STORY",
     hero_preorder: "Pre-order",
     hero_launch_price: "Launch price",
+    
+    // Fashion Section
+    fashion_collection_title: "Fashion Collection",
+    fashion_collection_subtitle: "Discover our fashion collection inspired by the ISOLELE universe",
+    fashion_view_full: "View Full Collection",
+    fashion_fire_performance: "Fire Performance",
+    fashion_monument_power: "Monument of Power",
+    fashion_sacred_geometry: "Sacred Geometry",
+    fashion_runway_essence: "Runway Essence",
     
     // Book Slides
     book_welcome_tag: "WELCOME TO ISOLELE",
@@ -504,13 +526,24 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_settings: "Paramètres",
     
     // Hero Section
-    hero_title: "ZAÏRE - PRINCE DU KONGO",
+    hero_title: "ZAIIRE - PRINCE DU KONGO",
     hero_subtitle: "Le Collier de la Destinée",
-    hero_description: "Une aventure palpitante et édifiante qui fait écho à l'esprit du Roi Lion et de Black Panther, tout en offrant aux jeunes lecteurs une célébration de l'héritage, du courage et de la découverte de soi.",
+    hero_prince_kongo: "Prince du Kongo",
+    hero_necklace_destiny: "Le Collier de la Destinée",
+    hero_description: "Une aventure d'action inspirante qui écho l'esprit du Roi Lion et Black Panther, tout en offrant aux jeunes lecteurs une célébration du patrimoine, du courage et de l'autodécouverte.",
     hero_buy_now: "ACHETER MAINTENANT",
     hero_discover: "DÉCOUVRIR L'HISTOIRE",
-    hero_preorder: "Pré-commande",
+    hero_preorder: "Précommande",
     hero_launch_price: "Prix de lancement",
+    
+    // Fashion Section
+    fashion_collection_title: "Collection Mode",
+    fashion_collection_subtitle: "Découvrez notre collection de mode inspirée par l'univers ISOLELE",
+    fashion_view_full: "Voir la Collection Complète",
+    fashion_fire_performance: "Performance du Feu",
+    fashion_monument_power: "Monument du Pouvoir",
+    fashion_sacred_geometry: "Géométrie Sacrée",
+    fashion_runway_essence: "Essence de la Piste",
     
     // Book Slides
     book_welcome_tag: "BIENVENUE À ISOLELE",
@@ -728,13 +761,24 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_become_supporter: "Torne-se um Apoiador",
     nav_partners: "Parceiros",
     nav_restaurant: "Restaurante Parceiro",
+    nav_fashion: "Moda",
+    nav_settings: "Configuracoes",
     hero_title: "ZAIIRE - PRINCIPE DO KONGO",
     hero_subtitle: "O Colar do Destino",
+    hero_prince_kongo: "Principe do Kongo",
+    hero_necklace_destiny: "O Colar do Destino",
     hero_description: "Uma aventura emocionante e edificante que ecoa o espirito de O Rei Leao e Pantera Negra, oferecendo aos jovens leitores uma celebracao da heranca, coragem e autodescoberta.",
     hero_buy_now: "COMPRAR AGORA",
     hero_discover: "DESCOBRIR A HISTORIA",
     hero_preorder: "Pre-venda",
     hero_launch_price: "Preco de lancamento",
+    fashion_collection_title: "Colecao de Moda",
+    fashion_collection_subtitle: "Descubra nossa colecao de moda inspirada no universo ISOLELE",
+    fashion_view_full: "Ver Colecao Completa",
+    fashion_fire_performance: "Performance de Fogo",
+    fashion_monument_power: "Monumento do Poder",
+    fashion_sacred_geometry: "Geometria Sagrada",
+    fashion_runway_essence: "Essencia da Passarela",
     universe_title: "O UNIVERSO ISOLELE",
     universe_subtitle: "Os Escolhidos",
     universe_description: "Isolele e um universo visionario nascido para restaurar a alma da narrativa africana - um imperio mitologico onde Super-herois sao escolhidos pelo destino.",
@@ -1623,7 +1667,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_pillar3_title: "Пробуждение человечества", about_pillar3_desc: "Isolele - это первая часть великой цели, направленной на открытие, изучение и восстановление африканского королевства.",
     about_pillar4_title: "Следы детей", about_pillar4_desc: "Ребенок, читающий Isolele, откроет для себя защитников, которые выглядят как он.",
     founder_title: "Основатель", founder_name: "Его королевское величество король Куфулула", founder_role: "Создатель и архитектор вселенной Isolele",
-    founder_bio: "Провидец, стоящий за Isolele, посвященный восстановлению души африканского повествования и празднованию африканской королевской идентичности.",
+    founder_bio: "Прови��ец, стоящий за Isolele, посвященный восстановлению души африканского повествования и празднованию африканской королевской идентичности.",
     language: "Язык", theme: "Тема", discover: "Откройте", latestNews: "Последние новости", loading: "Загрузка...",
     error: "Ошибка", success: "Успех", cancel: "Отмена", save: "Сохранить", edit: "Редактировать", delete: "Удалить",
     search: "Поиск", search_placeholder: "Поиск...", view_all: "Просмотреть все", learn_more: "Узнать больше",
@@ -1661,7 +1705,7 @@ export const translations: Record<Language, TranslationKeys> = {
     universe_destiny_title: "運命は選択ではありません", universe_destiny_desc: "それは呼びかけです。",
     universe_heritage_title: "王族の血は古代の力を持ちます", universe_heritage_desc: "王族の血は忘れられた王国の記憶と力を担っています。",
     universe_resurrection_title: "祖先の霊は決して死になません", universe_resurrection_desc: "アフリカは決して無力ではありませんでした。",
-    characters_title: "選ばれし者たち", characters_subtitle: "ISOLELE宇宙の英雄、伝説、守護者に出会う",
+    characters_title: "選ば���し者たち", characters_subtitle: "ISOLELE宇宙の英雄、伝説、守護者に出会う",
     characters_discover: "発見", characters_zaire_title: "コンゴの王子", characters_zaire_desc: "雷と王族の子。",
     characters_kimoya_title: "キモヤ", characters_kimoya_desc: "火の女によって力を与えられた戦士。", characters_zattar_title: "ザッター",
     characters_zattar_desc: "宇宙の征服者。", characters_twins_title: "双子", characters_twins_desc: "運命の守護者。",
@@ -1753,7 +1797,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_vision_title: "الرؤية", about_vision_desc: "استعادة أفريقيا كمصدر للقصص والخيال والقوة.",
     about_pillars_title: "الأركان الأربعة لإيسولايل", about_pillar1_title: "العالم الروحي",
     about_pillar1_desc: "مكتظ ب��دد كافٍ من الملوك والملكات لحكم أفريقيا بأكملها.",
-    about_pillar2_title: "النشر الإبداعي والتوطين", about_pillar2_desc: "من القصص إلى الأفكار، من الألعاب إلى السينما، ينشئ إيسولايل منصة لعمال أفريقيين مبدعين.",
+    about_pillar2_title: "النشر الإبداعي والتوطين", about_pillar2_desc: "من ا��قصص إلى الأفكار، من الألعاب إلى السينما، ينشئ إيسولايل منصة لعمال أفريقيين مبدعين.",
     about_pillar3_title: "يقظة الإنسانية", about_pillar3_desc: "إيسولايل هو الجزء الأول من هدف عظيم يهدف إلى اكتشاف واستكشاف واستعادة الملكية الأفريقية والروحانية.",
     about_pillar4_title: "آثار الأطفال", about_pillar4_desc: "الطفل الذي يقرأ إيسولايل سيكتشف حاميين يبدون مثله.",
     founder_title: "المؤسس", founder_name: "الملك كوفولولا", founder_role: "منشئ ومهندس كون إيسولايل",
@@ -1792,7 +1836,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_zaiko_subtitle: "তিনি রাস্তা থেকে উঠেন নি। তিনি তাদের জয় করেছেন।", book_zaiko_desc: "উত্তর কিভুতে জন্মেছেন।",
     book_discover_zaiko: "জায়কো আবিষ্কার করুন",
     universe_title: "ইসোলেল মহাবিশ্ব", universe_subtitle: "নির্বাচিত", universe_description: "ইসোলে��� একটি দূরদর্শী মহাবিশ্ব যা আফ্রিকান বর্ণনার আত্মা পুনরুদ্ধার করতে জন্ম নিয়েছিল।",
-    universe_destiny_title: "ভাগ্য একটি পছন্দ নয়", universe_destiny_desc: "এটি একটি আহ্বান।",
+    universe_destiny_title: "ভাগ্য একটি পছন্দ নয়", universe_destiny_desc: "এটি একটি আহ্ব���ন।",
     universe_heritage_title: "রাজকীয় রক্ত প্রাচীন শক্তি বহন করে", universe_heritage_desc: "রাজকীয় রক্ত ভুলে যাওয়া সাম্রাজ���যের স্মৃতি এবং শক্তি বহন করে।",
     universe_resurrection_title: "পূর্বপুরুষের আ��্মা কখ��ও মৃত্যু পায় না", universe_resurrection_desc: "আফ্রিকা কখনই সহায়কহীন ছিল না।",
     characters_title: "নির্বাচিত", characters_subtitle: "ইসোলেল মহাবিশ্বের বীর, কিংবদন্তি এবং অভিভাবকদের দেখা করুন",
@@ -2235,7 +2279,7 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_become_supporter: "ደጋፊ ሆን", nav_partners: "ተባበሪ", nav_restaurant: "ተባበሪ ምግብ ቤት", nav_fashion: "ፋሽን", nav_settings: "ቅንጅቶች",
     hero_title: "ዛኢሬ - ኮንጎ ወንድ ልጅ", hero_subtitle: "የአዋጅ string", hero_description: "ተነሳሽ ድርጊት ጥሩ ታሪክ ከ Lion King እና Black Panther መንፈስ ጋር ይስማማል።",
     hero_buy_now: "አሁን ግዙ", hero_discover: "ታሪክ ያግኙ", hero_preorder: "ቅድ���ያ ማዘዝ", hero_launch_price: "ጅምር ሙጫ",
-    book_welcome_tag: "ወደ ISOLELE እንኳን በደህና መጡ", book_chosen_ones_title: "የተመረጡ", book_chosen_ones_subtitle: "ኮንጎ ሥሮች ከተወለዱ የሙሉ አለም...",
+    book_welcome_tag: "ወደ ISOLELE እንኳን በደህ�� መጡ", book_chosen_ones_title: "የተመረጡ", book_chosen_ones_subtitle: "ኮንጎ ሥሮች ከተወለዱ የሙሉ አለም...",
     book_chosen_ones_desc: "ISOLELE ፈላሚ የአለም ስር አፍሪካ ታሪክ ተረት ለማገድ የተወለደ ነው።",
     book_explore_universe: "አለምን ይቃኙ", book_makanda_tag: "MAKANDA መንግሥት - ታሪክ I", book_makanda_title: "MAKANDA",
     book_makanda_subtitle: "ታሪክ ውስጥ ከሚጠናከር ግዛት ጋር አልተጠፋም። ሰዎ ሳቅ አደረገቅ.", book_makanda_desc: "በመካከለኛ አፍሪካ ውስጥ, ሥልጣን አልታወቅም ቂሎ ነበር.",

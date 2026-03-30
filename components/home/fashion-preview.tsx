@@ -9,17 +9,16 @@ import { useRef } from 'react'
 import { useInView } from 'framer-motion'
 
 export function FashionPreview() {
-  const { currentTheme } = useTheme()
-  const { currentLanguage } = useLanguage()
+  const lang = currentLanguage.code
+  const { t } = useLanguage()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   
-  const lang = currentLanguage.code
   const fashionImages = [
-    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/24b920d7-edfa-4aaf-aca5-b6954082c4f8.jpeg', title: { en: 'Fire Performance', fr: 'Performance du Feu' } },
-    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/b9cc3aca-9a1d-432a-8b14-85494aee7a0d.jpeg', title: { en: 'Monument of Power', fr: 'Monument du Pouvoir' } },
-    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/258a56b3-8a74-47ff-967c-61ff803cc20f.jpeg', title: { en: 'Sacred Geometry', fr: 'Géométrie Sacrée' } },
-    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/189adee8-e7b7-45ee-ba67-5c9b6ef5ab67.jpeg', title: { en: 'Runway Essence', fr: 'Essence de la Piste' } },
+    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/24b920d7-edfa-4aaf-aca5-b6954082c4f8.jpeg', key: 'fashion_fire_performance' },
+    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/b9cc3aca-9a1d-432a-8b14-85494aee7a0d.jpeg', key: 'fashion_monument_power' },
+    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/258a56b3-8a74-47ff-967c-61ff803cc20f.jpeg', key: 'fashion_sacred_geometry' },
+    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/189adee8-e7b7-45ee-ba67-5c9b6ef5ab67.jpeg', key: 'fashion_runway_essence' },
   ]
 
   return (
@@ -40,15 +39,13 @@ export function FashionPreview() {
               className="text-4xl md:text-5xl font-bold mb-4"
               style={{ color: currentTheme.colors.textPrimary }}
             >
-              {lang === 'fr' ? 'Collection Mode' : 'Fashion Collection'}
+              {t('fashion_collection_title')}
             </h2>
             <p
               className="text-lg max-w-2xl mx-auto"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              {lang === 'fr'
-                ? 'Découvrez notre collection de mode inspirée par l\'univers ISOLELE'
-                : 'Discover our fashion collection inspired by the ISOLELE universe'}
+              {t('fashion_collection_subtitle')}
             </p>
           </div>
 
@@ -64,7 +61,7 @@ export function FashionPreview() {
               >
                 <Image
                   src={image.src}
-                  alt={image.title[lang as keyof typeof image.title] || image.title.en}
+                  alt={t(image.key as any)}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-300"
                 />
@@ -72,7 +69,7 @@ export function FashionPreview() {
                   <p
                     className="text-white text-xs sm:text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   >
-                    {image.title[lang as keyof typeof image.title] || image.title.en}
+                    {t(image.key as any)}
                   </p>
                 </div>
               </motion.div>
@@ -91,7 +88,7 @@ export function FashionPreview() {
                   boxShadow: `0 0 30px ${currentTheme.colors.accentPrimary}40`
                 }}
               >
-                {lang === 'fr' ? 'Voir la Collection Complète' : 'View Full Collection'}
+                {t('fashion_view_full')}
               </motion.button>
             </Link>
           </div>
