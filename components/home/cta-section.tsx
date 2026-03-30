@@ -234,7 +234,7 @@ export function CtaSection() {
                   ease: "easeInOut",
                 }}
               />
-              <span className="relative z-10">E X P L O R E   T H E   U N I V E R S E</span>
+              <span className="relative z-10">{t('cta_explore')}</span>
             </motion.button>
           </Link>
           
@@ -251,7 +251,7 @@ export function CtaSection() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            S U B S C R I B E   N E W S L E T T E R
+            {t('cta_newsletter')}
           </motion.button>
         </motion.div>
 
