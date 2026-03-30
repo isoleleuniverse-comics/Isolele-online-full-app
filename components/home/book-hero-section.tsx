@@ -158,12 +158,7 @@ const slideVariants = {
 export function BookHeroSection() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
-  const [mounted, setMounted] = useState(false)
   const { t } = useLanguage()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   const paginate = useCallback(
     (newDirection: number) => {
@@ -180,12 +175,9 @@ export function BookHeroSection() {
 
   // Auto-advance every 7 seconds
   useEffect(() => {
-    if (!mounted) return
     const timer = setInterval(() => paginate(1), 7000)
     return () => clearInterval(timer)
-  }, [mounted, paginate])
-
-  if (!mounted) return null
+  }, [paginate])
 
   const slide = slides[current]
 
