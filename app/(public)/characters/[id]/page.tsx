@@ -6,7 +6,8 @@ import { useLanguage } from "@/lib/language-context"
 import { ArrowLeft, Share2, Heart } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 const charactersData: Record<string, any> = {
   zaire: {
@@ -103,6 +104,13 @@ export default function CharacterPage({ params }: { params: { id: string } }) {
   const { currentTheme } = useTheme()
   const { t } = useLanguage()
   const [isLiked, setIsLiked] = useState(false)
+  const router = useRouter()
+  const [canGoBack, setCanGoBack] = useState(false)
+
+  useEffect(() => {
+    // Check if we can go back in browser history
+    setCanGoBack(window.history.length > 1)
+  }, [])
 
   if (!character) {
     return (
@@ -126,8 +134,9 @@ export default function CharacterPage({ params }: { params: { id: string } }) {
       {/* Header with back button */}
       <div className="sticky top-0 z-40 px-4 sm:px-6 lg:px-8 py-4" style={{ backgroundColor: `${currentTheme.colors.background}95`, backdropFilter: "blur(10px)" }}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link href="/characters">
+          {canGoBack ? (
             <motion.button
+              onClick={() => router.back()}
               className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all"
               style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20`, color: currentTheme.colors.accentPrimary }}
               whileHover={{ backgroundColor: currentTheme.colors.accentPrimary, color: currentTheme.colors.background }}
@@ -135,7 +144,18 @@ export default function CharacterPage({ params }: { params: { id: string } }) {
               <ArrowLeft size={20} />
               Back
             </motion.button>
-          </Link>
+          ) : (
+            <Link href="/characters">
+              <motion.button
+                className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all"
+                style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20`, color: currentTheme.colors.accentPrimary }}
+                whileHover={{ backgroundColor: currentTheme.colors.accentPrimary, color: currentTheme.colors.background }}
+              >
+                <ArrowLeft size={20} />
+                Back
+              </motion.button>
+            </Link>
+          )}
           <div className="flex items-center gap-2">
             <motion.button
               onClick={() => setIsLiked(!isLiked)}
