@@ -6,6 +6,7 @@ import { ProductsSection } from "@/components/home/products-section"
 import { FounderPreview } from "@/components/home/founder-preview"
 import { ReviewsSection } from "@/components/home/reviews-section"
 import { NewsSection } from "@/components/home/news-section"
+import { FashionPreview } from "@/components/home/fashion-preview"
 import { CtaSection } from "@/components/home/cta-section"
 import { OrganizationJsonLd, ComicSeriesJsonLd, WebsiteJsonLd } from "@/components/json-ld"
 
@@ -40,6 +41,9 @@ export default function HomePage() {
 
       {/* News / articles */}
       <NewsSection />
+
+      {/* Fashion Collection Preview */}
+      <FashionPreview />
 
       {/* CTA / newsletter */}
       <CtaSection />
