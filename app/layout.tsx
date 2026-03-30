@@ -125,7 +125,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" suppressHydrationWarning>
+    <html lang="fr" suppressHydrationWarning className="bg-background">
       <body className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} font-sans antialiased`}>
         {children}
         <Analytics />
