@@ -63,6 +63,28 @@ export interface TranslationKeys {
   fashion_sacred_geometry: string
   fashion_runway_essence: string
 
+  // Founder Preview
+  founder_title: string
+  founder_subtitle: string
+  founder_location: string
+  founder_description: string
+  founder_quote: string
+  founder_cta: string
+  founder_creator_author: string
+  
+  // Products Section
+  products_already_available: string
+  products_subtitle: string
+  product_zaiire_name: string
+  product_zaiire_desc: string
+  product_kimoya_name: string
+  product_kimoya_desc: string
+  product_art_name: string
+  product_art_desc: string
+  product_badge_preorder: string
+  product_badge_limited: string
+  product_badge_new: string
+
   // Book Slides
   book_welcome_tag: string
   book_chosen_ones_title: string
@@ -303,6 +325,28 @@ export const translations: Record<Language, TranslationKeys> = {
     fashion_monument_power: "Monument of Power",
     fashion_sacred_geometry: "Sacred Geometry",
     fashion_runway_essence: "Runway Essence",
+
+    // Founder Preview
+    founder_title: "H.R.M KING KUFULULA",
+    founder_subtitle: "The Visionary Behind ISOLELE",
+    founder_location: "King Kufulula — New York",
+    founder_description: "A cultural architect and storyteller, King Kufulula founded ISOLELE to restore the soul of African storytelling. His vision is to create a mythological empire where African superheroes rise from authentic history, not borrowed myths.",
+    founder_quote: "We don't just create characters. We create a lineage. We create a legacy.",
+    founder_cta: "Meet the Founder",
+    founder_creator_author: "Creator & Author",
+    
+    // Products Section
+    products_already_available: "ALREADY AVAILABLE",
+    products_subtitle: "Dive into the Isolele universe with our collection of comics and books",
+    product_zaiire_name: "Zaiire: The Necklace of Destiny",
+    product_zaiire_desc: "The epic first chapter of the ISOLELE Universe — ZAIIRE Le Prince du Kongo",
+    product_kimoya_name: "Kimoya: The Rising Kandake",
+    product_kimoya_desc: "Collector's edition — the royal court of the Rising Kandake",
+    product_art_name: "The Art of ISOLELE",
+    product_art_desc: "Behind the scenes artwork — The Chosen Ones universe poster edition",
+    product_badge_preorder: "PRE-ORDER",
+    product_badge_limited: "LIMITED",
+    product_badge_new: "NEW",
     
     // Book Slides
     book_welcome_tag: "WELCOME TO ISOLELE",
@@ -544,6 +588,28 @@ export const translations: Record<Language, TranslationKeys> = {
     fashion_monument_power: "Monument du Pouvoir",
     fashion_sacred_geometry: "Géométrie Sacrée",
     fashion_runway_essence: "Essence de la Piste",
+
+    // Founder Preview
+    founder_title: "S.A.R. ROI KUFULULA",
+    founder_subtitle: "Le Visionnaire Derrière ISOLELE",
+    founder_location: "Roi Kufulula — New York",
+    founder_description: "Architecte culturel et conteur, le Roi Kufulula a fondé ISOLELE pour restaurer l'âme de la narration africaine. Sa vision est de créer un empire mythologique où les super-héros africains émergent de l'histoire authentique.",
+    founder_quote: "Nous ne créons pas seulement des personnages. Nous créons une lignée. Nous créons un héritage.",
+    founder_cta: "Rencontrer le Fondateur",
+    founder_creator_author: "Créateur & Auteur",
+    
+    // Products Section
+    products_already_available: "DEJA DISPONIBLE",
+    products_subtitle: "Plongez dans l'univers Isolele avec notre collection de bandes dessinées et livres",
+    product_zaiire_name: "Zaiire: Le Collier de la Destinée",
+    product_zaiire_desc: "Le premier chapitre épique de l'univers ISOLELE",
+    product_kimoya_name: "Kimoya: La Kandake Montante",
+    product_kimoya_desc: "Édition collector — la cour royale de la Kandake Montante",
+    product_art_name: "L'Art d'ISOLELE",
+    product_art_desc: "Les illustrations et concepts de l'univers des Élus",
+    product_badge_preorder: "PRECOMMANDE",
+    product_badge_limited: "LIMITE",
+    product_badge_new: "NOUVEAU",
     
     // Book Slides
     book_welcome_tag: "BIENVENUE À ISOLELE",
@@ -1597,7 +1663,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_pillars_title: "आइसलेल के चार स्तंभ", about_pillar1_title: "आध्यात्मिक दुनिया",
     about_pillar1_desc: "पूरे अफ्रीका पर शासन करने के लिए पर्याप्त राजाओं और रानियों से भरा हुआ��",
     about_pillar2_title: "रचनात्मक प्रकाशन और स्थानीयकरण", about_pillar2_desc: "कहानी से सोच तक, खेल से सिनेमा तक, आइसलेल अफ्रीकी रचनात्मक कार्यकर्ताओं के लिए एक मंच बनाता है।",
-    about_pillar3_title: "मानव जागृति", about_pillar3_desc: "आइसलेल एक महान उद्देश���य का पहला हिस्सा है जिसका लक्ष्य अफ्रीका की रॉयल्टी, आत्मा और परे को खोजना, खोज करना और बहाल करना है।",
+    about_pillar3_title: "मानव जागृति", about_pillar3_desc: "आइसलेल एक महान उद्देश���य का पहला हिस्सा है जिसका लक्ष्य अफ्रीका की रॉयल��टी, आत्मा और परे को खोजना, खोज करना और बहाल करना है।",
     about_pillar4_title: "बाल पदचिन्ह", about_pillar4_desc: "आइसलेल पढ़ने वाला बच्चा ऐसे संरक्षकों की खोज करेगा जो उसकी तरह दिखते हैं।",
     founder_title: "संस्थापक", founder_name: "राजा कुफुलुला महामहिम", founder_role: "आइसलेल ब्रह्मांड के निर्माता और आर्किटेक्ट",
     founder_bio: "आइसलेल के पीछे दूरदर��शी, अफ्रीकी कथा की आत्मा को बहाल ��रने और अफ्रीकी राजकीय पहचान का जश्न मनाने के लिए प्रतिबद्ध।",
@@ -1613,7 +1679,7 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_home: "Главная", nav_about: "О нас", nav_founder: "Основатель", nav_news: "Новости", nav_characters: "Персонажи",
     nav_shop: "Магазин", nav_supporters: "Сторонники", nav_contact: "Контакт", nav_games: "Игры", nav_all_characters: "Все персонажи",
     nav_become_supporter: "Стать сторонником", nav_partners: "Партнеры", nav_restaurant: "Партнерский ресторан", nav_fashion: "Мода", nav_settings: "Параметры",
-    hero_title: "ЗАИР - ПРИНЦ КОНГО", hero_subtitle: "Ожерелье Судьбы", hero_description: "Вдохновляющая полная экшена приключенческая история, которая резонирует с духом «Короля льва» и «Черной пантеры».",
+    hero_title: "ЗАИР - ПРИНЦ КОНГО", hero_subtitle: "��жерелье Судьбы", hero_description: "Вдохновляющая полная экшена приключенческая история, которая резонирует с духом «Короля льва» и «Черной пантеры».",
     hero_buy_now: "КУПИТЬ СЕЙЧАС", hero_discover: "ОТКРОЙТЕ ИСТОРИЮ", hero_preorder: "Предзаказ", hero_launch_price: "Цена запуска",
     book_welcome_tag: "ДОБРО ПОЖАЛОВАТЬ В ISOLELE", book_chosen_ones_title: "ИЗБРАННЫЕ", book_chosen_ones_subtitle: "Целая вселенная, рожденная из корней Конго...",
     book_chosen_ones_desc: "Isolele - это дальновидная всел��нная, созданная для восстановления души африканского повествования.",
@@ -1636,7 +1702,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_discover_zaiko: "ОТКРОЙТЕ ЗАИКО",
     universe_title: "ВСЕЛЕННАЯ ISOLELE", universe_subtitle: "Избранные", universe_description: "Isolele - это дальновидная вселенная, созданная для восстановления души африканского повествования.",
     universe_destiny_title: "Судьба - это не выбор", universe_destiny_desc: "Это зов.",
-    universe_heritage_title: "Королевская кровь несет древнюю силу", universe_heritage_desc: "Королевская кровь хранит память и мощь забытых королевств.",
+    universe_heritage_title: "Королевская кровь несет дре��нюю силу", universe_heritage_desc: "Королевская кровь хранит память и мощь забытых королевств.",
     universe_resurrection_title: "Духи предков никогда не умирают", universe_resurrection_desc: "Африка никогда не была беспомощной.",
     characters_title: "ИЗБРАННЫЕ", characters_subtitle: "Встретьте героев, легенды и хранителей вс��ленной Isolele",
     characters_discover: "ОТКРОЙТЕ", characters_zaire_title: "Принц Конго", characters_zaire_desc: "Сын грома и королевского рода.",
@@ -1691,7 +1757,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_discover_bambula: "バンブラを発見", book_mokele_tag: "モケレ：苦難の中に生まれて",
     book_mokele_title: "モケレ", book_mokele_subtitle: "少年からキンシャサの主へ", book_mokele_desc: "モケレは王として生まれたのではありません。",
     book_discover_mokele: "モケレを発見", book_zaiire_tag: "ザイーレ：コンゴの王子", book_zaiire_title: "コンゴの王子",
-    book_zaiire_subtitle: "運命のネックレス", book_zaiire_desc: "コンゴ王国の��で鍛造された、運命のネックレスは身に着けるためのものではありませんでした。", book_discover_zaiire: "ザイーレを発見",
+    book_zaiire_subtitle: "運命のネックレス", book_zaiire_desc: "コンゴ王国の��で鍛造された、運命のネックレスは身に着けるためのものではありませんで��た。", book_discover_zaiire: "ザイーレを発見",
     book_kufu_tag: "クフ：王冠の게임", book_kufu_title: "クフ", book_kufu_subtitle: "ISOLELE宇宙の公式ゲーム",
     book_kufu_desc: "これは単なるカードゲームではありません。", book_explore_game: "ゲームを探索",
     book_amara_tag: "アマラ：海の女王", book_amara_title: "アマラ", book_amara_subtitle: "第I章・アマゾン海賊の女王",
@@ -1802,7 +1868,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_pillar4_title: "آثار الأطفال", about_pillar4_desc: "الطفل الذي يقرأ إيسولايل سيكتشف حاميين يبدون مثله.",
     founder_title: "المؤسس", founder_name: "الملك كوفولولا", founder_role: "منشئ ومهندس كون إيسولايل",
     founder_bio: "الرائد وراء إيسولايل، ملتزم باستعادة روح السرد الأفريقي والاحتفال بهوية الملكية الأفريقية.",
-    language: "اللغة", theme: "المظهر", discover: "اكتشف", latestNews: "أحدث الأخبار", loading: "جار التحميل...",
+    language: "الل��ة", theme: "المظهر", discover: "اكتشف", latestNews: "أحدث الأخبار", loading: "جار التحميل...",
     error: "خطأ", success: "نجاح", cancel: "إلغاء", save: "حفظ", edit: "تحرير", delete: "حذف",
     search: "بحث", search_placeholder: "بحث...", view_all: "عرض الكل", learn_more: "تعرف على المزيد",
     back: "رجوع", next: "التالي", previous: "السابق", site_map: "خريطة الموقع", accessibility: "إمكانية الوصول",
@@ -1828,7 +1894,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_zaiire_subtitle: "ভাগ্যের হার", book_zaiire_desc: "কঙ্গো সাম্রাজ্যের হৃদয়ে তৈরি, ভাগ্যের হার পরিধান করার জন্য তৈরি নয়েছিল।", book_discover_zaiire: "জায়ের আবিষ্কার করুন",
     book_kufu_tag: "কুফু: মুকুটের খেলা", book_kufu_title: "কুফু", book_kufu_subtitle: "ইসোলেল মহাবিশ্বের অফিসিয়াল গেম",
     book_kufu_desc: "এটি শুধু একটি কার্ড গেম নয়।", book_explore_game: "খেলা অন্বেষণ করুন",
-    book_amara_tag: "অমারা: সমুদ্রের রানী", book_amara_title: "অমারা", book_amara_subtitle: "অধ্যায় I · আমাজন জলদস্যুদের রানী",
+    book_amara_tag: "অমা���া: সমুদ্রের রানী", book_amara_title: "অমারা", book_amara_subtitle: "অধ্যায় I · আমাজন জলদস্যুদের রানী",
     book_amara_desc: "প্রতিটি জলদস্যু সমুদ্রকে ভয় করে।", book_discover_amara: "অমারা আবিষ্কার করুন",
     book_zattar_tag: "জাত্তার: মহাবিশ্বের রাজকুমার", book_zattar_title: "জাত্তার", book_zattar_subtitle: "সিংহাসনের জয়ী",
     book_zattar_desc: "যখন ভাগ্য তাকে একটি রাজ্য অস্বীকার করেছিল, তিনি সেগুলি সব নিতে সিদ্ধান্ত ন���য়েছিলেন।", book_discover_zattar: "জাত্তার আবিষ্কার করুন",
@@ -1865,7 +1931,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_pillars_title: "ইসোলেলের চারটি স্তম্ভ", about_pillar1_title: "আধ্যাত্মিক বিশ্ব",
     about_pillar1_desc: "পুরো আফ্রিকা শাসন করার জন্য পর্যাপ্ত রাজা এবং রানী দিয়ে পূর্ণ।",
     about_pillar2_title: "সৃজনশীল প্রকাশনা এবং স্থানীয়করণ", about_pillar2_desc: "গল্প থেকে ধারণা পর্যন্ত, গেম থেকে সিনেমা পর্যন্ত, ইসোলেল আফ্রিকান সৃজনশীল কর্মীদের জন্য একটি প্ল্যাটফর্ম তৈরি করে।",
-    about_pillar3_title: "মানবতার জাগরণ", about_pillar3_desc: "ইসোলেল একটি মহৎ উদ্দেশ্যের প্রথম অংশ যা আফ্রিকীয় রাজকীয়, আধ��যাত্মিকতা আবিষ্কার, অন্বেষণ এবং পুনরুদ্ধার করতে লক্ষ্য করে।",
+    about_pillar3_title: "মানবতার জাগরণ", about_pillar3_desc: "ইসোলেল একটি মহৎ উদ্দেশ্যের প্রথম অংশ যা আফ্রিকীয় রাজকীয়, আধ��যাত্মিকতা আবিষ্���ার, অন্বেষণ এবং পুনরুদ্ধার করতে লক্ষ্য করে।",
     about_pillar4_title: "শিশুর পদচিহ্ন", about_pillar4_desc: "ইসোলেল পড়ার একটি শিশু এমন অভিভাবক আবিষ্কার করবে যারা তার মতো দেখায়।",
     founder_title: "প্রতিষ��ঠাতা", founder_name: "রাজা কুফুলুলার মহারাজ", founder_role: "ইসোলেল মহাবিশ্বের নির্মাতা এবং স্থপতি",
     founder_bio: "ইসোলেলের পিছনে দ��রদর্শী, আফ্রিকান বর্ণনার আত্মা পুনরুদ���ধার এবং আফ্রিকান রাজকীয় পরিচয় উদযাপন করতে প্রতিশ্রুতিবদ্ধ।",
