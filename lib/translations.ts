@@ -130,6 +130,8 @@ export interface TranslationKeys {
   related_characters: string
   discover_more: string
   back_to_home: string
+  readArticle: string
+  viewAllNews: string
 
   // Book Slides
   book_welcome_tag: string
@@ -439,6 +441,8 @@ export const translations: Record<Language, TranslationKeys> = {
     related_characters: "Related Characters",
     discover_more: "Discover More",
     back_to_home: "Back to Home",
+    readArticle: "READ ARTICLE",
+    viewAllNews: "VIEW ALL NEWS",
 
     // Book Slides
     book_welcome_tag: "WELCOME TO ISOLELE",
@@ -748,6 +752,8 @@ export const translations: Record<Language, TranslationKeys> = {
     related_characters: "Personnages Liés",
     discover_more: "Découvrir Plus",
     back_to_home: "Retour à l'Accueil",
+    readArticle: "LIRE L'ARTICLE",
+    viewAllNews: "VOIR TOUTES LES ACTUALITÉS",
 
     // Book Slides
     book_welcome_tag: "BIENVENUE À ISOLELE",
@@ -1413,6 +1419,9 @@ export const translations: Record<Language, TranslationKeys> = {
     news_read_more: "SOMA SANGO",
     news_minutes_read: "miniti ya kosoma",
     news_published: "Bokitaki",
+    readArticle: "SOMA SANGO",
+    viewAllNews: "KOMONA SALANGAZO NYONSO",
+    back_to_home: "Zonga na Boyinde",
     
     // CTA Section
     cta_title: "YAKA NA LINGOMBA",
@@ -1810,7 +1819,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_welcome_tag: "欢迎来到孤独灵魂", book_chosen_ones_title: "被选者", book_chosen_ones_subtitle: "一个源于刚果��源的完整宇宙...",
     book_chosen_ones_desc: "孤独灵��是一个远大的宇宙，旨在恢复非洲叙事的灵魂，一个神话帝国，其中超级英雄被命运选中，王国永远不会被遗忘，祖先的力量活在每一页、每一个预言、每一场战斗中。",
     book_explore_universe: "探索宇宙", book_makanda_tag: "玛卡达王朝-第一册", book_makanda_title: "玛卡达",
-    book_makanda_subtitle: "历史上最���大的帝国没有失落。它被故意隐藏了。", book_makanda_desc: "在中非深处存在一个世界不���道的文明。精神上觉醒。技术先进。由圣火保护。",
+    book_makanda_subtitle: "历史上最���大的帝国没有失落。它被故意隐藏了。", book_makanda_desc: "在中非深处存在一个世界������道的文明。精神上觉醒。技术先进。由圣火保护。",
     book_discover_makanda: "发现玛卡达", book_bambula_tag: "班布拉：节奏之子", book_bambula_title: "班布拉",
     book_bambula_subtitle: "第一章·圣鼓", book_bambula_desc: "在文字之前，有节奏。班布拉是听到一切的孩子。",
     book_discover_bambula: "发现班布拉", book_mokele_tag: "莫克勒：在斗争中出生",
@@ -1830,7 +1839,7 @@ export const translations: Record<Language, TranslationKeys> = {
     universe_destiny_title: "命运不是选择", universe_destiny_desc: "这是一个召唤。", 
     universe_heritage_title: "王室���脉携带古老力量", universe_heritage_desc: "王血携带被遗忘王国的记忆和力量。",
     universe_resurrection_title: "祖先灵魂永不消亡", universe_resurrection_desc: "非洲从不无力。",
-    characters_title: "被选者", characters_subtitle: "认识孤独灵魂宇宙的英雄、传奇和守护者",
+    characters_title: "���选者", characters_subtitle: "认识孤独灵魂宇宙的英雄、传奇和守护者",
     characters_discover: "发现", characters_zaire_title: "刚果王子", characters_zaire_desc: "雷鸣和皇族之子，被命运项链选中。",
     characters_kimoya_title: "基莫亚", characters_kimoya_desc: "被火焰之女赋予力量的战士。", characters_zattar_title: "扎塔尔",
     characters_zattar_desc: "宇宙的征服者。", characters_twins_title: "双胞胎", characters_twins_desc: "命运的守护者。",
@@ -1910,7 +1919,7 @@ export const translations: Record<Language, TranslationKeys> = {
     footer_email_placeholder: "अपना ईमेल दर्ज कर���ं", footer_subscribe: "सदस्यता लें", footer_copyright: "कॉपीराइट",
     footer_press: "प्रेस", footer_careers: "करियर", footer_contact: "संपर्क", footer_faq: "अक्सर पूछे जाने वाले प्रश्न",
     footer_terms: "शर्तें", footer_privacy: "गोपनीयता", shop_title: "दुकान", shop_subtitle: "एक्सक्लूसिव सामान खरीदें",
-    shop_add_to_cart: "कार्ट में जोड़ें", shop_buy_now: "अभी खरीदें", shop_price: "मूल्य", shop_sale: "बिक्री",
+    shop_add_to_cart: "���ार्ट में जोड़ें", shop_buy_now: "अभी खरीदें", shop_price: "मूल्य", shop_sale: "बिक्री",
     shop_new: "नया", shop_bestseller: "सर्वाधिक विक्रय", cart_title: "कार्ट", cart_empty: "आपकी कार्ट खाली है",
     cart_subtotal: "उप-कुल", cart_shipping: "शिपिंग", cart_total: "कुल", cart_checkout: "चेकआउट",
     cart_continue_shopping: "खरीदारी जारी रखें", cart_remove: "हटाएं", cart_quantity: "मात्रा",
@@ -1923,7 +1932,7 @@ export const translations: Record<Language, TranslationKeys> = {
     about_pillars_title: "आइसलेल के चार स्तंभ", about_pillar1_title: "आध्यात्मिक दुनिया",
     about_pillar1_desc: "पूरे अफ्रीका पर शासन करने के लिए पर्याप्त राजाओं और रानियों से भरा हुआ��",
     about_pillar2_title: "रचनात्मक प्रकाशन और स्थानीयकरण", about_pillar2_desc: "कहानी से सोच तक, खेल से सिनेमा तक, आइसलेल अफ्रीकी रचनात्मक कार्यकर्ताओं के लिए एक मंच बनाता है।",
-    about_pillar3_title: "मानव जागृति", about_pillar3_desc: "आइसलेल एक महान उद्देश���य का पहला हिस्सा है जिसका लक्ष्य अफ्रीका की रॉयल��टी, आत्मा और परे को खोजना, खोज करना और बहाल करना है।",
+    about_pillar3_title: "मानव जागृति", about_pillar3_desc: "आइसलेल एक महान उद्देश���य का पहला हिस्सा है जिसका लक���ष्य अफ्रीका की रॉयल��टी, आत्मा और परे को खोजना, खोज करना और बहाल करना है।",
     about_pillar4_title: "बाल पदचिन्ह", about_pillar4_desc: "आइसलेल पढ़ने वाला बच्चा ऐसे संरक्षकों की खोज करेगा जो उसकी तरह दिखते हैं।",
     founder_title: "संस्थापक", founder_name: "राजा कुफुलुला महामहिम", founder_role: "आइसलेल ब्रह्मांड के निर्माता और आर्किटेक्ट",
     founder_bio: "आइसलेल के पीछे दूरदर��शी, अफ्रीकी कथा की आत्मा को बहाल ��रने और अफ्रीकी राजकीय पहचान का जश्न मनाने के लिए प्रतिबद्ध।",
@@ -1998,7 +2007,7 @@ export const translations: Record<Language, TranslationKeys> = {
     error: "Ошибка", success: "Успех", cancel: "Отмена", save: "Сохранить", edit: "Редактировать", delete: "Удалить",
     search: "Поиск", search_placeholder: "Поиск...", view_all: "Просмотреть все", learn_more: "Узнать больше",
     back: "Назад", next: "Далее", previous: "Предыдущий", site_map: "Карта сайта", accessibility: "Доступность",
-    cookie_settings: "Параметры файлов cookie", footer_thank_you: "Спасибо!",
+    cookie_settings: "П��раметры файлов cookie", footer_thank_you: "Спасибо!",
   },
 
   // Japanese (ja)
@@ -2091,7 +2100,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_amara_desc: "كل قرصان يخاف من المحيط.", book_discover_amara: "اكتشف أمارا",
     book_zattar_tag: "زاتار: أمير الكون", book_zattar_title: "زاتار", book_zattar_subtitle: "فاتح العروش",
     book_zattar_desc: "عندما رفضت المصير إعطاءه مملكة واحدة، قرر أن يأخذها جميعًا.", book_discover_zattar: "اكتشف زاتار",
-    book_zaiko_tag: "زايكو: آخر ملك في شوارع كيفو", book_zaiko_title: "أسطورة زايكو",
+    book_zaiko_tag: "زايكو: آخر مل�� في شوارع كيفو", book_zaiko_title: "أسطورة زايكو",
     book_zaiko_subtitle: "لم يرتق من الشوارع. فتحها بالقوة.", book_zaiko_desc: "وُلد في كيفو الشمالية.",
     book_discover_zaiko: "اكتشف زايكو",
     universe_title: "كون إيسولايل", universe_subtitle: "المختارون", universe_description: "إيسولايل هو كون بعيد النظر وُلد لاستعادة روح السرد الأفريقي.",
@@ -2143,7 +2152,7 @@ export const translations: Record<Language, TranslationKeys> = {
     hero_title: "জায়ের - কঙ্গোর রাজকুমার", hero_subtitle: "ভাগ্যের হার", hero_description: "একটি অনুপ্রেরণামূলক অ্যাকশন-প্যাকড অ্যাডভেঞ্চার যা লায়ন কিং এবং ব্ল্যাক প্যান্থারের আত্মার সাথে অনুরণিত হয়।",
     hero_buy_now: "এখনই ক���নুন", hero_discover: "গল্প আবিষ্কার করুন", hero_preorder: "প্রাক-অর্ডার", hero_launch_price: "লঞ্চ মূল্য",
     book_welcome_tag: "ইসোলেলে স্বাগতম", book_chosen_ones_title: "নির্বাচিত", book_chosen_ones_subtitle: "কঙ্গোর শিকড় থেকে জন্ম নেওয়া একটি সম্পূর��ণ মহাবিশ্ব...",
-    book_chosen_ones_desc: "ইসোলেল একটি দূরদর্শী মহাবিশ্ব যা আফ্রিকান বর্ণনার আত্মা পুনরুদ্ধার করতে জন্ম নিয়েছিল।",
+    book_chosen_ones_desc: "ইসোলেল এ���টি দূরদর্শী মহাবিশ্ব যা আফ্রিকান বর্ণনার আত্মা পুনরুদ্ধার করতে জন্ম নিয়েছিল।",
     book_explore_universe: "মহাবিশ্ব অন্বেষণ করুন", book_makanda_tag: "মাকান্ডা সাম্রাজ্য - বই I", book_makanda_title: "মাকান্ডা",
     book_makanda_subtitle: "ইতিহাসের সবচেয়ে শক্তিশালী সাম্রাজ্য হারিয়ে যায় নি। এটি ইচ্ছাকৃতভাবে লুকানো ছিল।", book_makanda_desc: "মধ্য আফ্রিকার গভীরে একটি সভ্যতা ছিল যা বিশ্ব জানত না।",
     book_discover_makanda: "মাকান্ডা আবিষ্কার করুন", book_bambula_tag: "বাম্বুলা: ছন্দের সন্তান", book_bambula_title: "বাম্বুলা",
@@ -2178,7 +2187,7 @@ export const translations: Record<Language, TranslationKeys> = {
     footer_email_placeholder: "আপনার ইমেইল প্রবেশ করুন", footer_subscribe: "সাবস্ক্রাইব করুন", footer_copyright: "কপিরাইট",
     footer_press: "প্রেস", footer_careers: "ক্যারিয়ার", footer_contact: "যোগাযোগ", footer_faq: "প্রায়শই জিজ্ঞাসিত প্রশ্ন",
     footer_terms: "শর্তাবলী", footer_privacy: "গোপনীয়তা", shop_title: "��োকান", shop_subtitle: "একচেটিয়া পণ্য কিনুন",
-    shop_add_to_cart: "কার্টে যোগ করুন", shop_buy_now: "এখনই কিনুন", shop_price: "দাম", shop_sale: "বিক্রয়",
+    shop_add_to_cart: "কার���টে যোগ করুন", shop_buy_now: "এখনই কিনুন", shop_price: "দাম", shop_sale: "বিক্রয়",
     shop_new: "নতুন", shop_bestseller: "বেস্টসেলার", cart_title: "কার্ট", cart_empty: "আপনার কার্ট খালি",
     cart_subtotal: "সাবটোটাল", cart_shipping: "শিপিং", cart_total: "মোট", cart_checkout: "চেকআউট",
     cart_continue_shopping: "কেনাকাটা অব্যাহত রাখুন", cart_remove: "সরান", cart_quantity: "পরিমাণ",
