@@ -333,7 +333,7 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_description: "A cultural architect and storyteller, King Kufulula founded ISOLELE to restore the soul of African storytelling. His vision is to create a mythological empire where African superheroes rise from authentic history, not borrowed myths.",
     founder_quote: "We don't just create characters. We create a lineage. We create a legacy.",
     founder_cta: "Meet the Founder",
-    founder_creator_author: "Creator & Author",
+    founder_creator_author: "Motongaki & Mokomi",
     
     // Products Section
     products_already_available: "ALREADY AVAILABLE",
@@ -596,7 +596,7 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_description: "Architecte culturel et conteur, le Roi Kufulula a fondé ISOLELE pour restaurer l'âme de la narration africaine. Sa vision est de créer un empire mythologique où les super-héros africains émergent de l'histoire authentique.",
     founder_quote: "Nous ne créons pas seulement des personnages. Nous créons une lignée. Nous créons un héritage.",
     founder_cta: "Rencontrer le Fondateur",
-    founder_creator_author: "Créateur & Auteur",
+    founder_creator_author: "Motongaki & Mokomi",
     
     // Products Section
     products_already_available: "DEJA DISPONIBLE",
@@ -853,7 +853,7 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_description: "Um arquiteto cultural e contador de historias, o Principe Kufulula fundou ISOLELE para restaurar a alma da narrativa africana. Sua visao e criar um imperio mitologico onde os super-herois africanos surgem da historia autentica.",
     founder_quote: "Nao criamos apenas personagens. Criamos uma linhagem. Criamos um legado.",
     founder_cta: "Conhecer o Fundador",
-    founder_creator_author: "Criador & Autor",
+    founder_creator_author: "Motongaki & Mokomi",
     
     // Products Section
     products_already_available: "JA DISPONIVEL",
@@ -1002,7 +1002,7 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_description: "Un arquitecto cultural y narrador de historias, el Príncipe Kufulula fundó ISOLELE para restaurar el alma de la narrativa africana. Su visión es crear un imperio mitológico donde los superhéroes africanos surgen de la historia auténtica.",
     founder_quote: "No solo creamos personajes. Creamos un linaje. Creamos un legado.",
     founder_cta: "Conocer al Fundador",
-    founder_creator_author: "Creador & Autor",
+    founder_creator_author: "Motongaki & Mokomi",
     
     // Products Section
     products_already_available: "YA DISPONIBLE",
@@ -1445,7 +1445,7 @@ export const translations: Record<Language, TranslationKeys> = {
     founder_description: "Umdoli wezinhlaka nezazi zemithi, Isikhosana Kufulula wasungula i-ISOLELE ukuze abuye umzimba wokukhuluma kwabanto abakwa-Afrika. Umbono wakhe wukwakha impilo yokanobha lapho ama-superhero aseAfrika avela kumlando wokwenyani.",
     founder_quote: "Asikwazi nje kwakha abantu. Sikwazi ukusika isizalo. Sikwazi ukusika isipiliyoni.",
     founder_cta: "Hlangana nomuntu owakhe",
-    founder_creator_author: "Umweliko & Umuhibi",
+    founder_creator_author: "Motongaki & Mokomi",
     
     // Products Section
     products_already_available: "SELE KLIKILE",
@@ -1690,7 +1690,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_discover_zaiko: "发现扎伊科",
     universe_title: "孤独灵魂宇宙", universe_subtitle: "被选者", universe_description: "孤独灵魂是一个远大的宇宙，旨在恢复非洲叙事的灵魂",
     universe_destiny_title: "命运不是选择", universe_destiny_desc: "这是一个召唤。", 
-    universe_heritage_title: "王室血脉携带古老力量", universe_heritage_desc: "王血携带被遗忘王国的记忆和力量。",
+    universe_heritage_title: "王室���脉携带古老力量", universe_heritage_desc: "王血携带被遗忘王国的记忆和力量。",
     universe_resurrection_title: "祖先灵魂永不消亡", universe_resurrection_desc: "非洲从不无力。",
     characters_title: "被选者", characters_subtitle: "认识孤独灵魂宇宙的英雄、传奇和守护者",
     characters_discover: "发现", characters_zaire_title: "刚果王子", characters_zaire_desc: "雷鸣和皇族之子，被命运项链选中。",
@@ -1734,7 +1734,7 @@ export const translations: Record<Language, TranslationKeys> = {
     nav_home: "होम", nav_about: "परिचय", nav_founder: "संस्थापक", nav_news: "समाचार", nav_characters: "पात्र",
     nav_shop: "दुकान", nav_supporters: "समर्थक", nav_contact: "संपर्क", nav_games: "खेल", nav_all_characters: "सभी पात्र",
     nav_become_supporter: "समर्थ��� बनें", nav_partners: "भागीदार", nav_restaurant: "भागीदार रेस्तरां", nav_fashion: "फैशन", nav_settings: "सेटिं���्स",
-    hero_title: "जायरे - कांगो के ���ाजकुमा���", hero_subtitle: "नियति का हार", hero_description: "एक प्रेरणादायक कार्य-संचालित साहसिक कथा जो द लायन किंग और ब्लैक पैंथर की भावना को प्रतिध्वन��त करती है।",
+    hero_title: "जायरे - कांगो के ���ाजकुमा���", hero_subtitle: "नियति का हार", hero_description: "एक प्रेरणादायक कार्य-संचालित साहसिक कथा जो द लायन किंग और ब्लैक पैंथर की भावना को प्रत��ध्वन��त करती है।",
     hero_buy_now: "अभी खरीदें", hero_discover: "कहानी की खोज करें", hero_preorder: "पूर्व-ऑर्डर करें", hero_launch_price: "लॉन्च मूल्य",
     book_welcome_tag: "आइसलेल में स्वागत है", book_chosen_ones_title: "चुने हुए", book_chosen_ones_subtitle: "कांगो की जड़ों से जन्मी एक पूरी दुनिया...",
     book_chosen_ones_desc: "आइसलेल एक दूरदर्शी ब्रह्मांड है जो अफ्रीकी कथा की आत्मा को बहाल करने के लिए जन्मा।",
@@ -1745,7 +1745,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_discover_bambula: "बांबुला की खोज करें", book_mokele_tag: "मोकेल: संघर्ष में जन्मा",
     book_mokele_title: "मोकेल", book_mokele_subtitle: "बालक स��� किनशासा के प्रभु तक", book_mokele_desc: "मोकेल राजा के रूप में जन्मा नहीं।",
     book_discover_mokele: "मोकेल की खोज करें", book_zaiire_tag: "जायरे: कांगो का राजकुमार", book_zaiire_title: "कांगो का राजकुमार",
-    book_zaiire_subtitle: "नियति का हार", book_zaiire_desc: "कांगो साम्राज्य के दिल में बनाया गया।", book_discover_zaiire: "जायरे की खोज करें",
+    book_zaiire_subtitle: "नियति का हार", book_zaiire_desc: "कांगो साम्��ाज्य के दिल में बनाया गया।", book_discover_zaiire: "जायरे की खोज करें",
     book_kufu_tag: "कुफु: ताज का खेल", book_kufu_title: "कुफु", book_kufu_subtitle: "आइसलेल ब्रह्मांड का आधिकारिक खेल",
     book_kufu_desc: "यह केवल एक कार्ड गेम नहीं है।", book_explore_game: "खेल की खोज करें",
     book_amara_tag: "अमारा: समुद्र की रानी", book_amara_title: "अमारा", book_amara_subtitle: "अध्याय I · अमेज़न के समुद्री डाकुओं की रानी",
@@ -1828,7 +1828,7 @@ export const translations: Record<Language, TranslationKeys> = {
     universe_resurrection_title: "Духи предков никогда не умирают", universe_resurrection_desc: "Африка никогда не была беспомощной.",
     characters_title: "ИЗБРАННЫЕ", characters_subtitle: "Встретьте героев, легенды и хранителей вс��ленной Isolele",
     characters_discover: "ОТКРОЙТЕ", characters_zaire_title: "Принц Конго", characters_zaire_desc: "Сын грома и королевского рода.",
-    characters_kimoya_title: "Кимоя", characters_kimoya_desc: "Воин, наделенный силой Женщины Огня.", characters_zattar_title: "Заттар",
+    characters_kimoya_title: "Кимоя", characters_kimoya_desc: "Воин, на��еленный силой Женщины Огня.", characters_zattar_title: "Заттар",
     characters_zattar_desc: "Завоеватель вселенной.", characters_twins_title: "Близнецы", characters_twins_desc: "Хранители судьбы.",
     characters_imvula_title: "Имвула", characters_imvula_desc: "Женщина дождя.",
     news_title: "Новости", news_read_more: "Узнать больше", news_minutes_read: "минут чтения", news_published: "Опубликовано",
@@ -2016,7 +2016,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_zaiire_subtitle: "ভাগ্যের হার", book_zaiire_desc: "কঙ্গো সাম্রাজ্যের হৃদয়ে তৈরি, ভাগ্যের হার পরিধান করার জন্য তৈরি নয়েছিল।", book_discover_zaiire: "জায়ের আবিষ্কার করুন",
     book_kufu_tag: "কুফু: মুকুটের খেলা", book_kufu_title: "কুফু", book_kufu_subtitle: "ইসোলেল মহাবিশ্বের অফিসিয়াল গেম",
     book_kufu_desc: "এটি শুধু একটি কার্ড গেম নয়।", book_explore_game: "খেলা অন্বেষণ করুন",
-    book_amara_tag: "অমা���া: সমুদ্রের রানী", book_amara_title: "অমারা", book_amara_subtitle: "অধ্যায় I · আমাজন জলদস্যুদের রানী",
+    book_amara_tag: "অমা���া: সমুদ্রের রানী", book_amara_title: "অমার��", book_amara_subtitle: "অধ্যায় I · আমাজন জলদস্যুদের রানী",
     book_amara_desc: "প্রতিটি জলদস্যু সমুদ্রকে ভয় করে।", book_discover_amara: "অমারা আবিষ্কার করুন",
     book_zattar_tag: "জাত্তার: মহাবিশ্বের রাজকুমার", book_zattar_title: "জাত্তার", book_zattar_subtitle: "সিংহাসনের জয়ী",
     book_zattar_desc: "যখন ভাগ্য তাকে একটি রাজ্য অস্বীকার করেছিল, তিনি সেগুলি সব নিতে সিদ্ধান্ত ন���য়েছিলেন।", book_discover_zattar: "জাত্তার আবিষ্কার করুন",
@@ -2039,7 +2039,7 @@ export const translations: Record<Language, TranslationKeys> = {
     footer_newsletter_title: "আমাদের নিউজলেটার সাবস্ক্রাইব করুন", footer_newsletter_desc: "সর্বশেষ গল্প এবং আপডেট পান",
     footer_email_placeholder: "আপনার ইমেইল প্রবেশ করুন", footer_subscribe: "সাবস্ক্রাইব করুন", footer_copyright: "কপিরাইট",
     footer_press: "প্রেস", footer_careers: "ক্যারিয়ার", footer_contact: "যোগাযোগ", footer_faq: "প্রায়শই জিজ্ঞাসিত প্রশ্ন",
-    footer_terms: "শর্তাবলী", footer_privacy: "গোপনীয়তা", shop_title: "দোকান", shop_subtitle: "একচেটিয়া পণ্য কিনুন",
+    footer_terms: "শর্তাবলী", footer_privacy: "গোপনীয়তা", shop_title: "��োকান", shop_subtitle: "একচেটিয়া পণ্য কিনুন",
     shop_add_to_cart: "কার্টে যোগ করুন", shop_buy_now: "এখনই কিনুন", shop_price: "দাম", shop_sale: "বিক্রয়",
     shop_new: "নতুন", shop_bestseller: "বেস্টসেলার", cart_title: "কার্ট", cart_empty: "আপনার কার্ট খালি",
     cart_subtotal: "সাবটোটাল", cart_shipping: "শিপিং", cart_total: "মোট", cart_checkout: "চেকআউট",
@@ -2487,7 +2487,7 @@ export const translations: Record<Language, TranslationKeys> = {
     book_zaiko_subtitle: "ሕብረቁምፍር ውስጥ ሳይወሰድ. ጓዞ ላይ ሐ�ቁ.", book_zaiko_desc: "ሰሜን ኪቭ ውስጥ የተወለደ.",
     book_discover_zaiko: "ዛያኮ ይግኙ",
     universe_title: "ISOLELE አለም", universe_subtitle: "የተመረጡ", universe_description: "ISOLELE ፈላሚ የአለም ስር አፍሪካ ታሪክ ተረት ለማገድ የተወለደ ነው።",
-    universe_destiny_title: "የአዋጅ ምርጫ አይደለም", universe_destiny_desc: "ይህ ጥሪ ነው.",
+    universe_destiny_title: "የአዋጅ ምርጫ አይደለም", universe_destiny_desc: "ይህ ጥሪ ���ው.",
     universe_heritage_title: "ሥ��ጣኔ 피ደ ጥንታዊ ኃይል ይሸከም", universe_heritage_desc: "ሥልጣኔ ልቦሌ የወደ ሱሪዩ ስታይ ይሸከም.",
     universe_resurrection_title: "ወሪት ስሩታት ሞታ አይደለም", universe_resurrection_desc: "አፍሪካ ሩግ አልነበረም።",
     characters_title: "የተመረጡ", characters_subtitle: "ተጋ ወገኖች ፣ ወገኖች ፣ እና ታሪክ ISOLELE ከሪ",
