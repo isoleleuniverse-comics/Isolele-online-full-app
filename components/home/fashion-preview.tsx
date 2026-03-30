@@ -16,10 +16,10 @@ export function FashionPreview() {
   
   const lang = currentLanguage.code
   const fashionImages = [
-    { src: '/fashion/img-1.jpg', title: { en: 'Fire Performance', fr: 'Performance du Feu' } },
-    { src: '/fashion/img-2.jpg', title: { en: 'Monument of Power', fr: 'Monument du Pouvoir' } },
-    { src: '/fashion/img-3.jpg', title: { en: 'Sacred Geometry', fr: 'Géométrie Sacrée' } },
-    { src: '/fashion/img-4.jpg', title: { en: 'Runway Essence', fr: 'Essence de la Piste' } },
+    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg', title: { en: 'Fire Performance', fr: 'Performance du Feu' } },
+    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260106-WA0011-UqXFP6gWl4Khrn6sXFwj5ZtTTbvkiP.jpg', title: { en: 'Monument of Power', fr: 'Monument du Pouvoir' } },
+    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260106-WA0012-HZAFyQIAHjVxMaTAyLn0TKRpvB9DPc.jpg', title: { en: 'Sacred Geometry', fr: 'Géométrie Sacrée' } },
+    { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260106-WA0013-2aVvV8rH0cJxsV5pE8K3N5ZzU7Q2Ft.jpg', title: { en: 'Runway Essence', fr: 'Essence de la Piste' } },
   ]
 
   return (
