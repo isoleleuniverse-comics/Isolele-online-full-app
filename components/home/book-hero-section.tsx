@@ -199,7 +199,7 @@ export function BookHeroSection() {
           <div className="absolute inset-0">
             <Image
               src={slide.image}
-              alt={slide.title}
+              alt={t(slide.titleKey)}
               fill
               className="object-cover object-top"
               priority={current === 0}
