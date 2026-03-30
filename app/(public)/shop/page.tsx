@@ -14,7 +14,7 @@ import { ProductNegotiationWidget } from '@/components/product-negotiation-widge
 interface Product {
   id: number
   name: { en: string; fr: string }
-  price: number
+  price: number | null
   category: string
   image: string
   description: { en: string; fr: string }
@@ -25,140 +25,27 @@ interface Product {
 const products = [
   {
     id: 1,
-    name: { en: 'Luxury Sunglasses Elite', fr: 'Lunettes de Soleil Luxe' },
-    price: 199.99,
-    category: 'accessories',
+    name: { en: 'Black Pantera – Animal King Hat', fr: 'Black Pantera – Chapeau du Roi Animal' },
+    price: 253,
+    category: 'headwear',
     image: '/shop/product-1.jpg',
-    description: { en: 'Premium black frame with gold accents', fr: 'Monture noire premium avec accents or' },
+    description: { en: 'Dark crown inspired by Animal King Black Pantera', fr: 'Couronne sombre inspirée du Roi Animal Black Pantera' },
   },
   {
     id: 2,
-    name: { en: 'Colorful Sneakers Pro', fr: 'Baskets Colorées Pro' },
-    price: 149.99,
-    category: 'footwear',
+    name: { en: 'Prince Zaiïre – Crown Hat', fr: 'Prince Zaiïre – Chapeau Couronne' },
+    price: 289,
+    category: 'headwear',
     image: '/shop/product-2.jpg',
-    description: { en: 'Artistic design with vibrant colors', fr: 'Design artistique avec couleurs vibrantes' },
+    description: { en: 'Royal crown inspired by the Prince of Kongo, heir of the Sacred Flame', fr: 'Couronne royale inspirée du Prince de Kongo, héritier de la Flamme Sacrée' },
   },
   {
     id: 3,
-    name: { en: 'ZAIIRE Perfume Royal', fr: 'Parfum ZAIIRE Royal' },
-    price: 129.99,
-    category: 'fragrance',
+    name: { en: 'Kimoya – White Queen Kandake Amanirenas Hat', fr: 'Kimoya – Chapeau Reine Blanche Kandake Amanirenas' },
+    price: null,
+    category: 'headwear',
     image: '/shop/product-3.jpg',
-    description: { en: 'Prince of Kongo essence', fr: 'Essence du Prince de Kongo' },
-  },
-  {
-    id: 4,
-    name: { en: 'ISOLELE Logo Perfume', fr: 'Parfum Logo ISOLELE' },
-    price: 139.99,
-    category: 'fragrance',
-    image: '/shop/product-4.jpg',
-    description: { en: 'Gold-infused luxury fragrance', fr: 'Parfum luxe infusé or' },
-  },
-  {
-    id: 5,
-    name: { en: 'PANTHERA Cap - Black', fr: 'Casquette PANTHERA Noire' },
-    price: 59.99,
-    category: 'headwear',
-    image: '/shop/product-5.jpg',
-    description: { en: 'Premium mesh cap with embroidery', fr: 'Casquette mesh premium brodée' },
-  },
-  {
-    id: 6,
-    name: { en: 'Classic ISOLELE Belt', fr: 'Ceinture ISOLELE Classique' },
-    price: 89.99,
-    category: 'accessories',
-    image: '/shop/product-6.jpg',
-    description: { en: 'Black leather with gold buckle', fr: 'Cuir noir avec boucle or' },
-  },
-  {
-    id: 7,
-    name: { en: 'Square Frame Sunglasses', fr: 'Lunettes Carrées' },
-    price: 189.99,
-    category: 'accessories',
-    image: '/shop/product-7.jpg',
-    description: { en: 'Contemporary luxury design', fr: 'Design luxe contemporain' },
-  },
-  {
-    id: 8,
-    name: { en: 'Royal Sunglasses', fr: 'Lunettes Royales' },
-    price: 209.99,
-    category: 'accessories',
-    image: '/shop/product-8.jpg',
-    description: { en: 'Premium frames with style', fr: 'Montures premium avec style' },
-  },
-  {
-    id: 9,
-    name: { en: 'White ISOLELE Cap', fr: 'Casquette ISOLELE Blanche' },
-    price: 54.99,
-    category: 'headwear',
-    image: '/shop/product-9.jpg',
-    description: { en: 'Cream cotton with embroidery', fr: 'Coton crème brodé' },
-  },
-  {
-    id: 10,
-    name: { en: 'LIONPARD Cap', fr: 'Casquette LIONPARD' },
-    price: 64.99,
-    category: 'headwear',
-    image: '/shop/product-10.jpg',
-    description: { en: 'Golden lion portrait embroidery', fr: 'Broderie portrait lion doré' },
-  },
-  {
-    id: 11,
-    name: { en: 'Warrior Armor Sneakers', fr: 'Baskets Armure Guerrier' },
-    price: 169.99,
-    category: 'footwear',
-    image: '/shop/product-11.jpg',
-    description: { en: 'Futuristic athletic design', fr: 'Design athlétique futuriste' },
-  },
-  {
-    id: 12,
-    name: { en: 'Elite Sneakers Limited', fr: 'Baskets Elite Limitées' },
-    price: 159.99,
-    category: 'footwear',
-    image: '/shop/product-12.jpg',
-    description: { en: 'Limited edition colors', fr: 'Couleurs édition limitée' },
-  },
-  {
-    id: 13,
-    name: { en: 'ZAIRE Character Cap', fr: 'Casquette Personnage ZAIRE' },
-    price: 69.99,
-    category: 'headwear',
-    image: '/shop/product-13.jpg',
-    description: { en: 'Artistic character design', fr: 'Design de personnage artistique' },
-  },
-  {
-    id: 14,
-    name: { en: 'Warrior Lion Mask', fr: 'Masque Lion Guerrier' },
-    price: 99.99,
-    category: 'collectibles',
-    image: '/shop/product-14.jpg',
-    description: { en: 'African inspired collectible', fr: 'Collectible inspiré africain' },
-  },
-  {
-    id: 15,
-    name: { en: 'ZAIRE Essence Bottle', fr: 'Bouteille Essence ZAIRE' },
-    price: 144.99,
-    category: 'fragrance',
-    image: '/shop/product-15.jpg',
-    description: { en: 'The Prince of Kongo', fr: 'Le Prince de Kongo' },
-  },
-  {
-    id: 16,
-    name: { en: 'ISOLELE Gold Bottle', fr: 'Bouteille Or ISOLELE' },
-    price: 154.99,
-    category: 'fragrance',
-    image: '/shop/product-16.jpg',
-    description: { en: 'Premium gold essence', fr: 'Essence or premium' },
-  },
-  {
-    id: 17,
-    name: { en: 'ZAIIRE The Prince Of Kongo: Necklace Of Destiny', fr: 'ZAIIRE Le Prince Du Kongo: Collier De Destinée' },
-    price: 36.99,
-    category: 'collectibles',
-    image: '/shop/product-17.jpg',
-    description: { en: 'Legendary necklace of the Prince', fr: 'Le collier légendaire du Prince' },
-    stripeLink: 'https://buy.stripe.com/14A5kD44Z6yM2zR6qh6Zy0c',
+    description: { en: 'White crown inspired by Queen-Mother Kimoya, heiress of Kush and Nubia', fr: 'Couronne blanche inspirée de la Reine-Mère Kimoya, héritière de Kush et Nubia' },
   },
 ]
 
@@ -383,7 +270,7 @@ export default function ShopPage() {
                   </p>
 
                   <p className="text-lg font-bold mb-3" style={{ color: currentTheme.colors.accentPrimary }}>
-                    ${product.price}
+                    {product.price !== null ? `$${product.price}` : (lang === 'fr' ? 'Bientôt Disponible' : 'Coming Soon')}
                   </p>
 
                   {/* Actions */}
@@ -432,16 +319,20 @@ export default function ShopPage() {
                     whileTap={{ scale: 0.98 }}
                     onClick={() => {
                       const prod = product as Product
+                      if (prod.price === null) return
                       if (prod.stripeLink) {
                         window.open(prod.stripeLink, '_blank')
                       } else {
                         addToCart(product.id)
                       }
                     }}
-                    className="w-full py-2 rounded font-bold text-white"
+                    disabled={product.price === null}
+                    className="w-full py-2 rounded font-bold text-white disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ backgroundColor: currentTheme.colors.accentPrimary }}
                   >
-                    {(product as Product).stripeLink 
+                    {product.price === null
+                      ? (lang === 'fr' ? 'Bientôt Disponible' : 'Coming Soon')
+                      : (product as Product).stripeLink 
                       ? (lang === 'fr' ? 'Acheter Maintenant' : 'Buy Now')
                       : (lang === 'fr' ? 'Acheter' : 'Buy')}
                   </motion.button>
