@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono, Great_Vibes } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { ErrorBoundary } from '@/components/error-boundary'
 import './globals.css'
 
 // Font configuration
@@ -128,7 +129,9 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning className="dark bg-background">
       <body className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} font-sans antialiased`}>
-        {children}
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
         <Analytics />
         <SpeedInsights />
       </body>
