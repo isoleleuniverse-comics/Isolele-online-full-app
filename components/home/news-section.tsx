@@ -88,7 +88,7 @@ export function NewsSection() {
                   <div className="relative h-48 overflow-hidden bg-gray-300">
                     <Image
                       src={article.image}
-                      alt={article.title}
+                      alt={t(article.titleKey)}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
