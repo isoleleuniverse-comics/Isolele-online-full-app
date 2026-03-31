@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useLanguage } from '@/lib/language-context'
+import { ChevronLeft, ChevronRight, ShoppingBag } from 'lucide-react'
+import { useState } from 'react'
 
 const comicsData = [
   {
@@ -10,131 +12,296 @@ const comicsData = [
     titleKey: 'book_zaiire_title',
     titleFr: 'Zaiire: Prince du Kongo',
     descKey: 'book_zaiire_desc',
-    descFr: 'Une aventure palpitante et édifiante qui fait écho à l\'esprit du Roi Lion et de Black Panther, tout en offrant aux jeunes lecteurs une célébration de l\'héritage, du courage et de la découverte de soi.',
+    descFr: 'Une aventure palpitante et édifiante qui fait écho à l\'esprit du Roi Lion et de Black Panther.',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg',
-    date: 'September 6, 2025',
+    price: 25.99,
+    category: 'featured',
   },
   {
     id: 'how_isolele',
     title: 'How the Isolele Universe Reclaims African Memory',
     titleFr: 'Comment l\'univers Isolele réclame la mémoire africaine',
-    desc: '"Le colonialisme n\'a pas effacé notre grandeur. Il l\'a enterrée sous son propre mythe." Un plan pour la restauration de l\'imagination africaine supprimée.',
+    desc: '"Le colonialisme n\'a pas effacé notre grandeur. Il l\'a enterrée sous son propre mythe."',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chrome_screenshot_Mar%2031%2C%202026%202_16_31%20PM%20GMT%2B02_00-v3ueG61JhSCQHjK2LqR5FJbw9dJJao.png',
-    date: 'July 18, 2025',
+    price: 21.99,
+    category: 'new',
   },
   {
     id: 'makanda',
     titleKey: 'book_makanda_title',
     titleFr: 'De Mythe à Manuscrit: Cartographier l\'Empire Makanda',
     descKey: 'book_makanda_desc',
-    descFr: 'Un voyage cartographique à travers une civilisation africaine effacée dont la mémoire a survécu dans les symboles et non dans les frontières.',
+    descFr: 'Un voyage cartographique à travers une civilisation africaine effacée.',
     image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
-    date: 'July 17, 2025',
+    price: 23.99,
+    category: 'bestseller',
   },
   {
     id: 'sacred_flame',
-    title: 'Inside the Sacred Flame Blueprints: What Technology Did They Leave Behind?',
-    titleFr: 'À l\'intérieur des plans de la Flamme Sacrée: Quelle technologie ont-ils laissée?',
-    desc: 'Au-delà du mythe et de la métaphore, décodage de la science spirituelle de l\'Afrique la plus supprimée.',
+    title: 'Inside the Sacred Flame Blueprints',
+    titleFr: 'À l\'intérieur des plans de la Flamme Sacrée',
+    desc: 'Décodage de la science spirituelle de l\'Afrique la plus supprimée.',
     image: 'https://images.unsplash.com/photo-1507842217343-583f7270bfba?w=400&h=500&fit=crop',
-    date: 'July 16, 2025',
+    price: 27.99,
+    category: 'bestseller',
   },
   {
     id: 'zaiire_necklace',
-    title: 'The Hidden Message of the Cover of Zaiire: The Prince of Kongo, The Necklace of Destiny',
-    titleFr: 'Le Message Caché de la Couverture de Zaiire: Le Collier de la Destinée',
-    desc: 'La couverture de Zaiire: Le Prince du Kongo n\'est pas seulement de l\'art, c\'est une salle du trône de la mémoire, où les ancêtres, les révolutionnaires et les esprits se rassemblent pour couronner l\'élu.',
+    title: 'The Hidden Message of the Cover of Zaiire',
+    titleFr: 'Le Message Caché de la Couverture de Zaiire',
+    desc: 'La couverture de Zaiire est une salle du trône de la mémoire.',
     image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chrome_screenshot_Mar%2031%2C%202026%202_16_31%20PM%20GMT%2B02_00-v3ueG61JhSCQHjK2LqR5FJbw9dJJao.png',
-    date: 'September 6, 2025',
+    price: 18.99,
+    category: 'featured',
   },
   {
     id: 'isolele_superhero',
     title: 'Isolele: The First Congolese Superhero Universe',
     titleFr: 'Isolele: Le Premier Univers de Super-héros Congolais',
-    desc: 'Et si le nouvel univers global de super-héros ne venait pas de Hollywood, mais du cœur de l\'Afrique? Isolele est une révolution de la fiction africaine où la mythologie rencontre la prophétie.',
+    desc: 'Et si le nouvel univers global de super-héros ne venait pas de Hollywood?',
     image: 'https://images.unsplash.com/photo-1543269161-cbf427effbad?w=400&h=500&fit=crop',
-    date: 'September 9, 2025',
+    price: 24.99,
+    category: 'new',
+  },
+  // Nouveaux livres de ISOLELE NEWS
+  {
+    id: 'lost_tribe_wakanda',
+    title: 'The Lost Tribe Behind Wakanda Was Real',
+    titleFr: 'La Tribu Perdue Derrière Wakanda Était Réelle',
+    desc: 'Une nouvelle vague d\'historiens et de leaders culturels jette la lumière sur Makanda.',
+    image: 'https://images.unsplash.com/photo-1507842217343-583f7270bfba?w=400&h=500&fit=crop',
+    price: 19.99,
+    category: 'new',
+  },
+  {
+    id: 'myth_manuscript',
+    title: 'From Myth to Manuscript: Mapping the Makanda Empire',
+    titleFr: 'Du Mythe au Manuscrit: Cartographier l\'Empire Makanda',
+    desc: 'Un voyage cartographique à travers une civilisation africaine effacée.',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
+    price: 23.99,
+    category: 'bestseller',
+  },
+  {
+    id: 'bambula',
+    title: 'Bambula: La Gardienne',
+    titleFr: 'Bambula: La Gardienne',
+    desc: 'Une aventure palpitante qui célèbre le courage et la découverte de soi.',
+    image: 'https://images.unsplash.com/photo-1543269161-cbf427effbad?w=400&h=500&fit=crop',
+    price: 24.99,
+    category: 'featured',
+  },
+  {
+    id: 'mokele',
+    title: 'Mokele: Le Prince des Eaux',
+    titleFr: 'Mokele: Le Prince des Eaux',
+    desc: 'Une quête légendaire à travers les royaumes du Congo.',
+    image: 'https://images.unsplash.com/photo-1507842217343-583f7270bfba?w=400&h=500&fit=crop',
+    price: 26.99,
+    category: 'featured',
+  },
+  {
+    id: 'kufulula',
+    title: 'King Kufulula: The Founder',
+    titleFr: 'King Kufulula: Le Fondateur',
+    desc: 'L\'histoire du grand roi qui a établi la légende ISOLELE.',
+    image: 'https://images.unsplash.com/photo-1543269161-cbf427effbad?w=400&h=500&fit=crop',
+    price: 29.99,
+    category: 'bestseller',
+  },
+  {
+    id: 'sacred_blueprints',
+    title: 'Sacred Blueprints: Technology of the Ancients',
+    titleFr: 'Plans Sacrés: La Technologie des Anciens',
+    desc: 'Découvrez la technologie avancée que les ancêtres ont laissée derrière eux.',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=500&fit=crop',
+    price: 27.99,
+    category: 'new',
   },
 ]
+
+interface ComicSectionProps {
+  title: string
+  titleFr: string
+  books: typeof comicsData
+  lang: string
+}
+
+function ComicSection({ title, titleFr, books, lang }: ComicSectionProps) {
+  const [scrollPosition, setScrollPosition] = useState(0)
+  const containerRef = React.useRef<HTMLDivElement>(null)
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (containerRef.current) {
+      const scrollAmount = 320
+      const newPosition = scrollPosition + (direction === 'left' ? -scrollAmount : scrollAmount)
+      containerRef.current.scrollTo({
+        left: newPosition,
+        behavior: 'smooth',
+      })
+      setScrollPosition(newPosition)
+    }
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="mb-16"
+    >
+      {/* Section Header */}
+      <div className="flex items-center justify-between mb-6 px-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-white">
+          {lang === 'fr' ? titleFr : title}
+        </h2>
+        <a href="#" className="text-accent-primary hover:underline text-sm font-semibold">
+          {lang === 'fr' ? 'Voir tout' : 'See all'}
+        </a>
+      </div>
+
+      {/* Scrollable Container */}
+      <div className="relative group">
+        <div
+          ref={containerRef}
+          className="flex gap-4 overflow-x-auto scroll-smooth pb-4 px-6 scrollbar-hide"
+          style={{ scrollBehavior: 'smooth' }}
+        >
+          {books.map((book, index) => (
+            <motion.div
+              key={book.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              className="flex-shrink-0 w-72 sm:w-80"
+            >
+              <ComicCard book={book} lang={lang} />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Scroll Buttons */}
+        <button
+          onClick={() => scroll('left')}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 hover:bg-black/80 text-white p-2 rounded-full transform -translate-x-4 sm:-translate-x-2"
+        >
+          <ChevronLeft size={24} />
+        </button>
+        <button
+          onClick={() => scroll('right')}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity bg-black/60 hover:bg-black/80 text-white p-2 rounded-full transform translate-x-4 sm:translate-x-2"
+        >
+          <ChevronRight size={24} />
+        </button>
+      </div>
+    </motion.div>
+  )
+}
+
+interface ComicCardProps {
+  book: typeof comicsData[0]
+  lang: string
+}
+
+function ComicCard({ book, lang }: ComicCardProps) {
+  return (
+    <div className="bg-card border border-border/50 rounded-xl overflow-hidden hover:border-accent-primary/50 hover:shadow-lg hover:shadow-accent-primary/20 transition-all group h-full flex flex-col">
+      {/* Image Container */}
+      <div className="relative h-72 overflow-hidden bg-gradient-to-b from-gray-800 to-gray-900">
+        <Image
+          src={book.image}
+          alt={book.titleKey ? book.titleFr : book.title}
+          fill
+          className="object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+        
+        {/* Price Badge */}
+        <div className="absolute top-3 right-3 bg-accent-primary text-black px-3 py-1 rounded-full font-bold text-sm">
+          ${book.price}
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-4 flex-1 flex flex-col">
+        {/* Category Badge */}
+        <span className="text-xs text-accent-primary font-bold uppercase mb-2">
+          {book.category}
+        </span>
+
+        {/* Title */}
+        <h3 className="text-sm font-bold text-foreground group-hover:text-accent-primary transition-colors line-clamp-2 leading-tight mb-2">
+          {lang === 'fr' ? book.titleFr : (book.titleKey ? book.titleFr : book.title)}
+        </h3>
+
+        {/* Description */}
+        <p className="text-xs text-foreground/60 line-clamp-2 mb-4 flex-1">
+          {lang === 'fr' ? book.descFr : book.desc}
+        </p>
+
+        {/* Button */}
+        <button className="w-full bg-accent-primary hover:bg-accent-primary/90 text-black font-bold py-2 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm">
+          <ShoppingBag size={16} />
+          {lang === 'fr' ? 'Lire' : 'Read'}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+import React from 'react'
 
 export default function ComicsPage() {
   const { t, currentLanguage } = useLanguage()
   const lang = currentLanguage.code
 
+  // Grouper les livres par catégorie
+  const featured = comicsData.filter(b => b.category === 'featured')
+  const bestsellers = comicsData.filter(b => b.category === 'bestseller')
+  const newReleases = comicsData.filter(b => b.category === 'new')
+
   return (
-    <main className="min-h-screen pt-32 pb-24">
+    <main className="min-h-screen pt-32 pb-24 bg-background">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-16 px-6"
+        className="text-center mb-20 px-6"
       >
         <h1 className="text-5xl md:text-6xl font-bold text-accent-primary mb-4">
           {lang === 'fr' ? 'ISOLELE COMICS' : 'ISOLELE COMICS'}
         </h1>
         <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
           {lang === 'fr' 
-            ? 'Découvrez notre collection complète de bandes dessinées et d\'histoires' 
-            : 'Discover our complete collection of comics and stories'}
+            ? 'Découvrez notre univers complet de bandes dessinées, d\'histoires et d\'aventures épiques' 
+            : 'Discover our complete universe of comics, stories and epic adventures'}
         </p>
       </motion.div>
 
-      {/* Comics Grid - 2 columns, 3 rows */}
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-8">
-          {comicsData.map((comic, index) => (
-            <motion.div
-              key={comic.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group"
-            >
-              {/* Comic Card */}
-              <div className="bg-card border border-border/50 rounded-2xl overflow-hidden hover:border-accent-primary/50 transition-all hover:shadow-lg hover:shadow-accent-primary/20">
-                {/* Image Container */}
-                <div className="relative h-64 md:h-72 overflow-hidden bg-gradient-to-b from-gray-800 to-gray-900">
-                  <Image
-                    src={comic.image}
-                    alt={comic.titleKey ? t(comic.titleKey) : comic.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                </div>
+      {/* Featured Section */}
+      <ComicSection
+        title="Featured Collections"
+        titleFr="Collections Vedettes"
+        books={featured}
+        lang={lang}
+      />
 
-                {/* Content */}
-                <div className="p-6 space-y-4">
-                  {/* Title */}
-                  <h2 className="text-xl font-bold text-foreground group-hover:text-accent-primary transition-colors line-clamp-2 leading-tight">
-                    {comic.titleKey ? t(comic.titleKey) : (lang === 'fr' ? comic.titleFr : comic.title)}
-                  </h2>
+      {/* Bestsellers Section */}
+      <ComicSection
+        title="Best Sellers"
+        titleFr="Meilleures Ventes"
+        books={bestsellers}
+        lang={lang}
+      />
 
-                  {/* Description */}
-                  <p className="text-foreground/70 text-sm leading-relaxed line-clamp-3">
-                    {comic.descKey ? t(comic.descKey) : (lang === 'fr' ? comic.descFr : comic.desc)}
-                  </p>
-
-                  {/* Footer - Date and Read More */}
-                  <div className="flex items-center justify-between pt-2 border-t border-border/30">
-                    <span className="text-xs text-foreground/50 font-medium">
-                      {comic.date}
-                    </span>
-                    <motion.button
-                      whileHover={{ x: 4 }}
-                      className="text-accent-primary font-bold hover:underline text-sm transition-colors"
-                    >
-                      {lang === 'fr' ? 'Lire Plus' : 'Read More'}
-                    </motion.button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
+      {/* New Releases Section */}
+      <ComicSection
+        title="New Releases"
+        titleFr="Nouvelles Sorties"
+        books={newReleases}
+        lang={lang}
+      />
 
       {/* Bottom CTA */}
       <motion.div
@@ -159,4 +326,5 @@ export default function ComicsPage() {
     </main>
   )
 }
+
 
