@@ -14,7 +14,7 @@ const pillars = [
     icon: Sparkles,
     titleKey: "universe_destiny_title",
     descriptionKey: "universe_destiny_desc",
-    href: "/characters/zaiire",
+    href: "/the-founder",
     characterName: "Zaiire",
   },
   {
@@ -22,7 +22,7 @@ const pillars = [
     icon: Crown,
     titleKey: "universe_heritage_title",
     descriptionKey: "universe_heritage_desc",
-    href: "/characters/kimoya",
+    href: "/the-founder",
     characterName: "Kimoya",
   },
   {
@@ -30,7 +30,7 @@ const pillars = [
     icon: Flame,
     titleKey: "universe_resurrection_title",
     descriptionKey: "universe_resurrection_desc",
-    href: "/characters/bambula",
+    href: "/the-founder",
     characterName: "Bambula",
   },
   {
