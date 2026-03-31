@@ -68,20 +68,14 @@ export function SiteFooter() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Column 1: Identity */}
           <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center">
               <Image
                 src="/isolele-logo-official.png"
-                alt="ISOLELE"
-                width={50}
-                height={50}
+                alt="ISOLELE — The Chosen Ones"
+                width={160}
+                height={80}
                 className="object-contain"
               />
-              <span 
-                className="text-xl font-bold tracking-wider"
-                style={{ color: currentTheme.colors.textPrimary }}
-              >
-                ISOLELE
-              </span>
             </Link>
             <p 
               className="text-sm leading-relaxed"
