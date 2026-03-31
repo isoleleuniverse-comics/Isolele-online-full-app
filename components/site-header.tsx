@@ -236,7 +236,7 @@ export function SiteHeader() {
           </Link>
 
           {/* Comics/Characters */}
-          <Link href="/characters" title="Comics">
+          <Link href="/e-comics-book" title="Comics">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
