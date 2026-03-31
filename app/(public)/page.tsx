@@ -20,32 +20,32 @@ export default function HomePage() {
 
       {/* Fullscreen book / game slideshow hero */}
       <BookHeroSection />
-
-      {/* Universe pillars */}
+      
+      {/* Universe Pillars Section */}
       <UniverseSection />
-
-      {/* Characters carousel */}
+      
+      {/* Characters Section */}
       <CharactersSection />
-
-      {/* Story / synopsis section */}
+      
+      {/* Story Section */}
       <StorySection />
-
-      {/* Products / shop preview */}
+      
+      {/* Products Section */}
       <ProductsSection />
-
-      {/* Founder spotlight */}
+      
+      {/* Founder Preview */}
       <FounderPreview />
-
-      {/* Reviews */}
+      
+      {/* Reviews Section */}
       <ReviewsSection />
-
-      {/* News / articles */}
+      
+      {/* News Section */}
       <NewsSection />
-
-      {/* Fashion Collection Preview */}
+      
+      {/* Fashion Preview */}
       <FashionPreview />
-
-      {/* CTA / newsletter */}
+      
+      {/* CTA Section */}
       <CtaSection />
     </>
   )
