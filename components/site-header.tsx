@@ -75,7 +75,7 @@ export function SiteHeader() {
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center gap-3">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -91,6 +91,14 @@ export function SiteHeader() {
                   priority
                 />
               </motion.div>
+              <div className="flex flex-col">
+                <h1 className="text-2xl font-bold" style={{ color: currentTheme.colors.accentPrimary }}>
+                  ISOLELE
+                </h1>
+                <p className="text-xs font-semibold tracking-widest" style={{ color: currentTheme.colors.textSecondary }}>
+                  THE CHOSEN ONES
+                </p>
+              </div>
             </Link>
 
             {/* Desktop Navigation */}
