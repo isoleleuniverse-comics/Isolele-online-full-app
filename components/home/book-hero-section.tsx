@@ -181,6 +181,8 @@ export function BookHeroSection() {
 
   const slide = slides[current]
 
+  if (!slide) return null
+
   return (
     <section className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: "#000" }}>
       {/* SLIDES */}

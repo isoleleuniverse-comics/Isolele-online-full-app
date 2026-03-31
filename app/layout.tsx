@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import './globals.css'
 
+// Font configuration
 const geistSans = Geist({ 
   subsets: ["latin"],
   variable: "--font-geist-sans"
