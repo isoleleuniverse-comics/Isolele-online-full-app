@@ -83,7 +83,7 @@ export function SiteHeader() {
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               >
                 <Image
-                  src="/isolele-official-logo.png"
+                  src="/isolele-logo-official.png"
                   alt="ISOLELE — The Chosen Ones"
                   width={200}
                   height={100}
@@ -216,7 +216,7 @@ export function SiteHeader() {
       <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black py-3 px-4">
         <Link href="/" className="flex items-center gap-4">
           <Image
-            src="/isolele-official-logo.png"
+            src="/isolele-logo-official.png"
             alt="ISOLELE"
             width={120}
             height={60}

@@ -70,7 +70,7 @@ export function SiteFooter() {
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3">
               <Image
-                src="/IMG-20260311-WA0030.jpg"
+                src="/isolele-logo-official.png"
                 alt="ISOLELE"
                 width={50}
                 height={50}
