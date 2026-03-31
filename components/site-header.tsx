@@ -213,34 +213,25 @@ export function SiteHeader() {
       </header>
 
       {/* MOBILE TOP HEADER - VISIBLE on mobile, HIDDEN on lg+ */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black">
-        <div className="px-4 py-2 flex items-center gap-3">
-          <Link href="/" className="flex-shrink-0">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              animate={{ y: [0, -4, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <Image
-                src="/IMG-20260311-WA0030.jpg"
-                alt="ISOLELE — The Chosen Ones"
-                width={60}
-                height={60}
-                className="object-contain"
-                priority
-              />
-            </motion.div>
-          </Link>
-          <div className="flex flex-col leading-none">
-            <h1 className="text-xl font-bold text-yellow-400 tracking-wider">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black py-3 px-4">
+        <Link href="/" className="flex items-center gap-4">
+          <Image
+            src="/IMG-20260311-WA0030.jpg"
+            alt="ISOLELE"
+            width={70}
+            height={70}
+            className="object-contain flex-shrink-0"
+            priority
+          />
+          <div className="flex flex-col gap-0">
+            <h1 className="text-2xl font-black text-yellow-400 tracking-wider leading-tight">
               ISOLELE
             </h1>
-            <p className="text-xs font-semibold tracking-widest text-yellow-300">
+            <p className="text-xs font-bold tracking-widest text-yellow-300 -mt-1">
               THE CHOSEN ONES
             </p>
           </div>
-        </div>
+        </Link>
       </header>
 
       {/* MOBILE BOTTOM NAV - VISIBLE on mobile, HIDDEN on lg+ */}
