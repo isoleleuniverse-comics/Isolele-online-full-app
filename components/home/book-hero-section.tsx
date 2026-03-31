@@ -98,6 +98,45 @@ const slides: Slide[] = [
     href: "/kufu-game",
     accentColor: "#F6B800",
   },
+  {
+    id: "amara",
+    type: "book",
+    tag: "AMARA: QUEEN OF THE SEAS",
+    title: "CHAPTER I - QUEEN OF THE PIRATES OF AMAZON",
+    subtitle: "AMARA",
+    description: "Every pirate fears the ocean. Amara owns it. She is the Queen of the Seas. The most feared captain on every water in the world. No ship has outrun her. No king has outsmarted her. No army has stopped her fleet. But Amara does not sail alone. Beside her stand four women bound by blood, loyalty and destiny. Five queens of the sea who together carry a power that will shake every throne on the continent. From their union the Agojie dynasty is born. And from that dynasty rise the five women, kings who will change the course of African history forever. This is not just a pirate story. This is where the greatest female dynasty in the ISOLELE universe begins.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
+    buttonText: "DISCOVER AMARA",
+    href: "/books/amara",
+    accentColor: "#1E90B3",
+  },
+  {
+    id: "zattar",
+    type: "book",
+    tag: "ZATTAR: THE PRINCE OF THE UNIVERSE",
+    title: "THE CONQUEROR OF THRONES",
+    subtitle: "ZATTAR",
+    description: "When Destiny Refused Him One Kingdom, He Decided to Take Them All. Prince Zattar was born to inherit the throne of Bapindi. But when the Ancestors chose another, something inside him did not break. It ignited. He studied the First and Second Wars of Vegas, legends of devastation that shook the world before he was even born. Where others saw warning, Zattar saw a map. He started the Third War of Vegas. Not out of madness. Not out of pain. But because he looked at the entire universe and reached one conclusion: It belongs to someone. And that someone is Zattar. He was not chosen. So he chose the universe instead.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e9c64c65-3717-4fe3-a391-885767df3303-LbjnMwCViF43pwErKmoFv7iGxQdCeQ.jpeg",
+    buttonText: "DISCOVER ZATTAR",
+    href: "/books/zattar",
+    accentColor: "#2E8B57",
+  },
+  {
+    id: "zaiko",
+    type: "book",
+    tag: "ZAIKO: LAST KING OF THE STREETS OF KIVUS",
+    title: "THE LEGEND OF ZAIKO",
+    subtitle: "THE LEGEND OF ZAIKO",
+    description: "Born in North Kivu. Forged in Kinshasa. Zaiko was never meant to survive. But survival was never enough. In a world ruled by power, money, and fear, he rises from nothing. Not as a hero. But as a force. With his brother, he builds the most feared empire the Kivus have ever known. No crown was given. No destiny was written. Everything was taken. Every empire built from the ashes of those who came before. This is the legend of how one man defied fate itself and carved his name into African history with iron and will.",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1175-njlosetUOsqZszKylrOXsIRLw0l3s7.jpeg",
+    buttonText: "DISCOVER ZAIKO",
+    href: "/books/zaiko",
+    accentColor: "#8B7355",
+  },
 ]
 
 const slideVariants = {
