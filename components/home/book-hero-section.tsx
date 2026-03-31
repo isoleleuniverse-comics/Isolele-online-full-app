@@ -5,17 +5,16 @@ import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { useLanguage } from "@/lib/language-context"
 
 interface Slide {
   id: string
   type: "book" | "game"
-  tagKey: string
-  titleKey: string
-  subtitleKey: string
-  descriptionKey: string
+  tag: string
+  title: string
+  subtitle: string
+  description: string
   image: string
-  buttonTextKey: string
+  buttonText: string
   href: string
   accentColor: string
 }
@@ -24,119 +23,80 @@ const slides: Slide[] = [
   {
     id: "zaiire",
     type: "book",
-    tagKey: "book_welcome_tag",
-    titleKey: "book_chosen_ones_title",
-    subtitleKey: "book_chosen_ones_subtitle",
-    descriptionKey: "book_chosen_ones_desc",
+    tag: "WELCOME TO ISOLELE",
+    title: "THE CHOSEN ONES",
+    subtitle: "AN ENTIRE UNIVERSE BORN FROM THE ROOTS OF KONGO...",
+    description: "Isolele is a visionary universe born to restore the soul of African storytelling, a mythological empire where superheroes are chosen by destiny, kingdoms never forgotten, and ancestral power is alive in every page, every prophecy, every battle. Every child who reads Isolele will discover superheroes who look like them, speak their language, protect their land, and honor their ancestors. This is for the next generation of kings, queens, warriors, inventors, and storytellers.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg",
-    buttonTextKey: "book_explore_universe",
+    buttonText: "EXPLORE THE UNIVERSE",
     href: "/characters",
     accentColor: "#F6B800",
   },
   {
     id: "makanda",
     type: "book",
-    tagKey: "book_makanda_tag",
-    titleKey: "book_makanda_title",
-    subtitleKey: "book_makanda_subtitle",
-    descriptionKey: "book_makanda_desc",
+    tag: "THE MAKANDA DYNASTY - BOOK I",
+    title: "THE MOST POWERFUL EMPIRE IN HISTORY",
+    subtitle: "WAS NOT LOST. IT WAS HIDDEN ON PURPOSE.",
+    description: "Deep within Central Africa existed a civilization the world was never meant to know about. Spiritually awakened. Technologically advanced. Protected by the Sacred Flame. When outside forces came for what was theirs, the Makanda did not fall. They disappeared. Their city was never lost. It was waiting for the one born to carry the flame again.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
-    buttonTextKey: "book_discover_makanda",
+    buttonText: "DISCOVER MAKANDA",
     href: "/books/makanda",
     accentColor: "#C0392B",
   },
   {
     id: "bambula",
     type: "book",
-    tagKey: "book_bambula_tag",
-    titleKey: "book_bambula_title",
-    subtitleKey: "book_bambula_subtitle",
-    descriptionKey: "book_bambula_desc",
+    tag: "BAMBULA: CHILD OF RHYTHM",
+    title: "CHAPTER I - THE SACRED DRUM",
+    subtitle: "BAMBULA",
+    description: "Before words, there was rhythm. Bambula was the child who heard everything. When the drums were taken and the land went silent, he kept the rhythm alive inside him. Armed with the sacred drum, he walks between the spirit world and the living. He does not fight to destroy. He protects to remember.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
-    buttonTextKey: "book_discover_bambula",
+    buttonText: "DISCOVER BAMBULA",
     href: "/books/bambula",
     accentColor: "#B3541E",
   },
   {
     id: "mokele",
     type: "book",
-    tagKey: "book_mokele_tag",
-    titleKey: "book_mokele_title",
-    subtitleKey: "book_mokele_subtitle",
-    descriptionKey: "book_mokele_desc",
+    tag: "MOKELE: BORN INTO STRUGGLE",
+    title: "FROM CHILD TO LORD OF KINSHASA",
+    subtitle: "MOKELE",
+    description: "Mokele is not born a king. He is born into struggle. The streets of Kinshasa teach him before school ever could, where loyalty is fragile, violence is normal, and survival is everything. From child to hustler to lord. He builds power, money, and respect. In Kinshasa, you either get eaten... Or you become the predator.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg",
-    buttonTextKey: "book_discover_mokele",
+    buttonText: "DISCOVER MOKELE",
     href: "/books/mokele",
     accentColor: "#4169E1",
   },
   {
     id: "zaiire-universe",
     type: "book",
-    tagKey: "book_zaiire_tag",
-    titleKey: "book_zaiire_title",
-    subtitleKey: "book_zaiire_subtitle",
-    descriptionKey: "book_zaiire_desc",
+    tag: "ZAIIRE: THE PRINCE OF KONGO",
+    title: "THE NECKLACE OF DESTINY",
+    subtitle: "ZAIIRE",
+    description: "Forged in the heart of the Kongo Kingdom, the Necklace of Destiny was never made to be worn. It was made to choose. Passed through centuries of fire, war, and silence, it carries the soul of every king who bled for their people and every queen who held the world together with bare hands. When it finds Zaiire, it does not shine. It awakens.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0059-75yxyGjuDt9hhqXF6obymfG8BpNLz4.jpg",
-    buttonTextKey: "book_discover_zaiire",
+    buttonText: "DISCOVER ZAIIRE",
     href: "/books/zaiire",
     accentColor: "#F6B800",
   },
   {
     id: "kufu",
     type: "game",
-    tagKey: "book_kufu_tag",
-    titleKey: "book_kufu_title",
-    subtitleKey: "book_kufu_subtitle",
-    descriptionKey: "book_kufu_desc",
+    tag: "KUFU: THE CROWN GAME",
+    title: "THE OFFICIAL GAME OF THE ISOLELE UNIVERSE",
+    subtitle: "KUFU",
+    description: "This is not just a card game. It is a ceremony. Gather your warriors. Build your kingdom. Outplay every opponent at the table. But to claim the crown there is only one way to win. You must raise your voice and speak the name of the king out loud. Then someone places the necklace over your head. Not by your own hand. By another. Because a true king is not crowned alone. KUFU is where African royalty becomes something you feel in your hands, hear in your voice, and carry around your neck. Every game is a coronation. Every winner is a king.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_20260321_113436-ktAJOL2e0SS0pkTY6aPnn7aBKxr3pq.jpg",
-    buttonTextKey: "book_explore_game",
+    buttonText: "EXPLORE THE GAME",
     href: "/kufu-game",
     accentColor: "#F6B800",
-  },
-  {
-    id: "amara",
-    type: "book",
-    tagKey: "book_amara_tag",
-    titleKey: "book_amara_title",
-    subtitleKey: "book_amara_subtitle",
-    descriptionKey: "book_amara_desc",
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-    buttonTextKey: "book_discover_amara",
-    href: "/books/amara",
-    accentColor: "#1E90B3",
-  },
-  {
-    id: "zattar",
-    type: "book",
-    tagKey: "book_zattar_tag",
-    titleKey: "book_zattar_title",
-    subtitleKey: "book_zattar_subtitle",
-    descriptionKey: "book_zattar_desc",
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e9c64c65-3717-4fe3-a391-885767df3303-LbjnMwCViF43pwErKmoFv7iGxQdCeQ.jpeg",
-    buttonTextKey: "book_discover_zattar",
-    href: "/books/zattar",
-    accentColor: "#2E8B57",
-  },
-  {
-    id: "zaiko",
-    type: "book",
-    tagKey: "book_zaiko_tag",
-    titleKey: "book_zaiko_title",
-    subtitleKey: "book_zaiko_subtitle",
-    descriptionKey: "book_zaiko_desc",
-    image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1175-njlosetUOsqZszKylrOXsIRLw0l3s7.jpeg",
-    buttonTextKey: "book_discover_zaiko",
-    href: "/books/zaiko",
-    accentColor: "#8B7355",
   },
 ]
 
@@ -158,7 +118,6 @@ const slideVariants = {
 export function BookHeroSection() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
-  const { t } = useLanguage()
 
   const paginate = useCallback(
     (newDirection: number) => {
@@ -201,7 +160,7 @@ export function BookHeroSection() {
           <div className="absolute inset-0">
             <Image
               src={slide.image}
-              alt={t(slide.titleKey)}
+              alt={slide.title}
               fill
               className="object-cover object-top"
               priority={current === 0}
@@ -236,7 +195,7 @@ export function BookHeroSection() {
                   textTransform: "uppercase",
                 }}
               >
-                {t(slide.tagKey)}
+                {slide.tag}
               </motion.div>
 
               {/* SUBTITLE */}
@@ -247,7 +206,7 @@ export function BookHeroSection() {
                 className="text-sm font-semibold tracking-widest uppercase mb-3"
                 style={{ color: slide.accentColor, opacity: 0.85 }}
               >
-                {t(slide.subtitleKey)}
+                {slide.subtitle}
               </motion.p>
 
               {/* TITLE */}
@@ -264,7 +223,7 @@ export function BookHeroSection() {
                   fontFamily: "Montserrat, sans-serif",
                 }}
               >
-                {t(slide.titleKey)}
+                {slide.title}
               </motion.h1>
 
               {/* DESCRIPTION */}
@@ -275,7 +234,7 @@ export function BookHeroSection() {
                 className="text-base md:text-lg leading-relaxed mb-8 max-w-xl"
                 style={{ color: "#E0E0E0" }}
               >
-                {t(slide.descriptionKey)}
+                {slide.description}
               </motion.p>
 
               {/* BUTTON */}
@@ -292,7 +251,7 @@ export function BookHeroSection() {
                       color: "#000",
                     }}
                   >
-                    {t(slide.buttonTextKey)}
+                    {slide.buttonText}
                   </button>
                 </Link>
               </motion.div>
@@ -301,81 +260,44 @@ export function BookHeroSection() {
         </motion.div>
       </AnimatePresence>
 
-      {/* FIXED HEADER with ISOLELE Logo */}
-      <motion.header
-        className="fixed top-0 left-0 right-0 z-40 h-[70px] flex items-center px-6 md:px-10"
-        style={{
-          backgroundColor: "rgba(0,0,0,0.75)",
-          backdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(246, 184, 0, 0.12)",
-        }}
-        initial={{ y: -70 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <Link href="/">
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ei_1774029892268-removebg-preview-OGLwAWrJqgxIOFX6ES21zzBCcRpiHa.png"
-            alt="ISOLELE — The Chosen Ones"
-            width={180}
-            height={50}
-            className="object-contain"
-            priority
-          />
-        </Link>
-      </motion.header>
+      {/* NAVIGATION */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-6">
+        {/* Prev Button */}
+        <button
+          onClick={() => paginate(-1)}
+          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm"
+        >
+          <ChevronLeft className="w-6 h-6 text-white" />
+        </button>
 
-      {/* NAV ARROWS */}
-      <button
-        onClick={() => paginate(-1)}
-        aria-label="Previous slide"
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full transition-all hover:scale-110"
-        style={{
-          background: "rgba(246,184,0,0.15)",
-          border: "1.5px solid rgba(246,184,0,0.5)",
-          color: "#F6B800",
-        }}
-      >
-        <ChevronLeft size={22} />
-      </button>
-      <button
-        onClick={() => paginate(1)}
-        aria-label="Next slide"
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full transition-all hover:scale-110"
-        style={{
-          background: "rgba(246,184,0,0.15)",
-          border: "1.5px solid rgba(246,184,0,0.5)",
-          color: "#F6B800",
-        }}
-      >
-        <ChevronRight size={22} />
-      </button>
+        {/* Dots */}
+        <div className="flex gap-2">
+          {slides.map((_, index) => (
+            <motion.button
+              key={index}
+              onClick={() => {
+                setDirection(index > current ? 1 : -1)
+                setCurrent(index)
+              }}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                index === current ? "bg-white w-8" : "bg-white/40 w-2"
+              }`}
+              whileHover={{ backgroundColor: "rgba(255,255,255,0.6)" }}
+            />
+          ))}
+        </div>
 
-      {/* DOT INDICATORS */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-        {slides.map((s, i) => (
-          <button
-            key={s.id}
-            aria-label={`Go to slide ${i + 1}`}
-            onClick={() => {
-              setDirection(i > current ? 1 : -1)
-              setCurrent(i)
-            }}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: i === current ? 28 : 8,
-              height: 8,
-              backgroundColor: i === current ? "#F6B800" : "rgba(255,255,255,0.35)",
-            }}
-          />
-        ))}
+        {/* Next Button */}
+        <button
+          onClick={() => paginate(1)}
+          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm"
+        >
+          <ChevronRight className="w-6 h-6 text-white" />
+        </button>
       </div>
 
-      {/* Slide counter */}
-      <div
-        className="absolute bottom-8 right-8 md:right-16 z-20 text-xs font-bold tracking-widest"
-        style={{ color: "rgba(255,255,255,0.5)" }}
-      >
+      {/* SLIDE INDICATOR */}
+      <div className="absolute bottom-8 right-8 z-20 text-white text-sm font-semibold">
         {String(current + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
       </div>
     </section>
