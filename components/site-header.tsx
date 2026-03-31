@@ -92,10 +92,10 @@ export function SiteHeader() {
                 />
               </motion.div>
               <div className="flex flex-col">
-                <h1 className="text-2xl font-bold" style={{ color: currentTheme.colors.accentPrimary }}>
+                <h1 className="text-2xl font-bold text-yellow-400">
                   ISOLELE
                 </h1>
-                <p className="text-xs font-semibold tracking-widest" style={{ color: currentTheme.colors.textSecondary }}>
+                <p className="text-xs font-semibold tracking-widest text-yellow-300">
                   THE CHOSEN ONES
                 </p>
               </div>
