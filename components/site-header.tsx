@@ -212,6 +212,37 @@ export function SiteHeader() {
         </div>
       </header>
 
+      {/* MOBILE TOP HEADER - VISIBLE on mobile, HIDDEN on lg+ */}
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black">
+        <div className="px-4 py-2 flex items-center gap-3">
+          <Link href="/" className="flex-shrink-0">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              animate={{ y: [0, -4, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Image
+                src="/IMG-20260311-WA0030.jpg"
+                alt="ISOLELE — The Chosen Ones"
+                width={60}
+                height={60}
+                className="object-contain"
+                priority
+              />
+            </motion.div>
+          </Link>
+          <div className="flex flex-col leading-none">
+            <h1 className="text-xl font-bold text-yellow-400 tracking-wider">
+              ISOLELE
+            </h1>
+            <p className="text-xs font-semibold tracking-widest text-yellow-300">
+              THE CHOSEN ONES
+            </p>
+          </div>
+        </div>
+      </header>
+
       {/* MOBILE BOTTOM NAV - VISIBLE on mobile, HIDDEN on lg+ */}
       {/* New elegant navigation with: Home, Comics, Shop, Games, Story/News, Settings */}
       <motion.div
