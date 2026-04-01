@@ -50,8 +50,8 @@ const slides: Slide[] = [
     id: "bambula",
     type: "book",
     tag: "BAMBULA: CHILD OF RHYTHM",
-    title: "CHAPTER I - THE SACRED DRUM",
-    subtitle: "BAMBULA",
+    title: "BAMBULA",
+    subtitle: "CHAPTER I · THE SACRED DRUM",
     description: "Before words, there was rhythm. Bambula was the child who heard everything. When the drums were taken and the land went silent, he kept the rhythm alive inside him. Armed with the sacred drum, he walks between the spirit world and the living. He does not fight to destroy. He protects to remember.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
