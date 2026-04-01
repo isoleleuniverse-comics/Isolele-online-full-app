@@ -11,6 +11,7 @@ import { useCart } from "@/lib/cart-context"
 import { useNotifications } from "@/lib/notifications-context"
 import { cn } from "@/lib/utils"
 import { HomeIcon, ComicsIcon, ShopIcon, StoryNewsIcon, SettingsIcon } from "@/components/icons/elegant-icons"
+import { BackButton } from "@/components/back-button"
 
 const characterLinks = [
   { name: "ZAIRE - PRINCE DU KONGO", href: "/characters/zaire" },
@@ -74,6 +75,8 @@ export function SiteHeader() {
       >
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex items-center justify-between">
+            {/* Back Button */}
+            <BackButton />
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <motion.div
@@ -205,7 +208,19 @@ export function SiteHeader() {
       </header>
 
       {/* MOBILE TOP HEADER - VISIBLE on mobile, HIDDEN on lg+ */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black py-3 px-4">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black py-3 px-4 flex items-center justify-between gap-2">
+        <BackButton />
+        <Link href="/" className="flex-1 flex items-center justify-center">
+          <Image
+            src="/isolele-logo-official.png"
+            alt="ISOLELE"
+            width={120}
+            height={60}
+            className="object-contain flex-shrink-0"
+            priority
+          />
+        </Link>
+        <div className="w-10" /> left-0 right-0 z-50 bg-black py-3 px-4">
         <Link href="/" className="flex items-center">
           <Image
             src="/isolele-logo-official.png"
