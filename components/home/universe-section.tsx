@@ -133,7 +133,7 @@ export function UniverseSection() {
               >
                 {/* Background image */}
                 <div 
-                  className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${index === 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-20'}`}
+                  className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${index === 0 || index === 1 ? 'opacity-100' : 'opacity-0 group-hover:opacity-20'}`}
                   style={{
                     backgroundImage: `url('${backgroundImages[index]}')`,
                     backgroundSize: 'cover',
