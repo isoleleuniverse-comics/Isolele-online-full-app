@@ -44,7 +44,7 @@ const pillars = [
 ]
 
 const backgroundImages = [
-  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c1e14e48-7ad7-4311-8f7e-73b69263fd5f.jpeg',
+  '/lion-woman-background.jpg',
   'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/a1486131-34f6-4e8f-941d-1f1185ed8af7.jpeg',
   'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/577207f9-ac97-4745-a175-9815c6c39313.jpeg',
   'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c1e14e48-7ad7-4311-8f7e-73b69263fd5f.jpeg',
@@ -133,7 +133,7 @@ export function UniverseSection() {
               >
                 {/* Background image */}
                 <div 
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+                  className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${index === 0 ? 'opacity-30' : 'opacity-0 group-hover:opacity-20'}`}
                   style={{
                     backgroundImage: `url('${backgroundImages[index]}')`,
                     backgroundSize: 'cover',
