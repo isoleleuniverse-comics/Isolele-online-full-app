@@ -115,61 +115,100 @@ export function CharactersShowcase() {
           </motion.p>
         </div>
 
-        {/* Animated Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-14">
-          {showcaseCharacters.map((character, index) => (
-            <motion.div
-              key={character.name}
-              initial={{ opacity: 0, scale: 0.85, y: 30 }}
-              animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 + index * 0.07, type: "spring", stiffness: 200, damping: 20 }}
-              whileHover={{ scale: 1.04, zIndex: 10 }}
-              className="relative group rounded-2xl overflow-hidden cursor-pointer"
-              style={{
-                aspectRatio: index < 4 ? "3/4" : "1/1",
-                border: `1px solid ${character.color}20`,
-              }}
-            >
-              <Image
-                src={character.image}
-                alt={character.name}
-                fill
-                className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
-              />
-
-              {/* Always-visible gradient at bottom */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: `linear-gradient(180deg, transparent 50%, ${character.color}80 85%, rgba(0,0,0,0.9) 100%)`,
+        {/* Animated Carousel with Looping Path */}
+        <div className="relative w-full h-[600px] mb-14 rounded-3xl overflow-hidden bg-gradient-to-br from-black/40 to-black/20 border border-white/10">
+          {showcaseCharacters.map((character, index) => {
+            // Calculate staggered animation timeline for each character
+            // Path: left→right, center→top, top→bottom-right, bottom-right→bottom-left, bottom-left→top-left, top-left→right-bottom
+            const totalDuration = 12 + index * 0.5 // Stagger start times
+            const delay = index * 1 // Stagger so they don't overlap
+            
+            return (
+              <motion.div
+                key={character.name}
+                className="absolute group"
+                animate={{
+                  x: [
+                    "-80px",      // Start left
+                    "200px",      // Move right
+                    "calc(50vw - 60px)", // Center
+                    "calc(100vw - 140px)", // Move to right edge
+                    "calc(100vw - 140px)", // Stay right bottom
+                    "-80px",      // Move to left bottom
+                    "-80px",      // Left top
+                    "200px",      // Move right again
+                  ],
+                  y: [
+                    "150px",      // Start center
+                    "150px",      // Stay center during right movement
+                    "-80px",      // Move to top center
+                    "400px",      // Move to bottom right
+                    "400px",      // Stay bottom right
+                    "400px",      // Stay bottom left
+                    "-80px",      // Move up left
+                    "-80px",      // Move down while going right
+                  ],
+                  rotate: [0, 5, 0, -5, 0, 5, 0, 0],
+                  scale: [0.9, 1, 1.05, 1, 0.95, 1, 1.05, 1],
                 }}
-              />
-
-              {/* Animated glow on hover */}
-              <motion.div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
-                style={{ boxShadow: `inset 0 0 40px ${character.color}40, 0 0 30px ${character.color}20` }}
-              />
-
-              {/* Pulse ring animation */}
-              <motion.div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100"
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                style={{ border: `2px solid ${character.color}60` }}
-              />
-
-              {/* Name tag */}
-              <div className="absolute bottom-0 left-0 right-0 p-3">
-                <p
-                  className="text-xs font-black tracking-widest leading-tight text-balance"
-                  style={{ color: "#fff", textShadow: "0 1px 4px rgba(0,0,0,0.8)" }}
+                transition={{
+                  duration: totalDuration,
+                  delay,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  times: [0, 0.15, 0.3, 0.5, 0.6, 0.75, 0.9, 1],
+                }}
+                style={{
+                  width: "120px",
+                  height: "160px",
+                  zIndex: 50 - index,
+                }}
+              >
+                <div
+                  className="relative w-full h-full rounded-2xl overflow-hidden cursor-pointer"
+                  style={{
+                    border: `2px solid ${character.color}60`,
+                    boxShadow: `0 0 20px ${character.color}30`,
+                  }}
                 >
-                  {character.name}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+                  <Image
+                    src={character.image}
+                    alt={character.name}
+                    fill
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
+                  />
+
+                  {/* Gradient overlay */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: `linear-gradient(180deg, transparent 40%, ${character.color}70 80%, rgba(0,0,0,0.95) 100%)`,
+                    }}
+                  />
+
+                  {/* Animated glow */}
+                  <motion.div
+                    className="absolute inset-0 rounded-2xl opacity-40"
+                    animate={{ opacity: [0.3, 0.6, 0.3] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    style={{
+                      boxShadow: `inset 0 0 30px ${character.color}40, 0 0 20px ${character.color}20`,
+                    }}
+                  />
+
+                  {/* Name tag */}
+                  <div className="absolute bottom-1 left-1 right-1 p-2">
+                    <p
+                      className="text-[9px] font-black tracking-wide leading-tight text-balance line-clamp-2"
+                      style={{ color: "#fff", textShadow: "0 1px 3px rgba(0,0,0,0.9)" }}
+                    >
+                      {character.name.split(" ")[0]}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
 
         {/* CTA Button */}
