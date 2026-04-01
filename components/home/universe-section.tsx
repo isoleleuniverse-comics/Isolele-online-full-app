@@ -47,7 +47,7 @@ const backgroundImages = [
   '/golden-throne-beasts.jpg',
   '/kongo-spiritual-background.jpg',
   'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/577207f9-ac97-4745-a175-9815c6c39313.jpeg',
-  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c1e14e48-7ad7-4311-8f7e-73b69263fd5f.jpeg',
+  '/king-kufulula-background.png',
 ]
 
 export function UniverseSection() {
@@ -133,7 +133,7 @@ export function UniverseSection() {
               >
                 {/* Background image */}
                 <div 
-                  className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${index === 0 || index === 1 ? 'opacity-100' : 'opacity-0 group-hover:opacity-20'}`}
+                  className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${index === 0 || index === 1 || index === 3 ? 'opacity-100' : 'opacity-0 group-hover:opacity-20'}`}
                   style={{
                     backgroundImage: `url('${backgroundImages[index]}')`,
                     backgroundSize: 'cover',
