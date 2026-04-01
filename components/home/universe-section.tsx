@@ -158,22 +158,37 @@ export function UniverseSection() {
 
                 {/* Content */}
                 <div className="relative z-10 flex-1 flex flex-col">
-                  <div 
-                    className="bg-[#F5F0E8]/90 rounded-lg p-4 flex-1"
-                  >
-                    <h3 
-                      className="text-xl font-bold tracking-wide mb-4"
-                      style={{ color: '#000000' }}
+                  {index < 3 ? (
+                    <div 
+                      className="bg-[#F5F0E8]/90 rounded-lg p-4 flex-1"
                     >
-                      {t(pillar.titleKey)}
-                    </h3>
-                    <p 
-                      className="text-sm leading-relaxed"
-                      style={{ color: '#000000' }}
-                    >
-                      {t(pillar.descriptionKey)}
-                    </p>
-                  </div>
+                      <h3 
+                        className="text-xl font-bold tracking-wide mb-4"
+                        style={{ color: '#000000' }}
+                      >
+                        {t(pillar.titleKey)}
+                      </h3>
+                      <p 
+                        className="text-sm leading-relaxed"
+                        style={{ color: '#000000' }}
+                      >
+                        {t(pillar.descriptionKey)}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex-1 flex items-center justify-center rounded-lg overflow-hidden">
+                      <video 
+                        autoPlay 
+                        loop 
+                        muted 
+                        className="w-full h-full object-cover rounded-lg"
+                      >
+                        {/* Add your video source here */}
+                        <source src="/path-to-your-video.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  )}
                 </div>
 
                 {/* Discover Button */}
