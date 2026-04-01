@@ -46,7 +46,7 @@ const pillars = [
 const backgroundImages = [
   '/golden-throne-beasts.jpg',
   '/kongo-spiritual-background.jpg',
-  'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/577207f9-ac97-4745-a175-9815c6c39313.jpeg',
+  '/royal-palace-background.png',
   '/king-kufulula-background.png',
 ]
 
