@@ -8,6 +8,7 @@ import { ReviewsSection } from "@/components/home/reviews-section"
 import { NewsSection } from "@/components/home/news-section"
 import { FashionPreview } from "@/components/home/fashion-preview"
 import { CtaSection } from "@/components/home/cta-section"
+import { CharactersShowcase } from "@/components/home/characters-showcase"
 import { OrganizationJsonLd, ComicSeriesJsonLd, WebsiteJsonLd } from "@/components/json-ld"
 
 export default function HomePage() {
@@ -44,6 +45,9 @@ export default function HomePage() {
       
       {/* Fashion Preview */}
       <FashionPreview />
+      
+      {/* Characters Showcase — before footer */}
+      <CharactersShowcase />
       
       {/* CTA Section */}
       <CtaSection />
