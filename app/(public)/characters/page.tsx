@@ -15,7 +15,7 @@ const characters = [
     title: "The Prince of Kongo",
     origin: "Kingdom of Kongo / Central Africa",
     color: "#F6B800",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0060-fjvA6s0PWIrFYpgRmSxqtJtCg2z0PZ.jpg",
+    image: "/characters/zaiire-kongo-throne.jpg",
     description:
       "He carries the fire of those who were erased, and the crown of those yet to rise. Forged in the heart of the Kongo Kingdom, the Necklace of Destiny chose Zaiire not because he sought power — but because he was willing to carry its weight. He walks between the spirit world and the present, armed with the electric force of royal lineage and the memory of a kingdom the world tried to erase.",
     powers: ["Royal Lionpard Transformation", "Lightning & Thunder Control", "Time-Walking", "Ancestral Sight"],
