@@ -131,8 +131,8 @@ export const translations = {
     universe_destiny_desc: "An African proverb says: 'Until the lion learns to write, every story will glorify the hunter.' ISOLELE is the lion's pen. Africa is writing its own story.",
     universe_heritage_title: "Everything Begins in Kongo",
     universe_heritage_desc: "Music. Dance. Royalty. Fashion. Culture. History. Before the world had names for these things, the Kongo had mastered them all. Africa is not a continent. It is a source. And the Congo is not just part of that source. The Congo IS the source. The trigger of all human culture. The heartbeat that started everything. ISOLELE was born there. Not by accident. By destiny.",
-    universe_resurrection_title: "Ancestral Spirits Never Die",
-    universe_resurrection_desc: "Africa was never powerless. The prophecy has returned, and with it, the resurrection of buried myths.",
+    universe_resurrection_title: "You Have Always Been Royal",
+    universe_resurrection_desc: "Before anyone told you who you were, the ancestors already knew. Every child born on African soil, every member of the diaspora who crossed oceans and survived, every person who carries African blood in their veins has always carried a crown they were never told about. ISOLELE exists to give it back. Not as a gift. As a reminder. You were never lost. You were never less. You were never without power. You were just waiting for someone to tell you the truth. Welcome home.",
     universe_founder_title: "The Visionary Founder",
     universe_founder_desc: "King Kufulula founded ISOLELE to restore the soul of African storytelling and create a mythological empire where African superheroes rise from authentic history.",
     
