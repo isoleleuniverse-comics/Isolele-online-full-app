@@ -301,14 +301,6 @@ export function BookHeroSection() {
 
       {/* NAVIGATION */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-6">
-        {/* Prev Button */}
-        <button
-          onClick={() => paginate(-1)}
-          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm"
-        >
-          <ChevronLeft className="w-6 h-6 text-white" />
-        </button>
-
         {/* Dots */}
         <div className="flex gap-2">
           {slides.map((_, index) => (
@@ -325,19 +317,6 @@ export function BookHeroSection() {
             />
           ))}
         </div>
-
-        {/* Next Button */}
-        <button
-          onClick={() => paginate(1)}
-          className="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200 backdrop-blur-sm"
-        >
-          <ChevronRight className="w-6 h-6 text-white" />
-        </button>
-      </div>
-
-      {/* SLIDE INDICATOR */}
-      <div className="absolute bottom-8 right-8 z-20 text-white text-sm font-semibold">
-        {String(current + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
       </div>
     </section>
   )
