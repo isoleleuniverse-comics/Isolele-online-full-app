@@ -75,7 +75,7 @@ export function SiteHeader() {
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -91,14 +91,6 @@ export function SiteHeader() {
                   priority
                 />
               </motion.div>
-              <div className="flex flex-col">
-                <h1 className="text-2xl font-bold text-yellow-400">
-                  ISOLELE
-                </h1>
-                <p className="text-xs font-semibold tracking-widest text-yellow-300">
-                  THE CHOSEN ONES
-                </p>
-              </div>
             </Link>
 
             {/* Desktop Navigation */}
@@ -214,7 +206,7 @@ export function SiteHeader() {
 
       {/* MOBILE TOP HEADER - VISIBLE on mobile, HIDDEN on lg+ */}
       <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black py-3 px-4">
-        <Link href="/" className="flex items-center gap-4">
+        <Link href="/" className="flex items-center">
           <Image
             src="/isolele-logo-official.png"
             alt="ISOLELE"
@@ -223,14 +215,6 @@ export function SiteHeader() {
             className="object-contain flex-shrink-0"
             priority
           />
-          <div className="flex flex-col gap-0">
-            <h1 className="text-2xl font-black text-yellow-400 tracking-wider leading-tight">
-              ISOLELE
-            </h1>
-            <p className="text-xs font-bold tracking-widest text-yellow-300 -mt-1">
-              THE CHOSEN ONES
-            </p>
-          </div>
         </Link>
       </header>
 
