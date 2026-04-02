@@ -39,8 +39,8 @@ const slides: Slide[] = [
     id: "makanda",
     type: "book",
     tag: "THE MAKANDA DYNASTY - BOOK I",
-    title: "KIMOYA",
-    subtitle: "THE RISING KANDAKE",
+    title: "MAKANDA",
+    subtitle: "THE MOST POWERFUL EMPIRE IN HIS... WAS NOT LOST, IT WAS HIDDEN ON PURPOSE",
     description: "Deep within Central Africa existed a civilization the world was never meant to know about. Spiritually awakened. Technologically advanced. Protected by the Sacred Flame. When outside forces came for what was theirs, the Makanda did not fall. They disappeared. Their city was never lost. It was waiting for the one born to carry the flame again.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
