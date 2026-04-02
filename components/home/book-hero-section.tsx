@@ -160,42 +160,38 @@ export function BookHeroSection() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
   const { currentLanguage } = useLanguage()
-  const t = translations[currentLanguage] || {}
+  const t = translations[currentLanguage]
 
   // Memoize translated slides
   const translatedSlides = useMemo(() => {
-    return slides.map(slide => {
-      // Map slide IDs to translation keys
-      const translationMap: Record<string, { titleKey?: string; descKey?: string }> = {
-        zaiire: { titleKey: "cta_explore", descKey: "cta_description" },
-        makanda: { titleKey: "book_makanda_title", descKey: "book_makanda_desc" },
-        bambula: { titleKey: "book_bambula_title", descKey: "book_bambula_desc" },
-        mokele: { titleKey: "book_mokele_title", descKey: "book_mokele_desc" },
-        "zaiire-universe": { titleKey: "book_zaiire_title", descKey: "book_zaiire_desc" },
-      }
+    if (!t) return slides
 
+    const translationMap: Record<string, { titleKey?: string; descKey?: string }> = {
+      zaiire: { titleKey: "cta_explore", descKey: "cta_description" },
+      makanda: { titleKey: "book_makanda_title", descKey: "book_makanda_desc" },
+      bambula: { titleKey: "book_bambula_title", descKey: "book_bambula_desc" },
+      mokele: { titleKey: "book_mokele_title", descKey: "book_mokele_desc" },
+      "zaiire-universe": { titleKey: "book_zaiire_title", descKey: "book_zaiire_desc" },
+    }
+
+    return slides.map(slide => {
       const mapping = translationMap[slide.id]
       if (!mapping) return slide
 
       const translatedSlide = { ...slide }
+      const tObj = t as Record<string, any>
       
-      if (mapping.titleKey && t) {
-        const titleValue = (t as Record<string, any>)[mapping.titleKey]
-        if (titleValue && typeof titleValue === 'string') {
-          translatedSlide.title = titleValue
-        }
+      if (mapping.titleKey && tObj[mapping.titleKey]) {
+        translatedSlide.title = tObj[mapping.titleKey]
       }
       
-      if (mapping.descKey && t) {
-        const descValue = (t as Record<string, any>)[mapping.descKey]
-        if (descValue && typeof descValue === 'string') {
-          translatedSlide.description = descValue
-        }
+      if (mapping.descKey && tObj[mapping.descKey]) {
+        translatedSlide.description = tObj[mapping.descKey]
       }
 
       return translatedSlide
     })
-  }, [currentLanguage, t])
+  }, [currentLanguage])
 
   const paginate = useCallback(
     (newDirection: number) => {
