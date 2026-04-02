@@ -167,10 +167,14 @@ export function BookHeroSection() {
     if (!t) return slides
 
     const translationMap: Record<string, { titleKey?: string; descKey?: string }> = {
-      zaiire: { titleKey: "cta_explore", descKey: "cta_description" },
+      zaiire: { titleKey: "cta_title", descKey: "cta_description" },
       makanda: { titleKey: "book_makanda_title", descKey: "book_makanda_desc" },
       bambula: { titleKey: "book_bambula_title", descKey: "book_bambula_desc" },
       mokele: { titleKey: "book_mokele_title", descKey: "book_mokele_desc" },
+      kufu: { titleKey: "book_kufu_title", descKey: "book_kufu_desc" },
+      amara: { titleKey: "book_amara_title", descKey: "book_amara_desc" },
+      zattar: { titleKey: "book_zattar_title", descKey: "book_zattar_desc" },
+      zaiko: { titleKey: "book_zaiko_title", descKey: "book_zaiko_desc" },
       "zaiire-universe": { titleKey: "book_zaiire_title", descKey: "book_zaiire_desc" },
     }
 
