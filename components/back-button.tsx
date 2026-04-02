@@ -4,11 +4,61 @@ import { useRouter, usePathname } from "next/navigation"
 import { ChevronLeft } from "lucide-react"
 import { motion } from "framer-motion"
 import { useTheme } from "@/lib/theme-context"
+import { useEffect } from "react"
 
 export function BackButton() {
   const router = useRouter()
   const pathname = usePathname()
   const { currentTheme } = useTheme()
+
+  // Save scroll position before leaving current page
+  useEffect(() => {
+    const saveScrollPosition = () => {
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem(
+          `scroll-pos-${pathname}`,
+          JSON.stringify({
+            y: window.scrollY,
+            x: window.scrollX,
+          })
+        )
+      }
+    }
+
+    // Save on scroll
+    window.addEventListener("scroll", saveScrollPosition)
+    // Save before page unload
+    window.addEventListener("beforeunload", saveScrollPosition)
+
+    return () => {
+      window.removeEventListener("scroll", saveScrollPosition)
+      window.removeEventListener("beforeunload", saveScrollPosition)
+    }
+  }, [pathname])
+
+  // Restore scroll position when returning to this page
+  useEffect(() => {
+    const restoreScrollPosition = () => {
+      if (typeof window !== "undefined") {
+        const savedPosition = sessionStorage.getItem(`scroll-pos-${pathname}`)
+        if (savedPosition) {
+          try {
+            const { y } = JSON.parse(savedPosition)
+            // Use requestAnimationFrame for smooth restoration
+            requestAnimationFrame(() => {
+              window.scrollTo(0, y)
+            })
+          } catch (e) {
+            console.error("[v0] Failed to restore scroll:", e)
+          }
+        }
+      }
+    }
+
+    // Small delay to ensure page is rendered
+    const timeout = setTimeout(restoreScrollPosition, 100)
+    return () => clearTimeout(timeout)
+  }, [pathname])
 
   // Hide back button on main page
   if (pathname === "/") {
