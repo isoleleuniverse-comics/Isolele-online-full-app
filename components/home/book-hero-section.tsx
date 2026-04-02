@@ -160,7 +160,7 @@ export function BookHeroSection() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
   const { currentLanguage } = useLanguage()
-  const t = translations[currentLanguage]
+  const t = translations[currentLanguage.code]
 
   // Memoize translated slides
   const translatedSlides = useMemo(() => {
@@ -195,7 +195,7 @@ export function BookHeroSection() {
 
       return translatedSlide
     })
-  }, [currentLanguage])
+  }, [currentLanguage.code])
 
   const paginate = useCallback(
     (newDirection: number) => {
