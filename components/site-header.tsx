@@ -208,7 +208,7 @@ export function SiteHeader() {
       </header>
 
       {/* MOBILE TOP HEADER - VISIBLE on mobile, HIDDEN on lg+ */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#F5EFE7] py-3 px-4 flex items-center justify-between gap-2">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black py-3 px-4 flex items-center justify-between gap-2">
         <BackButton />
         <Link href="/" className="flex-1 flex items-center justify-center">
           <Image
