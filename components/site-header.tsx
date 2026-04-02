@@ -220,17 +220,7 @@ export function SiteHeader() {
             priority
           />
         </Link>
-        <div className="w-10" /> left-0 right-0 z-50 bg-black py-3 px-4">
-        <Link href="/" className="flex items-center">
-          <Image
-            src="/isolele-logo-official.png"
-            alt="ISOLELE"
-            width={120}
-            height={60}
-            className="object-contain flex-shrink-0"
-            priority
-          />
-        </Link>
+        <div className="w-10" />
       </header>
 
       {/* MOBILE BOTTOM NAV - VISIBLE on mobile, HIDDEN on lg+ */}

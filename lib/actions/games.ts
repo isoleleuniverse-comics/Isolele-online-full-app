@@ -66,33 +66,6 @@ export async function getGameBySlug(slug: string) {
 }
 
 // Subscribe to newsletter
-export async function subscribeNewsletter(email: string, language: string) {
-  try {
-    const supabase = await createClient()
-    
-    const { data, error } = await supabase
-      .from('newsletter_subscriptions')
-      .insert({
-        email,
-        language,
-        subscribed_at: new Date().toISOString()
-      })
-      .select()
-
-    if (error) {
-      console.error('Error subscribing:', error)
-      return { success: false, error: error.message }
-    }
-
-    return { success: true, data }
-  } catch (err) {
-    console.error('Exception subscribing:', err)
-    return { success: false, error: 'Subscription failed' }
-  }
-}
-
-
-// Subscribe to newsletter
 export async function subscribeNewsletter(email: string, language: string = 'en') {
   const supabase = await createClient()
   
