@@ -1,10 +1,12 @@
 "use client"
 // ISOLELE Hero Section - THE CHOSEN ONES - March 2026
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useLanguage } from "@/lib/language-context"
+import { translations } from "@/lib/translations"
 
 interface Slide {
   id: string
@@ -157,18 +159,51 @@ const slideVariants = {
 export function BookHeroSection() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
+  const { currentLanguage } = useLanguage()
+  const t = translations[currentLanguage]
+
+  // Memoize translated slides
+  const translatedSlides = useMemo(() => {
+    return slides.map(slide => {
+      // Map slide IDs to translation keys
+      const translationMap: Record<string, { titleKey?: string; descKey?: string }> = {
+        zaiire: { titleKey: "cta_explore", descKey: "cta_description" },
+        makanda: { titleKey: "book_makanda_title", descKey: "book_makanda_desc" },
+        bambula: { titleKey: "book_bambula_title", descKey: "book_bambula_desc" },
+        mokele: { titleKey: "book_mokele_title", descKey: "book_mokele_desc" },
+        "zaiire-universe": { titleKey: "book_zaiire_title", descKey: "book_zaiire_desc" },
+      }
+
+      const mapping = translationMap[slide.id]
+      if (!mapping) return slide
+
+      const translatedSlide = { ...slide }
+      
+      if (mapping.titleKey) {
+        const titleValue = (t as any)[mapping.titleKey]
+        if (titleValue) translatedSlide.title = titleValue
+      }
+      
+      if (mapping.descKey) {
+        const descValue = (t as any)[mapping.descKey]
+        if (descValue) translatedSlide.description = descValue
+      }
+
+      return translatedSlide
+    })
+  }, [currentLanguage, t])
 
   const paginate = useCallback(
     (newDirection: number) => {
       setDirection(newDirection)
       setCurrent((prev) => {
         const next = prev + newDirection
-        if (next < 0) return slides.length - 1
-        if (next >= slides.length) return 0
+        if (next < 0) return translatedSlides.length - 1
+        if (next >= translatedSlides.length) return 0
         return next
       })
     },
-    []
+    [translatedSlides]
   )
 
   // Auto-advance every 7 seconds
@@ -177,7 +212,7 @@ export function BookHeroSection() {
     return () => clearInterval(timer)
   }, [paginate])
 
-  const slide = slides[current]
+  const slide = translatedSlides[current]
 
   if (!slide) return null
 
@@ -303,7 +338,7 @@ export function BookHeroSection() {
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-6">
         {/* Dots */}
         <div className="flex gap-2">
-          {slides.map((_, index) => (
+          {translatedSlides.map((_, index) => (
             <motion.button
               key={index}
               onClick={() => {
