@@ -160,7 +160,7 @@ export function BookHeroSection() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
   const { currentLanguage } = useLanguage()
-  const t = translations[currentLanguage]
+  const t = translations[currentLanguage] || {}
 
   // Memoize translated slides
   const translatedSlides = useMemo(() => {
@@ -179,14 +179,18 @@ export function BookHeroSection() {
 
       const translatedSlide = { ...slide }
       
-      if (mapping.titleKey) {
-        const titleValue = (t as any)[mapping.titleKey]
-        if (titleValue) translatedSlide.title = titleValue
+      if (mapping.titleKey && t) {
+        const titleValue = (t as Record<string, any>)[mapping.titleKey]
+        if (titleValue && typeof titleValue === 'string') {
+          translatedSlide.title = titleValue
+        }
       }
       
-      if (mapping.descKey) {
-        const descValue = (t as any)[mapping.descKey]
-        if (descValue) translatedSlide.description = descValue
+      if (mapping.descKey && t) {
+        const descValue = (t as Record<string, any>)[mapping.descKey]
+        if (descValue && typeof descValue === 'string') {
+          translatedSlide.description = descValue
+        }
       }
 
       return translatedSlide
