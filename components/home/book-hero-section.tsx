@@ -162,6 +162,11 @@ export function BookHeroSection() {
   const { currentLanguage } = useLanguage()
   const t = translations[currentLanguage.code]
 
+  console.log("[v0] BookHeroSection - currentLanguage:", currentLanguage)
+  console.log("[v0] BookHeroSection - currentLanguage.code:", currentLanguage.code)
+  console.log("[v0] BookHeroSection - translations available keys:", Object.keys(translations))
+  console.log("[v0] BookHeroSection - t object:", t ? Object.keys(t).slice(0, 10) : "undefined")
+
   // Memoize translated slides
   const translatedSlides = useMemo(() => {
     if (!t) return slides
