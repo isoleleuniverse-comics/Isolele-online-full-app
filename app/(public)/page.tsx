@@ -4,6 +4,7 @@ import { CharactersSection } from "@/components/home/characters-section"
 import { StorySection } from "@/components/home/story-section"
 import { ProductsSection } from "@/components/home/products-section"
 import { FounderPreview } from "@/components/home/founder-preview"
+import { BookstoreDisplaySection } from "@/components/home/bookstore-display-section"
 import { ReviewsSection } from "@/components/home/reviews-section"
 import { NewsSection } from "@/components/home/news-section"
 import { FashionPreview } from "@/components/home/fashion-preview"
@@ -36,6 +37,9 @@ export default function HomePage() {
       
       {/* Founder Preview */}
       <FounderPreview />
+      
+      {/* Bookstore Display Section */}
+      <BookstoreDisplaySection />
       
       {/* Reviews Section */}
       <ReviewsSection />
