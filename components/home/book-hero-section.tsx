@@ -158,6 +158,7 @@ const slideVariants = {
 export function BookHeroSection() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
+  const { currentLanguage } = useLanguage()
 
   const paginate = useCallback(
     (newDirection: number) => {
@@ -178,7 +179,20 @@ export function BookHeroSection() {
     return () => clearInterval(timer)
   }, [paginate])
 
-  const slide = slides[current]
+  // Create translated slides based on current language
+  const translatedSlides = slides.map((slide) => {
+    const translations = currentLanguage.translations as any
+    return {
+      ...slide,
+      tag: translations[slide.tagKey] || slide.tagKey,
+      title: translations[slide.titleKey] || slide.titleKey,
+      subtitle: translations[slide.subtitleKey] || slide.subtitleKey,
+      description: translations[slide.descKey] || slide.descKey,
+      buttonText: translations[slide.buttonKey] || slide.buttonKey,
+    }
+  })
+
+  const slide = translatedSlides[current]
 
   if (!slide) return null
 
