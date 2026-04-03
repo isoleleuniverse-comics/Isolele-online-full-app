@@ -47,9 +47,9 @@ export function InfiniteScrollCarousel() {
 
     let scrollPosition = 0
     const scrollSpeed = 1 // pixels per frame
-    const containerWidth = scrollContainer.scrollWidth / 2 // Half because we duplicate
-
+    
     const animate = () => {
+      const containerWidth = scrollContainer.scrollWidth / 2
       scrollPosition += scrollSpeed
       if (scrollPosition >= containerWidth) {
         scrollPosition = 0
@@ -57,9 +57,13 @@ export function InfiniteScrollCarousel() {
       scrollContainer.style.transform = `translateX(-${scrollPosition}px)`
     }
 
-    const animationInterval = setInterval(animate, 16) // ~60fps
+    // Start animation after a small delay to ensure DOM is ready
+    const timeoutId = setTimeout(() => {
+      const animationInterval = setInterval(animate, 16) // ~60fps
+      return () => clearInterval(animationInterval)
+    }, 100)
 
-    return () => clearInterval(animationInterval)
+    return () => clearTimeout(timeoutId)
   }, [])
 
   return (
