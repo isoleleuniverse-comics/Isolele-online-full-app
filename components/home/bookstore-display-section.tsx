@@ -12,10 +12,10 @@ export function BookstoreDisplaySection() {
             In Stores Now
           </p>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
-            A Global Phenomenon
+            A Pan-African Phenomenon
           </h2>
           <p className="text-base md:text-lg text-muted-foreground mt-3 max-w-2xl mx-auto">
-            ISOLELE books are now featured on bestseller shelves in bookstores worldwide
+            The first Pan-African superhero universe already on bestseller shelves across Africa
           </p>
         </div>
 
@@ -34,7 +34,7 @@ export function BookstoreDisplaySection() {
         {/* Stats or caption below image */}
         <div className="mt-6 md:mt-8 text-center">
           <p className="text-sm md:text-base text-muted-foreground">
-            Featured on international bestseller lists and retail displays
+            From Kinshasa to Nairobi's bestseller shelves — ISOLELE is taking Africa by storm
           </p>
         </div>
       </div>
