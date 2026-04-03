@@ -179,21 +179,19 @@ export function BookHeroSection() {
     return () => clearInterval(timer)
   }, [paginate])
 
-  // Create translated slides based on current language
-  const translatedSlides = slides.map((slide) => {
-    return {
-      ...slide,
-      tag: t(slide.tagKey),
-      title: t(slide.titleKey),
-      subtitle: t(slide.subtitleKey),
-      description: t(slide.descKey),
-      buttonText: t(slide.buttonKey),
-    }
-  })
-
-  const slide = translatedSlides[current]
+  const slide = slides[current]
 
   if (!slide) return null
+
+  // Get translated values for current slide
+  const translatedSlide = {
+    ...slide,
+    tag: t(slide.tagKey),
+    title: t(slide.titleKey),
+    subtitle: t(slide.subtitleKey),
+    description: t(slide.descKey),
+    buttonText: t(slide.buttonKey),
+  }
 
   return (
     <section className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: "#000" }}>
@@ -213,7 +211,7 @@ export function BookHeroSection() {
           <div className="absolute inset-0">
             <Image
               src={slide.image}
-              alt={slide.title}
+              alt={translatedSlide.title}
               fill
               className="object-cover object-top"
               priority={current === 0}
@@ -248,7 +246,7 @@ export function BookHeroSection() {
                   textTransform: "uppercase",
                 }}
               >
-                {slide.tag}
+                {translatedSlide.tag}
               </motion.div>
 
               {/* SUBTITLE */}
@@ -259,7 +257,7 @@ export function BookHeroSection() {
                 className="text-sm font-semibold tracking-widest uppercase mb-3"
                 style={{ color: slide.accentColor, opacity: 0.85 }}
               >
-                {slide.subtitle}
+                {translatedSlide.subtitle}
               </motion.p>
 
               {/* TITLE */}
@@ -276,7 +274,7 @@ export function BookHeroSection() {
                   fontFamily: "Montserrat, sans-serif",
                 }}
               >
-                {slide.title}
+                {translatedSlide.title}
               </motion.h1>
 
               {/* DESCRIPTION */}
@@ -287,7 +285,7 @@ export function BookHeroSection() {
                 className="text-base md:text-lg leading-relaxed mb-8 max-w-xl"
                 style={{ color: "#E0E0E0" }}
               >
-                {slide.description}
+                {translatedSlide.description}
               </motion.p>
 
               {/* BUTTON */}
@@ -304,7 +302,7 @@ export function BookHeroSection() {
                       color: "#000",
                     }}
                   >
-                    {slide.buttonText}
+                    {translatedSlide.buttonText}
                   </button>
                 </Link>
               </motion.div>
