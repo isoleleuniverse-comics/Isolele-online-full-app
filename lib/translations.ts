@@ -103,6 +103,27 @@ export interface TranslationKeys {
   book_bambula_desc: string
   book_mokele_title: string
   book_mokele_desc: string
+  
+  character_zaiire_name: string
+  character_zaiire_title: string
+  character_zaiire_desc: string
+  character_bambula_name: string
+  character_bambula_title: string
+  character_bambula_desc: string
+  character_kimoya_name: string
+  character_kimoya_title: string
+  character_kimoya_desc: string
+  character_mokele_name: string
+  character_mokele_title: string
+  character_mokele_desc: string
+  character_kufulula_name: string
+  character_kufulula_title: string
+  character_kufulula_desc: string
+  character_ensemble_name: string
+  character_ensemble_title: string
+  character_ensemble_desc: string
+  
+  back_to_home: string
 }
 
 export const translations = {
@@ -193,6 +214,27 @@ export const translations = {
     book_zaiko_desc: "Born in North Kivu. Forged in Kinshasa. Zaiko was never meant to survive. But survival was never enough. In a world ruled by power, money, and fear, he rises from nothing.",
     book_amara_title: "Amara: Queen of the Seas",
     book_amara_desc: "Every pirate fears the ocean. Amara owns it. She is the Queen of the Seas. The most feared captain on every water in the world. No ship has outrun her. No king has outsmarted her. No army has stopped her fleet.",
+    
+    character_zaiire_name: "ZAIIRE",
+    character_zaiire_title: "The Prince of Kongo and the Necklace of Destiny",
+    character_zaiire_desc: "Son of thunder and royalty, chosen by the Necklace of Destiny to restore the glory of Kongo.",
+    character_bambula_name: "BAMBULA",
+    character_bambula_title: "Child of Rhythm",
+    character_bambula_desc: "Warrior of the savannas, master of sacred fire and wild nature.",
+    character_kimoya_name: "MAKANDA",
+    character_kimoya_title: "The Most Powerful Empire in History",
+    character_kimoya_desc: "Warrior empress whose royal court holds the destiny of the continent in her hands.",
+    character_mokele_name: "MOKELE",
+    character_mokele_title: "Crowned by the Streets",
+    character_mokele_desc: "Heir of urban chaos and ancestral power — Crowned by the Streets.",
+    character_kufulula_name: "HRM KING KUFULULA",
+    character_kufulula_title: "Visionary • Cultural Architect • African Royalty",
+    character_kufulula_desc: "Legendary monarch, protector of the ISOLELE royal lineage and visionary founder.",
+    character_ensemble_name: "THE ISOLELE ASSEMBLY",
+    character_ensemble_title: "The Chosen Ones United",
+    character_ensemble_desc: "All warriors and queens of the ZAIIRE kingdom united in their splendor and power.",
+    
+    back_to_home: "Back to Home",
     cta_title: "THE CHOSEN ONES",
     cta_description: "Isolele is a visionary universe born to restore the soul of African storytelling, a mythological empire where superheroes are chosen by destiny, kingdoms never forgotten, and ancestral power is alive in every page, every prophecy, every battle.",
   } as const,
@@ -283,6 +325,27 @@ export const translations = {
     book_zaiko_desc: "Né en Afrique du Nord. Forgé à Kinshasa. Zaiko n'était jamais destiné à survivre. Mais la survie ne suffisait jamais. Dans un monde gouverné par le pouvoir, l'argent et la peur, il s'élève de rien.",
     book_amara_title: "Amara: Reine des Mers",
     book_amara_desc: "Tous les pirates craignent l'océan. Amara le possède. Elle est la Reine des Mers. La capitaine la plus redoutée sur tous les océans du monde. Aucun navire ne l'a dépassée. Aucun roi ne l'a surpassée. Aucune armée n'a arrêté sa flotte.",
+    
+    character_zaiire_name: "ZAIIRE",
+    character_zaiire_title: "Le Prince du Kongo et le Collier de la Destinée",
+    character_zaiire_desc: "Fils du tonnerre et de la royauté, choisi par le Collier de la Destinée pour restaurer la gloire du Kongo.",
+    character_bambula_name: "BAMBULA",
+    character_bambula_title: "Enfant du Rythme",
+    character_bambula_desc: "Guerrière des savanes, maîtresse du feu sacré et de la nature sauvage.",
+    character_kimoya_name: "MAKANDA",
+    character_kimoya_title: "L'EMPIRE LE PLUS PUISSANT de l'Histoire",
+    character_kimoya_desc: "Impératrice guerrière dont la cour royale tient le destin du continent entre ses mains.",
+    character_mokele_name: "MOKELE",
+    character_mokele_title: "Couronné par les Rues",
+    character_mokele_desc: "Héritier du chaos urbain et du pouvoir ancestral — Couronné par les Rues.",
+    character_kufulula_name: "SON ALTESSE ROYALE ROI KUFULULA",
+    character_kufulula_title: "Visionnaire • Architecte Culturel • Royauté Africaine",
+    character_kufulula_desc: "Monarque légendaire, protecteur de la lignée royale ISOLELE et fondateur visionnaire.",
+    character_ensemble_name: "L'ASSEMBLÉE ISOLELE",
+    character_ensemble_title: "Les Élus Unis",
+    character_ensemble_desc: "Tous les guerriers et reines du royaume ZAIIRE unis dans leur splendeur et leur pouvoir.",
+    
+    back_to_home: "Retour à l'Accueil",
     cta_title: "LES ÉLUS",
     cta_description: "Isolele est un univers visionnaire né pour restaurer l'âme de la narration africaine, un empire mythologique où les superhéros sont choisis par le destin, les royaumes jamais oubliés, et le pouvoir ancestral vivant dans chaque page, chaque prophétie, chaque bataille.",
   } as const,
@@ -365,6 +428,27 @@ export const translations = {
     book_bambula_desc: "Uma história de coragem, poder e autodescoberta",
     book_mokele_title: "Mokele: Príncipe das Águas",
     book_mokele_desc: "Uma busca lendária através dos reinos do Congo",
+    
+    character_zaiire_name: "ZAIIRE",
+    character_zaiire_title: "O Príncipe do Kongo e o Colar do Destino",
+    character_zaiire_desc: "Filho do trovão e da realeza, escolhido pelo Colar do Destino para restaurar a glória do Kongo.",
+    character_bambula_name: "BAMBULA",
+    character_bambula_title: "Filha do Ritmo",
+    character_bambula_desc: "Guerreira das savanas, mestra do fogo sagrado e da natureza selvagem.",
+    character_kimoya_name: "MAKANDA",
+    character_kimoya_title: "O IMPÉRIO MAIS PODEROSO da História",
+    character_kimoya_desc: "Imperatriz guerreira cuja corte real detém o destino do continente em suas mãos.",
+    character_mokele_name: "MOKELE",
+    character_mokele_title: "Coroado pelas Ruas",
+    character_mokele_desc: "Herdeiro do caos urbano e do poder ancestral — Coroado pelas Ruas.",
+    character_kufulula_name: "SUA ALTEZA REAL REI KUFULULA",
+    character_kufulula_title: "Visionário • Arquiteto Cultural • Realeza Africana",
+    character_kufulula_desc: "Monarca legendário, protetor da linhagem real ISOLELE e fundador visionário.",
+    character_ensemble_name: "A ASSEMBLEIA ISOLELE",
+    character_ensemble_title: "Os Escolhidos Unidos",
+    character_ensemble_desc: "Todos os guerreiros e rainhas do reino ZAIIRE unidas em seu esplendor e poder.",
+    
+    back_to_home: "Voltar para Casa",
   } as const,
   es: {
     nav_home: "Inicio",
@@ -445,6 +529,27 @@ export const translations = {
     book_bambula_desc: "Una historia de coraje, poder y autodescubrimiento",
     book_mokele_title: "Mokele: Príncipe de las Aguas",
     book_mokele_desc: "Una búsqueda legendaria a través de los reinos del Congo",
+    
+    character_zaiire_name: "ZAIIRE",
+    character_zaiire_title: "El Príncipe del Kongo y el Collar del Destino",
+    character_zaiire_desc: "Hijo del trueno y la realeza, elegido por el Collar del Destino para restaurar la gloria del Kongo.",
+    character_bambula_name: "BAMBULA",
+    character_bambula_title: "Hija del Ritmo",
+    character_bambula_desc: "Guerrera de las sabanas, maestra del fuego sagrado y la naturaleza salvaje.",
+    character_kimoya_name: "MAKANDA",
+    character_kimoya_title: "EL IMPERIO MÁS PODEROSO de la Historia",
+    character_kimoya_desc: "Emperatriz guerrera cuya corte real tiene el destino del continente en sus manos.",
+    character_mokele_name: "MOKELE",
+    character_mokele_title: "Coronado por las Calles",
+    character_mokele_desc: "Heredero del caos urbano y el poder ancestral — Coronado por las Calles.",
+    character_kufulula_name: "SU MAJESTAD REAL REY KUFULULA",
+    character_kufulula_title: "Visionario • Arquitecto Cultural • Realeza Africana",
+    character_kufulula_desc: "Monarca legendario, protector del linaje real ISOLELE y fundador visionario.",
+    character_ensemble_name: "LA ASAMBLEA ISOLELE",
+    character_ensemble_title: "Los Elegidos Unidos",
+    character_ensemble_desc: "Todos los guerreros y reinas del reino ZAIIRE unidos en su esplendor y poder.",
+    
+    back_to_home: "Volver a Casa",
   } as const,
   zu: {
     nav_home: "Home",
@@ -525,6 +630,27 @@ export const translations = {
     book_bambula_desc: "A tale of courage, power, and self-discovery",
     book_mokele_title: "Mokele: Prince of the Waters",
     book_mokele_desc: "A legendary quest through the kingdoms of Congo",
+    
+    character_zaiire_name: "ZAIIRE",
+    character_zaiire_title: "INkosana weKongo neneKhanga leNkomo",
+    character_zaiire_desc: "Indodana yomaledle nobukhosi, ekhethiwe yiKhanga leNkomo.",
+    character_bambula_name: "BAMBULA",
+    character_bambula_title: "Umntwana weRhythm",
+    character_bambula_desc: "Isumalemane sezavelo, unongameli womuntu kaSwele.",
+    character_kimoya_name: "MAKANDA",
+    character_kimoya_title: "UMBUSO ONAMANDLA KAKHULU Emlandweni",
+    character_kimoya_desc: "Inkosikazi yomsulwa eyalwa ngabantu.",
+    character_mokele_name: "MOKELE",
+    character_mokele_title: "Ukhethiwe NgeSitolo",
+    character_mokele_desc: "Indlalifa yomsindo wesigodi neamandla amazulu.",
+    character_kufulula_name: "INKOSI KUFULULA",
+    character_kufulula_title: "Umbone • Umakhi weNtu • Isikhulu seAfrika",
+    character_kufulula_desc: "Inkosi ende, umlindi womlandwankosi weISOLELE.",
+    character_ensemble_name: "IBHUNGA LEISO LELE",
+    character_ensemble_title: "Abasakhethiwe Ahlangene",
+    character_ensemble_desc: "Bonke abasumalemane neenkosikazi zeZAIIRE bahlangene ebukhosini.",
+    
+    back_to_home: "Buyela KuMuzi",
   } as const,
   xh: {
     nav_home: "Home",
