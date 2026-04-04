@@ -1,6 +1,5 @@
 'use server'
 
-import { headers } from 'next/headers'
 import { stripe } from '@/lib/stripe'
 import { BOOK_PRODUCTS } from '@/lib/book-products'
 
@@ -17,6 +16,11 @@ export async function startBookCheckoutSession(bookId: string): Promise<string> 
       metadata: {
         bookId: book.id,
         bookName: book.name,
+        bookSubtitle: book.subtitle,
+        bookPrice: String(book.priceInCents),
+        bookFormat: book.format,
+        bookPages: String(book.pages),
+        bookDescription: book.description,
       },
     },
     line_items: [
@@ -33,14 +37,6 @@ export async function startBookCheckoutSession(bookId: string): Promise<string> 
       },
     ],
     mode: 'payment',
-    custom_fields: [
-      {
-        key: 'email_for_receipt',
-        label: { type: 'custom', custom: 'Email for order confirmation' },
-        type: 'text',
-        optional: false,
-      },
-    ],
   })
 
   return session.client_secret!
