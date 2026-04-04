@@ -20,6 +20,7 @@ new_translations = {
         'book_amara_desc': 'Every pirate fears the ocean. Amara owns it. She is the Queen of the Seas. The most feared captain on every water in the world. No ship has outrun her. No king has outsmarted her. No army has stopped her fleet.',
         'cta_title': 'THE CHOSEN ONES',
         'cta_description': 'Isolele is a visionary universe born to restore the soul of African storytelling, a mythological empire where superheroes are chosen by destiny, kingdoms never forgotten, and ancestral power is alive in every page, every prophecy, every battle.',
+        'discover_more': 'DISCOVER MORE',
     },
     'fr': {
         'book_kufu_title': 'KUFU: Le Jeu de la Couronne',
@@ -32,6 +33,25 @@ new_translations = {
         'book_amara_desc': 'Tous les pirates craignent l\'océan. Amara le possède. Elle est la Reine des Mers. La capitaine la plus redoutée sur tous les océans du monde. Aucun navire ne l\'a dépassée. Aucun roi ne l\'a surpassée. Aucune armée n\'a arrêté sa flotte.',
         'cta_title': 'LES ÉLUS',
         'cta_description': 'Isolele est un univers visionnaire né pour restaurer l\'âme de la narration africaine, un empire mythologique où les superhéros sont choisis par le destin, les royaumes jamais oubliés, et le pouvoir ancestral vivant dans chaque page, chaque prophétie, chaque bataille.',
+        'discover_more': 'DÉCOUVRIR PLUS',
+    },
+    'pt': {
+        'discover_more': 'DESCUBRA MAIS',
+    },
+    'es': {
+        'discover_more': 'DESCUBRA MÁS',
+    },
+    'zu': {
+        'discover_more': 'THOLA OKUNYE',
+    },
+    'xh': {
+        'discover_more': 'THOLA OKUNYE',
+    },
+    'sw': {
+        'discover_more': 'JIFUNZE ZAIDI',
+    },
+    'ln': {
+        'discover_more': 'TALA MONGA',
     },
 }
 
