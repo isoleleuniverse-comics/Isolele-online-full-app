@@ -128,6 +128,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning className="dark bg-background">
+      <head>
+        {/* Preconnect to external resources */}
+        <link rel="preconnect" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* DNS Prefetch for analytics */}
+        <link rel="dns-prefetch" href="https://va.vercel-analytics.com" />
+        <link rel="dns-prefetch" href="https://speed-insights.vercel.app" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} font-sans antialiased`}>
         <ErrorBoundary>
           {children}
