@@ -12,33 +12,35 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [progress, setProgress] = useState(0)
   const [isComplete, setIsComplete] = useState(false)
 
+  // Progress animation — runs once on mount
   useEffect(() => {
-    const duration = 2400 // Faster load (was 3200)
+    const duration = 2400
     const interval = 24
     const increment = 100 / (duration / interval)
 
     const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer)
-          return 100
-        }
-        return Math.min(prev + increment, 100)
-      })
+      setProgress((prev) => Math.min(prev + increment, 100))
     }, interval)
 
     return () => clearInterval(timer)
-  }, [])
+  }, []) // Empty deps — only run once
 
+  // Auto-dismiss when progress reaches 100% — NO onComplete in deps
   useEffect(() => {
-    if (progress >= 100) {
-      const exitTimer = setTimeout(() => {
+    if (progress >= 100 && !isComplete) {
+      const dismissTimer = setTimeout(() => {
         setIsComplete(true)
-        onComplete()
-      }, 200) // Faster exit (was 300)
-      return () => clearTimeout(exitTimer)
+      }, 600)
+      return () => clearTimeout(dismissTimer)
     }
-  }, [progress, onComplete])
+  }, [progress, isComplete]) // Only deps needed for logic
+
+  // Call onComplete after isComplete state changes
+  useEffect(() => {
+    if (isComplete) {
+      onComplete()
+    }
+  }, [isComplete, onComplete])
 
   return (
     <AnimatePresence>
@@ -47,9 +49,9 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }} // Faster exit (was 0.3)
+          transition={{ duration: 0.2 }}
         >
-          {/* BACKGROUND — static leopard print, NO rotation */}
+          {/* BACKGROUND — static leopard print */}
           <div className="absolute inset-0">
             <Image
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260217-WA0019-5QkKPDwjEXwxZErsLSvxQ5HTEym3ro.jpg"
@@ -58,13 +60,12 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
               className="object-cover"
               priority
             />
-            {/* Dark overlay for readability */}
             <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.55)" }} />
           </div>
 
           {/* CONTENT */}
           <div className="relative z-10 flex flex-col items-center gap-8">
-            {/* CIRCULAR FRONT IMAGE — border-radius 50%, static */}
+            {/* CIRCULAR FRONT IMAGE */}
             <div
               className="relative overflow-hidden"
               style={{
@@ -86,7 +87,6 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
             {/* ISOLELE LOGO TEXT */}
             <div className="text-center">
-              {/* Logo image */}
               <div className="flex justify-center mb-3">
                 <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ei_1774029892268-removebg-preview-OGLwAWrJqgxIOFX6ES21zzBCcRpiHa.png"
