@@ -13,8 +13,8 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [isComplete, setIsComplete] = useState(false)
 
   useEffect(() => {
-    const duration = 3200
-    const interval = 20
+    const duration = 2400 // Faster load (was 3200)
+    const interval = 24
     const increment = 100 / (duration / interval)
 
     const timer = setInterval(() => {
@@ -35,7 +35,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
       const exitTimer = setTimeout(() => {
         setIsComplete(true)
         onComplete()
-      }, 300)
+      }, 200) // Faster exit (was 300)
       return () => clearTimeout(exitTimer)
     }
   }, [progress, onComplete])
@@ -47,7 +47,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2 }} // Faster exit (was 0.3)
         >
           {/* BACKGROUND — static leopard print, NO rotation */}
           <div className="absolute inset-0">
@@ -63,12 +63,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
           </div>
 
           {/* CONTENT */}
-          <motion.div
-            initial={{ scale: 0.85, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.7 }}
-            className="relative z-10 flex flex-col items-center gap-8"
-          >
+          <div className="relative z-10 flex flex-col items-center gap-8">
             {/* CIRCULAR FRONT IMAGE — border-radius 50%, static */}
             <div
               className="relative overflow-hidden"
@@ -90,12 +85,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
             </div>
 
             {/* ISOLELE LOGO TEXT */}
-            <motion.div
-              className="text-center"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.6 }}
-            >
+            <div className="text-center">
               {/* Logo image */}
               <div className="flex justify-center mb-3">
                 <Image
@@ -113,15 +103,10 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
               >
                 House of African Comic Royalty...
               </p>
-            </motion.div>
+            </div>
 
             {/* PROGRESS BAR */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="w-64 md:w-80"
-            >
+            <div className="w-64 md:w-80">
               <div
                 className="h-[3px] rounded-full overflow-hidden mb-3"
                 style={{ background: "rgba(246, 184, 0, 0.15)" }}
@@ -133,7 +118,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
                     boxShadow: "0 0 16px rgba(246, 184, 0, 0.9)",
                   }}
                   animate={{ width: `${progress}%` }}
-                  transition={{ ease: "linear", duration: 0.05 }}
+                  transition={{ ease: "linear", duration: 0.02 }}
                 />
               </div>
               <div className="flex justify-between items-center">
@@ -150,26 +135,16 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
                   {Math.round(progress)}%
                 </span>
               </div>
-            </motion.div>
+            </div>
 
             {/* STATUS */}
-            <motion.p
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 2.4, repeat: Infinity }}
+            <p
               className="text-[11px] tracking-[0.25em] uppercase"
               style={{ color: "#c0c0c0" }}
             >
               Awakening the Chosen Ones...
-            </motion.p>
-          </motion.div>
-
-          {/* Bottom gold accent line */}
-          <motion.div
-            className="absolute bottom-0 left-0 right-0 h-[2px]"
-            style={{ background: "linear-gradient(90deg, transparent 0%, #F6B800 50%, transparent 100%)" }}
-            animate={{ opacity: [0.3, 1, 0.3] }}
-            transition={{ duration: 1.8, repeat: Infinity }}
-          />
+            </p>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
