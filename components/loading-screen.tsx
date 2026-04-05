@@ -32,10 +32,11 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
   useEffect(() => {
     if (progress >= 100) {
-      setTimeout(() => {
+      const exitTimer = setTimeout(() => {
         setIsComplete(true)
-        setTimeout(onComplete, 600)
-      }, 400)
+        onComplete()
+      }, 300)
+      return () => clearTimeout(exitTimer)
     }
   }, [progress, onComplete])
 
@@ -46,7 +47,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
         >
           {/* BACKGROUND — static leopard print, NO rotation */}
           <div className="absolute inset-0">
