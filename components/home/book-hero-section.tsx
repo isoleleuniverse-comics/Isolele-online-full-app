@@ -31,7 +31,7 @@ const slides: Slide[] = [
     buttonKey: "book_welcome_button",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg",
-    href: "/characters",
+    href: "/books/zaiire",
     accentColor: "#F6B800",
   },
   {

@@ -23,8 +23,7 @@ export const BOOK_PRODUCTS: BookProduct[] = [
       "Journey into the mystical realm of Kongo where Zaiire discovers his destiny as the Prince foretold by ancient prophecies. Bound to the legendary Necklace of Destiny, young Zaiire must overcome powerful adversaries, unlocking mystical powers passed down through generations. With breathtaking artwork and compelling storytelling, this epic adventure explores themes of identity, courage, and the strength found in cultural heritage.",
     priceInCents: 3699,
     accentColor: "#F6B800",
-    coverImage:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/book2-sorvrTgG1qQTtqprK7P60ZJJEIMEJK.webp",
+    coverImage: "/images/book2.webp",
     format: "Paperback",
     pages: 156,
     tags: ["African Mythology", "Coming of Age", "Fantasy", "Superhero", "Young Adult"],
@@ -124,5 +123,53 @@ export const BOOK_PRODUCTS: BookProduct[] = [
     format: "Paperback",
     pages: 176,
     tags: ["Urban", "Street Life", "Hidden Royalty", "Kinshasa", "Action"],
+  },
+  {
+    id: "imvula",
+    name: "Queen Imvula: The Storm Maiden",
+    subtitle: "She Who Commands Heaven and Rain",
+    description:
+      "Command the heavens and the rain. Queen Imvula's reign brings hope and transformation as she harnesses the elements to protect her people from ancient evils threatening to consume the land.",
+    fullDescription:
+      "Imvula is more than a queen — she is nature's fury and hope incarnate. With the power to command storms and bring rain to parched lands, she stands as a beacon of light for her people. This epic tells of her rise to power, her deepening connection to ancestral spirits, and her battle against forces that would enslave her world. Stunning watercolor-inspired artwork brings the storms and sacred magic to life on every page.",
+    priceInCents: 3699,
+    accentColor: "#4682B4",
+    coverImage:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0059-75yxyGjuDt9hhqXF6obymfG8BpNLz4.jpg",
+    format: "Paperback",
+    pages: 184,
+    tags: ["Elemental Magic", "Nature", "African Queen", "Hope", "Ancestral Power"],
+  },
+  {
+    id: "kimoya",
+    name: "Kimoya: The Rising Kandake",
+    subtitle: "Empire of the Ancient Queens",
+    description:
+      "A breathtaking saga of sovereignty and rebirth. Kimoya rises from the ashes of a broken empire, reclaiming the ancient queendoms that time tried to erase — one battle at a time.",
+    fullDescription:
+      "The throne was never meant for her, yet the ancestors chose her. Kimoya was raised as a warrior, trained as a scholar, and hardened by exile. When the ancient queendoms fall into the hands of those who would destroy them, she answers the call — not with an army, but with the power of remembered truth. A story about the weight of legacy, the courage to rebuild, and why some thrones exist to be reclaimed.",
+    priceInCents: 3699,
+    accentColor: "#8B008B",
+    coverImage:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
+    format: "Paperback",
+    pages: 176,
+    tags: ["African Queens", "Empire", "Legacy", "Warrior Woman", "Fantasy"],
+  },
+  {
+    id: "njoko",
+    name: "The Njoko Twins: Bound by Destiny",
+    subtitle: "Two Souls, One Unbreakable Spirit",
+    description:
+      "Twin souls separated by fate yet forever connected. Their intertwined story reveals the eternal balance between light and shadow — and what happens when that balance breaks.",
+    fullDescription:
+      "Two souls, one spirit. The Njoko twins were born under a blood moon, destined to be forever connected yet forced apart by circumstance. One walks the path of light, the other embraces shadow. Their reunion promises to reshape the cosmic balance. This dual-narrative comic explores themes of unity, identity, and the eternal dance between opposing forces in African cosmology — told through breathtaking sequential art.",
+    priceInCents: 3699,
+    accentColor: "#696969",
+    coverImage:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1175-njlosetUOsqZszKylrOXsIRLw0l3s7.jpeg",
+    format: "Paperback",
+    pages: 168,
+    tags: ["Cosmic Balance", "Twins", "Duality", "African Spirituality", "Epic"],
   },
 ]

@@ -103,7 +103,7 @@ export default function ShopPage() {
 
   const handleCheckout = async () => {
     try {
-      const { loadStripe: stripe } = await import('@stripe/js')
+      const { loadStripe: stripe } = await import('@stripe/stripe-js')
       const stripeInstance = await stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
       const cartProducts = cart.map(id => products.find(p => p.id === id)).filter(Boolean)
       
