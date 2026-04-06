@@ -4,82 +4,178 @@ import { motion } from "framer-motion"
 import { useTheme } from "@/lib/theme-context"
 import { useLanguage } from "@/lib/language-context"
 import { useInView } from "framer-motion"
-import { useRef, useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
 
 const characters = [
   {
     id: "zaire",
-    name: "ZAIÏRE",
-    title: "Prince du Kongo",
-    description: "Fils du tonnerre et de la royauté, choisi par le Collier de la Destinée.",
+    name: "ZAIIRE",
+    title: {
+      en: "The Prince of Kongo and the Necklace of Destiny",
+      fr: "Le Prince du Kongo et le Collier de la Destinée",
+      pt: "O Príncipe do Kongo e o Colar do Destino",
+      es: "El Príncipe del Kongo y el Collar del Destino",
+      zu: "INkosana weKongo neneKhanga leNkomo",
+      xh: "Inkosana yeKongo neKhanga leNkomo",
+      sw: "Mkuu wa Kongo na Mkufu wa Hatimaye",
+      ln: "Mwana wa Kongo mpe Mbele ya Suka"
+    },
+    description: "Son of thunder and royalty, chosen by the Necklace of Destiny.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
     color: "#F6B800",
   },
   {
     id: "bambula",
     name: "BAMBULA",
-    title: "Gardienne de la Savane",
-    description: "Guerrière des savanes, maîtresse du feu sacré et de la nature sauvage.",
+    title: {
+      en: "Child of Rhythm",
+      fr: "Enfant du Rythme",
+      pt: "Filha do Ritmo",
+      es: "Hija del Ritmo",
+      zu: "Umntwana weRhythm",
+      xh: "Umntwana weRhythm",
+      sw: "Mtoto wa Ritmu",
+      ln: "Mwana wa Ndakisa"
+    },
+    description: "Warrior of the savannas, master of sacred fire and wild nature.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
     color: "#B3541E",
   },
   {
     id: "kimoya",
-    name: "KIMOYA",
-    title: "La Kandake Montante",
-    description: "Imperatrice guerrière dont la cour royale tient le destin du continent entre ses mains.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
+    name: "MAKANDA",
+    title: {
+      en: "THE MOST POWERFUL Empire in History",
+      fr: "L'EMPIRE LE PLUS PUISSANT de l'Histoire",
+      pt: "O IMPÉRIO MAIS PODEROSO da História",
+      es: "EL IMPERIO MÁS PODEROSO de la Historia",
+      zu: "UMBUSO ONAMANDLA KAKHULU Emlandweni",
+      xh: "UMBUSO ONAMANDLA KAKHULU Emlandweni",
+      sw: "NCHI YENYE NGUVU ZAIDI ya Historia",
+      ln: "BOKONZI OYO OYA NGUVU KAKHULU ya Biso"
+    },
+    description: "Warrior empress whose royal court holds the destiny of the continent in her hands.",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260323-WA0012-2zfYaTNiUmh8XgNPMwbkLcKExGX65Q.jpg",
     color: "#C0392B",
   },
   {
     id: "mokele",
     name: "MOKELE",
-    title: "Couronné par les Rues",
-    description: "Héritier du chaos urbain et de la puissance ancestrale — Crowned by the Streets.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mokele-lZToplq4eNUuy08B5V6faXETr5YnKg.jpg",
+    title: {
+      en: "Crowned by the Streets",
+      fr: "Couronné par les Rues",
+      pt: "Coroado pelas Ruas",
+      es: "Coronado por las Calles",
+      zu: "Ukhethiwe NgeSitolo",
+      xh: "Ukhethiwe NgeSitolo",
+      sw: "Akamata Taji kutoka Mitaani",
+      ln: "Komonzi na Malela"
+    },
+    description: "Heir of urban chaos and ancestral power — Crowned by the Streets.",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5bdc2ecc-913b-412b-a840-2a5197cd801a.jpeg",
     color: "#4169E1",
   },
   {
     id: "kufulula",
-    name: "KING KUFULULA",
-    title: "Le Roi Ancestral",
-    description: "Monarque légendaire de New York, protecteur de la lignée royale ISOLELE.",
+    name: "HRM KING KUFULULA",
+    title: {
+      en: "Visionary• Cultural Architect • African Royalty",
+      fr: "Visionnaire• Architecte Culturel • Royauté Africaine",
+      pt: "Visionário• Arquiteto Cultural • Realeza Africana",
+      es: "Visionario• Arquitecto Cultural • Realeza Africana",
+      zu: "Ongabonisele• Umkhi weNtu • Umbuso weAfrika",
+      xh: "Ongabonisele• Umkhi weNtu • Umbuso weAfrika",
+      sw: "Mwenye Mawazo• Mwalimu wa Kitamaduni • Ukurusi wa Afrika",
+      ln: "Mwenye Longi• Mokambi wa Boyokoli• Mokonzi wa Bafriki"
+    },
+    description: "Legendary monarch, protector of the ISOLELE royal lineage.",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg",
     color: "#8B6914",
   },
   {
     id: "ensemble",
-    name: "L'ASSEMBLÉE ISOLELE",
-    title: "Les Élus Réunis",
-    description: "Tous les guerriers et reines du royaume ZAIIRE réunis dans leur splendeur.",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Isolele%20ZAIIRE-EKnQs6Sp5EFeF3bYx9m4utnSu3LdM5.jpg",
+    name: "THE ISOLELE ASSEMBLY",
+    title: {
+      en: "The Chosen Ones United",
+      fr: "Les Élus Unis",
+      pt: "Os Escolhidos Unidos",
+      es: "Los Elegidos Unidos",
+      zu: "Abasakhethiwe Ahlangene",
+      xh: "Abasakhethiwe Ahlangene",
+      sw: "Wachaguzi Waameunganisha",
+      ln: "Baya Likonde Bayambilakela"
+    },
+    description: "All warriors and queens of the ZAIIRE kingdom united in their splendor.",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c389067b-e5b3-4664-8c15-26b59810c68b.jpeg",
     color: "#9932CC",
   },
 ]
 
 export function CharactersSection() {
   const { currentTheme } = useTheme()
-  const { t } = useLanguage()
+  const { currentLanguage } = useLanguage()
+  const lang = currentLanguage.code
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [activeIndex, setActiveIndex] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
+  const [isHovered, setIsHovered] = useState(false)
 
-  const scroll = (direction: "left" | "right") => {
-    if (carouselRef.current) {
-      const scrollAmount = 350
-      const newScrollLeft = carouselRef.current.scrollLeft + (direction === "left" ? -scrollAmount : scrollAmount)
-      carouselRef.current.scrollTo({ left: newScrollLeft, behavior: "smooth" })
-    }
-    
-    if (direction === "left" && activeIndex > 0) {
-      setActiveIndex(activeIndex - 1)
-    } else if (direction === "right" && activeIndex < characters.length - 1) {
-      setActiveIndex(activeIndex + 1)
+  // Translation object for section header
+  const translations = {
+    title: {
+      en: "THE CHOSEN ONES",
+      fr: "LES ÉLUS",
+      pt: "OS ESCOLHIDOS",
+      es: "LOS ELEGIDOS",
+      zu: "ABASAKHETHIWE",
+      xh: "ABASAKHETHIWE",
+      sw: "WACHAGUZI",
+      ln: "BAYA LIKONDE"
+    },
+    subtitle: {
+      en: "Meet the heroes, legends and guardians of the ISOLELE Universe.",
+      fr: "Rencontrez les héros, légendes et gardiens de l'univers ISOLELE.",
+      pt: "Conheça os heróis, lendas e guardiões do Universo ISOLELE.",
+      es: "Conoce a los héroes, leyendas y guardianes del Universo ISOLELE.",
+      zu: "Hlangana nengalo, inganekwane nezikhulu sezwe se-ISOLELE.",
+      xh: "Hlangana nengalo, inganekwane nezikhulu sezwe se-ISOLELE.",
+      sw: "Kamatia wabunga, hadithi na walinzi wa Ulimwengu wa ISOLELE.",
+      ln: "Longa baninga, bambo mpe basolani ya Bambwe ya ISOLELE."
+    },
+    discover: {
+      en: "DISCOVER",
+      fr: "DÉCOUVRIR",
+      pt: "DESCOBRIR",
+      es: "DESCUBRIR",
+      zu: "THOLA",
+      xh: "THOLA",
+      sw: "GUNDUA",
+      ln: "TALA"
     }
   }
+
+  const t = (key: string) => {
+    return translations[key as keyof typeof translations]?.[lang as keyof typeof translations[keyof typeof translations]] || 
+           translations[key as keyof typeof translations]?.en || ""
+  }
+
+  useEffect(() => {
+    if (!carouselRef.current || isHovered) return
+
+    const carousel = carouselRef.current
+    let animationId: NodeJS.Timeout
+
+    const scroll = () => {
+      carousel.scrollLeft += 2
+      if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth) {
+        carousel.scrollLeft = 0
+      }
+    }
+
+    animationId = setInterval(scroll, 30)
+    return () => clearInterval(animationId)
+  }, [isHovered])
 
   return (
     <section 
@@ -98,7 +194,7 @@ export function CharactersSection() {
               className="text-4xl sm:text-5xl font-black tracking-wider mb-2"
               style={{ color: currentTheme.colors.textPrimary }}
             >
-              {t("theChosen")}
+              {t("title")}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, x: -30 }}
@@ -107,65 +203,31 @@ export function CharactersSection() {
               className="text-lg"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              Rencontrez les heros, legendes et gardiens de l'Univers Isolele
+              {t("subtitle")}
             </motion.p>
-          </div>
-          
-          {/* Navigation arrows */}
-          <div className="flex gap-2">
-            <motion.button
-              onClick={() => scroll("left")}
-              className="p-3 rounded-full transition-all"
-              style={{ 
-                backgroundColor: `${currentTheme.colors.accentPrimary}20`,
-                color: currentTheme.colors.accentPrimary
-              }}
-              whileHover={{ 
-                scale: 1.1,
-                backgroundColor: currentTheme.colors.accentPrimary,
-                color: currentTheme.colors.background
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </motion.button>
-            <motion.button
-              onClick={() => scroll("right")}
-              className="p-3 rounded-full transition-all"
-              style={{ 
-                backgroundColor: `${currentTheme.colors.accentPrimary}20`,
-                color: currentTheme.colors.accentPrimary
-              }}
-              whileHover={{ 
-                scale: 1.1,
-                backgroundColor: currentTheme.colors.accentPrimary,
-                color: currentTheme.colors.background
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ChevronRight className="w-6 h-6" />
-            </motion.button>
           </div>
         </div>
 
-        {/* Characters Carousel */}
+        {/* Infinite Auto-Scrolling Carousel */}
         <div 
           ref={carouselRef}
-          className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
-          style={{ scrollSnapType: "x mandatory" }}
+          className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide"
+          style={{ scrollBehavior: "auto" }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          {characters.map((character, index) => (
+          {/* Duplicate characters 3 times for infinite loop */}
+          {[...characters, ...characters, ...characters].map((character, index) => (
             <motion.div
-              key={character.id}
+              key={`${character.id}-${Math.floor(index / characters.length)}`}
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+              transition={{ duration: 0.6, delay: 0.2 + (index % characters.length) * 0.1 }}
               className="flex-shrink-0 w-72 group"
-              style={{ scrollSnapAlign: "start" }}
             >
               <Link href={`/characters/${character.id}`}>
                 <div 
-                  className="relative h-96 rounded-2xl overflow-hidden mb-4 transition-all duration-500"
+                  className="relative h-96 rounded-2xl overflow-hidden mb-4 transition-all duration-500 cursor-pointer"
                   style={{
                     backgroundColor: currentTheme.colors.backgroundSecondary,
                     border: `1px solid ${currentTheme.colors.accentPrimary}30`,
@@ -177,9 +239,10 @@ export function CharactersSection() {
                     style={{
                       backgroundImage: `url('${character.image}')`,
                       backgroundSize: 'cover',
-                      backgroundPosition: 'center'
+                      backgroundPosition: 'top center'
                     }}
                   />
+                  
                   {/* Gradient overlay - transparent top to color bottom */}
                   <div 
                     className="absolute inset-0"
@@ -213,10 +276,10 @@ export function CharactersSection() {
                   {character.name}
                 </h3>
                 <p 
-                  className="text-sm font-medium mb-3"
+                  className="text-xs font-medium mb-3 line-clamp-2"
                   style={{ color: character.color }}
                 >
-                  {character.title}
+                  {typeof character.title === 'string' ? character.title : (character.title as any)[lang] || (character.title as any).en}
                 </p>
                 
                 {/* Discover button */}
@@ -235,28 +298,6 @@ export function CharactersSection() {
                 </motion.span>
               </Link>
             </motion.div>
-          ))}
-        </div>
-
-        {/* Progress dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          {characters.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setActiveIndex(index)
-                if (carouselRef.current) {
-                  carouselRef.current.scrollTo({ left: index * 300, behavior: "smooth" })
-                }
-              }}
-              className="w-2 h-2 rounded-full transition-all duration-300"
-              style={{
-                backgroundColor: index === activeIndex 
-                  ? currentTheme.colors.accentPrimary 
-                  : `${currentTheme.colors.textSecondary}40`,
-                width: index === activeIndex ? "24px" : "8px"
-              }}
-            />
           ))}
         </div>
       </div>

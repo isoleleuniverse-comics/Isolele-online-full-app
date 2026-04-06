@@ -33,7 +33,6 @@ export function SiteFooter() {
     { key: "nav_news", href: "/news" },
     { key: "nav_characters", href: "/characters" },
     { key: "nav_shop", href: "/shop" },
-    { key: "nav_supporters", href: "/supporters" },
   ]
 
   const resourceLinks = [
@@ -66,30 +65,23 @@ export function SiteFooter() {
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Column 1: Identity */}
           <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center">
               <Image
-                src="/isolele-logo-transparent.png"
-                alt="ISOLELE"
-                width={40}
-                height={40}
+                src="/isolele-logo-official.png"
+                alt="ISOLELE — The Chosen Ones"
+                width={160}
+                height={80}
                 className="object-contain"
-                style={{ width: 'auto', height: 'auto' }}
               />
-              <span 
-                className="text-xl font-bold tracking-wider"
-                style={{ color: currentTheme.colors.textPrimary }}
-              >
-                ISOLELE
-              </span>
             </Link>
             <p 
               className="text-sm leading-relaxed"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              Isolele est un univers visionnaire né pour restaurer l'âme du storytelling africain, un empire mythologique où les super-héros sont choisis par le destin, les royaumes jamais oubliés, et le pouvoir ancestral est vivant dans chaque page, chaque prophétie, chaque bataille.
+              {t("footer_description")}
             </p>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
@@ -186,7 +178,7 @@ export function SiteFooter() {
               className="text-sm mb-4"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              Inscrivez-vous pour recevoir des mises à jour exclusives sur les nouvelles sorties, les événements et les offres spéciales.
+              {t("footer_newsletter_desc")}
             </p>
             <form onSubmit={handleSubscribe} className="space-y-3">
               <input
@@ -217,7 +209,7 @@ export function SiteFooter() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {subscribed ? "MERCI!" : t("footer_subscribe")}
+                {subscribed ? t("footer_thank_you") : t("footer_subscribe")}
               </motion.button>
             </form>
           </div>
@@ -232,8 +224,7 @@ export function SiteFooter() {
             className="text-sm text-center md:text-left flex items-center gap-2"
             style={{ color: currentTheme.colors.textSecondary }}
           >
-            <span>©</span>
-            <span>{new Date().getFullYear()} ISOLELE. All rights reserved. A Congolese Heritage Initiative</span>
+            {t("footer_copyright")}
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-sm">
             <Link

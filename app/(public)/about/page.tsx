@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/language-context"
 import { Sparkles, Crown, Users, Globe, Zap, BookOpen, Heart, Star } from "lucide-react"
 import { BreadcrumbJsonLd } from "@/components/json-ld"
 import Image from "next/image"
+import { FeaturedPrincipleCarousel } from "@/components/featured-principle-carousel"
 
 // Founder profile data
 const founder = {
@@ -434,7 +435,12 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Fundamental Principles */}
+        {/* Fundamental Principles - Featured Carousel */}
+        <section className="py-20 px-4 md:px-8" style={{ backgroundColor: 'var(--isolele-bg-secondary)' }}>
+          <FeaturedPrincipleCarousel />
+        </section>
+
+        {/* Fundamental Principles - Pill Buttons */}
         <section className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16" style={{ color: 'var(--isolele-text)' }}>
             {lang === 'fr' ? "Principes Fondamentaux" : "Fundamental Principles"}

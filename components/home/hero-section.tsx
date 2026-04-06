@@ -131,7 +131,7 @@ export function HeroSection() {
                   className="text-lg sm:text-2xl lg:text-3xl font-bold tracking-widest mb-2"
                   style={{ color: currentTheme.colors.accentPrimary }}
                 >
-                  PRINCE DU KONGO
+                  {t('hero_prince_kongo')}
                 </p>
               </motion.div>
 
@@ -142,7 +142,7 @@ export function HeroSection() {
                 className="text-lg sm:text-xl lg:text-2xl font-semibold tracking-wide mb-6"
                 style={{ color: currentTheme.colors.textSecondary }}
               >
-                Le Collier de la Destinee
+                {t('hero_necklace_destiny')}
               </motion.h2>
 
               <motion.p
@@ -152,9 +152,7 @@ export function HeroSection() {
                 className="text-base sm:text-lg leading-relaxed mb-10 max-w-2xl mx-auto"
                 style={{ color: currentTheme.colors.textSecondary }}
               >
-                {
-                  "Une aventure palpitante et édifiante qui fait écho à l'esprit du Roi Lion et de Black Panther, tout en offrant aux jeunes lecteurs une célébration du patrimoine, du courage et de la découverte de soi."
-                }
+                {t('hero_description')}
               </motion.p>
 
               <motion.div

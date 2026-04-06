@@ -1,10 +1,12 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono, Great_Vibes } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { ErrorBoundary } from '@/components/error-boundary'
 import './globals.css'
 
+// Font configuration
 const geistSans = Geist({ 
   subsets: ["latin"],
   variable: "--font-geist-sans"
@@ -12,6 +14,11 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({ 
   subsets: ["latin"],
   variable: "--font-geist-mono"
+});
+const greatVibes = Great_Vibes({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-great-vibes"
 });
 
 export const metadata: Metadata = {
@@ -120,9 +127,21 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
-        {children}
+    <html lang="fr" suppressHydrationWarning className="dark bg-background">
+      <head>
+        {/* Preconnect to external resources */}
+        <link rel="preconnect" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        
+        {/* DNS Prefetch for analytics */}
+        <link rel="dns-prefetch" href="https://va.vercel-analytics.com" />
+        <link rel="dns-prefetch" href="https://speed-insights.vercel.app" />
+      </head>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${greatVibes.variable} font-sans antialiased`}>
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
         <Analytics />
         <SpeedInsights />
       </body>

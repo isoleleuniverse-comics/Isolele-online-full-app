@@ -4,11 +4,14 @@ import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronDown, Menu, X, ShoppingBag, Settings, Home, Users, Zap, Gamepad2 } from "lucide-react"
+import { ChevronDown, Menu, X, Bell, Zap, ShoppingBag } from "lucide-react"
 import { useTheme, themes } from "@/lib/theme-context"
 import { useLanguage, languages } from "@/lib/language-context"
 import { useCart } from "@/lib/cart-context"
+import { useNotifications } from "@/lib/notifications-context"
 import { cn } from "@/lib/utils"
+import { HomeIcon, ComicsIcon, ShopIcon, StoryNewsIcon, SettingsIcon } from "@/components/icons/elegant-icons"
+import { BackButton } from "@/components/back-button"
 
 const characterLinks = [
   { name: "ZAIRE - PRINCE DU KONGO", href: "/characters/zaire" },
@@ -17,20 +20,46 @@ const characterLinks = [
   { name: "MOKELE - LE PRINCE", href: "/characters/mokele" },
 ]
 
+// Animated Game Icon that cycles through different game-related icons
+const AnimatedGameIcon = () => {
+  const [currentIcon, setCurrentIcon] = useState(0)
+  
+  const gameIcons = [
+    <svg key="controller" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 9c0-1 1-2 2-2h8c1 0 2 1 2 2v6c0 1-1 2-2 2H8c-1 0-2-1-2-2V9z" /><circle cx="9" cy="12" r="0.5" fill="currentColor" /><circle cx="15" cy="12" r="0.5" fill="currentColor" /></svg>,
+    <svg key="ball" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10" /><path d="M12 2v20M2 12h20" /></svg>,
+    <svg key="map" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z" /></svg>,
+    <svg key="dice" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="4" y="4" width="16" height="16" rx="2" /><circle cx="8" cy="8" r="1" fill="currentColor" /><circle cx="12" cy="12" r="1" fill="currentColor" /><circle cx="16" cy="16" r="1" fill="currentColor" /></svg>,
+  ]
+
+  return (
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+      onAnimationComplete={() => setCurrentIcon((i) => (i + 1) % gameIcons.length)}
+    >
+      {gameIcons[currentIcon]}
+    </motion.div>
+  )
+}
+
 export function SiteHeader() {
   const { currentTheme, setTheme } = useTheme()
   const { currentLanguage, setLanguage, t } = useLanguage()
   const { totalItems, setIsCartOpen } = useCart()
+  const { unreadCount } = useNotifications()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
 
   const navItems = [
     { key: "nav_home", href: "/" },
     { key: "nav_about", href: "/about" },
+    { key: "nav_comics", href: "/comics" },
     { key: "nav_founder", href: "/founder" },
     { key: "nav_characters", href: "/characters", hasDropdown: true },
     { key: "nav_shop", href: "/shop" },
+    { key: "nav_fashion", href: "/fashion" },
     { key: "nav_games", href: "/kufu-game" },
+    { key: "nav_settings", href: "/settings" },
   ]
 
   return (
@@ -46,16 +75,25 @@ export function SiteHeader() {
       >
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex items-center justify-between">
+            {/* Back Button */}
+            <BackButton />
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <Image
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ei_1774029892268-removebg-preview-OGLwAWrJqgxIOFX6ES21zzBCcRpiHa.png"
-                alt="ISOLELE — The Chosen Ones"
-                width={200}
-                height={54}
-                className="object-contain"
-                priority
-              />
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Image
+                  src="/isolele-logo-official.png"
+                  alt="ISOLELE — The Chosen Ones"
+                  width={200}
+                  height={100}
+                  className="object-contain"
+                  priority
+                />
+              </motion.div>
             </Link>
 
             {/* Desktop Navigation */}
@@ -121,6 +159,18 @@ export function SiteHeader() {
                 </div>
               </div>
 
+              {/* Notifications */}
+              <Link href="/settings" className="relative p-2">
+                <div style={{ color: currentTheme.colors.accentPrimary }}>
+                  <Bell size={24} />
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                      {unreadCount}
+                    </span>
+                  )}
+                </div>
+              </Link>
+
               {/* Cart */}
               <button
                 onClick={() => setIsCartOpen(true)}
@@ -157,7 +207,24 @@ export function SiteHeader() {
         </div>
       </header>
 
+      {/* MOBILE TOP HEADER - VISIBLE on mobile, HIDDEN on lg+ */}
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-black py-3 px-4 flex items-center justify-between gap-2">
+        <BackButton />
+        <Link href="/" className="flex-1 flex items-center justify-center">
+          <Image
+            src="/isolele-logo-official.png"
+            alt="ISOLELE"
+            width={120}
+            height={60}
+            className="object-contain flex-shrink-0"
+            priority
+          />
+        </Link>
+        <div className="w-10" />
+      </header>
+
       {/* MOBILE BOTTOM NAV - VISIBLE on mobile, HIDDEN on lg+ */}
+      {/* New elegant navigation with: Home, Comics, Shop, Games, Story/News, Settings */}
       <motion.div
         initial={{ y: 100 }}
         animate={{ y: 0 }}
@@ -173,7 +240,7 @@ export function SiteHeader() {
           }}
         >
           {/* Home */}
-          <Link href="/">
+          <Link href="/" title="Home">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -183,12 +250,12 @@ export function SiteHeader() {
                 color: currentTheme.colors.accentPrimary,
               }}
             >
-              <Home size={24} />
+              <HomeIcon className="w-6 h-6" />
             </motion.button>
           </Link>
 
-          {/* Characters */}
-          <Link href="/characters">
+          {/* Comics/Characters */}
+          <Link href="/e-comics-book" title="Comics">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -198,12 +265,12 @@ export function SiteHeader() {
                 color: currentTheme.colors.accentPrimary,
               }}
             >
-              <Users size={24} />
+              <ComicsIcon className="w-6 h-6" />
             </motion.button>
           </Link>
 
           {/* Shop */}
-          <Link href="/shop">
+          <Link href="/shop" title="Shop">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -213,12 +280,12 @@ export function SiteHeader() {
                 color: currentTheme.colors.accentPrimary,
               }}
             >
-              <ShoppingBag size={24} />
+              <ShopIcon className="w-6 h-6" />
             </motion.button>
           </Link>
 
           {/* Games */}
-          <Link href="/kufu-game">
+          <Link href="/kufu-game" title="Games">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -228,105 +295,46 @@ export function SiteHeader() {
                 color: currentTheme.colors.accentPrimary,
               }}
             >
-              <Gamepad2 size={24} />
+              <AnimatedGameIcon />
+            </motion.button>
+          </Link>
+
+          {/* Story/News */}
+          <Link href="/news" title="News">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-3 rounded-2xl transition-all"
+              style={{
+                backgroundColor: `${currentTheme.colors.accentPrimary}15`,
+                color: currentTheme.colors.accentPrimary,
+              }}
+            >
+              <StoryNewsIcon className="w-6 h-6" />
             </motion.button>
           </Link>
 
           {/* Settings */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-3 rounded-2xl transition-all"
-            style={{
-              backgroundColor: `${currentTheme.colors.accentPrimary}15`,
-              color: currentTheme.colors.accentPrimary,
-            }}
-          >
-            <Settings size={24} />
-          </motion.button>
+          <Link href="/settings" className="relative" title="Settings">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="p-3 rounded-2xl transition-all"
+              style={{
+                backgroundColor: `${currentTheme.colors.accentPrimary}15`,
+                color: currentTheme.colors.accentPrimary,
+              }}
+            >
+              <SettingsIcon className="w-6 h-6" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                  {unreadCount}
+                </span>
+              )}
+            </motion.button>
+          </Link>
         </div>
       </motion.div>
-
-      {/* Mobile Menu - Settings/Language/Theme */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 lg:hidden z-30"
-              style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
-            />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              className="fixed inset-y-0 right-0 w-80 lg:hidden z-40 overflow-y-auto p-6"
-              style={{ backgroundColor: currentTheme.colors.background }}
-            >
-              <button onClick={() => setMobileMenuOpen(false)} className="mb-6">
-                <X size={24} style={{ color: currentTheme.colors.textPrimary }} />
-              </button>
-
-              {/* Language Selector */}
-              <div className="mb-6">
-                <h3 className="text-sm font-bold mb-3" style={{ color: currentTheme.colors.textPrimary }}>
-                  {t("language")}
-                </h3>
-                <div className="grid grid-cols-3 gap-2">
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => setLanguage(lang.code)}
-                      className={cn(
-                        "py-2 rounded text-sm font-medium transition-all",
-                        currentLanguage.code === lang.code
-                          ? "ring-2"
-                          : ""
-                      )}
-                      style={{
-                        backgroundColor: currentLanguage.code === lang.code ? currentTheme.colors.accentPrimary : `${currentTheme.colors.accentPrimary}15`,
-                        color: currentLanguage.code === lang.code ? currentTheme.colors.background : currentTheme.colors.textSecondary,
-                        ringColor: currentTheme.colors.accentPrimary
-                      }}
-                    >
-                      {lang.code.toUpperCase()}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Theme Selector */}
-              <div>
-                <h3 className="text-sm font-bold mb-3" style={{ color: currentTheme.colors.textPrimary }}>
-                  {t("theme")}
-                </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {themes.map((theme) => (
-                    <button
-                      key={theme.id}
-                      onClick={() => setTheme(theme.id)}
-                      className="p-4 rounded-lg transition-all"
-                      style={{
-                        backgroundColor: theme.colors.background,
-                        border: currentTheme.id === theme.id ? `2px solid ${theme.colors.accentPrimary}` : `1px solid ${theme.colors.accentPrimary}20`
-                      }}
-                    >
-                      <div className="flex gap-2">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: theme.colors.accentPrimary }} />
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: theme.colors.accentSecondary }} />
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
     </>
   )
 }

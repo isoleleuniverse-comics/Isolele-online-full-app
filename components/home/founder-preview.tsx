@@ -9,31 +9,7 @@ import { Sparkles } from "lucide-react"
 
 export function FounderPreview() {
   const { currentTheme } = useTheme()
-  const { currentLanguage } = useLanguage()
-
-  const content = {
-    en: {
-      title: "H.R.M KING KUFULULA",
-      subtitle: "The Visionary Behind ISOLELE",
-      location: "King Kufulula — New York",
-      description:
-        "A cultural architect and storyteller, King Kufulula founded ISOLELE to restore the soul of African storytelling. His vision is to create a mythological empire where African superheroes rise from authentic history, not borrowed myths.",
-      quote: "We don't just create characters. We create a lineage. We create a legacy.",
-      cta: "Meet the Founder",
-    },
-    fr: {
-      title: "H.R.M ROI KUFULULA",
-      subtitle: "Le Visionnaire Derrière ISOLELE",
-      location: "Roi Kufulula — New York",
-      description:
-        "Architecte culturel et conteur, le Roi Kufulula a fondé ISOLELE pour restaurer l'âme du storytelling africain. Sa vision est de créer un empire mythologique où les super-héros africains émergent de l'histoire authentique.",
-      quote:
-        "Nous ne créons pas seulement des personnages. Nous créons une lignée. Nous créons un héritage.",
-      cta: "Rencontrer le Fondateur",
-    },
-  }
-
-  const c = content[currentLanguage.code as keyof typeof content] || content.en
+  const { t } = useLanguage()
 
   return (
     <section
@@ -64,7 +40,11 @@ export function FounderPreview() {
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg"
                 alt="H.R.M King Kufulula — Creator of ISOLELE"
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover object-top"
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAICAgIChsICQkJChAODwoQFwwTGB8WFBcUFRYaFxwpHhcYGRgaGBgSHBwcHhcYGhj/2wBDAQcHBwoIChMICQsMCggKGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWm5ybnJ2eoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/8QAHwEAAwEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlbaWmJmaoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z"
+                priority={false}
               />
               <div
                 className="absolute inset-0"
@@ -83,8 +63,8 @@ export function FounderPreview() {
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 3, repeat: Infinity }}
             >
-              <p className="text-xs font-black tracking-widest uppercase">{c.location}</p>
-              <p className="text-[10px] opacity-75 tracking-wider">Creator & Author</p>
+              <p className="text-xs font-black tracking-widest uppercase">{t('founder_location')}</p>
+              <p className="text-[10px] opacity-75 tracking-wider">{t('founder_creator_author')}</p>
             </motion.div>
           </motion.div>
 
@@ -98,64 +78,64 @@ export function FounderPreview() {
           >
             <div>
               <h2
-                className="text-4xl sm:text-5xl font-black mb-2"
+                className="text-3xl sm:text-4xl lg:text-5xl font-black mb-2"
+                style={{ color: currentTheme.colors.textPrimary }}
+              >
+                {t('founder_title')}
+              </h2>
+              <p
+                className="text-lg sm:text-xl font-semibold mb-4"
                 style={{ color: currentTheme.colors.accentPrimary }}
               >
-                {c.title}
-              </h2>
-              <p className="text-xl" style={{ color: currentTheme.colors.textSecondary }}>
-                {c.subtitle}
+                {t('founder_subtitle')}
               </p>
             </div>
 
-            <p
-              className="text-lg leading-relaxed"
+            <p 
+              className="text-base sm:text-lg leading-relaxed"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              {c.description}
+              {t('founder_description')}
             </p>
 
-            <motion.blockquote
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="relative py-6 px-8 rounded-2xl"
-              style={{
+            {/* Quote */}
+            <div 
+              className="my-8 px-6 py-6 rounded-2xl text-center"
+              style={{ 
                 backgroundColor: currentTheme.colors.backgroundSecondary,
-                border: `1px solid ${currentTheme.colors.accentPrimary}30`,
+                border: `1px solid ${currentTheme.colors.accentPrimary}30`
               }}
             >
-              <Sparkles
-                className="absolute top-4 left-4 h-5 w-5"
+              <Sparkles 
+                size={24} 
                 style={{ color: currentTheme.colors.accentPrimary }}
+                className="mx-auto mb-3 opacity-60"
               />
-              <Sparkles
-                className="absolute bottom-4 right-4 h-5 w-5"
-                style={{ color: currentTheme.colors.accentPrimary }}
-              />
-              <p
-                className="text-xl sm:text-2xl font-semibold italic text-center"
+              <p 
+                className="text-lg sm:text-2xl italic font-semibold leading-relaxed"
                 style={{ color: currentTheme.colors.textPrimary }}
               >
-                &ldquo;{c.quote}&rdquo;
+                "{t('founder_quote')}"
               </p>
-            </motion.blockquote>
+              <Sparkles 
+                size={24} 
+                style={{ color: currentTheme.colors.accentPrimary }}
+                className="mx-auto mt-3 opacity-60"
+              />
+            </div>
 
+            {/* CTA */}
             <Link href="/founder">
               <motion.button
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-base font-bold w-fit"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-8 py-4 rounded-lg font-bold text-white transition-all duration-300 inline-block"
                 style={{
                   backgroundColor: currentTheme.colors.accentPrimary,
-                  color: currentTheme.colors.background,
+                  boxShadow: `0 0 30px ${currentTheme.colors.accentPrimary}40`
                 }}
-                whileHover={{
-                  scale: 1.04,
-                  boxShadow: `0 0 30px ${currentTheme.colors.accentPrimary}50`,
-                }}
-                whileTap={{ scale: 0.96 }}
               >
-                {c.cta} →
+                {t('founder_cta')} →
               </motion.button>
             </Link>
           </motion.div>

@@ -3,29 +3,51 @@
 import { motion } from "framer-motion"
 import { useTheme } from "@/lib/theme-context"
 import { useLanguage } from "@/lib/language-context"
-import { Sparkles, Crown, Flame } from "lucide-react"
+import { Sparkles, Crown, Flame, ArrowRight } from "lucide-react"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
+import Link from "next/link"
 
 const pillars = [
   {
     key: "destiny",
     icon: Sparkles,
-    title: "La Destinee n'est pas un Choix",
-    description: "C'est un Appel. Chaque personnage est invoque par les lignees sanguines, les esprits anciens et les histoires inachevees de leurs ancetres.",
+    titleKey: "universe_destiny_title",
+    descriptionKey: "universe_destiny_desc",
+    href: "/the-founder",
+    characterName: "Zaiire",
   },
   {
     key: "heritage",
     icon: Crown,
-    title: "Les Lignees Royales Portent un Pouvoir Ancien",
-    description: "Le sang royal transporte la memoire et la puissance des royaumes oublies, attendant d'etre reveillees par les elus.",
+    titleKey: "universe_heritage_title",
+    descriptionKey: "universe_heritage_desc",
+    href: "/the-founder",
+    characterName: "Kimoya",
   },
   {
     key: "resurrection",
     icon: Flame,
-    title: "Les Esprits Ancestraux ne Meurent Jamais",
-    description: "L'Afrique n'a jamais ete impuissante. La prophetie est revenue, et avec elle, la resurrection des mythes enterres.",
+    titleKey: "universe_resurrection_title",
+    descriptionKey: "universe_resurrection_desc",
+    href: "/the-founder",
+    characterName: "Bambula",
   },
+  {
+    key: "founder",
+    icon: Crown,
+    titleKey: "universe_founder_title",
+    descriptionKey: "universe_founder_desc",
+    href: "/the-founder",
+    characterName: "King Kufulula",
+  },
+]
+
+const backgroundImages = [
+  '/golden-throne-beasts.jpg',
+  '/kongo-spiritual-background.jpg',
+  '/royal-palace-background.png',
+  '/king-kufulula-background.png',
 ]
 
 export function UniverseSection() {
@@ -58,10 +80,10 @@ export function UniverseSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-4xl sm:text-5xl font-black tracking-wider mb-4"
+            className="text-2xl sm:text-3xl font-black tracking-wider mb-4 whitespace-nowrap"
             style={{ color: currentTheme.colors.textPrimary }}
           >
-            {t("universeIsolele")}
+            {t("universe_title")}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -70,7 +92,7 @@ export function UniverseSection() {
             className="text-xl font-medium tracking-wide mb-6"
             style={{ color: currentTheme.colors.accentPrimary }}
           >
-            {t("theChosenOnes")}
+            {t("universe_subtitle")}
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -79,87 +101,106 @@ export function UniverseSection() {
             className="text-base sm:text-lg leading-relaxed max-w-3xl mx-auto"
             style={{ color: currentTheme.colors.textSecondary }}
           >
-            Isolele est un univers visionnaire ne pour restaurer l'ame du storytelling africain, 
-            un empire mythologique ou les super-heros sont choisis par le destin, les royaumes jamais 
-            oublies, et le pouvoir ancestral est vivant dans chaque page, chaque prophetie, chaque bataille.
+            {t("universe_description")}
           </motion.p>
         </div>
 
         {/* Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {pillars.map((pillar, index) => (
             <motion.div
               key={pillar.key}
               initial={{ opacity: 0, rotateY: 90 }}
               animate={isInView ? { opacity: 1, rotateY: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.3 + index * 0.2 }}
-              className="group relative p-8 rounded-2xl transition-all duration-500"
-              style={{
-                backgroundColor: `${currentTheme.colors.background}80`,
-                border: `1px solid ${currentTheme.colors.accentPrimary}30`,
-              }}
+              className="group relative h-full flex flex-col"
             >
-              {/* Hover glow effect */}
-              <div 
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              <div
+                className="relative p-8 rounded-2xl transition-all duration-500 h-full flex flex-col"
                 style={{
-                  boxShadow: `inset 0 0 30px ${currentTheme.colors.accentPrimary}20, 0 0 30px ${currentTheme.colors.accentPrimary}20`
+                  backgroundColor: `${currentTheme.colors.background}80`,
+                  border: `1px solid ${currentTheme.colors.accentPrimary}30`,
+                  boxShadow: `0 0 0 rgba(0,0,0,0)`,
                 }}
-              />
-              
-              {/* Icon */}
-              <div className="relative mb-6">
-                <motion.div
-                  className="w-16 h-16 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20` }}
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.8 }}
-                >
-                  <pillar.icon 
-                    className="w-8 h-8"
-                    style={{ color: currentTheme.colors.accentPrimary }}
-                  />
-                </motion.div>
-                {/* Animated particles around icon */}
-                {index === 0 && (
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = `0 20px 40px ${currentTheme.colors.accentPrimary}30, inset 0 0 30px ${currentTheme.colors.accentPrimary}15`
+                  e.currentTarget.style.borderColor = currentTheme.colors.accentPrimary
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = `0 0 0 rgba(0,0,0,0)`
+                  e.currentTarget.style.borderColor = `${currentTheme.colors.accentPrimary}30`
+                }}
+              >
+                {/* Background image */}
+                <div 
+                  className={`absolute inset-0 rounded-2xl transition-opacity duration-500 ${index === 0 || index === 1 || index === 2 || index === 3 ? 'opacity-100' : 'opacity-0 group-hover:opacity-20'}`}
+                  style={{
+                    backgroundImage: `url('${backgroundImages[index]}')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                />
+                
+                {/* Icon */}
+                <div className="relative mb-6 z-10">
                   <motion.div
-                    className="absolute -top-2 -right-2 w-4 h-4"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.5, 1, 0.5],
-                    }}
-                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
+                    className="w-16 h-16 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20` }}
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.8 }}
                   >
-                    <Sparkles 
-                      className="w-4 h-4"
+                    <pillar.icon 
+                      className="w-8 h-8"
                       style={{ color: currentTheme.colors.accentPrimary }}
                     />
                   </motion.div>
-                )}
+                </div>
+
+                {/* Content */}
+                <div className="relative z-10 flex-1 flex flex-col">
+                  <div 
+                    className="bg-[#F5F0E8]/90 rounded-lg p-4 flex-1"
+                  >
+                    <h3 
+                      className="text-xl font-bold tracking-wide mb-4"
+                      style={{ color: '#000000' }}
+                    >
+                      {t(pillar.titleKey)}
+                    </h3>
+                    <p 
+                      className="text-sm leading-relaxed"
+                      style={{ color: '#000000' }}
+                    >
+                      {t(pillar.descriptionKey)}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Discover Button */}
+                <Link href={pillar.href} className="relative z-10 mt-6 w-full">
+                  <motion.button
+                    className="w-full px-4 py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-all"
+                    style={{
+                      backgroundColor: currentTheme.colors.accentPrimary,
+                      color: currentTheme.colors.background,
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {t('discover_more')}
+                    <ArrowRight className="w-4 h-4" />
+                  </motion.button>
+                </Link>
+
+                {/* Bottom accent line */}
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 h-1"
+                  style={{ backgroundColor: currentTheme.colors.accentPrimary }}
+                  initial={{ scaleX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
               </div>
-
-              {/* Content */}
-              <h3 
-                className="text-xl font-bold tracking-wide mb-4 relative"
-                style={{ color: currentTheme.colors.textPrimary }}
-              >
-                {pillar.title}
-              </h3>
-              <p 
-                className="text-sm leading-relaxed relative"
-                style={{ color: currentTheme.colors.textSecondary }}
-              >
-                {pillar.description}
-              </p>
-
-              {/* Bottom accent line */}
-              <motion.div
-                className="absolute bottom-0 left-8 right-8 h-0.5"
-                style={{ backgroundColor: currentTheme.colors.accentPrimary }}
-                initial={{ scaleX: 0 }}
-                whileHover={{ scaleX: 1 }}
-                transition={{ duration: 0.3 }}
-              />
             </motion.div>
           ))}
         </div>

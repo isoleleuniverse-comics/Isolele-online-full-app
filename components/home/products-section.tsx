@@ -10,37 +10,31 @@ import { ShoppingCart } from "lucide-react"
 const products = [
   {
     id: "zaiire-comic-1",
-    name: "Zaiire: The Necklace of Destiny",
-    nameFr: "Zaiire: Le Collier de la Destinée",
-    description: "The epic first chapter of the ISOLELE Universe — ZAIIRE Le Prince du Kongo",
-    descriptionFr: "Le premier chapitre épique de l'Univers ISOLELE",
+    name_key: "product_zaiire_name",
+    desc_key: "product_zaiire_desc",
     price: 26.99,
     originalPrice: 99.99,
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
-    badge: "PRE-ORDER",
+    badge_key: "product_badge_preorder",
     type: "comic" as const,
   },
   {
     id: "kimoya-deluxe",
-    name: "Kimoya: The Rising Kandake",
-    nameFr: "Kimoya: La Kandake Montante",
-    description: "Collector's edition — the royal court of the Rising Kandake",
-    descriptionFr: "Édition collector — la cour royale de la Kandake Montante",
+    name_key: "product_kimoya_name",
+    desc_key: "product_kimoya_desc",
     price: 49.99,
     originalPrice: 149.99,
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
-    badge: "LIMITED",
+    badge_key: "product_badge_limited",
     type: "book" as const,
   },
   {
     id: "isolele-artbook",
-    name: "The Art of ISOLELE",
-    nameFr: "L'Art d'ISOLELE",
-    description: "Behind the scenes artwork — The Chosen Ones universe poster edition",
-    descriptionFr: "Les illustrations et concepts de l'univers des Élus",
+    name_key: "product_art_name",
+    desc_key: "product_art_desc",
     price: 34.99,
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Isolele%20ZAIIRE-EKnQs6Sp5EFeF3bYx9m4utnSu3LdM5.jpg",
-    badge: "NEW",
+    badge_key: "product_badge_new",
     type: "book" as const,
   },
 ]
@@ -67,16 +61,13 @@ export function ProductsSection() {
             className="text-4xl sm:text-5xl font-black mb-4"
             style={{ color: currentTheme.colors.textPrimary }}
           >
-            {currentLanguage.code === "fr" ? "DEJA DISPONIBLE" : "ALREADY AVAILABLE"}
+            {t("products_already_available")}
           </h2>
           <p 
             className="text-xl max-w-2xl mx-auto"
             style={{ color: currentTheme.colors.textSecondary }}
           >
-            {currentLanguage.code === "fr" 
-              ? "Plongez dans l'univers Isolele avec notre collection de bandes dessinees et livres"
-              : "Dive into the Isolele universe with our collection of comics and books"
-            }
+            {t("products_subtitle")}
           </p>
         </motion.div>
 
@@ -95,7 +86,7 @@ export function ProductsSection() {
               }}
             >
               {/* Badge */}
-              {product.badge && (
+              {product.badge_key && (
                 <div 
                   className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full text-xs font-bold"
                   style={{ 
@@ -103,7 +94,7 @@ export function ProductsSection() {
                     color: currentTheme.colors.background
                   }}
                 >
-                  {product.badge}
+                  {t(product.badge_key as any)}
                 </div>
               )}
 
@@ -111,9 +102,13 @@ export function ProductsSection() {
               <div className="relative aspect-[3/4] overflow-hidden">
                 <Image
                   src={product.image || "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/plug%20hover%20load%20image%20isolele-JAz4XM8dgs50DBWVhN4NtyfcYj9rsF.jpg"}
-                  alt={product.name}
+                  alt={t(product.name_key as any)}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAICAgIChsICQkJChAODwoQFwwTGB8WFBcUFRYaFxwpHhcYGRgaGBgSHBwcHhcYGhj/2wBDAQcHBwoIChMICQsMCggKGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWm5ybnJ2eoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/8QAHwEAAwEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlbaWmJmaoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z"
+                  loading="lazy"
                 />
                 {/* Gradient overlay */}
                 <div 
@@ -129,8 +124,8 @@ export function ProductsSection() {
                   <motion.button
                     onClick={() => addItem({
                       id: product.id,
-                      name: currentLanguage.code === "fr" ? product.nameFr : product.name,
-                      description: currentLanguage.code === "fr" ? product.descriptionFr : product.description,
+                      name: t(product.name_key as any),
+                      description: t(product.desc_key as any),
                       price: product.price,
                       originalPrice: product.originalPrice,
                       image: product.image,
@@ -156,13 +151,13 @@ export function ProductsSection() {
                   className="text-xl font-bold mb-2"
                   style={{ color: currentTheme.colors.textPrimary }}
                 >
-                  {currentLanguage.code === "fr" ? product.nameFr : product.name}
+                  {t(product.name_key as any)}
                 </h3>
                 <p 
                   className="text-sm mb-4"
                   style={{ color: currentTheme.colors.textSecondary }}
                 >
-                  {currentLanguage.code === "fr" ? product.descriptionFr : product.description}
+                  {t(product.desc_key as any)}
                 </p>
                 <div className="flex items-center gap-3">
                   <span 

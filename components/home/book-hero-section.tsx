@@ -1,20 +1,21 @@
 "use client"
-
+// ISOLELE Hero Section - THE CHOSEN ONES - March 2026
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useLanguage } from "@/lib/language-context"
 
 interface Slide {
   id: string
   type: "book" | "game"
-  tag: string
-  title: string
-  subtitle: string
-  description: string
+  tagKey: string
+  titleKey: string
+  subtitleKey: string
+  descKey: string
+  buttonKey: string
   image: string
-  buttonText: string
   href: string
   accentColor: string
 }
@@ -23,86 +24,119 @@ const slides: Slide[] = [
   {
     id: "zaiire",
     type: "book",
-    tag: "ZAIÏRE: LE PRINCE DU KONGO",
-    title: "THE PRINCE OF KONGO",
-    subtitle: "Zaiïre — Le Collier du Destin",
-    description:
-      "In the heart of the ancient Kongo Kingdom, a young prince named Zaiïre discovers he carries the blood of the ancestors — and the power to reshape the destiny of an entire people. A cinematic epic blending African mythology, royal intrigue, and superhuman gifts.",
+    tagKey: "book_welcome_tag",
+    titleKey: "book_welcome_title",
+    subtitleKey: "book_welcome_subtitle",
+    descKey: "book_welcome_desc",
+    buttonKey: "book_welcome_button",
     image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
-    buttonText: "Discover Zaiïre",
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg",
     href: "/books/zaiire",
     accentColor: "#F6B800",
   },
   {
-    id: "kimoya",
+    id: "makanda",
     type: "book",
-    tag: "KIMOYA: THE RISING KANDAKE",
-    title: "THE RISING KANDAKE",
-    subtitle: "Kimoya — Book I",
-    description:
-      "A warrior emperor of unmatched power strides forward from the royal halls of an ancient empire. KIMOYA — The Rising Kandake — unites the fractured kingdoms of Africa against a darkness that seeks to erase their memory from history.",
+    tagKey: "book_makanda_tag",
+    titleKey: "book_makanda_title",
+    subtitleKey: "book_makanda_subtitle",
+    descKey: "book_makanda_desc",
+    buttonKey: "book_makanda_button",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
-    buttonText: "Discover Kimoya",
-    href: "/books/kimoya",
+    href: "/books/makanda",
     accentColor: "#C0392B",
   },
   {
     id: "bambula",
     type: "book",
-    tag: "BAMBULA: GARDIENNE DE LA SAVANE",
-    title: "BAMBULA",
-    subtitle: "Bambula — Book I",
-    description:
-      "Bambula — fierce guardian of the African savanna — walks between the spirit world and the living. Armed with a glowing sacred drum, she commands the rhythms of nature itself to defend the ancient lands from those who would destroy them.",
+    tagKey: "book_bambula_tag",
+    titleKey: "book_bambula_title",
+    subtitleKey: "book_bambula_subtitle",
+    descKey: "book_bambula_desc",
+    buttonKey: "book_bambula_button",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
-    buttonText: "Discover Bambula",
     href: "/books/bambula",
     accentColor: "#B3541E",
   },
   {
     id: "mokele",
     type: "book",
-    tag: "MOKELE: CROWNED BY THE STREETS",
-    title: "CROWNED BY THE STREETS",
-    subtitle: "Mokele — Book I · H.R.M King Kufulula",
-    description:
-      "From the streets of Kinshasa to the throne rooms of Africa — MOKELE is the story of an heir who was never meant to be found. Suited and sovereign, Crowned by the Streets is a modern African epic where power, legacy, and the city collide.",
+    tagKey: "book_mokele_tag",
+    titleKey: "book_mokele_title",
+    subtitleKey: "book_mokele_subtitle",
+    descKey: "book_mokele_desc",
+    buttonKey: "book_mokele_button",
     image:
-      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mokele-lZToplq4eNUuy08B5V6faXETr5YnKg.jpg",
-    buttonText: "Discover Mokele",
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg",
     href: "/books/mokele",
     accentColor: "#4169E1",
   },
   {
     id: "zaiire-universe",
     type: "book",
-    tag: "ISOLELE UNIVERSE — THE CHOSEN ONES",
-    title: "THE CHOSEN ONES",
-    subtitle: "ZAIIRE — Tous les héros réunis",
-    description:
-      "An entire universe born from the roots of Kongo — every warrior, queen, prophet and guardian of the ISOLELE saga stands united. The Chosen Ones are not selected by chance. They are called by blood, destiny, and the spirits of a thousand ancestors.",
+    tagKey: "book_zaiire_tag",
+    titleKey: "book_zaiire_title",
+    subtitleKey: "book_zaiire_subtitle",
+    descKey: "book_zaiire_desc",
+    buttonKey: "book_zaiire_button",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0059-75yxyGjuDt9hhqXF6obymfG8BpNLz4.jpg",
-    buttonText: "Explore the Universe",
-    href: "/characters",
+    href: "/books/zaiire",
     accentColor: "#F6B800",
   },
   {
     id: "kufu",
     type: "game",
-    tag: "HÉRITAGE · ROYALTY · NKUFU YA BAKULU",
-    title: "KUFU — THE CROWN GAME",
-    subtitle: "Le Jeu Officiel de l'Univers ISOLELE",
-    description:
-      "KUFU Ludo is the official board game of the ISOLELE universe — an immersive ludo-style strategy game rooted in African royal traditions. Navigate your warriors across a ceremonial board inspired by Kongo cosmology and claim the Crown of the Ancestors.",
+    tagKey: "book_kufu_tag",
+    titleKey: "book_kufu_title",
+    subtitleKey: "book_kufu_subtitle",
+    descKey: "book_kufu_desc",
+    buttonKey: "book_kufu_button",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_20260321_113436-ktAJOL2e0SS0pkTY6aPnn7aBKxr3pq.jpg",
-    buttonText: "Explore the Game",
     href: "/kufu-game",
     accentColor: "#F6B800",
+  },
+  {
+    id: "amara",
+    type: "book",
+    tagKey: "book_amara_tag",
+    titleKey: "book_amara_title",
+    subtitleKey: "book_amara_subtitle",
+    descKey: "book_amara_desc",
+    buttonKey: "book_amara_button",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
+    href: "/books/amara",
+    accentColor: "#1E90B3",
+  },
+  {
+    id: "zattar",
+    type: "book",
+    tagKey: "book_zattar_tag",
+    titleKey: "book_zattar_title",
+    subtitleKey: "book_zattar_subtitle",
+    descKey: "book_zattar_desc",
+    buttonKey: "book_zattar_button",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e9c64c65-3717-4fe3-a391-885767df3303-LbjnMwCViF43pwErKmoFv7iGxQdCeQ.jpeg",
+    href: "/books/zattar",
+    accentColor: "#2E8B57",
+  },
+  {
+    id: "zaiko",
+    type: "book",
+    tagKey: "book_zaiko_tag",
+    titleKey: "book_zaiko_title",
+    subtitleKey: "book_zaiko_subtitle",
+    descKey: "book_zaiko_desc",
+    buttonKey: "book_zaiko_button",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1175-njlosetUOsqZszKylrOXsIRLw0l3s7.jpeg",
+    href: "/books/zaiko",
+    accentColor: "#8B7355",
   },
 ]
 
@@ -124,11 +158,7 @@ const slideVariants = {
 export function BookHeroSection() {
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(1)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const { t } = useLanguage()
 
   const paginate = useCallback(
     (newDirection: number) => {
@@ -145,14 +175,23 @@ export function BookHeroSection() {
 
   // Auto-advance every 7 seconds
   useEffect(() => {
-    if (!mounted) return
     const timer = setInterval(() => paginate(1), 7000)
     return () => clearInterval(timer)
-  }, [mounted, paginate])
-
-  if (!mounted) return null
+  }, [paginate])
 
   const slide = slides[current]
+
+  if (!slide) return null
+
+  // Get translated values for current slide
+  const translatedSlide = {
+    ...slide,
+    tag: t(slide.tagKey),
+    title: t(slide.titleKey),
+    subtitle: t(slide.subtitleKey),
+    description: t(slide.descKey),
+    buttonText: t(slide.buttonKey),
+  }
 
   return (
     <section className="relative w-full h-screen overflow-hidden" style={{ backgroundColor: "#000" }}>
@@ -169,13 +208,16 @@ export function BookHeroSection() {
           className="absolute inset-0"
         >
           {/* BG IMAGE */}
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 w-full h-full overflow-hidden">
             <Image
               src={slide.image}
-              alt={slide.title}
+              alt={translatedSlide.title}
               fill
+              sizes="100vw"
               className="object-cover object-top"
               priority={current === 0}
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAICAgIChsICQkJChAODwoQFwwTGB8WFBcUFRYaFxwpHhcYGRgaGBgSHBwcHhcYGhj/2wBDAQcHBwoIChMICQsMCggKGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWm5ybnJ2eoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/8QAHwEAAwEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlbaWmJmaoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z"
             />
             {/* Gradient overlay */}
             <div
@@ -207,7 +249,7 @@ export function BookHeroSection() {
                   textTransform: "uppercase",
                 }}
               >
-                {slide.tag}
+                {translatedSlide.tag}
               </motion.div>
 
               {/* SUBTITLE */}
@@ -218,7 +260,7 @@ export function BookHeroSection() {
                 className="text-sm font-semibold tracking-widest uppercase mb-3"
                 style={{ color: slide.accentColor, opacity: 0.85 }}
               >
-                {slide.subtitle}
+                {translatedSlide.subtitle}
               </motion.p>
 
               {/* TITLE */}
@@ -235,7 +277,7 @@ export function BookHeroSection() {
                   fontFamily: "Montserrat, sans-serif",
                 }}
               >
-                {slide.title}
+                {translatedSlide.title}
               </motion.h1>
 
               {/* DESCRIPTION */}
@@ -246,7 +288,7 @@ export function BookHeroSection() {
                 className="text-base md:text-lg leading-relaxed mb-8 max-w-xl"
                 style={{ color: "#E0E0E0" }}
               >
-                {slide.description}
+                {translatedSlide.description}
               </motion.p>
 
               {/* BUTTON */}
@@ -263,7 +305,7 @@ export function BookHeroSection() {
                       color: "#000",
                     }}
                   >
-                    {slide.buttonText}
+                    {translatedSlide.buttonText}
                   </button>
                 </Link>
               </motion.div>
@@ -272,82 +314,24 @@ export function BookHeroSection() {
         </motion.div>
       </AnimatePresence>
 
-      {/* FIXED HEADER with ISOLELE Logo */}
-      <motion.header
-        className="fixed top-0 left-0 right-0 z-40 h-[70px] flex items-center px-6 md:px-10"
-        style={{
-          backgroundColor: "rgba(0,0,0,0.75)",
-          backdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(246, 184, 0, 0.12)",
-        }}
-        initial={{ y: -70 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <Link href="/">
-          <Image
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ei_1774029892268-removebg-preview-OGLwAWrJqgxIOFX6ES21zzBCcRpiHa.png"
-            alt="ISOLELE — The Chosen Ones"
-            width={180}
-            height={50}
-            className="object-contain"
-            priority
-          />
-        </Link>
-      </motion.header>
-
-      {/* NAV ARROWS */}
-      <button
-        onClick={() => paginate(-1)}
-        aria-label="Previous slide"
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full transition-all hover:scale-110"
-        style={{
-          background: "rgba(246,184,0,0.15)",
-          border: "1.5px solid rgba(246,184,0,0.5)",
-          color: "#F6B800",
-        }}
-      >
-        <ChevronLeft size={22} />
-      </button>
-      <button
-        onClick={() => paginate(1)}
-        aria-label="Next slide"
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-11 h-11 rounded-full transition-all hover:scale-110"
-        style={{
-          background: "rgba(246,184,0,0.15)",
-          border: "1.5px solid rgba(246,184,0,0.5)",
-          color: "#F6B800",
-        }}
-      >
-        <ChevronRight size={22} />
-      </button>
-
-      {/* DOT INDICATORS */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
-        {slides.map((s, i) => (
-          <button
-            key={s.id}
-            aria-label={`Go to slide ${i + 1}`}
-            onClick={() => {
-              setDirection(i > current ? 1 : -1)
-              setCurrent(i)
-            }}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: i === current ? 28 : 8,
-              height: 8,
-              backgroundColor: i === current ? "#F6B800" : "rgba(255,255,255,0.35)",
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Slide counter */}
-      <div
-        className="absolute bottom-8 right-8 md:right-16 z-20 text-xs font-bold tracking-widest"
-        style={{ color: "rgba(255,255,255,0.5)" }}
-      >
-        {String(current + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
+      {/* NAVIGATION */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-6">
+        {/* Dots */}
+        <div className="flex gap-2">
+          {slides.map((_, index) => (
+            <motion.button
+              key={index}
+              onClick={() => {
+                setDirection(index > current ? 1 : -1)
+                setCurrent(index)
+              }}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                index === current ? "bg-white w-8" : "bg-white/40 w-2"
+              }`}
+              whileHover={{ backgroundColor: "rgba(255,255,255,0.6)" }}
+            />
+          ))}
+        </div>
       </div>
     </section>
   )

@@ -7,37 +7,38 @@ import { useInView } from "framer-motion"
 import { useRef } from "react"
 import Link from "next/link"
 import { Clock, ArrowRight } from "lucide-react"
+import Image from "next/image"
 
 const articles = [
   {
     id: 1,
-    category: "HISTOIRE DEVOILEE",
+    categoryKey: "news_category_history",
     categoryColor: "#D4AF37",
-    title: "La tribu perdue derriere Wakanda etait reelle : Rencontrez les Makanda du Congo",
-    excerpt: "Une nouvelle vague d'historiens et de leaders culturels met en lumiere Makanda, un empire congolais autrefois cache qui detiendrait le veritable heritage derriere le mythe de Wakanda.",
+    titleKey: "news_title_makanda",
+    excerptKey: "news_excerpt_makanda",
     readTime: "5 min",
-    date: "Mars 2025",
-    image: "/events/event-showcase-1.jpg",
+    dateKey: "news_date_march",
+    image: "/events/wakanda-makanda-royal.jpg",
   },
   {
     id: 2,
-    category: "COMMENTAIRE CULTUREL",
+    categoryKey: "news_category_cultural",
     categoryColor: "#B3541E",
-    title: "Comment l'Univers Isolele Recupere la Memoire Africaine",
-    excerpt: "\"Le colonialisme n'a pas efface notre grandeur. Il l'a enterree sous son propre mythe.\" Un plan pour la restauration de l'imagination supprimee de l'Afrique.",
+    titleKey: "news_title_isolele_memory",
+    excerptKey: "news_excerpt_isolele_memory",
     readTime: "8 min",
-    date: "Fevrier 2025",
-    image: "/events/event-showcase-2.jpg",
+    dateKey: "news_date_february",
+    image: "/events/african-empire-luxury.jpg",
   },
   {
     id: 3,
-    category: "RECHERCHE",
+    categoryKey: "news_category_research",
     categoryColor: "#4169E1",
-    title: "Du Mythe au Manuscrit : Cartographier l'Empire Makanda",
-    excerpt: "Un voyage cartographique a travers une civilisation africaine effacee dont la memoire a survecu dans des symboles, pas dans des frontieres.",
+    titleKey: "news_title_makanda_manuscript",
+    excerptKey: "news_excerpt_makanda_manuscript",
     readTime: "6 min",
-    date: "Janvier 2025",
-    image: "/events/event-showcase-1.jpg",
+    dateKey: "news_date_january",
+    image: "/events/courtroom-makanda.jpg",
   },
 ]
 
@@ -84,22 +85,32 @@ export function NewsSection() {
                   }}
                 >
                   {/* Image */}
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden bg-gray-300">
+                    <Image
+                      src={article.image}
+                      alt={t(article.titleKey)}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      placeholder="blur"
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAICAgIChsICQkJChAODwoQFwwTGB8WFBcUFRYaFxwpHhcYGRgaGBgSHBwcHhcYGhj/2wBDAQcHBwoIChMICQsMCggKGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWm5ybnJ2eoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/8QAHwEAAwEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlbaWmJmaoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z"
+                      loading="lazy"
+                    />
                     <div 
                       className="absolute inset-0 transition-transform duration-500 group-hover:scale-110"
                       style={{
-                        background: `linear-gradient(135deg, ${article.categoryColor}40 0%, ${currentTheme.colors.backgroundSecondary} 100%)`
+                        background: `linear-gradient(135deg, ${article.categoryColor}40 0%, transparent 100%)`
                       }}
                     />
                     {/* Category badge */}
                     <span 
-                      className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold tracking-wider"
+                      className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-bold tracking-wider z-10"
                       style={{
                         backgroundColor: article.categoryColor,
                         color: currentTheme.colors.background,
                       }}
                     >
-                      {article.category}
+                      {t(article.categoryKey)}
                     </span>
                   </div>
 
@@ -109,13 +120,13 @@ export function NewsSection() {
                       className="text-lg font-bold tracking-wide mb-3 line-clamp-2 transition-colors duration-300"
                       style={{ color: currentTheme.colors.textPrimary }}
                     >
-                      {article.title}
+                      {t(article.titleKey)}
                     </h3>
                     <p 
                       className="text-sm leading-relaxed mb-4 line-clamp-3"
                       style={{ color: currentTheme.colors.textSecondary }}
                     >
-                      {article.excerpt}
+                      {t(article.excerptKey)}
                     </p>
                     
                     {/* Meta */}
@@ -125,9 +136,9 @@ export function NewsSection() {
                         style={{ color: currentTheme.colors.textSecondary }}
                       >
                         <Clock className="w-4 h-4" />
-                        <span>{article.readTime} de lecture</span>
+                        <span>{article.readTime} {t('news_minutes_read')}</span>
                         <span>•</span>
-                        <span>{article.date}</span>
+                        <span>{t(article.dateKey)}</span>
                       </div>
                     </div>
 
@@ -136,7 +147,7 @@ export function NewsSection() {
                       className="flex items-center gap-2 mt-4 text-sm font-bold tracking-wider"
                       style={{ color: currentTheme.colors.accentPrimary }}
                     >
-                      <span>LIRE L'ARTICLE</span>
+                      <span>READ ARTICLE</span>
                       <motion.div
                         className="group-hover:translate-x-2 transition-transform duration-300"
                       >
@@ -171,7 +182,7 @@ export function NewsSection() {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              VOIR TOUTES LES ACTUALITES
+              VIEW ALL NEWS
             </motion.button>
           </Link>
         </motion.div>

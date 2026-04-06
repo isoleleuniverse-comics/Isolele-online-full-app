@@ -6,6 +6,7 @@ import { useLanguage } from "@/lib/language-context"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 export function CtaSection() {
   const { currentTheme } = useTheme()
@@ -84,36 +85,138 @@ export function CtaSection() {
       </div>
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+        {/* Decorative top element */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-wider mb-6"
-          style={{ color: currentTheme.colors.textPrimary }}
+          className="flex justify-center gap-2 mb-8 items-center"
         >
-          {t("joinLegend")}
-        </motion.h2>
-        
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-lg sm:text-xl leading-relaxed mb-10 max-w-2xl mx-auto"
-          style={{ color: currentTheme.colors.textSecondary }}
-        >
-          Faites partie d'un univers de bande dessinee revolutionnaire qui celebre 
-          l'heritage africain tout en inspirant la prochaine generation de super-heros.
-        </motion.p>
+          <div className="h-px w-12" style={{ backgroundColor: currentTheme.colors.accentPrimary }} />
+          <span style={{ color: currentTheme.colors.accentPrimary }}>◆</span>
+          <span style={{ color: currentTheme.colors.accentPrimary }}>•</span>
+          <span style={{ color: currentTheme.colors.accentPrimary }}>◆</span>
+          <div className="h-px w-12" style={{ backgroundColor: currentTheme.colors.accentPrimary }} />
+        </motion.div>
 
+        {/* Heading: JOIN THE LEGEND - With Luxury Fireworks */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mb-12 relative"
+        >
+          {/* Fireworks particles */}
+          {Array.from({ length: 60 }).map((_, i) => {
+            const angle = (i / 60) * Math.PI * 2;
+            const velocity = 2 + Math.random() * 3;
+            const delay = (i % 20) * 0.15;
+            
+            return (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 rounded-full pointer-events-none"
+                style={{
+                  left: "50%",
+                  top: "50%",
+                  backgroundColor: i % 2 === 0 ? "#FFD700" : "#00D4FF",
+                  boxShadow: i % 2 === 0 
+                    ? "0 0 8px #FFD700, 0 0 15px rgba(255, 215, 0, 0.5)"
+                    : "0 0 8px #00D4FF, 0 0 15px rgba(0, 212, 255, 0.5)"
+                }}
+                animate={{
+                  x: [0, Math.cos(angle) * velocity * 100],
+                  y: [0, Math.sin(angle) * velocity * 100],
+                  opacity: [1, 0],
+                  scale: [1, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  delay: delay,
+                  repeat: Number.POSITIVE_INFINITY,
+                  ease: "easeOut",
+                }}
+              />
+            );
+          })}
+
+          <motion.h2 
+            className="text-5xl sm:text-6xl lg:text-7xl whitespace-nowrap relative z-10"
+            style={{ 
+              fontFamily: 'Impact, Arial Black, sans-serif',
+              fontWeight: 900,
+              width: '100%',
+              position: 'relative',
+            }}
+            animate={{
+              color: [
+                "#FFD700",
+                "#00D4FF",
+                "#FFD700",
+                "#00D4FF",
+                "#FFD700",
+              ],
+              textShadow: [
+                "0 0 20px #FFD700, 0 0 40px #FFD700, 2px 2px 0px #0088CC",
+                "0 0 20px #00D4FF, 0 0 40px #00D4FF, 2px 2px 0px #0066FF",
+                "0 0 20px #FFD700, 0 0 40px #FFD700, 2px 2px 0px #0088CC",
+                "0 0 20px #00D4FF, 0 0 40px #00D4FF, 2px 2px 0px #0066FF",
+                "0 0 20px #FFD700, 0 0 40px #FFD700, 2px 2px 0px #0088CC",
+              ],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: "easeInOut",
+            }}
+          >
+            {t("cta_join_legend")}
+          </motion.h2>
+        </motion.div>
+
+        {/* Heroes image square */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="mb-12 relative w-full max-w-md mx-auto aspect-square rounded-3xl overflow-hidden shadow-2xl"
+          style={{ border: `5px solid ${currentTheme.colors.accentPrimary}` }}
+        >
+          <Image
+            src="/heroes/legends-crew.jpg"
+            alt="The Legends Crew"
+            fill
+            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 30vw"
+            className="object-cover"
+            priority
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAICAgIChsICQkJChAODwoQFwwTGB8WFBcUFRYaFxwpHhcYGRgaGBgSHBwcHhcYGhj/2wBDAQcHBwoIChMICQsMCggKGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWm5ybnJ2eoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/8QAHwEAAwEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlbaWmJmaoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z"
+            quality={85}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+        </motion.div>
+
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="text-lg sm:text-xl leading-relaxed mb-12 max-w-2xl mx-auto"
+          style={{ color: currentTheme.colors.textSecondary }}
+        >
+          {t("cta_description")}
+        </motion.p>
+
+        {/* Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center mb-8"
         >
           <Link href="/about">
             <motion.button
-              className="relative px-8 py-4 rounded-lg text-lg font-bold tracking-wider overflow-hidden"
+              className="relative px-12 py-5 rounded-full text-lg font-bold tracking-wider overflow-hidden whitespace-nowrap"
               style={{
                 backgroundColor: currentTheme.colors.accentPrimary,
                 color: currentTheme.colors.background,
@@ -121,7 +224,6 @@ export function CtaSection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {/* Pulsating glow */}
               <motion.span
                 className="absolute inset-0"
                 style={{
@@ -136,12 +238,12 @@ export function CtaSection() {
                   ease: "easeInOut",
                 }}
               />
-              <span className="relative z-10">{t("exploreUniverse")}</span>
+              <span className="relative z-10">{t('cta_explore')}</span>
             </motion.button>
           </Link>
           
           <motion.button
-            className="px-8 py-4 rounded-lg text-lg font-bold tracking-wider transition-all border-2"
+            className="px-12 py-5 rounded-full text-lg font-bold tracking-wider transition-all border-2 whitespace-nowrap"
             style={{
               borderColor: currentTheme.colors.accentPrimary,
               color: currentTheme.colors.accentPrimary,
@@ -153,21 +255,21 @@ export function CtaSection() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            {t("subscribeNewsletter")}
+            {t('cta_newsletter')}
           </motion.button>
         </motion.div>
 
-        {/* Decorative elements */}
+        {/* Decorative dots */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1, delay: 0.5 }}
-          className="mt-16 flex justify-center gap-4"
+          className="flex justify-center gap-3 mt-8"
         >
           {Array.from({ length: 5 }).map((_, i) => (
             <motion.div
               key={i}
-              className="w-2 h-2 rounded-full"
+              className="w-2.5 h-2.5 rounded-full"
               style={{ backgroundColor: currentTheme.colors.accentPrimary }}
               animate={{
                 scale: [1, 1.5, 1],

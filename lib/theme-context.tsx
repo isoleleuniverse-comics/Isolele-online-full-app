@@ -84,6 +84,45 @@ export const themes: Theme[] = [
       textSecondary: "#FAEBD7",
     },
   },
+  {
+    id: "comics-noir",
+    name: "Comics Black & White",
+    nameFr: "Comics Noir et Blanc",
+    colors: {
+      background: "#FFFFFF",
+      backgroundSecondary: "#F0F0F0",
+      accentPrimary: "#000000",
+      accentSecondary: "#333333",
+      textPrimary: "#000000",
+      textSecondary: "#404040",
+    },
+  },
+  {
+    id: "journal-dessin",
+    name: "Journal Drawing",
+    nameFr: "Journal Dessin",
+    colors: {
+      background: "#FFF8DC",
+      backgroundSecondary: "#F5E6D3",
+      accentPrimary: "#8B4513",
+      accentSecondary: "#D2691E",
+      textPrimary: "#3E2723",
+      textSecondary: "#5D4037",
+    },
+  },
+  {
+    id: "noir-premium",
+    name: "Pure Black Premium",
+    nameFr: "Noir Pur Premium",
+    colors: {
+      background: "#000000",
+      backgroundSecondary: "#0A0A0A",
+      accentPrimary: "#FFD700",
+      accentSecondary: "#FFFFFF",
+      textPrimary: "#FFFFFF",
+      textSecondary: "#E0E0E0",
+    },
+  },
 ]
 
 interface ThemeContextType {
