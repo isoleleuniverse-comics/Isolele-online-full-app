@@ -3,10 +3,9 @@ const nextConfig = {
   // Image optimization
   images: {
     formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year (cache forever for immutable assets)
+    minimumCacheTTL: 60 * 60 * 24 * 365, // 1 year
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    qualities: [75, 80, 85, 90],
     remotePatterns: [
       {
         protocol: 'https',
@@ -14,9 +13,6 @@ const nextConfig = {
       },
     ],
   },
-
-  // Swc minification for faster builds
-  swcMinify: true,
 
   // Compiler optimizations
   compiler: {
