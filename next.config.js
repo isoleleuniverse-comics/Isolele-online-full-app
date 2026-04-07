@@ -28,6 +28,7 @@ const nextConfig = {
   // Experimental features for performance
   experimental: {
     optimizePackageImports: ['framer-motion', '@hookform/resolvers'],
+    serverActions: true,
   },
 
   // Headers for caching
