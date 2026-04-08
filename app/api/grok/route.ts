@@ -1,6 +1,10 @@
 import { streamText } from 'ai'
-import { xai } from '@ai-sdk/xai'
+import { createXai } from '@ai-sdk/xai'
 import type { NextRequest } from 'next/server'
+
+const xai = createXai({
+  apiKey: process.env.XAI_API_KEY,
+})
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,13 +15,11 @@ export async function POST(request: NextRequest) {
     }
 
     const result = streamText({
-      model: xai('grok-4', {
-        apiKey: process.env.XAI_API_KEY,
-      }),
+      model: xai('grok-beta'),
       prompt: prompt,
       system: context || 'You are Grok, a helpful and witty AI assistant. Provide engaging and useful responses.',
       temperature: 0.8,
-      maxTokens: 500,
+      maxOutputTokens: 500,
     })
 
     return result.toTextStreamResponse()
