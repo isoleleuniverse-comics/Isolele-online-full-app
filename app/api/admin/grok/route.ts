@@ -1,6 +1,10 @@
 import { streamText } from 'ai'
-import { xai } from '@ai-sdk/xai'
+import { createXai } from '@ai-sdk/xai'
 import type { NextRequest } from 'next/server'
+
+const xai = createXai({
+  apiKey: process.env.XAI_API_KEY,
+})
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,13 +27,11 @@ ${context ? `Current Context: ${context}` : ''}
 Provide helpful, creative, and professional responses tailored to the ISOLELE universe and brand.`
 
     const result = streamText({
-      model: xai('grok-4', {
-        apiKey: process.env.XAI_API_KEY,
-      }),
+      model: xai('grok-beta'),
       prompt,
       system: systemPrompt,
       temperature: 0.7,
-      maxTokens: 1024,
+      maxOutputTokens: 1024,
     })
 
     return result.toTextStreamResponse()

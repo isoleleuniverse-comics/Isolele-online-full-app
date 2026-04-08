@@ -109,6 +109,11 @@ export async function POST(request: NextRequest) {
 
 async function performTranslation(text: string, sourceLanguage: string, targetLanguage: string): Promise<string> {
   try {
+    if (!genAI) {
+      console.error("[v0] Gemini API not initialized - missing API key")
+      return text // Fallback to original text
+    }
+
     const sourceLangName = languageMap[sourceLanguage] || "English"
     const targetLangName = languageMap[targetLanguage] || "English"
 
