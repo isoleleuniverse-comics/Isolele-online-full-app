@@ -11,71 +11,32 @@ interface LoadingScreenProps {
 export function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [progress, setProgress] = useState(0)
   const [visible, setVisible] = useState(true)
-  const pageReady = useRef(false)
   const progressRef = useRef(0)
   const onCompleteRef = useRef(onComplete)
   onCompleteRef.current = onComplete
 
   useEffect(() => {
-    // Phase 1: fill to 75% in ~1.5s
-    const PHASE1_TARGET = 75
-    const PHASE1_DURATION = 1500
-    const PHASE1_INTERVAL = 20
-    const phase1Increment = PHASE1_TARGET / (PHASE1_DURATION / PHASE1_INTERVAL)
+    // Simple progress animation to 100% in 2 seconds
+    const DURATION = 2000
+    const INTERVAL = 20
+    const increment = 100 / (DURATION / INTERVAL)
 
-    let done = false
-
-    const finish = () => {
-      if (done) return
-      done = true
-      // Fill to 100% instantly, then fade out
-      setProgress(100)
-      progressRef.current = 100
-      setTimeout(() => {
-        setVisible(false)
-        setTimeout(() => onCompleteRef.current(), 250)
-      }, 200)
-    }
-
-    // Phase 1 timer
-    const phase1Timer = setInterval(() => {
-      progressRef.current = Math.min(progressRef.current + phase1Increment, PHASE1_TARGET)
+    const timer = setInterval(() => {
+      progressRef.current = Math.min(progressRef.current + increment, 100)
       setProgress(progressRef.current)
-      if (progressRef.current >= PHASE1_TARGET) {
-        clearInterval(phase1Timer)
-        // If page already ready by the time we hit 75%, finish immediately
-        if (pageReady.current) {
-          finish()
-        } else {
-          // Phase 2: crawl slowly from 75% to 90% while waiting for page
-          const phase2Timer = setInterval(() => {
-            progressRef.current = Math.min(progressRef.current + 0.3, 90)
-            setProgress(progressRef.current)
-            if (progressRef.current >= 90) clearInterval(phase2Timer)
-          }, 100)
-        }
+      
+      if (progressRef.current >= 100) {
+        clearInterval(timer)
+        // Wait for page ready, then exit
+        setTimeout(() => {
+          setVisible(false)
+          setTimeout(() => onCompleteRef.current(), 200)
+        }, 300)
       }
-    }, PHASE1_INTERVAL)
+    }, INTERVAL)
 
-    // Listen for real page ready signal
-    const onReady = () => {
-      pageReady.current = true
-      if (progressRef.current >= PHASE1_TARGET) {
-        finish()
-      }
-    }
-
-    if (document.readyState === "complete") {
-      onReady()
-    } else {
-      window.addEventListener("load", onReady, { once: true })
-    }
-
-    return () => {
-      clearInterval(phase1Timer)
-      window.removeEventListener("load", onReady)
-    }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    return () => clearInterval(timer)
+  }, [])
 
   return (
     <AnimatePresence>
