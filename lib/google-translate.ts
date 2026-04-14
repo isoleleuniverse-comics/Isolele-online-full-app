@@ -4,12 +4,17 @@ let translateClient: Translate | null = null
 
 // Initialize Google Translate client
 export function initializeTranslate() {
-  if (!translateClient && process.env.GOOGLE_CLOUD_PROJECT_ID) {
-    const { Translate } = require("@google-cloud/translate/build/src/v2")
-    translateClient = new Translate({
-      projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
-      key: process.env.GOOGLE_TRANSLATE_API_KEY,
-    })
+  if (!translateClient && process.env.GOOGLE_CLOUD_PROJECT_ID && process.env.GOOGLE_TRANSLATE_API_KEY) {
+    try {
+      const { Translate } = require("@google-cloud/translate/build/src/v2")
+      translateClient = new Translate({
+        projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
+        key: process.env.GOOGLE_TRANSLATE_API_KEY,
+      })
+    } catch (error) {
+      console.warn("[v0] Google Translate client initialization failed:", error)
+      return null
+    }
   }
   return translateClient
 }

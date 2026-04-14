@@ -1,6 +1,21 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "@google/generative-ai"
 
-const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || "");
+const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY
+
+let genAI: GoogleGenerativeAI | null = null
+
+// Initialize Gemini API only if key is available
+function initializeGemini() {
+  if (!genAI && apiKey) {
+    try {
+      genAI = new GoogleGenerativeAI(apiKey)
+    } catch (error) {
+      console.warn("[v0] Gemini API initialization failed:", error)
+      return null
+    }
+  }
+  return genAI
+}
 
 export interface TranslationRequest {
   text: string;
@@ -22,26 +37,32 @@ export async function translateWithGemini(
   request: TranslationRequest
 ): Promise<TranslationResponse> {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const gemini = initializeGemini()
+    
+    if (!gemini) {
+      throw new Error("Gemini API not initialized. Please set NEXT_PUBLIC_GEMINI_API_KEY environment variable.")
+    }
+
+    const model = gemini.getGenerativeModel({ model: "gemini-1.5-flash" })
 
     const prompt = `Translate the following text to ${request.targetLanguage}. 
 Only provide the translation, nothing else.
 
 Text to translate:
-"${request.text}"`;
+"${request.text}"`
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const translatedText = response.text();
+    const result = await model.generateContent(prompt)
+    const response = await result.response
+    const translatedText = response.text()
 
     return {
       originalText: request.text,
       translatedText: translatedText.trim(),
       targetLanguage: request.targetLanguage,
-    };
+    }
   } catch (error) {
-    console.error("[Gemini] Translation error:", error);
-    throw error;
+    console.error("[Gemini] Translation error:", error)
+    throw error
   }
 }
 
@@ -53,17 +74,23 @@ export async function translateBatch(
   targetLanguage: string
 ): Promise<string[]> {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const gemini = initializeGemini()
+    
+    if (!gemini) {
+      throw new Error("Gemini API not initialized. Please set NEXT_PUBLIC_GEMINI_API_KEY environment variable.")
+    }
+
+    const model = gemini.getGenerativeModel({ model: "gemini-1.5-flash" })
 
     const prompt = `Translate all the following texts to ${targetLanguage}.
 Return them in the same order, one per line, without numbering or extra formatting.
 
 Texts:
-${texts.map((t, i) => `${i + 1}. "${t}"`).join("\n")}`;
+${texts.map((t, i) => `${i + 1}. "${t}"`).join("\n")}`
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const result = await model.generateContent(prompt)
+    const response = await result.response
+    const text = response.text()
 
     // Parse the response to extract individual translations
     const translations = text
@@ -71,13 +98,13 @@ ${texts.map((t, i) => `${i + 1}. "${t}"`).join("\n")}`;
       .filter((line) => line.trim())
       .map((line) => {
         // Remove numbering if present (e.g., "1. " or "1) ")
-        return line.replace(/^\d+[\.\)]\s*/, "").trim();
-      });
+        return line.replace(/^\d+[\.\)]\s*/, "").trim()
+      })
 
-    return translations;
+    return translations
   } catch (error) {
-    console.error("[Gemini] Batch translation error:", error);
-    throw error;
+    console.error("[Gemini] Batch translation error:", error)
+    throw error
   }
 }
 
