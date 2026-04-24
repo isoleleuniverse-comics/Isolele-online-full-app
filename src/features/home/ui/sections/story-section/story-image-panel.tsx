@@ -36,7 +36,7 @@ export function StoryImagePanel({ theme, founderLabel }: StoryImagePanelProps) {
         />
       </div>
 
-      <motion.div
+      {/* <motion.div
         className="absolute -bottom-6 -right-6 px-6 py-3 rounded-xl"
         style={{
           backgroundColor: theme.colors.accentPrimary,
@@ -45,9 +45,9 @@ export function StoryImagePanel({ theme, founderLabel }: StoryImagePanelProps) {
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
       >
-        <p className="text-sm font-bold">H.R.M KING KUFULULA</p>
-        <p className="text-xs opacity-80">{founderLabel}</p>
-      </motion.div>
+        {/* <p className="text-sm font-bold">H.R.M KING KUFULUA</p> */}
+        {/* <p className="text-xs opacity-80">{founderLabel}</p> */}
+      {/* </motion.div> */}
     </motion.div>
   );
 }

@@ -1,7 +1,8 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import { translations, type Language as LangCode, type TranslationKeys, languageNames, languageFlags } from "./translations"
+import { translations, type Language as LangCode, type TranslationKeys, languageFlags } from "./translations"
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES, type SupportedLocale } from "@/lib/i18n/locales"
 
 export interface Language {
   code: LangCode
@@ -19,7 +20,11 @@ export const languages: Language[] = [
   { code: "pt", name: "Portuguese", nativeName: "Português", flag: languageFlags.pt },
   { code: "es", name: "Spanish", nativeName: "Español", flag: languageFlags.es },
   { code: "xh", name: "Xhosa", nativeName: "isiXhosa", flag: languageFlags.zu },
-]
+ ]
+
+export const publicLanguages: Language[] = languages.filter((language) =>
+  (SUPPORTED_LOCALES as readonly string[]).includes(language.code),
+)
 
 interface LanguageContextType {
   currentLanguage: Language
@@ -29,6 +34,10 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
+
+function getLanguageByCode(code: string, allowedLanguages: readonly Language[]) {
+  return allowedLanguages.find((language) => language.code === code)
+}
 
 function mapBrowserLocaleToSupportedLanguage(): LangCode {
   if (typeof navigator === "undefined") return "en"
@@ -53,32 +62,42 @@ function mapBrowserLocaleToSupportedLanguage(): LangCode {
   return "en"
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>(languages[0])
-  const [mounted, setMounted] = useState(false)
+interface LanguageProviderProps {
+  children: ReactNode
+  initialLanguage?: SupportedLocale
+}
+
+export function LanguageProvider({ children, initialLanguage }: LanguageProviderProps) {
+  const allowedLanguages = initialLanguage ? publicLanguages : languages
+  const fallbackCode = initialLanguage ?? DEFAULT_LOCALE
+  const fallbackLanguage = getLanguageByCode(fallbackCode, allowedLanguages) ?? allowedLanguages[0]
+  const [currentLanguage, setCurrentLanguage] = useState<Language>(fallbackLanguage)
 
   useEffect(() => {
     try {
-      const savedLang = localStorage.getItem("isolele-language")
-      if (savedLang) {
-        const lang = languages.find((l) => l.code === savedLang)
-        if (lang) {
-          setCurrentLanguage(lang)
-        }
-      } else {
-        const autoLangCode = mapBrowserLocaleToSupportedLanguage()
-        const autoLang = languages.find((l) => l.code === autoLangCode) || languages[0]
-        setCurrentLanguage(autoLang)
-        localStorage.setItem("isolele-language", autoLang.code)
+      if (initialLanguage) {
+        localStorage.setItem("isolele-language", initialLanguage)
+        return
       }
+
+      const savedLang = localStorage.getItem("isolele-language")
+      const savedLanguage = savedLang ? getLanguageByCode(savedLang, allowedLanguages) : undefined
+      if (savedLanguage) {
+        setCurrentLanguage(savedLanguage)
+        return
+      }
+
+      const autoLangCode = mapBrowserLocaleToSupportedLanguage()
+      const autoLang = getLanguageByCode(autoLangCode, allowedLanguages) ?? fallbackLanguage
+      setCurrentLanguage(autoLang)
+      localStorage.setItem("isolele-language", autoLang.code)
     } catch (error) {
       console.error("[v0] Error loading language preference:", error)
     }
-    setMounted(true)
-  }, [])
+  }, [allowedLanguages, fallbackLanguage, initialLanguage])
 
   const setLanguage = (code: string) => {
-    const lang = languages.find((l) => l.code === code)
+    const lang = getLanguageByCode(code, allowedLanguages)
     if (lang) {
       setCurrentLanguage(lang)
       localStorage.setItem("isolele-language", code)
@@ -120,7 +139,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   return (
     <LanguageContext.Provider value={{ currentLanguage, setLanguage, t, translateText }}>
-      {mounted ? children : <>{children}</>}
+      {children}
     </LanguageContext.Provider>
   )
 }

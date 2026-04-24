@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { characterProfiles, type CharacterSlug } from "./characters.data";
+import { isSupportedLocale, type SupportedLocale, DEFAULT_LOCALE } from "@/lib/i18n/locales";
 
 export function getCharacterBySlug(slug: string) {
   return characterProfiles[slug as CharacterSlug];
@@ -9,7 +10,8 @@ export function getCharacterStaticParams() {
   return Object.keys(characterProfiles).map((character) => ({ character }));
 }
 
-export function getCharacterMetadata(slug: string): Metadata {
+export function getCharacterMetadata(locale: string, slug: string): Metadata {
+  const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
   const profile = getCharacterBySlug(slug);
 
   if (!profile) {
@@ -21,16 +23,21 @@ export function getCharacterMetadata(slug: string): Metadata {
 
   const pageTitle = `ISOLELE | ${profile.name}`;
   const pageDescription = `Discover ${profile.name} - ${profile.title} in the ISOLELE universe.`;
+  const path = `/${safeLocale}/characters/${slug}`;
 
   return {
     title: pageTitle,
     description: pageDescription,
     alternates: {
-      canonical: `/characters/${slug}`,
+      canonical: path,
+      languages: {
+        fr: `/fr/characters/${slug}`,
+        en: `/en/characters/${slug}`,
+      },
     },
     openGraph: {
       type: "article",
-      url: `/characters/${slug}`,
+      url: path,
       title: pageTitle,
       description: pageDescription,
       images: [

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { AppProviders } from "@/providers/app-providers";
-import { PublicShell } from "@/components/public-shell";
-import { absoluteUrl, getSiteUrl } from "@/shared/seo/site-url";
+import { headers } from "next/headers";
+import { absoluteUrl, getSiteUrl } from "@/lib/seo/site-url";
+import { DEFAULT_LOCALE, isSupportedLocale } from "@/lib/i18n/locales";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -62,21 +62,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const localeHeader = requestHeaders.get("x-locale");
+  const locale = isSupportedLocale(localeHeader) ? localeHeader : DEFAULT_LOCALE;
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <AppProviders>
-          <PublicShell>{children}</PublicShell>
-        </AppProviders>
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

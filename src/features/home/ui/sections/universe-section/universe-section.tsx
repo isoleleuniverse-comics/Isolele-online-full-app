@@ -3,14 +3,14 @@
 import { useRef } from "react";
 import { useInView } from "framer-motion";
 import { useTheme } from "@/lib/theme-context";
-import { useLanguage } from "@/lib/language-context";
+import { useHomePageContent } from "@/features/home/model";
 import { UNIVERSE_PILLARS, UNIVERSE_BACKGROUND_IMAGES } from "./data";
 import { UniverseSectionHeader } from "./universe-section-header";
 import { UniversePillarCard } from "./universe-pillar-card";
 
 export function UniverseSection() {
   const { currentTheme } = useTheme();
-  const { t } = useLanguage();
+  const { universe } = useHomePageContent();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -36,19 +36,21 @@ export function UniverseSection() {
           textPrimary={currentTheme.colors.textPrimary}
           accentPrimary={currentTheme.colors.accentPrimary}
           textSecondary={currentTheme.colors.textSecondary}
-          t={t}
+          title={universe.title}
+          subtitle={universe.subtitle}
+          description={universe.description}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {UNIVERSE_PILLARS.map((pillar, index) => (
             <UniversePillarCard
               key={pillar.key}
-              pillar={pillar}
+              pillar={{ ...pillar, ...universe.pillars[index] }}
               index={index}
               isInView={isInView}
               backgroundImage={UNIVERSE_BACKGROUND_IMAGES[index]}
               theme={currentTheme}
-              t={t}
+              discoverMoreLabel={universe.discoverMoreLabel}
             />
           ))}
         </div>

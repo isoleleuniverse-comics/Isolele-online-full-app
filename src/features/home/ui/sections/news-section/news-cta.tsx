@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 interface NewsCtaProps {
   isInView: boolean;
   accentColor: string;
+  label: string;
 }
 
-export function NewsCta({ isInView, accentColor }: NewsCtaProps) {
+export function NewsCta({ isInView, accentColor, label }: NewsCtaProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -28,7 +29,7 @@ export function NewsCta({ isInView, accentColor }: NewsCtaProps) {
           }}
           whileTap={{ scale: 0.95 }}
         >
-          VIEW ALL NEWS
+          {label}
         </motion.button>
       </Link>
     </motion.div>

@@ -19,8 +19,9 @@ import {
   X,
 } from "lucide-react";
 import { useTheme, themes } from "@/lib/theme-context";
-import { languages, useLanguage } from "@/lib/language-context";
+import { publicLanguages, useLanguage } from "@/lib/language-context";
 import { useCart } from "@/lib/cart-context";
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES, withLocale } from "@/lib/i18n/locales";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -61,11 +62,7 @@ function HeaderBackButton({ color }: { color: string }) {
   return (
     <button
       onClick={() => {
-        if (window.history.length > 1) {
-          router.back();
-          return;
-        }
-        router.push("/");
+        router.back();
       }}
       className="inline-flex h-10 w-10 items-center justify-center rounded-full border transition-colors hover:bg-white/5"
       style={{ color, borderColor: `${color}45` }}
@@ -78,9 +75,30 @@ function HeaderBackButton({ color }: { color: string }) {
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const router = useRouter();
   const { currentTheme, setTheme } = useTheme();
-  const { currentLanguage, setLanguage, t } = useLanguage();
+  const { setLanguage, t } = useLanguage();
   const { totalItems, setIsCartOpen } = useCart();
+
+  const firstSegment = pathname.split("/")[1];
+  const locale = (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
+    ? (firstSegment as (typeof SUPPORTED_LOCALES)[number])
+    : DEFAULT_LOCALE;
+  const pathnameNoLocale =
+    (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
+      ? pathname.replace(new RegExp(`^/${firstSegment}`), "") || "/"
+      : pathname;
+  const isHomePage = pathnameNoLocale === "/";
+
+  function localizedHref(href: string) {
+    return withLocale(locale, href);
+  }
+
+  function switchLocale(nextLocale: (typeof SUPPORTED_LOCALES)[number]) {
+    // Keep the same page when possible, but switch locale prefix.
+    const nextPath = withLocale(nextLocale, pathnameNoLocale);
+    router.push(nextPath);
+  }
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -96,8 +114,8 @@ export function SiteHeader() {
       >
         <div className="mx-auto grid h-20 max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-6 px-6">
           <div className="flex items-center gap-4">
-            <HeaderBackButton color={currentTheme.colors.accentPrimary} />
-            <Link href="/" className="inline-flex items-center gap-2">
+            {!isHomePage ? <HeaderBackButton color={currentTheme.colors.accentPrimary} /> : <div className="h-10 w-10" />}
+            <Link href={localizedHref("/")} className="inline-flex items-center gap-2">
               <motion.div
                 whileHover={{ scale: 1.04 }}
                 animate={{ y: [0, -4, 0] }}
@@ -120,7 +138,7 @@ export function SiteHeader() {
 
           <nav className="mx-auto flex items-center gap-7">
             {navItems.map((item) => {
-              const active = isActive(pathname, item.href);
+              const active = isActive(pathnameNoLocale, item.href);
 
               return (
                 <div
@@ -130,7 +148,7 @@ export function SiteHeader() {
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <Link
-                    href={item.href}
+                    href={localizedHref(item.href)}
                     className="inline-flex items-center text-sm font-semibold tracking-wide"
                     style={{ color: active ? currentTheme.colors.accentPrimary : currentTheme.colors.textSecondary }}
                   >
@@ -155,7 +173,7 @@ export function SiteHeader() {
                       }}
                     >
                       <Link
-                        href="/characters"
+                        href={localizedHref("/characters")}
                         className="block border-b px-4 py-3 text-sm font-semibold"
                         style={{
                           color: currentTheme.colors.accentPrimary,
@@ -167,7 +185,7 @@ export function SiteHeader() {
                       {characterLinks.map((character) => (
                         <Link
                           key={character.href}
-                          href={character.href}
+                          href={localizedHref(character.href)}
                           className="block px-4 py-2 text-sm transition-colors hover:bg-black/10"
                           style={{ color: currentTheme.colors.textSecondary }}
                         >
@@ -191,7 +209,7 @@ export function SiteHeader() {
                 }}
               >
                 <Globe className="h-3.5 w-3.5" />
-                {currentLanguage.code}
+                {locale}
                 <ChevronDown className="h-3.5 w-3.5" />
               </button>
               <div
@@ -201,14 +219,20 @@ export function SiteHeader() {
                   borderColor: `${currentTheme.colors.accentPrimary}35`,
                 }}
               >
-                {languages.map((language) => (
+                {publicLanguages.map((language) => (
                   <button
                     key={language.code}
-                    onClick={() => setLanguage(language.code)}
+                    onClick={() => {
+                      const nextLocale = language.code as (typeof SUPPORTED_LOCALES)[number];
+                      // Keep existing app-level translations in sync (if present),
+                      // but URL is the source of truth for SEO.
+                      setLanguage(nextLocale);
+                      switchLocale(nextLocale);
+                    }}
                     className="block w-full px-3 py-2 text-left text-xs uppercase tracking-wider transition-colors hover:bg-black/5"
                     style={{
                       color:
-                        language.code === currentLanguage.code
+                        language.code === locale
                           ? currentTheme.colors.accentPrimary
                           : currentTheme.colors.textSecondary,
                     }}
@@ -274,9 +298,9 @@ export function SiteHeader() {
 
       <header className="fixed left-0 right-0 top-0 z-50 border-b lg:hidden" style={{ backgroundColor: "#0A0A0AEE", borderColor: "#FFFFFF1F" }}>
         <div className="mx-auto grid h-16 max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-2 px-4">
-          <HeaderBackButton color="#F6B800" />
+          {!isHomePage ? <HeaderBackButton color="#F6B800" /> : <div className="h-10 w-10" />}
 
-          <Link href="/" className="mx-auto inline-flex items-center justify-center">
+          <Link href={localizedHref("/")} className="mx-auto inline-flex items-center justify-center">
             <Image
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0030-kydmLlQEI33of4mfyTaGi2r6TNvZWz.jpg"
               alt="ISOLELE"
@@ -314,14 +338,14 @@ export function SiteHeader() {
               {navItems.map((item) => (
                 <Link
                   key={item.key}
-                  href={item.href}
+                  href={localizedHref(item.href)}
                   onClick={() => setMobileMenuOpen(false)}
                   className="rounded-lg px-3 py-2 text-sm font-semibold"
                   style={{
-                    backgroundColor: isActive(pathname, item.href)
+                    backgroundColor: isActive(pathnameNoLocale, item.href)
                       ? `${currentTheme.colors.accentPrimary}20`
                       : `${currentTheme.colors.backgroundSecondary}99`,
-                    color: isActive(pathname, item.href) ? currentTheme.colors.accentPrimary : currentTheme.colors.textSecondary,
+                    color: isActive(pathnameNoLocale, item.href) ? currentTheme.colors.accentPrimary : currentTheme.colors.textSecondary,
                   }}
                 >
                   {t(item.key)}
@@ -334,18 +358,23 @@ export function SiteHeader() {
                 Language
               </p>
               <div className="flex flex-wrap gap-2">
-                {languages.map((language) => (
+                {publicLanguages.map((language) => (
                   <button
                     key={language.code}
-                    onClick={() => setLanguage(language.code)}
+                    onClick={() => {
+                      const nextLocale = language.code as (typeof SUPPORTED_LOCALES)[number];
+                      setLanguage(nextLocale);
+                      switchLocale(nextLocale);
+                      setMobileMenuOpen(false);
+                    }}
                     className="rounded-full border px-3 py-1 text-xs uppercase"
                     style={{
                       borderColor:
-                        language.code === currentLanguage.code
+                        language.code === locale
                           ? currentTheme.colors.accentPrimary
                           : `${currentTheme.colors.accentPrimary}30`,
                       color:
-                        language.code === currentLanguage.code
+                        language.code === locale
                           ? currentTheme.colors.accentPrimary
                           : currentTheme.colors.textSecondary,
                     }}
@@ -387,11 +416,11 @@ export function SiteHeader() {
           }}
         >
           {mobileNav.map((item) => {
-            const active = isActive(pathname, item.href);
+            const active = isActive(pathnameNoLocale, item.href);
             const Icon = item.icon;
 
             return (
-              <Link key={item.href} href={item.href} aria-label={item.label}>
+              <Link key={item.href} href={localizedHref(item.href)} aria-label={item.label}>
                 <motion.span
                   whileTap={{ scale: 0.9 }}
                   className={cn("inline-flex rounded-2xl p-3")}

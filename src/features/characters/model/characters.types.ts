@@ -7,6 +7,7 @@ export interface Character {
   origin: string;
   color: string;
   image: string;
+  alt?: string;
   description: string;
   powers: string[];
   powerIcons: LucideIcon[];
@@ -22,6 +23,7 @@ export interface CharacterProfile {
   title: string;
   origin: string;
   image: string;
+  alt?: string;
   description: string;
   powers: string[];
 }

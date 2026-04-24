@@ -10,7 +10,7 @@ interface UniversePillarCardProps {
   isInView: boolean;
   backgroundImage?: string;
   theme: Theme;
-  t: (key: string) => string;
+  discoverMoreLabel: string;
 }
 
 export function UniversePillarCard({
@@ -19,7 +19,7 @@ export function UniversePillarCard({
   isInView,
   backgroundImage,
   theme,
-  t,
+  discoverMoreLabel,
 }: UniversePillarCardProps) {
   return (
     <motion.div
@@ -69,10 +69,10 @@ export function UniversePillarCard({
         <div className="relative z-10 flex-1 flex flex-col">
           <div className="bg-[#F5F0E8]/90 rounded-lg p-4 flex-1">
             <h3 className="text-xl font-bold tracking-wide mb-4" style={{ color: "#000000" }}>
-              {t(pillar.titleKey)}
+              {pillar.title}
             </h3>
             <p className="text-sm leading-relaxed" style={{ color: "#000000" }}>
-              {t(pillar.descriptionKey)}
+              {pillar.description}
             </p>
           </div>
         </div>
@@ -87,7 +87,7 @@ export function UniversePillarCard({
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {t("discover_more")}
+            {discoverMoreLabel}
             <ArrowRight className="w-4 h-4" />
           </motion.button>
         </Link>

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useTheme } from "@/lib/theme-context"
-import { useLanguage } from "@/lib/language-context"
+import { useHomePageContent } from "@/features/home/model"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
 import Link from "next/link"
@@ -16,7 +16,7 @@ const FIREWORK_PARTICLES = Array.from({ length: 60 }).map((_, i) => ({
 
 export function CtaSection() {
   const { currentTheme } = useTheme()
-  const { t } = useLanguage()
+  const { cta } = useHomePageContent()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
@@ -172,7 +172,7 @@ export function CtaSection() {
               ease: "easeInOut",
             }}
           >
-            {t("cta_join_legend")}
+            {cta.joinLegendTitle}
           </motion.h2>
         </motion.div>
 
@@ -186,7 +186,7 @@ export function CtaSection() {
         >
           <Image
             src="/heroes/legends-crew.jpg"
-            alt="The Legends Crew"
+            alt={cta.imageAlt}
             fill
             sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 30vw"
             className="object-cover"
@@ -206,7 +206,7 @@ export function CtaSection() {
           className="text-lg sm:text-xl leading-relaxed mb-12 max-w-2xl mx-auto"
           style={{ color: currentTheme.colors.textSecondary }}
         >
-          {t("cta_description")}
+          {cta.description}
         </motion.p>
 
         {/* Buttons */}
@@ -240,7 +240,7 @@ export function CtaSection() {
                   ease: "easeInOut",
                 }}
               />
-              <span className="relative z-10">{t('cta_explore')}</span>
+              <span className="relative z-10">{cta.exploreLabel}</span>
             </motion.button>
           </Link>
           
@@ -257,7 +257,7 @@ export function CtaSection() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            {t('cta_newsletter')}
+            {cta.newsletterLabel}
           </motion.button>
         </motion.div>
 

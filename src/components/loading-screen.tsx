@@ -21,7 +21,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
   useEffect(() => {
     const phase1Target = 75;
-    const phase1Duration = 1500;
+    const phase1Duration = 1000;
     const phase1Interval = 20;
     const phase1Increment = phase1Target / (phase1Duration / phase1Interval);
 

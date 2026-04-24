@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import type { Character, SupportedLang } from "./types";
+import type { Character } from "./types";
 
 interface CharacterCardProps {
   character: Character;
@@ -10,7 +10,6 @@ interface CharacterCardProps {
   totalCharacters: number;
   isInView: boolean;
   discoverLabel: string;
-  lang: SupportedLang;
   colors: {
     background: string;
     backgroundSecondary: string;
@@ -25,7 +24,6 @@ export function CharacterCard({
   totalCharacters,
   isInView,
   discoverLabel,
-  lang,
   colors,
 }: CharacterCardProps) {
   return (
@@ -33,7 +31,7 @@ export function CharacterCard({
       key={`${character.id}-${Math.floor(index / totalCharacters)}`}
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.2 + (index % totalCharacters) * 0.1 }}
+      transition={{ duration: 10, delay: 0.2 + (index % totalCharacters) * 0.1 }}
       className="flex-shrink-0 w-72 group"
     >
       <Link href={`/characters/${character.id}`}>
@@ -75,7 +73,7 @@ export function CharacterCard({
           {character.name}
         </h3>
         <p className="text-xs font-medium mb-3 line-clamp-2" style={{ color: character.color }}>
-          {character.title[lang] || character.title.en}
+          {character.title}
         </p>
 
         <motion.span

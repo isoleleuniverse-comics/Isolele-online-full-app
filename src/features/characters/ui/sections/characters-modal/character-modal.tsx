@@ -99,7 +99,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
               className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-black tracking-widest"
               style={{ backgroundColor: character.color, color: "#000000" }}
             >
-              DISCOVER MORE
+              DISCOVER {character.name.toUpperCase()}
             </Link>
           </div>
         </div>

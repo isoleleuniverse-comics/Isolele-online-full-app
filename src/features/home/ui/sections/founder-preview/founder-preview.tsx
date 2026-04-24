@@ -1,13 +1,13 @@
 "use client";
 
 import { useTheme } from "@/lib/theme-context";
-import { useLanguage } from "@/lib/language-context";
+import { useHomePageContent } from "@/features/home/model";
 import { FounderPhotoPanel } from "./founder-photo-panel";
 import { FounderTextPanel } from "./founder-text-panel";
 
 export function FounderPreview() {
   const { currentTheme } = useTheme();
-  const { t } = useLanguage();
+  const { founder } = useHomePageContent();
 
   return (
     <section
@@ -18,17 +18,17 @@ export function FounderPreview() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <FounderPhotoPanel
             theme={currentTheme}
-            locationLabel={t("founder_location")}
-            roleLabel={t("founder_creator_author")}
+            locationLabel={founder.locationLabel}
+            roleLabel={founder.roleLabel}
           />
 
           <FounderTextPanel
             theme={currentTheme}
-            title={t("founder_title")}
-            subtitle={t("founder_subtitle")}
-            description={t("founder_description")}
-            quote={t("founder_quote")}
-            ctaLabel={t("founder_cta")}
+            title={founder.title}
+            subtitle={founder.subtitle}
+            description={founder.description}
+            quote={founder.quote}
+            ctaLabel={founder.ctaLabel}
           />
         </div>
       </div>

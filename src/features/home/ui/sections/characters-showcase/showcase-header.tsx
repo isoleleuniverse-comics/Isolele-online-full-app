@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import type { ShowcaseLabels } from "./types";
 
 interface ShowcaseHeaderProps {
-  labels: ShowcaseLabels;
+  labels: ShowcaseLabels & { eyebrow: string };
   isInView: boolean;
   accentColor: string;
   textPrimary: string;
@@ -27,7 +27,7 @@ export function ShowcaseHeader({
         className="text-xs font-bold tracking-[0.4em] mb-3"
         style={{ color: accentColor }}
       >
-        ISOLELE UNIVERSE
+        {labels.eyebrow}
       </motion.p>
       <motion.h2
         initial={{ opacity: 0, y: 20 }}

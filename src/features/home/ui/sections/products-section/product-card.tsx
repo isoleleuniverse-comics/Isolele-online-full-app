@@ -4,12 +4,11 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
 import { PRODUCT_BLUR_DATA_URL, PRODUCT_FALLBACK_IMAGE } from "./data";
-import type { ProductItem } from "./types";
+import type { HomeProductContent } from "@/features/home/content/types";
 
 interface ProductCardProps {
-  product: ProductItem;
+  product: HomeProductContent;
   index: number;
-  t: (key: string) => string;
   addItem: (item: {
     id: string;
     name: string;
@@ -17,8 +16,9 @@ interface ProductCardProps {
     price: number;
     originalPrice?: number;
     image: string;
-    type: ProductItem["type"];
+    type: HomeProductContent["type"];
   }) => void;
+  addToCartLabel: string;
   colors: {
     background: string;
     backgroundSecondary: string;
@@ -28,7 +28,7 @@ interface ProductCardProps {
   };
 }
 
-export function ProductCard({ product, index, t, addItem, colors }: ProductCardProps) {
+export function ProductCard({ product, index, addItem, addToCartLabel, colors }: ProductCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -41,7 +41,7 @@ export function ProductCard({ product, index, t, addItem, colors }: ProductCardP
         border: `1px solid ${colors.accentPrimary}20`,
       }}
     >
-      {product.badge_key && (
+      {product.badge && (
         <div
           className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full text-xs font-bold"
           style={{
@@ -49,14 +49,14 @@ export function ProductCard({ product, index, t, addItem, colors }: ProductCardP
             color: colors.background,
           }}
         >
-          {t(product.badge_key)}
+          {product.badge}
         </div>
       )}
 
       <div className="relative aspect-[3/4] overflow-hidden">
         <Image
           src={product.image || PRODUCT_FALLBACK_IMAGE}
-          alt={t(product.name_key)}
+          alt={product.name}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -78,8 +78,8 @@ export function ProductCard({ product, index, t, addItem, colors }: ProductCardP
             onClick={() =>
               addItem({
                 id: product.id,
-                name: t(product.name_key),
-                description: t(product.desc_key),
+                name: product.name,
+                description: product.description,
                 price: product.price,
                 originalPrice: product.originalPrice,
                 image: product.image,
@@ -95,17 +95,17 @@ export function ProductCard({ product, index, t, addItem, colors }: ProductCardP
             whileTap={{ scale: 0.95 }}
           >
             <ShoppingCart className="h-5 w-5" />
-            {t("shop_add_to_cart")}
+            {addToCartLabel}
           </motion.button>
         </div>
       </div>
 
       <div className="p-6">
         <h3 className="text-xl font-bold mb-2" style={{ color: colors.textPrimary }}>
-          {t(product.name_key)}
+          {product.name}
         </h3>
         <p className="text-sm mb-4" style={{ color: colors.textSecondary }}>
-          {t(product.desc_key)}
+          {product.description}
         </p>
         <div className="flex items-center gap-3">
           <span className="text-2xl font-black" style={{ color: colors.accentPrimary }}>

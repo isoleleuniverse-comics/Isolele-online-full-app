@@ -3,15 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useTheme } from "@/lib/theme-context";
-import { useLanguage } from "@/lib/language-context";
-import { CHARACTERS, CHARACTER_SECTION_TRANSLATIONS } from "./data";
-import type { SupportedLang } from "./types";
+import { useHomePageContent } from "@/features/home/model";
 import { CharacterCard } from "./character-card";
 
 export function CharactersSection() {
   const { currentTheme } = useTheme();
-  const { currentLanguage } = useLanguage();
-  const lang = currentLanguage.code as SupportedLang;
+  const { characters } = useHomePageContent();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -32,10 +29,7 @@ export function CharactersSection() {
     return () => clearInterval(animationId);
   }, [isHovered]);
 
-  const t = (key: keyof typeof CHARACTER_SECTION_TRANSLATIONS) =>
-    CHARACTER_SECTION_TRANSLATIONS[key]?.[lang] || CHARACTER_SECTION_TRANSLATIONS[key]?.en || "";
-
-  const triplicatedCharacters = [...CHARACTERS, ...CHARACTERS, ...CHARACTERS];
+  const triplicatedCharacters = [...characters.items, ...characters.items, ...characters.items];
 
   return (
     <section ref={ref} className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ backgroundColor: currentTheme.colors.background }}>
@@ -49,7 +43,7 @@ export function CharactersSection() {
               className="text-4xl sm:text-5xl font-black tracking-wider mb-2"
               style={{ color: currentTheme.colors.textPrimary }}
             >
-              {t("title")}
+              {characters.title}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, x: -30 }}
@@ -58,7 +52,7 @@ export function CharactersSection() {
               className="text-lg"
               style={{ color: currentTheme.colors.textSecondary }}
             >
-              {t("subtitle")}
+              {characters.subtitle}
             </motion.p>
           </div>
         </div>
@@ -75,10 +69,9 @@ export function CharactersSection() {
               key={`${character.id}-${index}`}
               character={character}
               index={index}
-              totalCharacters={CHARACTERS.length}
+              totalCharacters={characters.items.length}
               isInView={isInView}
-              discoverLabel={t("discover")}
-              lang={lang}
+              discoverLabel={characters.discoverLabel}
               colors={{
                 background: currentTheme.colors.background,
                 backgroundSecondary: currentTheme.colors.backgroundSecondary,

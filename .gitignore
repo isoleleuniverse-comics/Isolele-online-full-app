@@ -61,7 +61,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
-.gitignore
+.env.*.local
+!.env.example
+!.env*.example
 
 # vercel
 .vercel
@@ -69,3 +71,24 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+
+# sensitive files
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.jks
+*.kdbx
+*.ovpn
+*.mobileprovision
+*.pem
+
+# local databases / dumps
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+*.dump

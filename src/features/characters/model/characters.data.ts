@@ -14,9 +14,10 @@ export const characters: Character[] = [
   {
     id: "zaiire-kongo",
     name: "ZAIIRE KONGO",
-    title: "The Prince of Kongo",
+    title: "The Prince of Kongo and the Necklace of Destiny",
     origin: "Kingdom of Kongo / Central Africa",
     color: "#F6B800",
+    alt:"Zaiire Prince of Kongo Black African Demi-God Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_20260321_113436-ktAJOL2e0SS0pkTY6aPnn7aBKxr3pq.jpg",
     description:
       "Forged in the heart of Kongo, Zaiire carries ancestral memory and royal force. Chosen by the Necklace of Destiny, he walks between spirit and present to restore what history tried to erase.",
@@ -29,6 +30,7 @@ export const characters: Character[] = [
     title: "The Rising Kandake",
     origin: "Kingdom of Makanda / Central Africa",
     color: "#C0392B",
+    alt:"Kimoya Kandake Warrior Queen Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0046-7WKAbuvZv3sSAPHzxduIM9oV8vbLfn.jpg",
     description:
       "Kimoya is heir to a hidden empire awakened by the Sacred Flame. She does not ask for power. She reclaims it as warrior, strategist, and sovereign.",
@@ -41,6 +43,7 @@ export const characters: Character[] = [
     title: "Wise Ancestor of Deep Roots",
     origin: "Kongo / Bantu Civilization",
     color: "#2E8B57",
+    alt:"Madiba Mandela Wise Ancestor of Deep Roots Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0060-fjvA6s0PWIrFYpgRmSxqtJtCg2z0PZ.jpg",
     description:
       "A living symbol of resilience and justice, Madiba channels generational wisdom and unbreakable spirit for his people.",
@@ -53,6 +56,7 @@ export const characters: Character[] = [
     title: "Queen Mother of the Black Lion",
     origin: "Katiopa / Sky Realm",
     color: "#D4A017",
+    alt:"Zaira Mbube Queen Mother of the Black Lion Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0044-rWntBpXYHtd3w6EwtDv3MbkUwWwxol.jpg",
     description:
       "Half lioness, half queen, fully divine. Zaira protects royal bloodlines and guards the ancient lion lineage.",
@@ -65,6 +69,7 @@ export const characters: Character[] = [
     title: "Lord of All African Masks",
     origin: "Bapindi / Kongo Spirit World",
     color: "#8B4513",
+    alt:"The Mask of Bapindi Lord of All African Masks Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0015-KCR64wfCzZ0TDqdIlus8JsB6fPp4mq.jpg",
     description:
       "An ancient spirit warrior carrying the sacred masks of civilizations. Guardian of boundaries between living and ancestral realms.",
@@ -77,6 +82,7 @@ export const characters: Character[] = [
     title: "Flame of Forgotten Queens",
     origin: "Kingdom of Kongo",
     color: "#228B22",
+    alt:"Kimpa Vita Flame of Forgotten Queens Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0059-O7aKmrKHSnpfJfkoG3fKLT2bmdspZi.jpg",
     description:
       "Prophetess, strategist, and spiritual force. Her fire reveals truth and powers every generation that refuses silence.",
@@ -89,6 +95,7 @@ export const characters: Character[] = [
     title: "Street Queen of Kinshasa",
     origin: "Kinshasa / Congo",
     color: "#1E90FF",
+    alt:"Kina Kin Street Queen of Kinshasa Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0012-oFW5VKECIKunXnoACjSPODhAohUeRr.jpg",
     description:
       "Urban tactician and cultural icon. Kina represents the new generation of African power: sharp, free, and unstoppable.",
@@ -101,6 +108,7 @@ export const characters: Character[] = [
     title: "Iron Ape of Kongo",
     origin: "Sacred Forest of Kongo",
     color: "#CD7F32",
+    alt:"Likaku Kongolo Iron Ape of Kongo Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0058-WFXl6BNH7353hEoa8dZfqd2Hoek4os.jpg",
     description:
       "Guardian of sacred forests and living memory. Likaku channels ancient wisdom and brutal strength in defense of balance.",
@@ -113,6 +121,7 @@ export const characters: Character[] = [
     title: "Keeper of Primordial Flame",
     origin: "Ancient Kongo / Spirit Realm",
     color: "#4B0082",
+    alt:"The Kongo Spirit Keeper of Primordial Flame Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260307-WA0076-ywtdNJDmpYOSuHZFbchOdTBA7YPuF7.jpg",
     description:
       "A primordial entity draped in memory and ritual power. The Kongo Spirit keeps the first flame and commands ancestral legions.",
@@ -125,6 +134,7 @@ export const characters: Character[] = [
     title: "The King Who Escaped Time",
     origin: "Quilombo / Brazil-Kongo Diaspora",
     color: "#DAA520",
+    alt:"King Ganga Zumba The King Who Escaped Time Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0042-U3FGzRErAsmW237T4DTDS4mTjDqFPV.jpg",
     description:
       "A symbol of freedom claimed, never given. Ganga Zumba turns cultural memory into armor and strategy into liberation.",
@@ -137,6 +147,7 @@ export const characters: Character[] = [
     title: "Lord of Kinshasa",
     origin: "Kinshasa / Kingdom of Kongo",
     color: "#4169E1",
+      alt:"Mokele Lord of Kinshasa Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260114-WA0025-nygOfWmCGHXEcn115WhgUrjIo3gXUC.jpg",
     description:
       "From street survival to total authority, Mokele rises as a force with tactical intelligence and relentless will.",
@@ -149,6 +160,7 @@ export const characters: Character[] = [
     title: "Tiger Warrior of Africa",
     origin: "Katiopa / African Savanna",
     color: "#FF4500",
+    alt:"Simbira La Tigressa Tiger Warrior of Africa Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0055-UpNoGP6IGeScn3KNfyvTWl9GPELVZa.jpg",
     description:
       "Ferocious and precise, Simbira turns ancestral pain into disciplined force and battlefield dominance.",
@@ -161,6 +173,7 @@ export const characters: Character[] = [
     title: "The Lion Warrior Queen",
     origin: "Makanda Dynasty",
     color: "#FFD700",
+    alt:"Kimoya The Lion Warrior Queen Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0013-6Xt165l5rPK1nNYEUoAqZBFN42ioH4.jpg",
     description:
       "Golden armored and battle-tested, Kimoya commands lion force and dynasty-level strategy.",
@@ -173,6 +186,7 @@ export const characters: Character[] = [
     title: "Leopard Phantom King",
     origin: "Kivu / Kinshasa",
     color: "#DAA520",
+    alt:"Zaiko Leopard Phantom King Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0026-jI2mhzc6ZvpNUAzVeFPsfvlfls2Au3.jpg",
     description:
       "Style as power, presence as dominance. Zaiko redefines urban sovereignty through cultural force and precision.",
@@ -269,6 +283,7 @@ export const characterProfiles = {
     name: "BAMBULA",
     title: "Child of Rhythm",
     origin: "Kongo Spirit Routes",
+    alt:"Bambula Child of Rhythm Black African Superhero ISOLELE Comics",
     image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
     description:
       "Before words, there was rhythm. Bambula keeps the sacred pulse alive between spirit and human worlds. He fights not for destruction, but for memory, dignity, and cultural continuity.",

@@ -3,15 +3,14 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { useTheme } from "@/lib/theme-context";
-import { useLanguage } from "@/lib/language-context";
-import { FASHION_IMAGES } from "./data";
+import { useHomePageContent } from "@/features/home/model";
 import { FashionPreviewHeader } from "./fashion-preview-header";
 import { FashionPreviewGrid } from "./fashion-preview-grid";
 import { FashionPreviewCta } from "./fashion-preview-cta";
 
 export function FashionPreview() {
   const { currentTheme } = useTheme();
-  const { t } = useLanguage();
+  const { fashion } = useHomePageContent();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -24,16 +23,16 @@ export function FashionPreview() {
           transition={{ duration: 0.6 }}
         >
           <FashionPreviewHeader
-            title={t("fashion_collection_title")}
-            subtitle={t("fashion_collection_subtitle")}
+            title={fashion.title}
+            subtitle={fashion.subtitle}
             textPrimary={currentTheme.colors.textPrimary}
             textSecondary={currentTheme.colors.textSecondary}
             isInView={isInView}
           />
 
-          <FashionPreviewGrid images={FASHION_IMAGES} isInView={isInView} t={t} />
+          <FashionPreviewGrid images={fashion.images} isInView={isInView} />
 
-          <FashionPreviewCta label={t("fashion_view_full")} accentPrimary={currentTheme.colors.accentPrimary} />
+          <FashionPreviewCta label={fashion.viewFullLabel} accentPrimary={currentTheme.colors.accentPrimary} />
         </motion.div>
       </div>
     </section>
