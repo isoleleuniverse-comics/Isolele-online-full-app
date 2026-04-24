@@ -16,6 +16,10 @@
 public-full.xml# production
 /build
 /dist
+public-full.xml
+public.txt
+repomix.txt
+test-gemini.js
 
 # misc
 .DS_Store
@@ -92,3 +96,10 @@ next-env.d.ts
 *.sqlite3
 *.bak
 *.dump
+
+# admin (temporary exclusion from deploy workflow)
+/src/app/(admin)/
+/src/components/admin/
+/src/lib/auth/require-admin.ts
+/scripts/init-admin.js
+/docs/admin-characters/
