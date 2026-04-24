@@ -7,11 +7,9 @@ import {
 } from "@/lib/i18n/locales";
 
 function shouldIgnorePath(pathname: string) {
-  // Skip Next internals, API, admin, and static assets.
+  // Skip Next internals, API, and static assets.
   if (pathname.startsWith("/_next")) return true;
   if (pathname.startsWith("/api")) return true;
-  if (pathname.startsWith("/admin")) return true;
-  if (pathname === "/login") return true;
   if (pathname === "/robots.txt" || pathname === "/sitemap.xml") return true;
   return pathname.includes(".");
 }
@@ -31,6 +29,15 @@ function detectLocale(req: NextRequest) {
 
 export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
+
+  // Public-only mode: block admin and login surfaces.
+  if (pathname.startsWith("/admin") || pathname === "/login" || pathname.startsWith("/login/")) {
+    const locale = detectLocale(req);
+    const url = req.nextUrl.clone();
+    url.pathname = `/${locale}`;
+    url.search = "";
+    return NextResponse.redirect(url);
+  }
 
   if (shouldIgnorePath(pathname)) {
     return NextResponse.next();
