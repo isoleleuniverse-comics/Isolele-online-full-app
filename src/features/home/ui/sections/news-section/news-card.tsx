@@ -20,7 +20,7 @@ export function NewsCard({ article, index, isInView, theme, minutesReadLabel, re
     <motion.article
       initial={{ opacity: 0, y: 32 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-      transition={{ duration: 0.58, delay: 0.14 + index * 0.14 }}
+      transition={{ duration: 0.5, delay: 0.6 + index * 0.14 }}
       className="group"
     >
       <Link href="/#hero">

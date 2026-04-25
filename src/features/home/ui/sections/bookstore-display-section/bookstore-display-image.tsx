@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 import type { BookstoreDisplayContent } from "./types";
 
 interface BookstoreDisplayImageProps {
@@ -8,7 +11,13 @@ interface BookstoreDisplayImageProps {
 
 export function BookstoreDisplayImage({ content, blurDataURL }: BookstoreDisplayImageProps) {
   return (
-    <div className="w-full rounded-lg overflow-hidden shadow-lg">
+    <motion.div
+      initial={{ opacity: 0, y: 28, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.2 }}
+      transition={{ duration: 1, ease: "easeOut" }}
+      className="w-full rounded-lg overflow-hidden shadow-lg"
+    >
       <Image
         src={content.imageSrc}
         alt={content.imageAlt}
@@ -20,6 +29,6 @@ export function BookstoreDisplayImage({ content, blurDataURL }: BookstoreDisplay
         placeholder="blur"
         blurDataURL={blurDataURL}
       />
-    </div>
+    </motion.div>
   );
 }
