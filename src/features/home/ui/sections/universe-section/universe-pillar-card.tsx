@@ -24,7 +24,7 @@ export function UniversePillarCard({
   return (
     <motion.div
       initial={{ opacity: 0, rotateY: 90 }}
-      animate={isInView ? { opacity: 1, rotateY: 0 } : {}}
+      animate={isInView ? { opacity: 1, rotateY: 0 } : { opacity: 0, rotateY: 90 }}
       transition={{ duration: 0.6, delay: 0.3 + index * 0.2 }}
       className="group relative h-full flex flex-col"
     >

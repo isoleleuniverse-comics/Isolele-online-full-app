@@ -29,9 +29,9 @@ export function CharacterCard({
   return (
     <motion.div
       key={`${character.id}-${Math.floor(index / totalCharacters)}`}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 10, delay: 0.2 + (index % totalCharacters) * 0.1 }}
+      initial={{ opacity: 0, y: 36 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 36 }}
+      transition={{ duration: 0.62, delay: 0.14 + (index % totalCharacters) * 0.1 }}
       className="flex-shrink-0 w-72 group"
     >
       <Link href={`/characters/${character.id}`}>

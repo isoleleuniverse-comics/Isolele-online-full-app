@@ -11,14 +11,15 @@ interface CulturalImpactCardProps {
 export function CulturalImpactCard({ impact, index, theme }: CulturalImpactCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial={{ opacity: 0, y: 24, scale: 0.94, rotateX: 10 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+      viewport={{ once: false, amount: 0.2 }}
+      transition={{ duration: 0.5, delay: 0.08 + index * 0.12 }}
       className="p-6 rounded-2xl"
       style={{
         backgroundColor: theme.colors.background,
         border: `1px solid ${theme.colors.accentPrimary}20`,
+        perspective: 1200,
       }}
     >
       <div

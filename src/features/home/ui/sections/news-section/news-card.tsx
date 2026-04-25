@@ -18,12 +18,12 @@ interface NewsCardProps {
 export function NewsCard({ article, index, isInView, theme, minutesReadLabel, readArticleLabel }: NewsCardProps) {
   return (
     <motion.article
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
+      initial={{ opacity: 0, y: 32 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
+      transition={{ duration: 0.58, delay: 0.14 + index * 0.14 }}
       className="group"
     >
-      <Link href={`/news/${article.id}`}>
+      <Link href="/#hero">
         <div
           className="rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2"
           style={{

@@ -14,9 +14,9 @@ export function FashionPreviewGrid({ images, isInView }: FashionPreviewGridProps
       {images.map((image, index) => (
         <motion.div
           key={index}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
+          initial={{ opacity: 0, y: 24, scale: 0.94 }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.94 }}
+          transition={{ duration: 0.58, delay: 0.12 + index * 0.14 }}
           className="relative aspect-square rounded-lg overflow-hidden group cursor-pointer"
         >
           <Image

@@ -12,7 +12,7 @@ export function StoryTextPanel({ content, theme }: StoryTextPanelProps) {
     <motion.div
       initial={{ opacity: 0, x: 50 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: false, amount: 0.2 }}
       transition={{ duration: 0.8 }}
     >
       <h2 className="text-3xl sm:text-4xl font-black mb-4" style={{ color: theme.colors.accentPrimary }}>
@@ -28,7 +28,7 @@ export function StoryTextPanel({ content, theme }: StoryTextPanelProps) {
             key={index}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className="leading-relaxed"
             style={{ color: theme.colors.textSecondary }}
@@ -41,7 +41,7 @@ export function StoryTextPanel({ content, theme }: StoryTextPanelProps) {
       <motion.blockquote
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: false, amount: 0.2 }}
         transition={{ duration: 0.8 }}
         className="text-2xl font-bold italic mb-8 pl-6 border-l-4"
         style={{

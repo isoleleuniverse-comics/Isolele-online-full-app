@@ -31,10 +31,10 @@ interface ProductCardProps {
 export function ProductCard({ product, index, addItem, addToCartLabel, colors }: ProductCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
+      viewport={{ once: false, amount: 0.2 }}
+      transition={{ duration: 0.58, delay: 0.12 + index * 0.14 }}
       className="group relative rounded-2xl overflow-hidden"
       style={{
         backgroundColor: colors.backgroundSecondary,

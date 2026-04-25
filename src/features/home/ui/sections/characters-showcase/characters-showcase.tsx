@@ -12,7 +12,7 @@ export function CharactersShowcase() {
   const { currentTheme } = useTheme();
   const { charactersShowcase } = useHomePageContent();
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { margin: "-80px" });
 
   return (
     <section

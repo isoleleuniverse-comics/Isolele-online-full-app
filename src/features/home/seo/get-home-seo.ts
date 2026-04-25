@@ -24,7 +24,7 @@ const metadataByLocale: Record<HomeLocale, HomeSeoConfig["metadata"]> = {
       url: "/en",
       images: [
         {
-          url: absoluteUrl("/favicon.ico"),
+          url: absoluteUrl("/LOGO.png"),
           width: 512,
           height: 512,
           alt: "ISOLELE icon",
@@ -61,7 +61,7 @@ const metadataByLocale: Record<HomeLocale, HomeSeoConfig["metadata"]> = {
       url: "/fr",
       images: [
         {
-          url: absoluteUrl("/favicon.ico"),
+          url: absoluteUrl("/LOGO.png"),
           width: 512,
           height: 512,
           alt: "ISOLELE icon",

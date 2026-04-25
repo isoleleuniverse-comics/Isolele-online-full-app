@@ -72,7 +72,7 @@ export function ProductsCarouselContent({
             {isEnglish ? "DISCOVER" : "DECOUVRIR"}
           </motion.button>
         </Link>
-        <Link href="/shop">
+        <Link href="/#hero">
           <motion.button
             className="px-8 py-4 rounded-lg text-lg font-bold tracking-wider transition-all border-2"
             style={{

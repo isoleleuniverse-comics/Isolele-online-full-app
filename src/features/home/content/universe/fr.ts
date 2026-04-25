@@ -12,7 +12,7 @@ export const universeFr: HomePageContent["universe"] = {
       title: "La Destinee n'est Pas un Choix",
       description:
         "C'est un appel. Chaque personnage est convoque par les lignees du sang, les esprits anciens et les histoires inachevees de leurs ancetres.",
-      href: "/the-founder",
+      href: "/#hero",
       characterName: "Zaiire",
     },
     {
@@ -20,7 +20,7 @@ export const universeFr: HomePageContent["universe"] = {
       title: "Les Lignees Royales Portent une Puissance Ancienne",
       description:
         "Le sang royal porte la memoire et la force des royaumes oublies. L'Afrique n'attend pas son futur. Elle se souvient de qui elle est.",
-      href: "/the-founder",
+      href: "/#hero",
       characterName: "Kimoya",
     },
     {
@@ -28,7 +28,7 @@ export const universeFr: HomePageContent["universe"] = {
       title: "Les Esprits Ancestraux Ne Meurent Jamais",
       description:
         "L'Afrique n'a jamais ete impuissante. La prophetie est revenue. Ce qui etait cache se revele de nouveau.",
-      href: "/the-founder",
+      href: "/#hero",
       characterName: "Bambula",
     },
     {
@@ -36,7 +36,7 @@ export const universeFr: HomePageContent["universe"] = {
       title: "Le Fondateur Visionnaire",
       description:
         "Le Roi Kufulula a fonde ISOLELE pour restaurer l'ame de la narration africaine et faire rayonner l'heritage du Kongo dans le monde.",
-      href: "/the-founder",
+      href: "/#hero",
       characterName: "King Kufulula",
     },
   ],

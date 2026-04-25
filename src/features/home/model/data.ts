@@ -99,7 +99,7 @@ export const slides : Slide[] = [
         buttonKey: "book_amara_button",
         image:
             "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-        href: "/books/amara",
+            href: "/#hero",
         accentColor: "#1E90B3",
     },
     {

@@ -3,20 +3,20 @@ import type { FooterLink, FooterSocialLink } from "./footer.types";
 
 export const quickLinks: FooterLink[] = [
   { key: "nav_home", href: "/" },
-  { key: "nav_about", href: "/about" },
-  { key: "nav_founder", href: "/founder" },
-  { key: "nav_news", href: "/news" },
+  { key: "nav_about", href: "/#hero" },
+  { key: "nav_founder", href: "/#hero" },
+  { key: "nav_news", href: "/#hero" },
   { key: "nav_characters", href: "/characters" },
-  { key: "nav_shop", href: "/shop" },
+  { key: "nav_shop", href: "/#hero" },
 ];
 
 export const resourceLinks: FooterLink[] = [
-  { key: "footer_press", href: "/press" },
-  { key: "footer_careers", href: "/careers" },
-  { key: "footer_contact", href: "/contact" },
-  { key: "footer_faq", href: "/faq" },
-  { key: "footer_terms", href: "/terms" },
-  { key: "footer_privacy", href: "/privacy" },
+  { key: "footer_press", href: "/#hero" },
+  { key: "footer_careers", href: "/#hero" },
+  { key: "footer_contact", href: "/#hero" },
+  { key: "footer_faq", href: "/#hero" },
+  { key: "footer_terms", href: "/#hero" },
+  { key: "footer_privacy", href: "/#hero" },
 ];
 
 export const socialLinks: FooterSocialLink[] = [

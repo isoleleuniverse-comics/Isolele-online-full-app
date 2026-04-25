@@ -51,6 +51,8 @@ const mobileNav = [
   { href: "/kufu-game", icon: Gamepad2, label: "Game" },
 ] as const;
 
+const HEADER_LOGO_SRC = "/LOGO%20HORIZONTAL.png";
+
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -115,24 +117,21 @@ export function SiteHeader() {
         <div className="mx-auto grid h-20 max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-6 px-6">
           <div className="flex items-center gap-4">
             {!isHomePage ? <HeaderBackButton color={currentTheme.colors.accentPrimary} /> : <div className="h-10 w-10" />}
-            <Link href={localizedHref("/")} className="inline-flex items-center gap-2">
+            <Link href={localizedHref("/")} className="inline-flex items-center">
               <motion.div
                 whileHover={{ scale: 1.04 }}
                 animate={{ y: [0, -4, 0] }}
                 transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
               >
                 <Image
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0030-kydmLlQEI33of4mfyTaGi2r6TNvZWz.jpg"
+                  src={HEADER_LOGO_SRC}
                   alt="ISOLELE"
-                  width={42}
-                  height={42}
-                  className="rounded-full object-contain"
+                  width={188}
+                  height={54}
+                  className="h-auto w-[158px] object-contain xl:w-[188px]"
                   priority
                 />
               </motion.div>
-              <span className="text-sm font-black tracking-[0.25em]" style={{ color: currentTheme.colors.textPrimary }}>
-                ISOLELE
-              </span>
             </Link>
           </div>
 
@@ -297,19 +296,21 @@ export function SiteHeader() {
       </header>
 
       <header className="fixed left-0 right-0 top-0 z-50 border-b lg:hidden" style={{ backgroundColor: "#0A0A0AEE", borderColor: "#FFFFFF1F" }}>
-        <div className="mx-auto grid h-16 max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-2 px-4">
-          {!isHomePage ? <HeaderBackButton color="#F6B800" /> : <div className="h-10 w-10" />}
+        <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4">
+          <div className="flex min-w-0 items-center gap-3">
+            {!isHomePage ? <HeaderBackButton color="#F6B800" /> : null}
 
-          <Link href={localizedHref("/")} className="mx-auto inline-flex items-center justify-center">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0030-kydmLlQEI33of4mfyTaGi2r6TNvZWz.jpg"
-              alt="ISOLELE"
-              width={36}
-              height={36}
-              className="rounded-full object-contain"
-              priority
-            />
-          </Link>
+            <Link href={localizedHref("/")} className="inline-flex min-w-0 items-center">
+              <Image
+                src={HEADER_LOGO_SRC}
+                alt="ISOLELE"
+                width={156}
+                height={44}
+                className="h-auto w-[132px] object-contain sm:w-[156px]"
+                priority
+              />
+            </Link>
+          </div>
 
           <button
             onClick={() => setMobileMenuOpen((open) => !open)}

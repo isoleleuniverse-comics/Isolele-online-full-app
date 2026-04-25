@@ -63,7 +63,7 @@ export function HeroPrimarySlide({ theme, t }: HeroPrimarySlideProps) {
         transition={{ duration: 0.5, delay: 0.6 }}
         className="flex flex-col sm:flex-row gap-4 justify-center"
       >
-        <Link href="/shop">
+        <Link href="/#hero">
           <motion.button
             className="px-8 py-4 rounded-lg text-lg font-bold tracking-wider transition-all"
             style={{
@@ -79,7 +79,7 @@ export function HeroPrimarySlide({ theme, t }: HeroPrimarySlideProps) {
             {t("hero_buy_now")}
           </motion.button>
         </Link>
-        <Link href="/about">
+        <Link href="/#hero">
           <motion.button
             className="px-8 py-4 rounded-lg text-lg font-bold tracking-wider transition-all border-2"
             style={{

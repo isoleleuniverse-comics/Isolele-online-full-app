@@ -106,7 +106,7 @@ export const bookHeroEn: HomePageContent["bookHero"] = {
         "Amara is a rebel princess of Kongo. The fierce daughter of a powerful king, she defies tradition and fights for justice in a world that tries to silence her. When her kingdom is threatened by external forces, Amara takes up arms to protect her people and reclaim her rightful place on the throne. Amara is a Black African comic character born from the royal bloodline of Kongo civilization, where princesses are not just figures of beauty, but warriors destined to lead their people to victory.",
       buttonText: "DISCOVER AMARA",
       image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-      href: "/books/amara",
+      href: "/#hero",
       accentColor: "#1E90B3",
     },
     {

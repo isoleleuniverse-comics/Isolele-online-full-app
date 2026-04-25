@@ -12,7 +12,7 @@ export function FashionPreview() {
   const { currentTheme } = useTheme();
   const { fashion } = useHomePageContent();
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { margin: "-100px" });
 
   return (
     <section ref={ref} className="py-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: currentTheme.colors.background }}>

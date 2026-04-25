@@ -14,6 +14,7 @@ export function BookHeroSection() {
 
   return (
     <section
+      id="hero"
       className="relative w-full h-[calc(100vh-5rem)] lg:h-[calc(100vh-6rem)] overflow-hidden"
       style={{ backgroundColor: "#000" }}
     >

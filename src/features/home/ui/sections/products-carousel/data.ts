@@ -13,7 +13,7 @@ export const PRODUCT_SLIDES: ProductSlide[] = [
       "Une aventure palpitante et edifiante qui fait echo a l'esprit du Roi Lion et de Black Panther, offrant aux jeunes lecteurs une celebration du patrimoine, du courage et de la decouverte de soi.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-5rfaF1Sj04RYxoqpyiUghbmqVm4XRK.jpg",
-    link: "/shop/zaiire",
+    link: "/#hero",
   },
   {
     id: "kimoya",
@@ -27,7 +27,7 @@ export const PRODUCT_SLIDES: ProductSlide[] = [
       "Un conte epique de souverainete et de sagesse, suivant Kimoya tandis qu'elle s'eleve pour revendiquer son trone et restaurer la gloire ancienne de son royaume par le courage et la magie ancestrale.",
     image:
       "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-KPVfRjZKSMT6VuFheyzKCy1xBQpZnR.jpg",
-    link: "/shop/kimoya",
+    link: "/#hero",
   },
   {
     id: "zattar",
@@ -40,7 +40,7 @@ export const PRODUCT_SLIDES: ProductSlide[] = [
     descriptionFr:
       "Un voyage sombre et mystique a travers des royaumes oublies, ou la maitrise de la magie du sang de Zattar et ses plans anciens defient le tissu meme de la realite.",
     image: "/characters/bakala-baku.jpg",
-    link: "/shop/zattar",
+    link: "/#hero",
   },
   {
     id: "njoko",
@@ -53,7 +53,7 @@ export const PRODUCT_SLIDES: ProductSlide[] = [
     descriptionFr:
       "Deux ames jumelles separees par le destin mais eternellement connectees, leur histoire entrelacee revele l'equilibre entre la lumiere et l'ombre, l'unite et la division dans le cosmos africain.",
     image: "/characters/cast-ensemble.jpg",
-    link: "/shop/njoko",
+    link: "/#hero",
   },
   {
     id: "imvula",
@@ -66,6 +66,6 @@ export const PRODUCT_SLIDES: ProductSlide[] = [
     descriptionFr:
       "Commandez les cieux et la pluie. Le regne de la Reine Imvula apporte l'espoir et la transformation alors qu'elle exploite les elements pour proteger son peuple des maux anciens.",
     image: "/characters/zariko-tabani.jpg",
-    link: "/shop/imvula",
+    link: "/#hero",
   },
 ];

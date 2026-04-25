@@ -18,7 +18,7 @@ export function CtaSection() {
   const { currentTheme } = useTheme()
   const { cta } = useHomePageContent()
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const isInView = useInView(ref, { margin: "-100px" })
 
   return (
     <section 
@@ -94,7 +94,7 @@ export function CtaSection() {
         {/* Decorative top element */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.6 }}
           className="flex justify-center gap-2 mb-8 items-center"
         >
@@ -108,7 +108,7 @@ export function CtaSection() {
         {/* Heading: JOIN THE LEGEND - With Luxury Fireworks */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
           className="mb-12 relative"
         >
@@ -179,7 +179,7 @@ export function CtaSection() {
         {/* Heroes image square */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           className="mb-12 relative w-full max-w-md mx-auto aspect-square rounded-3xl overflow-hidden shadow-2xl"
           style={{ border: `5px solid ${currentTheme.colors.accentPrimary}` }}
@@ -201,7 +201,7 @@ export function CtaSection() {
         {/* Description */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-lg sm:text-xl leading-relaxed mb-12 max-w-2xl mx-auto"
           style={{ color: currentTheme.colors.textSecondary }}
@@ -212,11 +212,11 @@ export function CtaSection() {
         {/* Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4 justify-center mb-8"
         >
-          <Link href="/about">
+          <Link href="/#hero">
             <motion.button
               className="relative px-12 py-5 rounded-full text-lg font-bold tracking-wider overflow-hidden whitespace-nowrap"
               style={{
@@ -264,7 +264,7 @@ export function CtaSection() {
         {/* Decorative dots */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
           className="flex justify-center gap-3 mt-8"
         >

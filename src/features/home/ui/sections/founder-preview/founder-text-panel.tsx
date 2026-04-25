@@ -17,7 +17,7 @@ export function FounderTextPanel({ theme, title, subtitle, description, quote, c
     <motion.div
       initial={{ opacity: 0, x: 40 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: false, amount: 0.2 }}
       transition={{ duration: 0.8 }}
       className="flex flex-col gap-6 justify center"
     >

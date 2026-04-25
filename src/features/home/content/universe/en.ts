@@ -12,7 +12,7 @@ export const universeEn: HomePageContent["universe"] = {
       title: "The Lion Has Learned to Write",
       description:
         "An African proverb says: 'Until the lion learns to write, every story will glorify the hunter.' ISOLELE is the lion's pen. Africa is writing its own story.",
-      href: "/the-founder",
+      href: "/#hero",
       characterName: "Zaiire",
     },
     {
@@ -20,7 +20,7 @@ export const universeEn: HomePageContent["universe"] = {
       title: "Everything Begins in Kongo",
       description:
         "Music. Dance. Royalty. Fashion. Culture. History. Before the world had names for these things, the Kongo had mastered them all.",
-      href: "/the-founder",
+      href: "/#hero",
       characterName: "Kimoya",
     },
     {
@@ -28,7 +28,7 @@ export const universeEn: HomePageContent["universe"] = {
       title: "You Have Always Been Royal",
       description:
         "Before anyone told you who you were, the ancestors already knew. Welcome home.",
-      href: "/the-founder",
+      href: "/#hero",
       characterName: "Bambula",
     },
     {
@@ -36,7 +36,7 @@ export const universeEn: HomePageContent["universe"] = {
       title: "The Visionary Founder",
       description:
         "HRM King Kufulula Bapindi Manikongo founded ISOLELE to restore the soul of African storytelling and create a mythological empire rooted in authentic Kongo history.",
-      href: "/the-founder",
+      href: "/#hero",
       characterName: "King Kufulula",
     },
   ],

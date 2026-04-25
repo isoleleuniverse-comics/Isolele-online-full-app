@@ -106,7 +106,7 @@ export function KufuGameHero() {
                     USD
                   </span>
                 </div>
-                <Link href="/shop">
+                <Link href="/#hero">
                   <button
                     className="inline-flex items-center gap-2 rounded-lg px-7 py-3 text-sm font-bold tracking-wide transition-all hover:scale-[1.02] hover:brightness-110 active:scale-[0.97]"
                     style={{ backgroundColor: "#F6B800", color: "#000000" }}

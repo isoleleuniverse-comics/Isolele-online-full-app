@@ -7,7 +7,7 @@ export const UNIVERSE_PILLARS: UniversePillar[] = [
     icon: Sparkles,
     title: "",
     description: "",
-    href: "/the-founder",
+    href: "/#hero",
     characterName: "Zaiire",
   },
   {
@@ -15,7 +15,7 @@ export const UNIVERSE_PILLARS: UniversePillar[] = [
     icon: Crown,
     title: "",
     description: "",
-    href: "/the-founder",
+    href: "/#hero",
     characterName: "Kimoya",
   },
   {
@@ -23,7 +23,7 @@ export const UNIVERSE_PILLARS: UniversePillar[] = [
     icon: Flame,
     title: "",
     description: "",
-    href: "/the-founder",
+    href: "/#hero",
     characterName: "Bambula",
   },
   {
@@ -31,7 +31,7 @@ export const UNIVERSE_PILLARS: UniversePillar[] = [
     icon: Crown,
     title: "",
     description: "",
-    href: "/the-founder",
+    href: "/#hero",
     characterName: "King Kufulula",
   },
 ];

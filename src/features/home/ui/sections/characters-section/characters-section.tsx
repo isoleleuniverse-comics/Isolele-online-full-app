@@ -10,7 +10,7 @@ export function CharactersSection() {
   const { currentTheme } = useTheme();
   const { characters } = useHomePageContent();
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { margin: "-100px" });
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -38,7 +38,7 @@ export function CharactersSection() {
           <div>
             <motion.h2
               initial={{ opacity: 0, x: -30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
               transition={{ duration: 0.6 }}
               className="text-4xl sm:text-5xl font-black tracking-wider mb-2"
               style={{ color: currentTheme.colors.textPrimary }}
@@ -47,7 +47,7 @@ export function CharactersSection() {
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, x: -30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-lg"
               style={{ color: currentTheme.colors.textSecondary }}
