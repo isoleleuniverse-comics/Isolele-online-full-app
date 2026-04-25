@@ -18,7 +18,7 @@ export const characters: Character[] = [
     origin: "Kingdom of Kongo / Central Africa",
     color: "#F6B800",
     alt:"Zaiire Prince of Kongo Black African Demi-God Superhero ISOLELE Comics",
-    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_20260321_113436-ktAJOL2e0SS0pkTY6aPnn7aBKxr3pq.jpg",
+    image: "/public/characters/zaiire-kongo-throne.jpg",
     description:
       "Forged in the heart of Kongo, Zaiire carries ancestral memory and royal force. Chosen by the Necklace of Destiny, he walks between spirit and present to restore what history tried to erase.",
     powers: ["Royal Transformation", "Lightning Control", "Time Walking", "Ancestral Sight"],

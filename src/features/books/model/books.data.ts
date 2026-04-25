@@ -6,6 +6,10 @@ const zaiireBookICover =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg";
 const zaiireBookIICover =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg";
+const zattarBookICover =
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e9c64c65-3717-4fe3-a391-885767df3303-LbjnMwCViF43pwErKmoFv7iGxQdCeQ.jpeg";
+const zaikoBookICover =
+  "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1175-njlosetUOsqZszKylrOXsIRLw0l3s7.jpeg";
 
 const booksPagesEn: Record<BookSlug, BookPageData> = {
   isolele: {
@@ -210,6 +214,88 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
       { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/", style: "secondary" },
     ],
   },
+  zattar: {
+    slug: "zattar",
+    title: "Zattar: The Prince of the Universe | Black African Villain | ISOLELE Comics",
+    metaDescription:
+      "Zattar was denied the throne of Bapindi. So he decided to take every throne in the universe. The most dangerous villain in the ISOLELE universe. A Black African comic series produced in Kinshasa, DRC.",
+    heroImage: zattarBookICover,
+    heroTag: "ZATTAR",
+    accentColor: "#2E8B57",
+    keywords: ["Zattar comic", "Black African villain", "Bapindi prince", "ISOLELE universe villain"],
+    sections: [
+      {
+        type: "heading_group",
+        sections: [
+          {
+            heading: "The Prince Who Was Denied",
+            body: "Zattar was born to inherit the throne of Bapindi. Royal blood. Royal destiny. Royal right. But when the Ancestors chose another, something inside him did not break. It ignited. He did not cry. He did not beg. He studied. He planned. And he decided that if destiny would not give him one kingdom, he would take every kingdom that existed.",
+          },
+          {
+            heading: "The Conqueror of Thrones",
+            body: "Zattar studied the First and Second Wars of Vegas, legends of devastation that shook the world before he was even born. Where others saw warning, Zattar saw a map. A blueprint. A lesson in what the greatest conquerors did wrong. He would not make the same mistakes. He started the Third War of Vegas. Not out of madness. Not out of pain. But because he looked at the entire universe and reached one conclusion: It belongs to someone. And that someone is Zattar.",
+          },
+          {
+            heading: "What Zattar Represents",
+            body: "Zattar is not evil because he is broken. He is dangerous because he is brilliant. He represents every man who was told he was not chosen and decided that the system of choosing was wrong. He is the mirror of Zaiire. Where Zaiire was chosen by destiny, Zattar chose himself. Both are princes. Both carry royal blood. Only one was given the crown. The other is coming to take it.",
+          },
+        ],
+      },
+      {
+        type: "image_quote",
+        image: zattarBookICover,
+        imageAlt: "Zattar cover",
+        quote: "Zattar: The Prince of the Universe. The Conqueror of Thrones. The Third War of Vegas begins here.",
+      },
+    ],
+    ctas: [
+      { id: "read-book-1", label: "READ BOOK I", href: BOOKS_CTA_LINKS.zattarBookI },
+      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/", style: "secondary" },
+    ],
+  },
+  zaiko: {
+    slug: "zaiko",
+    title: "Zaiko: Last King of the Streets of Kivus | Black African Comics | ISOLELE",
+    metaDescription:
+      "Zaiko was born in North Kivu and forged in Kinshasa. He built the most feared empire the Kivus have ever known. A Black African comic series rooted in the DRC. Part of the ISOLELE universe.",
+    heroImage: zaikoBookICover,
+    heroTag: "ZAIKO",
+    accentColor: "#8B7355",
+    keywords: ["Zaiko comic", "Kivus comic", "Black African comics", "DRC street king"],
+    sections: [
+      {
+        type: "heading_group",
+        sections: [
+          {
+            heading: "Born in North Kivu",
+            body: "Zaiko was not born into power. He was born into war. North Kivu, one of the most contested territories in all of Africa, shaped him before he could speak. Survival was his first language. The streets of Kinshasa became his second. And by the time the world noticed him, it was already too late to stop him.",
+          },
+          {
+            heading: "The Empire Built from Nothing",
+            body: "Born in North Kivu. Forged in Kinshasa. Zaiko was never meant to survive. But survival was never enough. In a world ruled by power, money, and fear, he rises from nothing. Not as a hero. But as a force. With his brother, he builds the most feared empire the Kivus have ever known. No crown was given. No destiny was written. Everything was taken. Every empire built from the ashes of those who came before.",
+          },
+          {
+            heading: "The Legend",
+            body: "This is the legend of how one man defied fate itself and carved his name into African history with iron and will. Zaiko does not wait for permission. He does not wait for destiny. He does not wait for anyone. In the Kivus, the weak disappear. The strong survive. And the legends become kings.",
+          },
+          {
+            heading: "What Zaiko Represents",
+            body: "Zaiko represents every child born in a conflict zone who was told their story did not matter. Every young man from North Kivu, South Kivu, every corner of the DRC that the world forgot. Zaiko says your story matters. Your survival is power. Your rise is legend. The Kivus produced one of the greatest kings in the ISOLELE universe. And the world will know his name.",
+          },
+        ],
+      },
+      {
+        type: "image_quote",
+        image: zaikoBookICover,
+        imageAlt: "Zaiko cover",
+        quote: "Zaiko: Last King of the Streets of Kivus. The Legend of Zaiko begins here.",
+      },
+    ],
+    ctas: [
+      { id: "read-book-1", label: "READ BOOK I", href: BOOKS_CTA_LINKS.zaikoBookI },
+      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/", style: "secondary" },
+    ],
+  },
 };
 
 const booksPagesFr: Record<BookSlug, BookPageData> = {
@@ -394,6 +480,20 @@ const booksPagesFr: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "preorder-kufu", label: "PRECOMMANDER KUFU", href: BOOKS_CTA_LINKS.kufuPreorder },
+      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/", style: "secondary" },
+    ],
+  },
+  zattar: {
+    ...booksPagesEn.zattar,
+    ctas: [
+      { id: "read-book-1", label: "LIRE LE LIVRE I", href: BOOKS_CTA_LINKS.zattarBookI },
+      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/", style: "secondary" },
+    ],
+  },
+  zaiko: {
+    ...booksPagesEn.zaiko,
+    ctas: [
+      { id: "read-book-1", label: "LIRE LE LIVRE I", href: BOOKS_CTA_LINKS.zaikoBookI },
       { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/", style: "secondary" },
     ],
   },

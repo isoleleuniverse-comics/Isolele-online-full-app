@@ -9,7 +9,7 @@ export const bookHeroEn: HomePageContent["bookHero"] = {
       title: "THE CHOSEN ONE",
       subtitle: "THE FIRST BLACK AFRICAN SUPERHERO UNIVERSE",
       description:
-        "ISOLELE is not a comic book company. It is a universe. Born from the roots of the Kongo civilization, the most powerful empire Central Africa has ever known, ISOLELE exists to give African children heroes who look like them, speak their language, and carry their ancestry. Every character, every story, every battle inside ISOLELE is rooted in real African history, real African spirituality, and real African royalty.",
+        "Isolele is a visionary universe born to restore the soul of African storytelling, a mythological empire where superheroes are chosen by destiny, kingdoms never forgotten, and ancestral power is alive in every page, every prophecy, every battle. Every child who reads Isolele will discover superheroes who look like them, speak their language, protect their land, and honor their ancestors. This is for the next generation of kings, queens, warriors, inventors, and storytellers. ISOLELE is the first Black African superhero universe rooted in authentic Kongo heritage, created in the DRC and built for the world.",
       buttonText: "EXPLORE THE UNIVERSE",
       image:
         "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg",
@@ -21,14 +21,15 @@ export const bookHeroEn: HomePageContent["bookHero"] = {
       type: "book",
       tag: "ZAIIRE: PRINCE OF KONGO",
       title: "ZAIIRE",
-      subtitle: "THE FIRST BLACK AFRICAN DEMI-GOD SUPERHERO",
+      subtitle: "THE NECKLACE OF DESTINY",
       description:
         "Zaiire is not born a hero. He is born chosen. Son of Shango, the divine lord of thunder, and Princess Kimoya, a warrior queen of the Kongo royal bloodline, Zaiire carries two worlds inside him. The mortal world of kings, wars, and sacrifice. And the divine world of ancestral power, cosmic destiny, and forces older than any kingdom.",
       buttonText: "DISCOVER ZAIIRE",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg",
+      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0059-75yxyGjuDt9hhqXF6obymfG8BpNLz4.jpg",
       href: "/books/zaiire",
       accentColor: "#F6B800",
     },
+    
     {
       id: "makanda",
       type: "book",
@@ -78,9 +79,48 @@ export const bookHeroEn: HomePageContent["bookHero"] = {
       description:
         "This is not just a card game. It is a ceremony. Gather your warriors. Build your kingdom. Outplay every opponent at the table. But to claim the crown there is only one way to win. You must raise your voice and speak the name of the king out loud. Then someone places the necklace over your head. Not by your own hand. By another. Because a true king is not crowned alone. KUFU is where African royalty becomes something you feel in your hands, hear in your voice, and carry around your neck. Every game is a coronation. Every winner is a king. Kufu is the first Pan-African card game featuring African kings, queens, and warriors from the Kongo civilization. 103 cards. One crown. Launching June 30, 2026.",
       buttonText: "DISCOVER KUFU",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260311-WA0030-kydmLlQEI33of4mfyTaGi2r6TNvZWz.jpg",
+      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_20260321_113436-ktAJOL2e0SS0pkTY6aPnn7aBKxr3pq.jpg",
       href: "/books/kufu",
       accentColor: "#F8B90D",
     },
+    {
+      id:"zattar",
+      type: "book",
+      tag: "ZATTAR: THE LAST PRINCE",
+      title: "ZATTAR",
+      subtitle: "THE LAST PRINCE OF KONGO",
+      description:
+        "When Destiny Refused Him One Kingdom, He Decided to Take Them All. Prince Zattar was born to inherit the throne of Bapindi. But when the Ancestors chose another, something inside him did not break. It ignited. He studied the First and Second Wars of Vegas, legends of devastation that shook the world before he was even born. Where others saw warning, Zattar saw a map. He started the Third War of Vegas. Not out of madness. Not out of pain. But because he looked at the entire universe and reached one conclusion: It belongs to someone. And that someone is Zattar. He was not chosen. So he chose the universe instead. Zattar is the most dangerous Black African villain in comics, a Prince of Bapindi who refused destiny and declared war on the entire universe.",
+      buttonText: "DISCOVER ZATTAR",
+      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e9c64c65-3717-4fe3-a391-885767df3303-LbjnMwCViF43pwErKmoFv7iGxQdCeQ.jpeg",
+      href: "/books/zattar",
+      accentColor: "#2E8B57",
+    },
+    {
+      id: "amara",
+      type: "book",
+      tag: "AMARA: THE REBEL PRINCESS",
+      title: "AMARA",
+      subtitle: "THE REBEL PRINCESS OF KONGO",
+      description:
+        "Amara is a rebel princess of Kongo. The fierce daughter of a powerful king, she defies tradition and fights for justice in a world that tries to silence her. When her kingdom is threatened by external forces, Amara takes up arms to protect her people and reclaim her rightful place on the throne. Amara is a Black African comic character born from the royal bloodline of Kongo civilization, where princesses are not just figures of beauty, but warriors destined to lead their people to victory.",
+      buttonText: "DISCOVER AMARA",
+      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
+      href: "/books/amara",
+      accentColor: "#1E90B3",
+    },
+    {
+      id: "zaiko",
+      type: "book",
+      tag: "ZAIKO: LAST KING OF THE STREETS OF KIVUS",
+      title: "ZAIKO",
+      subtitle: "THE LEGEND OF ZAIKO",
+      description:
+        "Born in North Kivu. Forged in Kinshasa. Zaiko was never meant to survive. But survival was never enough. In a world ruled by power, money, and fear, he rises from nothing. Not as a hero. But as a force. With his brother, he builds the most feared empire the Kivus have ever known. No crown was given. No destiny was written. Everything was taken. Every empire built from the ashes of those who came before. This is the legend of how one man defied fate itself and carved his name into African history with iron and will. Zaiko is a Black African comic hero born in North Kivu, DRC, where war forged the most feared king the streets have ever known.",
+      buttonText: "DISCOVER ZAIKO",
+      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1175-njlosetUOsqZszKylrOXsIRLw0l3s7.jpeg",
+      href: "/books/zaiko",
+      accentColor: "#2E8B57",
+    }
   ],
 };

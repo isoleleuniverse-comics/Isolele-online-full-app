@@ -20,8 +20,7 @@ export const slides : Slide[] = [
         subtitleKey: "book_welcome_subtitle",
         descKey: "book_welcome_desc",
         buttonKey: "book_welcome_button",
-        image:
-            "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg",
+        image:"https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_20260321_113436-ktAJOL2e0SS0pkTY6aPnn7aBKxr3pq.jpg",
         href: "/books/zaiire",
         accentColor: "#F6B800",
     },

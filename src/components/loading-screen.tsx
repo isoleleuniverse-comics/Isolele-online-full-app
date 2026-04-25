@@ -99,7 +99,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
         >
           <div className="absolute inset-0">
             <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260217-WA0019-5QkKPDwjEXwxZErsLSvxQ5HTEym3ro.jpg"
+              src="/images/chargement/chargement.webp"
               alt="ISOLELE background"
               fill
               className="object-cover"

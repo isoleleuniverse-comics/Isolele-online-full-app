@@ -1,6 +1,6 @@
 import type { SupportedLocale } from "@/lib/i18n/locales";
 
-export type BookSlug = "isolele" | "zaiire" | "makanda" | "bambula" | "mokele" | "kufu";
+export type BookSlug = "isolele" | "zaiire" | "makanda" | "bambula" | "mokele" | "kufu" | "zattar" | "zaiko";
 
 export interface BookCta {
   id: string;

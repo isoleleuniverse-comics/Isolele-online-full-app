@@ -5,4 +5,6 @@ export const BOOKS_CTA_LINKS = {
   zaiireBookI: process.env.NEXT_PUBLIC_ZAIIRE_BOOK_1_URL ?? "/comics",
   zaiireBookIIPreorder: process.env.NEXT_PUBLIC_ZAIIRE_BOOK_2_PREORDER_URL ?? "/comics",
   kufuPreorder: process.env.NEXT_PUBLIC_KUFU_PREORDER_URL ?? "/kufu-game",
+  zattarBookI: process.env.NEXT_PUBLIC_ZATTAR_BOOK_1_URL ?? "/shop/zattar",
+  zaikoBookI: process.env.NEXT_PUBLIC_ZAIKO_BOOK_1_URL ?? "/shop/zaiko",
 };

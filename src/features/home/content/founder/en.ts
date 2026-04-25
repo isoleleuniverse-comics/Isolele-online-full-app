@@ -6,8 +6,8 @@ export const founderEn: HomePageContent["founder"] = {
   title: "HRM KING KUFULULA",
   subtitle: "Royal Founder of the ISOLELE Universe",
   description:
-    "HRM King Kufulula is building more than a story world. He is restoring memory, dignity, and imagination through a Black African superhero universe rooted in Kongo heritage.",
+    "HRM King Kufulula Bapindi Manikongo is the traditional King of the Bapindi people of the DRC and Manikongo of the Kongo royal lineage. He built ISOLELE from nothing in Kinshasa with one goal: prove that Africa creates for the world. Three illustrators lost their lives to rebels building this universe. Their sacrifice is the foundation. This is not a comic company. This is a kingdom",
   quote:
-    "If Africa does not write its own legends, the world will keep telling us who we are.",
-  ctaLabel: "Discover the Founder",
+    "I was tired of a world that takes everything from Africa and gives nothing back. So I built the thing they will one day have to come to me for.",
+  ctaLabel: "EXPLORE THE ISOLELE UNIVERSE",
 };

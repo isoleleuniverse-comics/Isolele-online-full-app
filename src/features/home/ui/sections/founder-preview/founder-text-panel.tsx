@@ -19,7 +19,7 @@ export function FounderTextPanel({ theme, title, subtitle, description, quote, c
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
-      className="flex flex-col gap-6"
+      className="flex flex-col gap-6 justify center"
     >
       <div>
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-2" style={{ color: theme.colors.textPrimary }}>
@@ -48,7 +48,7 @@ export function FounderTextPanel({ theme, title, subtitle, description, quote, c
         <Sparkles size={24} style={{ color: theme.colors.accentPrimary }} className="mx-auto mt-3 opacity-60" />
       </div>
 
-      <Link href="/founder">
+      <Link href="/" className="center">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
