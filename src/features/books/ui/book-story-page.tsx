@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { withLocale, type SupportedLocale } from "@/lib/i18n/locales";
+import { withLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import { getBookBreadcrumbJsonLd, getBookJsonLd } from "@/features/books/model/books-json-ld";
 import type { BookCta, BookPageData } from "@/features/books/model/books.types";
 

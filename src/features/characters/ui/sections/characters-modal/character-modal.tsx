@@ -6,7 +6,7 @@ import Link from "next/link";
 import { X } from "lucide-react";
 import { profileRouteByCharacterId } from "@/features/characters/model/characters.data";
 import type { Character } from "@/features/characters/model/characters.types";
-import { useTheme } from "@/lib/theme-context";
+import { useTheme } from "@/shared/contexts/theme-context";
 
 interface CharacterModalProps {
   character: Character;

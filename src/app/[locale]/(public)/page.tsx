@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getHomeSeo } from "@/features/home/seo/get-home-seo";
 import { HomePage } from "@/features/home/ui/home-page";
-import { isSupportedLocale, DEFAULT_LOCALE, type SupportedLocale } from "@/lib/i18n/locales";
+import { isSupportedLocale, DEFAULT_LOCALE, type SupportedLocale } from "@/shared/i18n/locales";
 
 export async function generateMetadata({
   params,

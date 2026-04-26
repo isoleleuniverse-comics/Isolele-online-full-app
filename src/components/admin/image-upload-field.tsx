@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Camera, Loader } from "lucide-react";
 import { toast } from "sonner";
-import { uploadCharacterImageAction } from "@/lib/actions/media";
+import { uploadCharacterImageAction } from "@/server/actions/media";
 
 interface ImageUploadFieldProps {
   characterKey: string;

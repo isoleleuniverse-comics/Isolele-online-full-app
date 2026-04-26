@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
-import { absoluteUrl, getSiteUrl } from "@/lib/seo/site-url";
-import { DEFAULT_LOCALE, isSupportedLocale } from "@/lib/i18n/locales";
+import { absoluteUrl, getSiteUrl } from "@/shared/seo/site-url";
+import { DEFAULT_LOCALE, isSupportedLocale } from "@/shared/i18n/locales";
 import "./globals.css";
 
 const geistSans = Geist({

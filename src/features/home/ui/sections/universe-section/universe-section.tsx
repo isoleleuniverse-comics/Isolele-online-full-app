@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useInView } from "framer-motion";
-import { useTheme } from "@/lib/theme-context";
+import { useTheme } from "@/shared/contexts/theme-context";
 import { useHomePageContent } from "@/features/home/model";
 import { UNIVERSE_PILLARS, UNIVERSE_BACKGROUND_IMAGES } from "./data";
 import { UniverseSectionHeader } from "./universe-section-header";

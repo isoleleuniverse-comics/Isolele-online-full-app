@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTheme } from "@/lib/theme-context";
+import { useTheme } from "@/shared/contexts/theme-context";
 import { useHomePageContent } from "@/features/home/model";
-import { useCart } from "@/lib/cart-context";
+import { useCart } from "@/shared/contexts/cart-context";
 import { ProductCard } from "./product-card";
 
 export function ProductsSection() {

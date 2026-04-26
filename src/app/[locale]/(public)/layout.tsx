@@ -1,5 +1,5 @@
 import { PublicShell } from "@/components/public-shell";
-import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/lib/i18n/locales";
+import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
 
 export default async function PublicLayout({
   children,

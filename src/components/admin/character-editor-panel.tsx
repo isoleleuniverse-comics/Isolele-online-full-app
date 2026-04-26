@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Loader } from "lucide-react";
 import { EditableField } from "@/components/admin/editable-field";
 import { ImageUploadField } from "@/components/admin/image-upload-field";
-import { updateCharacterAction } from "@/lib/actions/characters";
+import { updateCharacterAction } from "@/server/actions/characters";
 
 interface AdminCharacterEditorPanelProps {
   character: {

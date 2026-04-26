@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { SiteFooter } from "@/features/navigation/ui/site-footer";
+import { SiteFooter } from "@/features/navigation/ui/footer/site-footer";
 import { LoadingScreen } from "@/components/loading-screen";
-import { SiteHeader } from "@/components/site-header";
-import type { SupportedLocale } from "@/lib/i18n/locales";
-import { ThemeProvider } from "@/lib/theme-context";
-import { LanguageProvider } from "@/lib/language-context";
-import { CartProvider } from "@/lib/cart-context";
+import { SiteHeader } from "@/features/navigation/ui/header/site-header";
+
+import type { SupportedLocale } from "@/shared/i18n/locales";
+import { LanguageProvider } from "@/shared/i18n/language-context";
+import { ThemeProvider } from "@/shared/contexts/theme-context";
+import { CartProvider } from "@/shared/contexts/cart-context";
 
 export function PublicShell({
   children,

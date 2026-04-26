@@ -10,7 +10,7 @@ import {
   CharactersGrid,
   CharactersHeroSection,
 } from "@/features/characters/ui/sections";
-import { useTheme } from "@/lib/theme-context";
+import { useTheme } from "@/shared/contexts/theme-context";
 
 export function CharactersPage() {
   const { currentTheme } = useTheme();

@@ -1,7 +1,7 @@
 "use client";
 
 import { comicsData } from "@/features/comics/model/comics.data";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage } from "@/shared/i18n/language-context";
 import {
   ComicCarouselSection,
   ComicsPageFooter,

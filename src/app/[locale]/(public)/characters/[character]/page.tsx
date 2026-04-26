@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CharacterDetailPage } from "@/features/characters/ui/character-detail-page";
 import { getCharacterMetadata, getCharacterStaticParams } from "@/features/characters/model/characters-seo";
-import { SUPPORTED_LOCALES } from "@/lib/i18n/locales";
+import { SUPPORTED_LOCALES } from "@/shared/i18n/locales";
 
 export function generateStaticParams() {
   const characters = getCharacterStaticParams();

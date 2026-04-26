@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { useTheme } from "@/lib/theme-context";
+import { useTheme } from "@/shared/contexts/theme-context";
 import { useHomePageContent } from "@/features/home/model";
 import { FashionPreviewHeader } from "./fashion-preview-header";
 import { FashionPreviewGrid } from "./fashion-preview-grid";

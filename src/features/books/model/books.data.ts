@@ -1,4 +1,4 @@
-import type { SupportedLocale } from "@/lib/i18n/locales";
+import type { SupportedLocale } from "@/shared/i18n/locales";
 import type { BookPageData, BookSlug } from "./books.types";
 import { BOOKS_CTA_LINKS } from "./books-cta-links";
 

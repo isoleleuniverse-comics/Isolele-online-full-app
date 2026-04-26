@@ -1,4 +1,4 @@
-import { absoluteUrl } from "@/lib/seo/site-url";
+import { absoluteUrl } from "@/shared/seo/site-url";
 import { GAME, SCREENSHOTS } from "./kufu-game.data";
 
 export function getKufuProductJsonLd() {

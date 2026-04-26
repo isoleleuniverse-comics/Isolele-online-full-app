@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 import type { CulturalImpactContent } from "./types";
 
 interface CulturalImpactHeaderProps {

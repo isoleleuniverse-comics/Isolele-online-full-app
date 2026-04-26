@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 import type { CarouselCharacter } from "./types";
 
 interface InfiniteCarouselCardProps {

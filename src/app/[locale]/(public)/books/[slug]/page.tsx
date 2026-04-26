@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { BookStoryPage } from "@/features/books/ui/book-story-page";
 import { getBookBySlug, getBookMetadata, getBooksStaticParams } from "@/features/books/model";
-import { DEFAULT_LOCALE, isSupportedLocale, SUPPORTED_LOCALES, type SupportedLocale } from "@/lib/i18n/locales";
+import { DEFAULT_LOCALE, isSupportedLocale, SUPPORTED_LOCALES, type SupportedLocale } from "@/shared/i18n/locales";
 
 export function generateStaticParams() {
   const pages = getBooksStaticParams();

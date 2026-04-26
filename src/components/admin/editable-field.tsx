@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+import { cn } from "@/shared/lib/utils";
 
 interface EditableFieldProps {
   value: string;

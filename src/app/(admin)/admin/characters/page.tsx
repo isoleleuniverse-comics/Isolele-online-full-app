@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/server/db/prisma";
 import { characters as staticCharacters } from "@/features/characters/model/characters.data";
 
 export default async function AdminCharactersPage() {

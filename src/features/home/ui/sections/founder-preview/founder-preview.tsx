@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "@/lib/theme-context";
+import { useTheme } from "@/shared/contexts/theme-context";
 import { useHomePageContent } from "@/features/home/model";
 import { FounderPhotoPanel } from "./founder-photo-panel";
 import { FounderTextPanel } from "./founder-text-panel";

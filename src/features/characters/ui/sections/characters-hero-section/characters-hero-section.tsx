@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { characters } from "@/features/characters/model/characters.data";
-import { useTheme } from "@/lib/theme-context";
+import { useTheme } from "@/shared/contexts/theme-context";
 
 export function CharactersHeroSection() {
   const { currentTheme } = useTheme();

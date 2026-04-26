@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { characterProfiles, type CharacterSlug } from "./characters.data";
-import { isSupportedLocale, type SupportedLocale, DEFAULT_LOCALE } from "@/lib/i18n/locales";
+import { isSupportedLocale, type SupportedLocale, DEFAULT_LOCALE } from "@/shared/i18n/locales";
 
 export function getCharacterBySlug(slug: string) {
   return characterProfiles[slug as CharacterSlug];

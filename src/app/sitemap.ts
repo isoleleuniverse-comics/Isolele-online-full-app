@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl } from "@/lib/seo/site-url";
+import { absoluteUrl } from "@/shared/seo/site-url";
+import { CHARACTER_SLUGS } from "@/features/characters/model/characters.data";
+import { BOOK_SLUGS } from "@/features/books/model/books.types";
 
-const CHARACTER_SLUGS = ["zaiire", "bambula", "kufulula", "mokele"] as const;
-const BOOK_SLUGS = ["isolele", "zaiire", "makanda", "bambula", "mokele", "kufu"] as const;
 const LOCALES = ["fr", "en"] as const;
 
 function localized(path: string, locale: (typeof LOCALES)[number]) {

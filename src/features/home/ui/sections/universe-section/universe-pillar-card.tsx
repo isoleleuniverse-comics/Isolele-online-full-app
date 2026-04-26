@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 import type { UniversePillar } from "./types";
 
 interface UniversePillarCardProps {

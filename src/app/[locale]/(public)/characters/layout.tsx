@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/lib/i18n/locales";
+import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
 
 export async function generateMetadata({
   params,

@@ -309,5 +309,5 @@ export const characterProfiles = {
   },
 } as const satisfies Record<string, CharacterProfile>;
 
-export type CharacterSlug = keyof typeof characterProfiles;
-
+export const CHARACTER_SLUGS = ["zaiire", "bambula", "kufulula", "mokele"] as const;
+export type CharacterSlug = typeof CHARACTER_SLUGS[number];

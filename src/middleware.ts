@@ -4,7 +4,7 @@ import {
   isSupportedLocale,
   LOCALE_COOKIE_NAME,
   SUPPORTED_LOCALES,
-} from "@/lib/i18n/locales";
+} from "@/shared/i18n/locales";
 
 function shouldIgnorePath(pathname: string) {
   // Skip Next internals, API, and static assets.

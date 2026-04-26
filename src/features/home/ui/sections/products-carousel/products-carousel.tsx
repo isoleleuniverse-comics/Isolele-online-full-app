@@ -1,7 +1,7 @@
 "use client";
 
-import { useTheme } from "@/lib/theme-context";
-import { useLanguage } from "@/lib/language-context";
+import { useTheme } from "@/shared/contexts/theme-context";
+import { useLanguage } from "@/shared/i18n/language-context";
 import { PRODUCT_SLIDES } from "./data";
 import { useProductsCarousel } from "./use-products-carousel";
 import { ProductsCarouselBackground } from "./products-carousel-background";

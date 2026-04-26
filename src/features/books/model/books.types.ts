@@ -1,6 +1,7 @@
-import type { SupportedLocale } from "@/lib/i18n/locales";
+import type { SupportedLocale } from "@/shared/i18n/locales";
 
-export type BookSlug = "isolele" | "zaiire" | "makanda" | "bambula" | "mokele" | "kufu" | "zattar" | "zaiko";
+export const BOOK_SLUGS = ["isolele", "zaiire", "makanda", "bambula", "mokele", "kufu", "zattar", "zaiko"] as const;
+export type BookSlug = typeof BOOK_SLUGS[number];
 
 export interface BookCta {
   id: string;

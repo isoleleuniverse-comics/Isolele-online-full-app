@@ -1,87 +1,24 @@
-import dynamic from "next/dynamic";
-import type { HomeJsonLd, HomeLocale } from "@/features/home/content";
-import { getHomePageContent } from "@/features/home/content";
-import { HomeContentProvider } from "@/features/home/model";
-import { HomeStructuredData } from "@/features/home/seo/home-structured-data";
-import { BookHeroSection, UniverseSection, CharactersSection } from "@/features/home/ui/sections";
+import { lazySection } from "@/shared/lib/lazy-section";
+import type { HomeJsonLd, HomeLocale } from "../content";
+import { getHomePageContent } from "../content";
+import { HomeContentProvider } from "../model";
+import { HomeStructuredData } from "../seo/home-structured-data";
 
-const StorySection = dynamic(
-  () => import("@/features/home/ui/sections/story-section/story-section").then((mod) => ({ default: mod.StorySection })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
+// Eagerly loaded — above the fold
+import { BookHeroSection } from "./sections/book-hero-section/book-hero-section";
+import { UniverseSection } from "./sections/universe-section/universe-section";
+import { CharactersSection } from "./sections/characters-section/characters-section";
 
-const ProductsSection = dynamic(
-  () => import("@/features/home/ui/sections/products-section/products-section").then((mod) => ({ default: mod.ProductsSection })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const FounderPreview = dynamic(
-  () => import("@/features/home/ui/sections/founder-preview/founder-preview").then((mod) => ({ default: mod.FounderPreview })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const BookstoreDisplaySection = dynamic(
-  () =>
-    import("@/features/home/ui/sections/bookstore-display-section/bookstore-display-section").then((mod) => ({
-      default: mod.BookstoreDisplaySection,
-    })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const ReviewsSection = dynamic(
-  () => import("@/features/home/ui/sections/reviews-section/reviews-section").then((mod) => ({ default: mod.ReviewsSection })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const NewsSection = dynamic(
-  () => import("@/features/home/ui/sections/news-section/news-section").then((mod) => ({ default: mod.NewsSection })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const FashionPreview = dynamic(
-  () => import("@/features/home/ui/sections/fashion-preview/fashion-preview").then((mod) => ({ default: mod.FashionPreview })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const CharactersShowcase = dynamic(
-  () =>
-    import("@/features/home/ui/sections/characters-showcase/characters-showcase").then((mod) => ({
-      default: mod.CharactersShowcase,
-    })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const CtaSection = dynamic(
-  () => import("@/features/home/ui/sections/cta-section/cta-section").then((mod) => ({ default: mod.CtaSection })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
+// Lazily loaded — below the fold
+const StorySection = lazySection(() => import("./sections/story-section/story-section"), "StorySection");
+const ProductsSection = lazySection(() => import("./sections/products-section/products-section"), "ProductsSection");
+const FounderPreview = lazySection(() => import("./sections/founder-preview/founder-preview"), "FounderPreview");
+const BookstoreDisplaySection = lazySection(() => import("./sections/bookstore-display-section/bookstore-display-section"), "BookstoreDisplaySection");
+const ReviewsSection = lazySection(() => import("./sections/reviews-section/reviews-section"), "ReviewsSection");
+const NewsSection = lazySection(() => import("./sections/news-section/news-section"), "NewsSection");
+const FashionPreview = lazySection(() => import("./sections/fashion-preview/fashion-preview"), "FashionPreview");
+const CharactersShowcase = lazySection(() => import("./sections/characters-showcase/characters-showcase"), "CharactersShowcase");
+const CtaSection = lazySection(() => import("./sections/cta-section/cta-section"), "CtaSection");
 
 interface HomePageProps {
   locale: HomeLocale;

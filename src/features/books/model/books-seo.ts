@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { absoluteUrl } from "@/lib/seo/site-url";
-import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/lib/i18n/locales";
+import { absoluteUrl } from "@/shared/seo/site-url";
+import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import { getBookBySlug } from "./books.data";
 
 export function getBookMetadata(locale: string, slug: string): Metadata {

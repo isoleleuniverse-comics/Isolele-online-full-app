@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "@/lib/theme-context";
+import { useTheme } from "@/shared/contexts/theme-context";
 import { useHomePageContent } from "@/features/home/model";
 import { ReviewsHeader } from "./reviews-header";
 import { ReviewCard } from "./review-card";

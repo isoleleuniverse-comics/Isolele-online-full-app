@@ -1,8 +1,8 @@
 "use client";
 
 import { AnimatePresence } from "framer-motion";
-import { useTheme } from "@/lib/theme-context";
-import { useLanguage } from "@/lib/language-context";
+import { useTheme } from "@/shared/contexts/theme-context";
+import { useLanguage } from "@/shared/i18n/language-context";
 import { HeroBackgroundEffects } from "./hero-background-effects";
 import { HeroPrimarySlide } from "./hero-primary-slide";
 import { HeroSecondarySlide } from "./hero-secondary-slide";

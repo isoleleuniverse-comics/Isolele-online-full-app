@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useInView } from "framer-motion";
-import { useTheme } from "@/lib/theme-context";
+import { useTheme } from "@/shared/contexts/theme-context";
 import { useHomePageContent } from "@/features/home/model";
 import { NewsHeader } from "./news-header";
 import { NewsCard } from "./news-card";

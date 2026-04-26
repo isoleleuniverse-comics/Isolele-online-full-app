@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
 import { translations, type Language as LangCode, type TranslationKeys, languageFlags } from "./translations"
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, type SupportedLocale } from "@/lib/i18n/locales"
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES, type SupportedLocale } from "./locales"
 
 export interface Language {
   code: LangCode

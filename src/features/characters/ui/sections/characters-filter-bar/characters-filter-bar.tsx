@@ -1,7 +1,7 @@
 "use client";
 
 import { characterFilters } from "@/features/characters/model/characters.data";
-import { useTheme } from "@/lib/theme-context";
+import { useTheme } from "@/shared/contexts/theme-context";
 
 interface CharactersFilterBarProps {
   activeFilter: string;

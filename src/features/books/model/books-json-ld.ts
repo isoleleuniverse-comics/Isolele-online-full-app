@@ -1,5 +1,5 @@
-import { absoluteUrl } from "@/lib/seo/site-url";
-import type { SupportedLocale } from "@/lib/i18n/locales";
+import { absoluteUrl } from "@/shared/seo/site-url";
+import type { SupportedLocale } from "@/shared/i18n/locales";
 import type { BookPageData } from "./books.types";
 
 export function getBookJsonLd(page: BookPageData, locale: SupportedLocale) {

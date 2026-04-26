@@ -1,4 +1,4 @@
-import { absoluteUrl } from "@/lib/seo/site-url";
+import { absoluteUrl } from "@/shared/seo/site-url";
 
 export function getComicsCollectionJsonLd() {
   const siteUrl = absoluteUrl("/");

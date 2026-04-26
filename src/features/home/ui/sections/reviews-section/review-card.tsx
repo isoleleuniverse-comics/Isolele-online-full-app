@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 import type { HomeReviewContent } from "@/features/home/content/types";
 
 interface ReviewCardProps {

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/server/db/prisma";
 import { AdminCharacterEditorPanel } from "@/components/admin/character-editor-panel";
 import { profileRouteByCharacterId, characters } from "@/features/characters/model/characters.data";
 

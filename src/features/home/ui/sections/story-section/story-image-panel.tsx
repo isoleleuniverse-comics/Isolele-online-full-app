@@ -1,14 +1,13 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 import { STORY_IMAGE, STORY_IMAGE_BLUR_DATA_URL } from "./data";
 
 interface StoryImagePanelProps {
   theme: Theme;
-  founderLabel: string;
 }
 
-export function StoryImagePanel({ theme, founderLabel }: StoryImagePanelProps) {
+export function StoryImagePanel({ theme }: StoryImagePanelProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -50 }}

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 import { FOUNDER_IMAGE } from "./data";
 import { FOUNDER_IMAGE_BLUR_DATA_URL } from "./types";
 

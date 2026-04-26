@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Clock, ArrowRight } from "lucide-react";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 import type { NewsArticle } from "./types";
 import { NEWS_IMAGE_BLUR_DATA_URL } from "./types";
 

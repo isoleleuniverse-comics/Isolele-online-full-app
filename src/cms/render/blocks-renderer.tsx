@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { CmsBlockV1 } from "@/cms/blocks/v1";
 
 export function BlocksRenderer({ blocks }: { blocks: CmsBlockV1[] }) {
