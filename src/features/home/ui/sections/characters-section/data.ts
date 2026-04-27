@@ -1,6 +1,6 @@
-import type { HomePageContent } from "../types";
 
-export const charactersEn: HomePageContent["characters"] = {
+export const charactersData = {
+  en: {
   title: "THE CHOSEN ONES",
   subtitle: "Meet the heroes, legends, and guardians of the Isolele Universe",
   discoverLabel: "DISCOVER",
@@ -54,4 +54,5 @@ export const charactersEn: HomePageContent["characters"] = {
       color: "#9932CC",
     },
   ],
+}
 };

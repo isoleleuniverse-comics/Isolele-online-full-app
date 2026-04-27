@@ -1,16 +1,18 @@
 "use client";
 
 import { useRef } from "react";
+import { useLanguage } from "@/shared/i18n/language-context";
+import { newsData } from "./data";
 import { useInView } from "framer-motion";
 import { useTheme } from "@/shared/contexts/theme-context";
-import { useHomePageContent } from "@/features/home/model";
 import { NewsHeader } from "./news-header";
 import { NewsCard } from "./news-card";
 import { NewsCta } from "./news-cta";
 
 export function NewsSection() {
   const { currentTheme } = useTheme();
-  const { news } = useHomePageContent();
+  const { currentLanguage } = useLanguage();
+  const news = newsData[currentLanguage.code] || newsData.en;
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "-100px" });
 

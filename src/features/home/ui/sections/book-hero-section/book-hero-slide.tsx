@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { HERO_BLUR_DATA_URL, HERO_SLIDE_VARIANTS } from "./data";
+import { BOOK_HERO_BLUR_DATA_URL, BOOK_HERO_SLIDE_VARIANTS } from "./data";
 import type { HeroSlide } from "./types";
 
 interface BookHeroSlideProps {
@@ -18,7 +18,7 @@ export function BookHeroSlide({ slide, current, direction }: BookHeroSlideProps)
       <motion.div
         key={slide.id}
         custom={direction}
-        variants={HERO_SLIDE_VARIANTS}
+        variants={BOOK_HERO_SLIDE_VARIANTS}
         initial="enter"
         animate="center"
         exit="exit"
@@ -34,7 +34,7 @@ export function BookHeroSlide({ slide, current, direction }: BookHeroSlideProps)
             className="object-cover object-top"
             priority={current === 0}
             placeholder="blur"
-            blurDataURL={HERO_BLUR_DATA_URL}
+            blurDataURL={BOOK_HERO_BLUR_DATA_URL}
           />
           <div
             className="absolute inset-0"

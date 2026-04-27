@@ -1,16 +1,18 @@
 "use client";
 
 import { useRef } from "react";
+import { useLanguage } from "@/shared/i18n/language-context";
+import { charactersShowcaseData } from "./data";
 import { useInView } from "framer-motion";
 import { useTheme } from "@/shared/contexts/theme-context";
-import { useHomePageContent } from "@/features/home/model";
 import { ShowcaseHeader } from "./showcase-header";
 import { ShowcaseCharacterCard } from "./showcase-character-card";
 import { ShowcaseCta } from "./showcase-cta";
 
 export function CharactersShowcase() {
   const { currentTheme } = useTheme();
-  const { charactersShowcase } = useHomePageContent();
+  const { currentLanguage } = useLanguage();
+  const charactersShowcase = charactersShowcaseData[currentLanguage.code] || charactersShowcaseData.en;
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "-80px" });
 

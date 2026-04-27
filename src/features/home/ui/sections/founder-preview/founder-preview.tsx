@@ -1,13 +1,15 @@
 "use client";
 
 import { useTheme } from "@/shared/contexts/theme-context";
-import { useHomePageContent } from "@/features/home/model";
+import { useLanguage } from "@/shared/i18n/language-context";
+import { founderData } from "./data";
 import { FounderPhotoPanel } from "./founder-photo-panel";
 import { FounderTextPanel } from "./founder-text-panel";
 
 export function FounderPreview() {
   const { currentTheme } = useTheme();
-  const { founder } = useHomePageContent();
+  const { currentLanguage } = useLanguage();
+  const founder = founderData[currentLanguage.code] || founderData.en;
 
   return (
     <section

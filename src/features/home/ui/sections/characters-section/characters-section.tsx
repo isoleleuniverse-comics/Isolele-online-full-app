@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/shared/i18n/language-context";
+import { charactersData } from "./data";
 import { motion, useInView } from "framer-motion";
 import { useTheme } from "@/shared/contexts/theme-context";
-import { useHomePageContent } from "@/features/home/model";
 import { CharacterCard } from "./character-card";
 
 export function CharactersSection() {
   const { currentTheme } = useTheme();
-  const { characters } = useHomePageContent();
+  const { currentLanguage } = useLanguage();
+  const characters = charactersData[currentLanguage.code] || charactersData.en;
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "-100px" });
   const carouselRef = useRef<HTMLDivElement>(null);

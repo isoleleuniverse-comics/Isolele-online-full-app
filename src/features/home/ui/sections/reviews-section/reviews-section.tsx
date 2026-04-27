@@ -1,13 +1,15 @@
 "use client";
 
 import { useTheme } from "@/shared/contexts/theme-context";
-import { useHomePageContent } from "@/features/home/model";
+import { useLanguage } from "@/shared/i18n/language-context";
+import { reviewsData } from "./data";
 import { ReviewsHeader } from "./reviews-header";
 import { ReviewCard } from "./review-card";
 
 export function ReviewsSection() {
   const { currentTheme } = useTheme();
-  const { reviews } = useHomePageContent();
+  const { currentLanguage } = useLanguage();
+  const reviews = reviewsData[currentLanguage.code] || reviewsData.en;
 
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: currentTheme.colors.background }}>

@@ -9,4 +9,5 @@ export interface UniversePillar {
   description: string;
   href: string;
   characterName: string;
+  discoverMoreLabel?: string;
 }

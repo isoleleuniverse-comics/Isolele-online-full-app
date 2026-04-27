@@ -1,6 +1,6 @@
-import type { HomePageContent } from "../types";
 
-export const newsEn: HomePageContent["news"] = {
+export const newsData = {
+  en: {
   title: "Latest News",
   minutesReadLabel: "min read",
   readArticleLabel: "READ ARTICLE",
@@ -37,4 +37,5 @@ export const newsEn: HomePageContent["news"] = {
       image: "/events/courtroom-makanda.jpg",
     },
   ],
+}
 };

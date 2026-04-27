@@ -21,6 +21,7 @@ export interface HomeUniversePillarContent {
   description: string;
   href: string;
   characterName: string;
+  discoverMoreLabel?: string;
 }
 
 export interface HomeUniverseContent {
@@ -166,20 +167,6 @@ export interface HomeCtaContent {
 
 export interface HomePageContent {
   locale: HomeLocale;
-  bookHero: {
-    slides: HomeHeroSlide[];
-  };
-  universe: HomeUniverseContent;
-  characters: HomeCharactersContent;
-  story: HomeStoryContent;
-  products: HomeProductsContent;
-  founder: HomeFounderContent;
-  bookstoreDisplay: HomeBookstoreDisplayContent;
-  reviews: HomeReviewsContent;
-  news: HomeNewsContent;
-  fashion: HomeFashionContent;
-  charactersShowcase: HomeCharactersShowcaseContent;
-  cta: HomeCtaContent;
 }
 
 export interface HomeJsonLd {

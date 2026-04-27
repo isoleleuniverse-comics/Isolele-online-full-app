@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
-import { PRODUCT_BLUR_DATA_URL, PRODUCT_FALLBACK_IMAGE } from "./data";
+import { PRODUCTS_BLUR_DATA_URL, PRODUCTS_FALLBACK_IMAGE } from "./data";
 import type { HomeProductContent } from "@/features/home/content/types";
 
 interface ProductCardProps {
@@ -55,13 +55,13 @@ export function ProductCard({ product, index, addItem, addToCartLabel, colors }:
 
       <div className="relative aspect-[3/4] overflow-hidden">
         <Image
-          src={product.image || PRODUCT_FALLBACK_IMAGE}
+          src={product.image || PRODUCTS_FALLBACK_IMAGE}
           alt={product.name}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover transition-transform duration-500 group-hover:scale-110"
           placeholder="blur"
-          blurDataURL={PRODUCT_BLUR_DATA_URL}
+          blurDataURL={PRODUCTS_BLUR_DATA_URL}
           loading="lazy"
         />
         <div

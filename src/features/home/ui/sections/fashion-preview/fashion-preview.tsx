@@ -1,16 +1,18 @@
 "use client";
 
 import { useRef } from "react";
+import { useLanguage } from "@/shared/i18n/language-context";
+import { fashionData } from "./data";
 import { motion, useInView } from "framer-motion";
 import { useTheme } from "@/shared/contexts/theme-context";
-import { useHomePageContent } from "@/features/home/model";
 import { FashionPreviewHeader } from "./fashion-preview-header";
 import { FashionPreviewGrid } from "./fashion-preview-grid";
 import { FashionPreviewCta } from "./fashion-preview-cta";
 
 export function FashionPreview() {
   const { currentTheme } = useTheme();
-  const { fashion } = useHomePageContent();
+  const { currentLanguage } = useLanguage();
+  const fashion = fashionData[currentLanguage.code] || fashionData.en;
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "-100px" });
 

@@ -1,12 +1,15 @@
 "use client";
 
-import { useHomePageContent } from "@/features/home/model";
+import { useLanguage } from "@/shared/i18n/language-context";
 import { useBookHeroCarousel } from "./use-book-hero-carousel";
 import { BookHeroSlide } from "./book-hero-slide";
 import { BookHeroNavigation } from "./book-hero-navigation";
+import { bookHeroData } from "./data";
 
 export function BookHeroSection() {
-  const { bookHero } = useHomePageContent();
+  const { currentLanguage } = useLanguage();
+  const bookHero = bookHeroData[currentLanguage.code] || bookHeroData.en;
+  
   const { current, direction, selectSlide } = useBookHeroCarousel(bookHero.slides.length);
 
   const slide = bookHero.slides[current];

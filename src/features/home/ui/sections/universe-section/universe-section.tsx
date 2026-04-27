@@ -1,16 +1,18 @@
 "use client";
 
 import { useRef } from "react";
+import { useLanguage } from "@/shared/i18n/language-context";
+import { universeData } from "./data";
 import { useInView } from "framer-motion";
 import { useTheme } from "@/shared/contexts/theme-context";
-import { useHomePageContent } from "@/features/home/model";
 import { UNIVERSE_PILLARS, UNIVERSE_BACKGROUND_IMAGES } from "./data";
 import { UniverseSectionHeader } from "./universe-section-header";
 import { UniversePillarCard } from "./universe-pillar-card";
 
 export function UniverseSection() {
   const { currentTheme } = useTheme();
-  const { universe } = useHomePageContent();
+  const { currentLanguage } = useLanguage();
+  const universe = universeData[currentLanguage.code] || universeData.en;
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "-100px" });
 

@@ -1,14 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLanguage } from "@/shared/i18n/language-context";
+import { productsData } from "./data";
 import { useTheme } from "@/shared/contexts/theme-context";
-import { useHomePageContent } from "@/features/home/model";
 import { useCart } from "@/shared/contexts/cart-context";
 import { ProductCard } from "./product-card";
 
 export function ProductsSection() {
   const { currentTheme } = useTheme();
-  const { products } = useHomePageContent();
+  const { currentLanguage } = useLanguage();
+  const products = productsData[currentLanguage.code] || productsData.en;
   const { addItem } = useCart();
 
   return (

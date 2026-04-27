@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import type { Theme } from "@/shared/contexts/theme-context";
 import type { UniversePillar } from "./types";
 
+
 interface UniversePillarCardProps {
   pillar: UniversePillar;
   index: number;
@@ -87,7 +88,7 @@ export function UniversePillarCard({
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            {discoverMoreLabel}
+            {pillar.discoverMoreLabel ?? discoverMoreLabel}
             <ArrowRight className="w-4 h-4" />
           </motion.button>
         </Link>
