@@ -54,15 +54,15 @@ export function CharacterCard({
           <div
             className="absolute inset-0"
             style={{
-              background: `linear-gradient(180deg, rgba(0,0,0,0) 0%, ${character.color}40 50%, ${colors.background} 100%)`,
+              background: `linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, ${character.color}40 100%, ${colors.background} 100%)`,
             }}
           />
 
           <div
             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500"
-            style={{ background: `linear-gradient(to top, ${colors.background} 0%, transparent 50%)` }}
+          
           />
-
+              
           <motion.div
             className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             style={{ boxShadow: `inset 0 0 30px ${character.color}40, 0 0 30px ${character.color}30` }}
@@ -70,9 +70,9 @@ export function CharacterCard({
         </div>
 
         <h3 className="text-2xl font-black tracking-wider mb-1" style={{ color: colors.textPrimary }}>
-          {character.name}
+          {character.name} 
         </h3>
-        <p className="text-xs font-medium mb-3 line-clamp-2" style={{ color: character.color }}>
+        <p className="text- font-medium mb-3 line-clamp-2" style={{ color: character.color }}>
           {character.title}
         </p>
 
@@ -81,9 +81,9 @@ export function CharacterCard({
           style={{ color: colors.accentPrimary }}
           whileHover={{ x: 5 }}
         >
-          {discoverLabel}
-          <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}>
-            â†’
+          
+          <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY }}>
+            {discoverLabel} {character.name}
           </motion.span>
         </motion.span>
       </Link>

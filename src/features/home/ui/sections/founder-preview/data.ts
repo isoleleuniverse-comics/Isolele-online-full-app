@@ -16,5 +16,16 @@ export const founderData = {
   quote:
     "I was tired of a world that takes everything from Africa and gives nothing back. So I built the thing they will one day have to come to me for.",
   ctaLabel: "EXPLORE THE ISOLELE UNIVERSE",
-}
+}, 
+  fr: {
+    locationLabel: "Kinshasa, RDC",
+    roleLabel: "Créateur & Auteur",
+    title: "HRM KING KUFULULA",
+    subtitle: "Fondateur Royal de l'Univers ISOLELE",
+    description:
+      "HRM King Kufulula Bapindi Manikongo est le Roi traditionnel du peuple Bapindi de la RDC et Manikongo de la lignée royale Kongo. Il a construit ISOLELE à partir de rien à Kinshasa avec un seul objectif : prouver que l'Afrique crée pour le monde. Trois illustrateurs ont perdu la vie face aux rebelles en construisant cet univers. Leur sacrifice est le fondement. Ceci n'est pas une entreprise de bandes dessinées. C'est un royaume.",
+    quote:
+      "J'en avais assez d'un monde qui prend tout à l'Afrique et ne lui rend rien. Alors j'ai construit la chose pour laquelle ils devront un jour venir me chercher.",
+    ctaLabel: "EXPLORER L'UNIVERS ISOLELE",
+  }
 };

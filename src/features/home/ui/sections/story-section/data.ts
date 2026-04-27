@@ -20,5 +20,20 @@ export const storyData = {
   ],
   conclusion: "The destiny of a nation rests around his neck. Will Zaiire embrace it?",
   cta: "Discover the Full Story",
+},
+fr:{
+  "founderLabel": "Créateur & Auteur",
+    "title": "LE PRINCE DU KONGO : LE COLLIER DU DESTIN",
+      "subtitle": "Une épopée d'héritage, de pouvoir et de destin",
+        "paragraphs": [
+          "Au cœur de l'Afrique, où tradition et héritage s'entrelacent avec la modernité, un prince royal découvrira bientôt sa véritable destinée.",
+          "\"Le Prince du Kongo : Le Collier du Destin\" raconte l'histoire épique de Zaiire, un jeune garçon de la ville animée de Kinshasa, élevé dans une vie d'une richesse et d'un privilège inimaginables.",
+          "À son insu, un héritage ancien coule dans ses veines, un héritage lié à l'âme même de son peuple, enraciné profondément dans la riche culture et l'histoire du Kongo.",
+          "En surface, Zaiire est un garçon habitué au luxe, au prestige et au respect. Mais lorsqu'il rend visite à sa mère, qu'il n'a pas vue depuis longtemps, dans les bidonvilles les plus pauvres de Kinshasa, son monde est bouleversé.",
+          "Lors de leurs retrouvailles, sa mère lui confie le Collier du Destin, un artefact mystique transmis à travers les générations de la royauté congolaise."
+        ],
+          "conclusion": "Le destin de la nation repose autour de son cou. Zaiire l'embrassera-t-il ?",
+            "cta": "Découvrez l'histoire complète"
 }
+
 };

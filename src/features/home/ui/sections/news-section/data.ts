@@ -37,5 +37,43 @@ export const newsData = {
       image: "/events/courtroom-makanda.jpg",
     },
   ],
-}
+},
+  fr: {
+    title: "Dernières Actualités",
+    minutesReadLabel: "min de lecture",
+    readArticleLabel: "LIRE L'ARTICLE",
+    viewAllLabel: "VOIR TOUTES LES ACTUALITÉS",
+    articles: [
+      {
+        id: 1,
+        category: "HISTOIRE",
+        categoryColor: "#D4AF37",
+        title: "Comment Makanda reconquiert un empire africain perdu dans les bandes dessinées modernes",
+        excerpt: "Un regard approfondi sur la mythologie royale, les symboles et les échos historiques qui façonnent l'un des mondes les plus audacieux d'ISOLELE.",
+        readTime: "5",
+        date: "Mars 2026",
+        image: "/events/wakanda-makanda-royal.jpg",
+      },
+      {
+        id: 2,
+        category: "CULTURE",
+        categoryColor: "#B3541E",
+        title: "Pourquoi ISOLELE devient un projet de mémoire autant qu'un univers de bandes dessinées",
+        excerpt: "De l'identité diasporique à la restauration culturelle, le projet résonne bien au-delà du divertissement.",
+        readTime: "8",
+        date: "Février 2026",
+        image: "/events/african-empire-luxury.jpg",
+      },
+      {
+        id: 3,
+        category: "RECHERCHE",
+        categoryColor: "#4169E1",
+        title: "À l'intérieur des références derrière le manuscrit Makanda",
+        excerpt: "Le langage visuel des cours, du feu sacré et des archives royales qui ont façonné cette nouvelle mythologie.",
+        readTime: "6",
+        date: "Janvier 2026",
+        image: "/events/courtroom-makanda.jpg",
+      },
+    ],
+  }
 };

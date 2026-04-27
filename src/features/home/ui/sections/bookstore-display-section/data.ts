@@ -10,5 +10,13 @@ export const bookstoreDisplayData = {
   imageSrc: "/images/bookstore-display.jpg",
   imageAlt: "ISOLELE books featured in a bookstore best sellers display",
   caption: "From Kinshasa to Nairobi's bestseller shelves, ISOLELE is taking Africa by storm.",
-}
+},
+  fr: {
+    "headingTagline": "Déjà en magasin",
+    "headingTitle": "Un phénomène panafricain",
+    "headingDescription": "Le premier univers de super-héros panafricain déjà présent dans les rayons best-sellers à travers l'Afrique.",
+    "imageSrc": "/images/bookstore-display.jpg",
+    "imageAlt": "Livres ISOLELE présentés dans une vitrine des meilleures ventes en librairie",
+    "caption": "De Kinshasa aux rayons best-sellers de Nairobi, ISOLELE prend l'Afrique d'assaut."
+  }
 };

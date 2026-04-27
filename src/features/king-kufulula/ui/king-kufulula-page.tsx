@@ -236,7 +236,7 @@ export function KingKufululaPage() {
                 Three paths. One universe. One crown.
               </p>
 
-              <div className="flex flex-col sm:flex-row justify-center gap-3">
+              <div className="flex flex-col  justify-center gap-3">
                 {CONTENT.ctas.map((cta) => (
                   <Link key={cta.label} href={cta.href}>
                     <motion.button

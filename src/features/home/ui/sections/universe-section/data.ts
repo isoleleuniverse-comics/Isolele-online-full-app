@@ -88,5 +88,45 @@ export const universeData = {
       discoverMoreLabel: "DISCOVER KING KUFULULA",
     },
   ],
+},
+fr:{
+  "title": "L'UNIVERS ISOLELE",
+    "subtitle": "L'Afrique a toujours eu des héros. ISOLELE leur donne un univers.",
+      "description": "Né des racines du Kongo. Construit pour chaque enfant africain qui ne s'est jamais vu en héros. ISOLELE est l'univers qui a toujours été destiné à exister. Le royaume n'a jamais été perdu. Il attendait ses conteurs. ISOLELE POUR TOUJOURS.",
+        "discoverMoreLabel": "DÉCOUVRIR",
+          "pillars": [
+            {
+              "key": "destiny",
+              "title": "Le Lion a Appris à Écrire",
+              "description": "Un proverbe africain dit : « Jusqu'à ce que le lion apprenne à écrire, chaque histoire glorifiera le chasseur. » ISOLELE est la plume du lion. L'Afrique écrit sa propre histoire. Pour la première fois dans l'histoire, la civilisation Kongo a son propre univers de super-héros. Des héros noirs africains créés à Kinshasa, RDC, pour chaque enfant sur terre qui mérite de se voir comme l'élu.",
+              "href": "/#hero",
+              "characterName": "Zaiire",
+              "discoverMoreLabel": "DÉCOUVRIR ZAIIRE"
+            },
+            {
+              "key": "heritage",
+              "title": "Tout Commence au Kongo",
+              "description": "La musique. La danse. La royauté. La mode. La culture. L'histoire. Avant que le monde n'ait des noms pour ces choses, le Kongo les avait toutes maîtrisées. L'Afrique n'est pas un continent. C'est une source. Et le Congo n'est pas seulement une partie de cette source. Le Congo EST la source. Le déclencheur de toute la culture humaine. Le battement de cœur qui a tout commencé. ISOLELE y est né. Pas par accident. Par destin. La civilisation Kongo est le fondement de l'univers ISOLELE. Chaque héros, chaque histoire, chaque bataille commence là où toute la culture humaine a commencé. Au Kongo.",
+              "href": "/#hero",
+              "characterName": "Kimoya",
+              "discoverMoreLabel": "DÉCOUVRIR KIMOYA"
+            },
+            {
+              "key": "resurrection",
+              "title": "Tu as Toujours Été Royal",
+              "description": "Avant que quiconque ne te dise qui tu étais, les ancêtres le savaient déjà. Chaque enfant né sur le sol africain, chaque membre de la diaspora qui a traversé les océans et survécu, chaque personne qui porte le sang africain dans ses veines a toujours porté une couronne dont on ne lui a jamais parlé. ISOLELE existe pour la rendre. Pas comme un cadeau. Comme un rappel. Tu n'as jamais été perdu. Tu n'as jamais été inférieur. Tu n'as jamais été sans pouvoir. Tu attendais juste que quelqu'un te dise la vérité. Bienvenue à la maison. Voici la vérité que l'histoire a oublié d'enseigner. L'Afrique n'a pas été le début de l'esclavage. L'Afrique a été le début de la civilisation.",
+              "href": "/royal-history",
+              "characterName": "Bambula",
+              "discoverMoreLabel": "DÉCOUVRIR VOTRE HISTOIRE ROYALE"
+            },
+            {
+              "key": "founder",
+              "title": "HRM King Kufulula Bapindi Manikongo",
+              "description": "HRM King Kufulula Bapindi Manikongo a fondé ISOLELE pour restaurer l'âme du récit africain et créer un empire mythologique où les super-héros africains s'élèvent de l'histoire authentique du Kongo. Le Roi traditionnel du peuple Bapindi. Le Manikongo. Construit depuis Kinshasa pour le monde.",
+              "href": "/king-kufulula",
+              "characterName": "King Kufulula",
+              "discoverMoreLabel": "DÉCOUVRIR KING KUFULULA"
+            }
+          ]
 }
 };

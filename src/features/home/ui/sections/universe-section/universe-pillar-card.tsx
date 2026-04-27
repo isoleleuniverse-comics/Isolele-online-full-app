@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { Theme } from "@/shared/contexts/theme-context";
 import type { UniversePillar } from "./types";
-
+import { useState } from "react";
 
 interface UniversePillarCardProps {
   pillar: UniversePillar;
@@ -14,6 +14,8 @@ interface UniversePillarCardProps {
   discoverMoreLabel: string;
 }
 
+
+
 export function UniversePillarCard({
   pillar,
   index,
@@ -22,6 +24,8 @@ export function UniversePillarCard({
   theme,
   discoverMoreLabel,
 }: UniversePillarCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isLongText = pillar.description.length > 150;
   return (
     <motion.div
       initial={{ opacity: 0, rotateY: 90 }}
@@ -72,6 +76,7 @@ export function UniversePillarCard({
             <h3 className="text-xl font-bold tracking-wide mb-4" style={{ color: "#000000" }}>
               {pillar.title}
             </h3>
+            
             <p className="text-sm leading-relaxed" style={{ color: "#000000" }}>
               {pillar.description}
             </p>

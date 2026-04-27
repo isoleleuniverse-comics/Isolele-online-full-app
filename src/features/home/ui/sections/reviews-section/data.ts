@@ -17,5 +17,22 @@ export const reviewsData: Record<string, HomeReviewsContent> = {
       ctaHref: process.env.NEXT_PUBLIC_ZAIIRE_BOOK_1_URL ?? "/comics",
     },
   ],
-}
+},
+fr:{
+  title: "UN PHÉNOMÈNE CULTUREL EN DEVENIR",
+  subtitle: "DÉJÀ EN LIBRAIRIE",
+  description:
+    "Zaiire : Le Prince du Kongo est déjà en tête des ventes dans les librairies au Kenya. De vrais lecteurs. Un impact réel. Une Afrique réelle.",
+  items: [
+    {
+      image: "/images/bookstore-display.jpg",
+      imageAlt: "Rayon des bestsellers de la librairie Nuria à Nairobi, Kenya",
+      text: "Zaiire a atteint le rayon des bestsellers de la librairie Nuria à Nairobi, Kenya sans distributeur, sans Hollywood et sans budget marketing. Construit à Kinshasa. Vendu par la puissance de l'histoire.",author: "ISOLELE",
+      stars: 5,
+      ctaLabel: "LISEZ L'HISTOIRE QUE L'AFRIQUE ACHÈTE — 36,99 $",
+      ctaHref: process.env.NEXT_PUBLIC_ZAIIRE_BOOK_1_URL ?? "/comics",
+    },
+  ],
+},
 };
+
