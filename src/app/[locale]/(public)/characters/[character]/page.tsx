@@ -22,7 +22,7 @@ export default async function Page({
 }: {
   params: Promise<{ locale: string; character: string }>;
 }) {
-  const { character } = await params;
-  return <CharacterDetailPage character={character} />;
+  const { locale, character } = await params;
+  return <CharacterDetailPage character={character} locale={locale === "en" ? "en" : "fr"} />;
 }
 

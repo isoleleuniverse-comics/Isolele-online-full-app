@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/server/db/prisma";
 import { AdminCharacterEditorPanel } from "@/components/admin/character-editor-panel";
-import { profileRouteByCharacterId, characters } from "@/features/characters/model/characters.data";
+import { getCharacters, profileRouteByCharacterId } from "@/features/characters/model/characters.data";
 
 export default async function AdminCharacterDetailPage({
   params,
@@ -9,6 +9,7 @@ export default async function AdminCharacterDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const characters = getCharacters("en");
 
   const dbCharacter = await prisma.character.findFirst({
     where: {

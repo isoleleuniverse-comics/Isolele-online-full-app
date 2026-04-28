@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
-import { characterProfiles, type CharacterSlug } from "./characters.data";
+import { characterProfilesData, CHARACTER_SLUGS } from "./characters.data";
 import { isSupportedLocale, type SupportedLocale, DEFAULT_LOCALE } from "@/shared/i18n/locales";
 
-export function getCharacterBySlug(slug: string) {
-  return characterProfiles[slug as CharacterSlug];
+export type CharacterSlug = typeof CHARACTER_SLUGS[number];
+
+export function getCharacterBySlug(slug: string, locale: SupportedLocale) {
+  const profiles = characterProfilesData[locale] ?? characterProfilesData.en;
+  return profiles[slug] ?? null;
 }
 
 export function getCharacterStaticParams() {
-  return Object.keys(characterProfiles).map((character) => ({ character }));
+  return CHARACTER_SLUGS.map((character) => ({ character }));
 }
 
 export function getCharacterMetadata(locale: string, slug: string): Metadata {
   const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
-  const profile = getCharacterBySlug(slug);
+  const profile = getCharacterBySlug(slug, safeLocale);
 
   if (!profile) {
     return {
@@ -30,24 +33,14 @@ export function getCharacterMetadata(locale: string, slug: string): Metadata {
     description: pageDescription,
     alternates: {
       canonical: path,
-      languages: {
-        fr: `/fr/characters/${slug}`,
-        en: `/en/characters/${slug}`,
-      },
+      languages: { fr: `/fr/characters/${slug}`, en: `/en/characters/${slug}` },
     },
     openGraph: {
       type: "article",
       url: path,
       title: pageTitle,
       description: pageDescription,
-      images: [
-        {
-          url: profile.image,
-          width: 1200,
-          height: 1600,
-          alt: `${profile.name} character portrait`,
-        },
-      ],
+      images: [{ url: profile.image, width: 1200, height: 1600, alt: `${profile.name} character portrait` }],
     },
     twitter: {
       card: "summary_large_image",
@@ -57,4 +50,3 @@ export function getCharacterMetadata(locale: string, slug: string): Metadata {
     },
   };
 }
-

@@ -1,10 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { characters } from "@/features/characters/model/characters.data";
+import type { CharactersUIStrings } from "@/features/characters/model/characters.types";
 import { useTheme } from "@/shared/contexts/theme-context";
 
-export function CharactersHeroSection() {
+interface CharactersHeroSectionProps {
+  characterCount: number;
+  ui: CharactersUIStrings;
+}
+
+export function CharactersHeroSection({ characterCount, ui }: CharactersHeroSectionProps) {
   const { currentTheme } = useTheme();
 
   return (
@@ -35,7 +40,7 @@ export function CharactersHeroSection() {
         className="relative mb-4 text-xs font-bold tracking-[0.4em]"
         style={{ color: currentTheme.colors.accentPrimary }}
       >
-        ISOLELE UNIVERSE
+        {ui.heroTagline}
       </motion.p>
       <motion.h1
         initial={{ opacity: 0, y: 18 }}
@@ -44,9 +49,9 @@ export function CharactersHeroSection() {
         className="relative mb-4 text-balance text-5xl font-black tracking-wider sm:text-7xl"
         style={{ color: currentTheme.colors.textPrimary }}
       >
-        LEGENDARY
+        {ui.heroTitleLine1}
         <br />
-        <span style={{ color: currentTheme.colors.accentPrimary }}>CHARACTERS</span>
+        <span style={{ color: currentTheme.colors.accentPrimary }}>{ui.heroTitleLine2}</span>
       </motion.h1>
       <motion.p
         initial={{ opacity: 0, y: 18 }}
@@ -55,7 +60,7 @@ export function CharactersHeroSection() {
         className="relative mx-auto max-w-2xl text-lg text-balance"
         style={{ color: currentTheme.colors.textSecondary }}
       >
-        Meet the superheroes, gods, and mythic figures born from the rich tapestry of African folklore.
+        {ui.heroDescription}
       </motion.p>
 
       <motion.div
@@ -65,9 +70,9 @@ export function CharactersHeroSection() {
         className="relative mt-10 flex justify-center gap-8 sm:gap-12"
       >
         {[
-          { label: "Characters", value: `${characters.length}+` },
-          { label: "Kingdoms", value: "12+" },
-          { label: "Universes", value: "3" },
+          { label: ui.statCharacters, value: `${characterCount}+` },
+          { label: ui.statKingdoms, value: "12+" },
+          { label: ui.statUniverses, value: "3" },
         ].map((stat) => (
           <div key={stat.label} className="text-center">
             <p className="text-3xl font-black" style={{ color: currentTheme.colors.accentPrimary }}>

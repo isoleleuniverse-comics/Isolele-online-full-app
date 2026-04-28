@@ -29,7 +29,12 @@ export async function generateMetadata({
   };
 }
 
-export default function Page() {
-  return <KingKufululaPage />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
+  return <KingKufululaPage locale={safeLocale} />;
 }
-

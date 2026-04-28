@@ -1,14 +1,15 @@
 "use client";
 
-import { characterFilters } from "@/features/characters/model/characters.data";
+import type { CharacterFilter } from "@/features/characters/model/characters.types";
 import { useTheme } from "@/shared/contexts/theme-context";
 
 interface CharactersFilterBarProps {
   activeFilter: string;
+  filters: CharacterFilter[];
   onChangeFilter: (filterId: string) => void;
 }
 
-export function CharactersFilterBar({ activeFilter, onChangeFilter }: CharactersFilterBarProps) {
+export function CharactersFilterBar({ activeFilter, filters, onChangeFilter }: CharactersFilterBarProps) {
   const { currentTheme } = useTheme();
 
   return (
@@ -20,7 +21,7 @@ export function CharactersFilterBar({ activeFilter, onChangeFilter }: Characters
       }}
     >
       <div className="mx-auto flex max-w-7xl gap-3 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {characterFilters.map((filterOption) => (
+        {filters.map((filterOption) => (
           <button
             key={filterOption.id}
             onClick={() => onChangeFilter(filterOption.id)}

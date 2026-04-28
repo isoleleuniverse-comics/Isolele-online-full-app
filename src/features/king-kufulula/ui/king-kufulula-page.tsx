@@ -5,63 +5,71 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Crown, ArrowRight, Shield, Flame } from "lucide-react";
 import { useTheme } from "@/shared/contexts/theme-context";
+import { SupportedLocale } from "@/shared/i18n/locales";
+import { KingKufululaContent, KingKufululaData } from "./data";
 
 const KING_PHOTO = {
   src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg",
   alt: "H.R.M King Kufulula - Creator of ISOLELE",
 };
 
-const CONTENT = {
-  title: "HRM King Kufulula Bapindi Manikongo: The African King Who Built a Universe From Nothing",
-  metaDescription:
-    "HRM King Kufulula Bapindi Manikongo is the traditional King of the Bapindi people and Manikongo of the Kongo royal lineage. Founder of ISOLELE, the first Black African superhero universe, built from Kinshasa, DRC for the world.",
-  sections: [
-    {
-      id: "king",
-      h2: "The King Behind the Universe",
-      body: "HRM King Kufulula Bapindi Manikongo is not a comic book creator who chose an African theme. He is an African king who chose to build a universe. As the traditional King of the Bapindi people of the Democratic Republic of Congo and Manikongo of the Kongo royal lineage, his identity, his bloodline, and his responsibility to his people are not inspiration for ISOLELE. They are ISOLELE. Every kingdom in the universe is real because the man who built it is royalty. Every hero who fights for their people is real because the man who created them fights for his every single day.",
-      icon: Crown,
-    },
-    {
-      id: "zaiire",
-      h2: "Zaiire Is His Story",
-      body: "Zaiire is the Prince of Kongo searching for his mother across the cosmos. King Kufulula knows what it means to search. To be separated from what you love. To carry a destiny that was chosen for you before you understood what it meant. The exile. The distance. The responsibility of a crown you did not ask for but cannot put down. Zaiire’s journey is not fiction. It is a mirror. When you read Zaiire crossing the cosmos to find his mother Kimoya, you are reading a king processing his own truth through the only language powerful enough to hold it. Story.",
-      icon: Shield,
-    },
-    {
-      id: "war",
-      h2: "Built in the Middle of War",
-      body: "Building ISOLELE was never just a creative challenge. It was survival. The DRC is one of the most conflict-affected countries on earth. North and South Kivu, where some of ISOLELE’s stories are set, are territories where armed groups, rebel forces, and violence are daily realities. During the creation of ISOLELE, three of our illustrators were killed by rebels. Three artists who gave their hands, their talent, and their lives to build something beautiful for African children. ISOLELE carries their names in every page. Their sacrifice is not forgotten. It is the foundation.",
-      icon: Flame,
-    },
-    {
-      id: "made-in-congo",
-      h2: "Made in Congo. On Purpose.",
-      body: "King Kufulula made a decision that most people told him was impossible. Everything ISOLELE produces will be made in Congo. Not in China. Not outsourced. Not dependent on a foreign supply chain that extracts value from Africa and returns nothing. The superhero costumes are made in Congo. The art is produced in Kinshasa. The fragrance bottles are crafted in Kinshasa. This is not a brand statement. It is a declaration of economic independence. King Kufulula was tired of a world that takes everything from Africa and gives African creators nothing in return. ISOLELE exists to prove that Africa can create for the world, not just supply it. One goal: dethrone the dependence on China. Build it in Congo. Ship it to the world.",
-      icon: Crown,
-    },
-    {
-      id: "children",
-      h2: "Investing in the Children of War",
-      body: "A portion of ISOLELE’s mission is dedicated to the children of North and South Kivu, young people growing up in active conflict zones who have never been told that their story matters. ISOLELE runs a free art education program for youth from these territories, because King Kufulula believes that a child who learns to draw their own hero cannot be fully broken by war. Art is armor. Story is survival. And every child who picks up a pencil in Kivu is already a warrior.",
-      icon: Shield,
-    },
-    {
-      id: "goal",
-      h2: "One Goal",
-      body: "HRM King Kufulula Bapindi Manikongo has one goal. To build from scratch what the world said Africa could not build. A complete creative lifestyle empire, comics, games, fragrance, fashion, all produced on African soil by African hands, distributed to the world. Not as a charity project. Not as a cultural curiosity. As a competitor. ISOLELE does not aspire to be recognized by the world. It is coming to change it. The king is not waiting to be discovered. He is building the thing they will one day have to come to him for.",
-      icon: Crown,
-    },
-  ],
-  ctas: [
-    { label: "EXPLORE THE ISOLELE UNIVERSE", href: "/#hero" },
-    { label: "READ ZAIIRE", href: "/books/zaiire" },
-    { label: "DISCOVER YOUR ROYAL HISTORY", href: "/royal-history" },
-  ],
-};
+interface kingKufululaPageProps {
+  locale: SupportedLocale
+}
 
-export function KingKufululaPage() {
+// const CONTENT = {
+//   title: "HRM King Kufulula Bapindi Manikongo: The African King Who Built a Universe From Nothing",
+//   metaDescription:
+//     "HRM King Kufulula Bapindi Manikongo is the traditional King of the Bapindi people and Manikongo of the Kongo royal lineage. Founder of ISOLELE, the first Black African superhero universe, built from Kinshasa, DRC for the world.",
+//   sections: [
+//     {
+//       id: "king",
+//       h2: "The King Behind the Universe",
+//       body: "HRM King Kufulula Bapindi Manikongo is not a comic book creator who chose an African theme. He is an African king who chose to build a universe. As the traditional King of the Bapindi people of the Democratic Republic of Congo and Manikongo of the Kongo royal lineage, his identity, his bloodline, and his responsibility to his people are not inspiration for ISOLELE. They are ISOLELE. Every kingdom in the universe is real because the man who built it is royalty. Every hero who fights for their people is real because the man who created them fights for his every single day.",
+//       icon: Crown,
+//     },
+//     {
+//       id: "zaiire",
+//       h2: "Zaiire Is His Story",
+//       body: "Zaiire is the Prince of Kongo searching for his mother across the cosmos. King Kufulula knows what it means to search. To be separated from what you love. To carry a destiny that was chosen for you before you understood what it meant. The exile. The distance. The responsibility of a crown you did not ask for but cannot put down. Zaiire’s journey is not fiction. It is a mirror. When you read Zaiire crossing the cosmos to find his mother Kimoya, you are reading a king processing his own truth through the only language powerful enough to hold it. Story.",
+//       icon: Shield,
+//     },
+//     {
+//       id: "war",
+//       h2: "Built in the Middle of War",
+//       body: "Building ISOLELE was never just a creative challenge. It was survival. The DRC is one of the most conflict-affected countries on earth. North and South Kivu, where some of ISOLELE’s stories are set, are territories where armed groups, rebel forces, and violence are daily realities. During the creation of ISOLELE, three of our illustrators were killed by rebels. Three artists who gave their hands, their talent, and their lives to build something beautiful for African children. ISOLELE carries their names in every page. Their sacrifice is not forgotten. It is the foundation.",
+//       icon: Flame,
+//     },
+//     {
+//       id: "made-in-congo",
+//       h2: "Made in Congo. On Purpose.",
+//       body: "King Kufulula made a decision that most people told him was impossible. Everything ISOLELE produces will be made in Congo. Not in China. Not outsourced. Not dependent on a foreign supply chain that extracts value from Africa and returns nothing. The superhero costumes are made in Congo. The art is produced in Kinshasa. The fragrance bottles are crafted in Kinshasa. This is not a brand statement. It is a declaration of economic independence. King Kufulula was tired of a world that takes everything from Africa and gives African creators nothing in return. ISOLELE exists to prove that Africa can create for the world, not just supply it. One goal: dethrone the dependence on China. Build it in Congo. Ship it to the world.",
+//       icon: Crown,
+//     },
+//     {
+//       id: "children",
+//       h2: "Investing in the Children of War",
+//       body: "A portion of ISOLELE’s mission is dedicated to the children of North and South Kivu, young people growing up in active conflict zones who have never been told that their story matters. ISOLELE runs a free art education program for youth from these territories, because King Kufulula believes that a child who learns to draw their own hero cannot be fully broken by war. Art is armor. Story is survival. And every child who picks up a pencil in Kivu is already a warrior.",
+//       icon: Shield,
+//     },
+//     {
+//       id: "goal",
+//       h2: "One Goal",
+//       body: "HRM King Kufulula Bapindi Manikongo has one goal. To build from scratch what the world said Africa could not build. A complete creative lifestyle empire, comics, games, fragrance, fashion, all produced on African soil by African hands, distributed to the world. Not as a charity project. Not as a cultural curiosity. As a competitor. ISOLELE does not aspire to be recognized by the world. It is coming to change it. The king is not waiting to be discovered. He is building the thing they will one day have to come to him for.",
+//       icon: Crown,
+//     },
+//   ],
+//   ctas: [
+//     { label: "EXPLORE THE ISOLELE UNIVERSE", href: "/#hero" },
+//     { label: "READ ZAIIRE", href: "/books/zaiire" },
+//     { label: "DISCOVER YOUR ROYAL HISTORY", href: "/royal-history" },
+//   ],
+// };
+
+export function KingKufululaPage({locale}: kingKufululaPageProps) {
   const { currentTheme } = useTheme();
+
+  const content = KingKufululaData[locale] ?? KingKufululaData.en
 
   return (
     <div style={{ backgroundColor: currentTheme.colors.background }}>
@@ -108,7 +116,7 @@ export function KingKufululaPage() {
               }}
             >
               <Crown className="h-4 w-4" />
-              ISOLELE FOUNDER
+              {content.founderBadge}
             </motion.div>
 
             <motion.h1
@@ -118,7 +126,7 @@ export function KingKufululaPage() {
               className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-balance"
               style={{ color: "#fff", lineHeight: 1.05, textShadow: "0 8px 40px rgba(0,0,0,0.55)" }}
             >
-              {CONTENT.title}
+              {content.title}
             </motion.h1>
 
             <motion.p
@@ -128,7 +136,7 @@ export function KingKufululaPage() {
               className="mt-5 text-lg sm:text-xl leading-relaxed max-w-4xl"
               style={{ color: "rgba(255,255,255,0.82)" }}
             >
-              {CONTENT.metaDescription}
+              {content.metaDescription}
             </motion.p>
 
             <motion.div
@@ -137,7 +145,7 @@ export function KingKufululaPage() {
               transition={{ duration: 0.75, delay: 0.26 }}
               className="mt-7 flex flex-wrap gap-3"
             >
-              {CONTENT.sections.map((s) => (
+              {content.sections.map((s) => (
                 <a
                   key={s.id}
                   href={`#${s.id}`}
@@ -160,7 +168,7 @@ export function KingKufululaPage() {
       {/* Content */}
       <section className="px-4 sm:px-6 lg:px-8 py-16">
         <div className="max-w-5xl mx-auto grid gap-10">
-          {CONTENT.sections.map((s, index) => {
+          {content.sections.map((s, index) => {
             const Icon = s.icon;
             return (
               <motion.article
@@ -237,7 +245,7 @@ export function KingKufululaPage() {
               </p>
 
               <div className="flex flex-col  justify-center gap-3">
-                {CONTENT.ctas.map((cta) => (
+                {content.ctas.map((cta) => (
                   <Link key={cta.label} href={cta.href}>
                     <motion.button
                       className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-black tracking-wider uppercase"

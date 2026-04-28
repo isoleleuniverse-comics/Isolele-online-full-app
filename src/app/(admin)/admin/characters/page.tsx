@@ -1,9 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { prisma } from "@/server/db/prisma";
-import { characters as staticCharacters } from "@/features/characters/model/characters.data";
+import { getCharacters } from "@/features/characters/model/characters.data";
 
 export default async function AdminCharactersPage() {
+  const staticCharacters = getCharacters("en");
   const dbCharacters = await prisma.character.findMany({
     select: {
       id: true,

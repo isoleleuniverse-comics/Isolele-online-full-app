@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import { characterFilterMap, characters } from "@/features/characters/model/characters.data";
+import { characterFilterMap, charactersPageData, getCharacters } from "@/features/characters/model/characters.data";
 import type { Character } from "@/features/characters/model/characters.types";
 import {
   CharacterModal,
@@ -10,26 +10,40 @@ import {
   CharactersGrid,
   CharactersHeroSection,
 } from "@/features/characters/ui/sections";
+import type { SupportedLocale } from "@/shared/i18n/locales";
 import { useTheme } from "@/shared/contexts/theme-context";
 
-export function CharactersPage() {
+interface CharactersPageProps {
+  locale: SupportedLocale;
+}
+
+export function CharactersPage({ locale }: CharactersPageProps) {
   const { currentTheme } = useTheme();
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [filter, setFilter] = useState("all");
+  const characters = useMemo(() => getCharacters(locale), [locale]);
+  const pageContent = charactersPageData[locale] ?? charactersPageData.en;
 
   const displayedCharacters = useMemo(() => {
     if (filter === "all") return characters;
     return characters.filter((character) => characterFilterMap[filter]?.includes(character.id));
-  }, [filter]);
+  }, [characters, filter]);
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: currentTheme.colors.background }}>
-      <CharactersHeroSection />
-      <CharactersFilterBar activeFilter={filter} onChangeFilter={setFilter} />
+      <CharactersHeroSection characterCount={characters.length} ui={pageContent.ui} />
+      <CharactersFilterBar activeFilter={filter} filters={pageContent.filters} onChangeFilter={setFilter} />
       <CharactersGrid characters={displayedCharacters} onSelectCharacter={setSelectedCharacter} />
 
       <AnimatePresence>
-        {selectedCharacter ? <CharacterModal character={selectedCharacter} onClose={() => setSelectedCharacter(null)} /> : null}
+        {selectedCharacter ? (
+          <CharacterModal
+            character={selectedCharacter}
+            locale={locale}
+            ui={pageContent.ui}
+            onClose={() => setSelectedCharacter(null)}
+          />
+        ) : null}
       </AnimatePresence>
     </div>
   );
