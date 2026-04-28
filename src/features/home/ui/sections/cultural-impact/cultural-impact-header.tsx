@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 import type { CulturalImpactContent } from "./types";
 
 interface CulturalImpactHeaderProps {
@@ -12,7 +12,7 @@ export function CulturalImpactHeader({ content, theme }: CulturalImpactHeaderPro
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: false, amount: 0.2 }}
       transition={{ duration: 0.8 }}
       className="text-center mb-16"
     >

@@ -1,91 +1,36 @@
-import dynamic from "next/dynamic";
-import { BookHeroSection, UniverseSection, CharactersSection } from "@/features/home/ui/sections";
-import { OrganizationJsonLd, ComicSeriesJsonLd, WebsiteJsonLd } from "@/shared/seo/json-ld";
+import { lazySection } from "@/shared/lib/lazy-section";
+import type { HomeJsonLd, HomeLocale } from "../content";
+import { getHomePageContent } from "../content";
+import { HomeContentProvider } from "../model";
+import { HomeStructuredData } from "../seo/home-structured-data";
 
-const StorySection = dynamic(
-  () => import("@/features/home/ui/components/story-section").then((mod) => ({ default: mod.StorySection })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
+// Eagerly loaded — above the fold
+import { BookHeroSection } from "./sections/book-hero-section/book-hero-section";
+import { UniverseSection } from "./sections/universe-section/universe-section";
+import { CharactersSection } from "./sections/characters-section/characters-section";
 
-const ProductsSection = dynamic(
-  () => import("@/features/home/ui/components/products-section").then((mod) => ({ default: mod.ProductsSection })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
+// Lazily loaded — below the fold
+const StorySection = lazySection(() => import("./sections/story-section/story-section"), "StorySection");
+const ProductsSection = lazySection(() => import("./sections/products-section/products-section"), "ProductsSection");
+const FounderPreview = lazySection(() => import("./sections/founder-preview/founder-preview"), "FounderPreview");
+const BookstoreDisplaySection = lazySection(() => import("./sections/bookstore-display-section/bookstore-display-section"), "BookstoreDisplaySection");
+const ReviewsSection = lazySection(() => import("./sections/reviews-section/reviews-section"), "ReviewsSection");
+const NewsSection = lazySection(() => import("./sections/news-section/news-section"), "NewsSection");
+const FashionPreview = lazySection(() => import("./sections/fashion-preview/fashion-preview"), "FashionPreview");
+const CharactersShowcase = lazySection(() => import("./sections/characters-showcase/characters-showcase"), "CharactersShowcase");
+const CtaSection = lazySection(() => import("./sections/cta-section/cta-section"), "CtaSection");
 
-const FounderPreview = dynamic(
-  () => import("@/features/home/ui/components/founder-preview").then((mod) => ({ default: mod.FounderPreview })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
+interface HomePageProps {
+  locale: HomeLocale;
+  seo: HomeJsonLd;
+}
 
-const BookstoreDisplaySection = dynamic(
-  () =>
-    import("@/features/home/ui/components/bookstore-display-section").then((mod) => ({
-      default: mod.BookstoreDisplaySection,
-    })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
+export function HomePage({ locale, seo }: HomePageProps) {
+  const content = getHomePageContent(locale);
 
-const ReviewsSection = dynamic(
-  () => import("@/features/home/ui/components/reviews-section").then((mod) => ({ default: mod.ReviewsSection })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const NewsSection = dynamic(
-  () => import("@/features/home/ui/components/news-section").then((mod) => ({ default: mod.NewsSection })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const FashionPreview = dynamic(
-  () => import("@/features/home/ui/components/fashion-preview").then((mod) => ({ default: mod.FashionPreview })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const CharactersShowcase = dynamic(
-  () =>
-    import("@/features/home/ui/components/characters-showcase").then((mod) => ({
-      default: mod.CharactersShowcase,
-    })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-const CtaSection = dynamic(
-  () => import("@/features/home/ui/components/cta-section").then((mod) => ({ default: mod.CtaSection })),
-  {
-    loading: () => <div className="h-96 bg-background" />,
-    ssr: true,
-  }
-);
-
-export function HomePage() {
   return (
-    <>
-      <OrganizationJsonLd />
-      <ComicSeriesJsonLd />
-      <WebsiteJsonLd />
+    <HomeContentProvider content={content}>
+      <HomeStructuredData organization={seo.organization} comicSeries={seo.comicSeries} website={seo.website} />
 
       <BookHeroSection />
       <UniverseSection />
@@ -99,6 +44,6 @@ export function HomePage() {
       <FashionPreview />
       <CharactersShowcase />
       <CtaSection />
-    </>
+    </HomeContentProvider>
   );
 }

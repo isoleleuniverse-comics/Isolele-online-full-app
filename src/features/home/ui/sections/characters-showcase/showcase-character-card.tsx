@@ -13,9 +13,9 @@ interface ShowcaseCharacterCardProps {
 export function ShowcaseCharacterCard({ character, index, isInView }: ShowcaseCharacterCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.85, y: 30 }}
-      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.1 + index * 0.07, type: "spring", stiffness: 200, damping: 20 }}
+      initial={{ opacity: 0, scale: 0.9, y: 28 }}
+      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.9, y: 28 }}
+      transition={{ duration: 0.58, delay: 0.16 + index * 0.12 }}
       whileHover={{ scale: 1.04, zIndex: 10 }}
       className="relative group rounded-2xl overflow-hidden cursor-pointer"
       style={{

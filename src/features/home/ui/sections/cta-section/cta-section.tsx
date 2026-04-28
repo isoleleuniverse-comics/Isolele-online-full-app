@@ -1,12 +1,13 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useTheme } from "@/lib/theme-context"
-import { useLanguage } from "@/lib/language-context"
+import { useTheme } from "@/shared/contexts/theme-context"
 import { useInView } from "framer-motion"
 import { useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { useLanguage } from "@/shared/i18n/language-context"
+import { ctaData } from "./data"
 
 const FIREWORK_PARTICLES = Array.from({ length: 60 }).map((_, i) => ({
   angle: (i / 60) * Math.PI * 2,
@@ -16,9 +17,10 @@ const FIREWORK_PARTICLES = Array.from({ length: 60 }).map((_, i) => ({
 
 export function CtaSection() {
   const { currentTheme } = useTheme()
-  const { t } = useLanguage()
+  const { currentLanguage } = useLanguage()
+  const cta = ctaData[currentLanguage.code] || ctaData.en
   const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const isInView = useInView(ref, { margin: "-100px" })
 
   return (
     <section 
@@ -94,7 +96,7 @@ export function CtaSection() {
         {/* Decorative top element */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.6 }}
           className="flex justify-center gap-2 mb-8 items-center"
         >
@@ -108,7 +110,7 @@ export function CtaSection() {
         {/* Heading: JOIN THE LEGEND - With Luxury Fireworks */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
           className="mb-12 relative"
         >
@@ -172,27 +174,27 @@ export function CtaSection() {
               ease: "easeInOut",
             }}
           >
-            {t("cta_join_legend")}
+            {cta.joinLegendTitle}
           </motion.h2>
         </motion.div>
 
         {/* Heroes image square */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
+          animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           className="mb-12 relative w-full max-w-md mx-auto aspect-square rounded-3xl overflow-hidden shadow-2xl"
           style={{ border: `5px solid ${currentTheme.colors.accentPrimary}` }}
         >
           <Image
             src="/heroes/legends-crew.jpg"
-            alt="The Legends Crew"
+            alt={cta.imageAlt}
             fill
             sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 30vw"
             className="object-cover"
             priority
             placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAICAgIChsICQkJChAODwoQFwwTGB8WFBcUFRYaFxwpHhcYGRgaGBgSHBwcHhcYGhj/2wBDAQcHBwoIChMICQsMCggKGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWm5ybnJ2eoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/8QAHwEAAwEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlbaWmJmaoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/9oADAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAICAgIChsICQkJChAODwoQFwwTGB8WFBcUFRYaFxwpHhcYGRgaGBgSHBwcHhcYGhj/2wBDAQcHBwoIChMICQsMCggKGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBj/wAARCABkAGQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWm5ybnJ2eoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/8QAHwEAAwEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlbaWmJmaoqOkpaanqKmqsrO0tba2uLm6wsPExcbHyMnK0tPU1dbW2Nna4uPk5ebn6Onq8vP09fb2+Pn6/9oAMBAAIRAxEAPwD3+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z"
             quality={85}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
@@ -201,22 +203,22 @@ export function CtaSection() {
         {/* Description */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-lg sm:text-xl leading-relaxed mb-12 max-w-2xl mx-auto"
           style={{ color: currentTheme.colors.textSecondary }}
         >
-          {t("cta_description")}
+          {cta.description}
         </motion.p>
 
         {/* Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4 justify-center mb-8"
         >
-          <Link href="/about">
+          <Link href="/#hero">
             <motion.button
               className="relative px-12 py-5 rounded-full text-lg font-bold tracking-wider overflow-hidden whitespace-nowrap"
               style={{
@@ -240,7 +242,7 @@ export function CtaSection() {
                   ease: "easeInOut",
                 }}
               />
-              <span className="relative z-10">{t('cta_explore')}</span>
+              <span className="relative z-10">{cta.exploreLabel}</span>
             </motion.button>
           </Link>
           
@@ -257,14 +259,14 @@ export function CtaSection() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            {t('cta_newsletter')}
+            {cta.newsletterLabel}
           </motion.button>
         </motion.div>
 
         {/* Decorative dots */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
           className="flex justify-center gap-3 mt-8"
         >

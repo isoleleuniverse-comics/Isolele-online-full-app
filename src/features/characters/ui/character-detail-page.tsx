@@ -1,14 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { charactersPageData } from "@/features/characters/model/characters.data";
 import { getCharacterBySlug } from "@/features/characters/model/characters-seo";
+import type { SupportedLocale } from "@/shared/i18n/locales";
+import { withLocale } from "@/shared/i18n/locales";
 
 interface CharacterDetailPageProps {
   character: string;
+  locale: SupportedLocale;
 }
 
-export function CharacterDetailPage({ character }: CharacterDetailPageProps) {
-  const profile = getCharacterBySlug(character);
+export function CharacterDetailPage({ character, locale }: CharacterDetailPageProps) {
+  const profile = getCharacterBySlug(character, locale);
+  const ui = charactersPageData[locale]?.ui ?? charactersPageData.en.ui;
 
   if (!profile) notFound();
 
@@ -30,27 +35,27 @@ export function CharacterDetailPage({ character }: CharacterDetailPageProps) {
 
       <section className="mx-auto grid w-full max-w-6xl gap-8 px-6 py-12 lg:grid-cols-[1.1fr_0.9fr]">
         <article className="rounded-2xl border border-[var(--isolele-accent)]/25 bg-[var(--isolele-bg-secondary)]/85 p-6 lg:p-8">
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[var(--isolele-accent)]">Biography</p>
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[var(--isolele-accent)]">{ui.biography}</p>
           <p className="text-base leading-relaxed text-[var(--isolele-text-secondary)] lg:text-lg">{profile.description}</p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href="/characters"
+              href={withLocale(locale, "/characters")}
               className="inline-flex rounded-full border border-[var(--isolele-accent)] px-5 py-2 text-sm font-semibold uppercase tracking-wider text-[var(--isolele-accent)] transition hover:bg-[var(--isolele-accent)]/10"
             >
-              Back to Characters
+              {ui.backToCharacters}
             </Link>
             <Link
-              href="/comics"
+              href={withLocale(locale, "/comics")}
               className="inline-flex rounded-full bg-[var(--isolele-accent)] px-5 py-2 text-sm font-semibold uppercase tracking-wider text-black transition hover:opacity-90"
             >
-              Explore Comics
+              {ui.exploreComics}
             </Link>
           </div>
         </article>
 
         <aside className="rounded-2xl border border-[var(--isolele-accent)]/25 bg-[var(--isolele-bg-secondary)]/85 p-6 lg:p-8">
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[var(--isolele-accent)]">Powers</p>
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[var(--isolele-accent)]">{ui.powersTitle}</p>
           <ul className="space-y-3">
             {profile.powers.map((power) => (
               <li

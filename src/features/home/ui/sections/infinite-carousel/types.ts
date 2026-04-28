@@ -1,4 +1,4 @@
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 
 export interface CarouselCharacter {
   id: string;

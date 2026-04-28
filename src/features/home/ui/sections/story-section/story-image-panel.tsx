@@ -1,19 +1,18 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 import { STORY_IMAGE, STORY_IMAGE_BLUR_DATA_URL } from "./data";
 
 interface StoryImagePanelProps {
   theme: Theme;
-  founderLabel: string;
 }
 
-export function StoryImagePanel({ theme, founderLabel }: StoryImagePanelProps) {
+export function StoryImagePanel({ theme }: StoryImagePanelProps) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -50 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: false, amount: 0.2 }}
       transition={{ duration: 0.8 }}
       className="relative"
     >
@@ -36,7 +35,7 @@ export function StoryImagePanel({ theme, founderLabel }: StoryImagePanelProps) {
         />
       </div>
 
-      <motion.div
+      {/* <motion.div
         className="absolute -bottom-6 -right-6 px-6 py-3 rounded-xl"
         style={{
           backgroundColor: theme.colors.accentPrimary,
@@ -45,9 +44,9 @@ export function StoryImagePanel({ theme, founderLabel }: StoryImagePanelProps) {
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY }}
       >
-        <p className="text-sm font-bold">H.R.M KING KUFULULA</p>
-        <p className="text-xs opacity-80">{founderLabel}</p>
-      </motion.div>
+        {/* <p className="text-sm font-bold">H.R.M KING KUFULUA</p> */}
+        {/* <p className="text-xs opacity-80">{founderLabel}</p> */}
+      {/* </motion.div> */}
     </motion.div>
   );
 }

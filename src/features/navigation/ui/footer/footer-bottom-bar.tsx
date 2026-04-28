@@ -14,7 +14,7 @@ export function FooterBottomBar({ currentTheme, t }: FooterContext) {
       </p>
       <div className="flex flex-wrap justify-center gap-4 text-sm">
         <Link
-          href="/sitemap"
+          href="/#hero"
           className="transition-colors"
           style={{ color: currentTheme.colors.textSecondary }}
           onMouseEnter={(e) => {
@@ -28,7 +28,7 @@ export function FooterBottomBar({ currentTheme, t }: FooterContext) {
         </Link>
         <span style={{ color: currentTheme.colors.textSecondary }}>|</span>
         <Link
-          href="/accessibility"
+          href="/#hero"
           className="transition-colors"
           style={{ color: currentTheme.colors.textSecondary }}
           onMouseEnter={(e) => {

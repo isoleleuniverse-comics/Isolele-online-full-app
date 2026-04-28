@@ -1,11 +1,11 @@
 export interface NewsArticle {
   id: number;
-  categoryKey: string;
+  category: string;
   categoryColor: string;
-  titleKey: string;
-  excerptKey: string;
+  title: string;
+  excerpt: string;
   readTime: string;
-  dateKey: string;
+  date: string;
   image: string;
 }
 

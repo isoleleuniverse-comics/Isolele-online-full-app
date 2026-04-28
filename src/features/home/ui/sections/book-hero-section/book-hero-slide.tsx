@@ -3,23 +3,22 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { HERO_BLUR_DATA_URL, HERO_SLIDE_VARIANTS } from "./data";
-import type { HeroSlide, LocalizedHeroSlide } from "./types";
+import { BOOK_HERO_BLUR_DATA_URL, BOOK_HERO_SLIDE_VARIANTS } from "./data";
+import type { HeroSlide } from "./types";
 
 interface BookHeroSlideProps {
   slide: HeroSlide;
-  localizedSlide: LocalizedHeroSlide;
   current: number;
   direction: number;
 }
 
-export function BookHeroSlide({ slide, localizedSlide, current, direction }: BookHeroSlideProps) {
+export function BookHeroSlide({ slide, current, direction }: BookHeroSlideProps) {
   return (
     <AnimatePresence custom={direction} mode="wait">
       <motion.div
         key={slide.id}
         custom={direction}
-        variants={HERO_SLIDE_VARIANTS}
+        variants={BOOK_HERO_SLIDE_VARIANTS}
         initial="enter"
         animate="center"
         exit="exit"
@@ -29,13 +28,13 @@ export function BookHeroSlide({ slide, localizedSlide, current, direction }: Boo
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <Image
             src={slide.image}
-            alt={localizedSlide.title}
+            alt={slide.title}
             fill
             sizes="100vw"
             className="object-cover object-top"
             priority={current === 0}
             placeholder="blur"
-            blurDataURL={HERO_BLUR_DATA_URL}
+            blurDataURL={BOOK_HERO_BLUR_DATA_URL}
           />
           <div
             className="absolute inset-0"
@@ -64,7 +63,7 @@ export function BookHeroSlide({ slide, localizedSlide, current, direction }: Boo
                 textTransform: "uppercase",
               }}
             >
-              {localizedSlide.tag}
+              {slide.tag}
             </motion.div>
 
             <motion.p
@@ -74,7 +73,7 @@ export function BookHeroSlide({ slide, localizedSlide, current, direction }: Boo
               className="text-sm font-semibold tracking-widest uppercase mb-3"
               style={{ color: slide.accentColor, opacity: 0.85 }}
             >
-              {localizedSlide.subtitle}
+              {slide.subtitle}
             </motion.p>
 
             <motion.h1
@@ -90,7 +89,7 @@ export function BookHeroSlide({ slide, localizedSlide, current, direction }: Boo
                 fontFamily: "Montserrat, sans-serif",
               }}
             >
-              {localizedSlide.title}
+              {slide.title}
             </motion.h1>
 
             <motion.p
@@ -100,7 +99,7 @@ export function BookHeroSlide({ slide, localizedSlide, current, direction }: Boo
               className="text-base md:text-lg leading-relaxed mb-8 max-w-xl"
               style={{ color: "#E0E0E0" }}
             >
-              {localizedSlide.description}
+              {slide.description}
             </motion.p>
 
             <motion.div
@@ -113,7 +112,7 @@ export function BookHeroSlide({ slide, localizedSlide, current, direction }: Boo
                   className="px-8 py-4 font-bold text-base tracking-wider uppercase rounded-md transition-all duration-200 hover:brightness-110 hover:scale-[1.02] active:scale-[0.98]"
                   style={{ backgroundColor: slide.accentColor, color: "#000" }}
                 >
-                  {localizedSlide.buttonText}
+                  {slide.buttonText}
                 </button>
               </Link>
             </motion.div>

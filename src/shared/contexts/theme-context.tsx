@@ -133,6 +133,17 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
+const applyTheme = (theme: Theme) => {
+  if (typeof document === 'undefined') return;
+  const root = document.documentElement
+  root.style.setProperty("--isolele-bg", theme.colors.background)
+  root.style.setProperty("--isolele-bg-secondary", theme.colors.backgroundSecondary)
+  root.style.setProperty("--isolele-accent", theme.colors.accentPrimary)
+  root.style.setProperty("--isolele-accent-secondary", theme.colors.accentSecondary)
+  root.style.setProperty("--isolele-text", theme.colors.textPrimary)
+  root.style.setProperty("--isolele-text-secondary", theme.colors.textSecondary)
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [currentTheme, setCurrentTheme] = useState<Theme>(themes[0])
   const [isTransitioning, setIsTransitioning] = useState(false)
@@ -142,6 +153,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     if (savedTheme) {
       const theme = themes.find((t) => t.id === savedTheme)
       if (theme) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCurrentTheme(theme)
         applyTheme(theme)
       }
@@ -150,15 +162,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const applyTheme = (theme: Theme) => {
-    const root = document.documentElement
-    root.style.setProperty("--isolele-bg", theme.colors.background)
-    root.style.setProperty("--isolele-bg-secondary", theme.colors.backgroundSecondary)
-    root.style.setProperty("--isolele-accent", theme.colors.accentPrimary)
-    root.style.setProperty("--isolele-accent-secondary", theme.colors.accentSecondary)
-    root.style.setProperty("--isolele-text", theme.colors.textPrimary)
-    root.style.setProperty("--isolele-text-secondary", theme.colors.textSecondary)
-  }
+
 
   const setTheme = (themeId: string) => {
     const theme = themes.find((t) => t.id === themeId)

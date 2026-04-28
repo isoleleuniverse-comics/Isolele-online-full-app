@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { AppProviders } from "@/providers/app-providers";
-import { PublicShell } from "@/components/public-shell";
+import { headers } from "next/headers";
 import { absoluteUrl, getSiteUrl } from "@/shared/seo/site-url";
+import { DEFAULT_LOCALE, isSupportedLocale } from "@/shared/i18n/locales";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,6 +26,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  icons: {
+    icon: "/LOGO.png",
+    shortcut: "/LOGO.png",
+    apple: "/LOGO.png",
+  },
   openGraph: {
     type: "website",
     url: "/",
@@ -35,7 +40,7 @@ export const metadata: Metadata = {
       "Discover ISOLELE, a premium African comic and African games universe rooted in Kongo mythology and cultural storytelling.",
     images: [
       {
-        url: absoluteUrl("/favicon.ico"),
+        url: absoluteUrl("/LOGO.png"),
         width: 512,
         height: 512,
         alt: "ISOLELE icon",
@@ -47,7 +52,7 @@ export const metadata: Metadata = {
     title: "ISOLELE - African Comics and African Games",
     description:
       "Explore ISOLELE: African comic stories and African games inspired by mythology, heritage, and destiny.",
-    images: [absoluteUrl("/favicon.ico")],
+    images: [absoluteUrl("/LOGO.png")],
   },
   robots: {
     index: true,
@@ -62,21 +67,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const localeHeader = requestHeaders.get("x-locale");
+  const locale = isSupportedLocale(localeHeader) ? localeHeader : DEFAULT_LOCALE;
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <AppProviders>
-          <PublicShell>{children}</PublicShell>
-        </AppProviders>
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

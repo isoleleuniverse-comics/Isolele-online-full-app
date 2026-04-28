@@ -10,7 +10,13 @@ export function FooterBrand({ currentTheme, t }: FooterContext) {
   return (
     <div className="space-y-6">
       <Link href="/" className="flex items-center">
-        <Image src="/isolele-logo-official.png" alt="ISOLELE â€” The Chosen Ones" width={160} height={80} className="object-contain" />
+        <Image
+          src="/isolele-logo-official.png"
+          alt="ISOLELE â€” The Chosen Ones"
+          width={160}
+          height={80}
+          className="h-auto object-contain"
+        />
       </Link>
       <p className="text-sm leading-relaxed" style={{ color: currentTheme.colors.textSecondary }}>
         {t("footer_description")}

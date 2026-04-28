@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 import { FOUNDER_IMAGE } from "./data";
 import { FOUNDER_IMAGE_BLUR_DATA_URL } from "./types";
 
@@ -15,7 +15,7 @@ export function FounderPhotoPanel({ theme, locationLabel, roleLabel }: FounderPh
     <motion.div
       initial={{ opacity: 0, x: -40 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: false, amount: 0.2 }}
       transition={{ duration: 0.8 }}
       className="relative flex justify-center"
     >

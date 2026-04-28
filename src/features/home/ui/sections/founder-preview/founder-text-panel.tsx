@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 
 interface FounderTextPanelProps {
   theme: Theme;
@@ -17,9 +17,9 @@ export function FounderTextPanel({ theme, title, subtitle, description, quote, c
     <motion.div
       initial={{ opacity: 0, x: 40 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: false, amount: 0.2 }}
       transition={{ duration: 0.8 }}
-      className="flex flex-col gap-6"
+      className="flex flex-col gap-6 justify center"
     >
       <div>
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-2" style={{ color: theme.colors.textPrimary }}>
@@ -48,7 +48,7 @@ export function FounderTextPanel({ theme, title, subtitle, description, quote, c
         <Sparkles size={24} style={{ color: theme.colors.accentPrimary }} className="mx-auto mt-3 opacity-60" />
       </div>
 
-      <Link href="/founder">
+      <Link href="/" className="center">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

@@ -1,22 +1,23 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
-import type { Theme } from "@/lib/theme-context";
-import type { ReviewItem } from "./types";
+import Image from "next/image";
+import Link from "next/link";
+import type { Theme } from "@/shared/contexts/theme-context";
+import type { HomeReviewContent } from "@/features/home/content/types";
 
 interface ReviewCardProps {
-  review: ReviewItem;
+  review: HomeReviewContent;
   index: number;
-  langCode: string;
   theme: Theme;
 }
 
-export function ReviewCard({ review, index, langCode, theme }: ReviewCardProps) {
+export function ReviewCard({ review, index, theme }: ReviewCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: false, amount: 0.2 }}
+      transition={{ duration: 0.58, delay: 0.12 + index * 0.14 }}
       className="relative p-8 rounded-2xl"
       style={{
         backgroundColor: theme.colors.backgroundSecondary,
@@ -31,13 +32,35 @@ export function ReviewCard({ review, index, langCode, theme }: ReviewCardProps) 
         ))}
       </div>
 
+      {review.image ? (
+        <div className="relative mb-5 h-48 w-full overflow-hidden rounded-xl sm:h-56">
+          <Image
+            src={review.image}
+            alt={review.imageAlt ?? review.author}
+            fill
+            sizes="(max-width: 768px) 100vw, 700px"
+            className="object-cover"
+          />
+        </div>
+      ) : null}
+
       <p className="text-lg mb-4 leading-relaxed" style={{ color: theme.colors.textPrimary }}>
-        &quot;{review.text[langCode] || review.text.en}&quot;
+        &quot;{review.text}&quot;
       </p>
 
       <p className="text-sm font-bold" style={{ color: theme.colors.accentPrimary }}>
         - {review.author}
       </p>
+
+      {review.ctaLabel && review.ctaHref ? (
+        <Link
+          href={review.ctaHref === "/comics" ? review.ctaHref : "/#hero"}
+          className="mt-5 inline-flex rounded-md px-5 py-3 text-xs font-bold tracking-wider uppercase transition-all duration-200 hover:brightness-110 hover:scale-[1.02]"
+          style={{ backgroundColor: theme.colors.accentPrimary, color: theme.colors.background }}
+        >
+          {review.ctaLabel}
+        </Link>
+      ) : null}
     </motion.div>
   );
 }

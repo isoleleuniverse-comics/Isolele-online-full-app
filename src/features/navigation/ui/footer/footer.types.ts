@@ -1,5 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import type { Theme } from "@/lib/theme-context";
+import type { Theme } from "@/shared/contexts/theme-context";
 
 export interface FooterLink {
   key: string;

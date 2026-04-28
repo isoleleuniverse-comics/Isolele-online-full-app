@@ -5,17 +5,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
 import { profileRouteByCharacterId } from "@/features/characters/model/characters.data";
-import type { Character } from "@/features/characters/model/characters.types";
-import { useTheme } from "@/lib/theme-context";
+import type { Character, CharactersUIStrings } from "@/features/characters/model/characters.types";
+import type { SupportedLocale } from "@/shared/i18n/locales";
+import { withLocale } from "@/shared/i18n/locales";
+import { useTheme } from "@/shared/contexts/theme-context";
 
 interface CharacterModalProps {
   character: Character;
+  locale: SupportedLocale;
+  ui: CharactersUIStrings;
   onClose: () => void;
 }
 
-export function CharacterModal({ character, onClose }: CharacterModalProps) {
+export function CharacterModal({ character, locale, ui, onClose }: CharacterModalProps) {
   const { currentTheme } = useTheme();
-  const profileHref = profileRouteByCharacterId[character.id] ?? "/characters";
+  const profileHref = withLocale(locale, profileRouteByCharacterId[character.id] ?? "/characters");
 
   return (
     <motion.div
@@ -71,7 +75,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
 
             <div className="mb-6">
               <p className="mb-3 text-xs font-bold tracking-widest" style={{ color: character.color }}>
-                POWERS AND ABILITIES
+                {ui.powersTitle}
               </p>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {character.powers.map((power, index) => {
@@ -99,7 +103,7 @@ export function CharacterModal({ character, onClose }: CharacterModalProps) {
               className="inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-black tracking-widest"
               style={{ backgroundColor: character.color, color: "#000000" }}
             >
-              DISCOVER MORE
+              {ui.discoverPrefix} {character.name.toUpperCase()}
             </Link>
           </div>
         </div>

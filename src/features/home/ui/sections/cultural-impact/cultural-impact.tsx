@@ -1,7 +1,7 @@
 "use client";
 
-import { useTheme } from "@/lib/theme-context";
-import { useLanguage } from "@/lib/language-context";
+import { useTheme } from "@/shared/contexts/theme-context";
+import { useLanguage } from "@/shared/i18n/language-context";
 import { CULTURAL_IMPACT_CONTENT } from "./data";
 import { CulturalImpactHeader } from "./cultural-impact-header";
 import { CulturalImpactCard } from "./cultural-impact-card";

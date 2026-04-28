@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import type { Character, SupportedLang } from "./types";
+import type { Character } from "./types";
 
 interface CharacterCardProps {
   character: Character;
@@ -10,7 +10,6 @@ interface CharacterCardProps {
   totalCharacters: number;
   isInView: boolean;
   discoverLabel: string;
-  lang: SupportedLang;
   colors: {
     background: string;
     backgroundSecondary: string;
@@ -25,15 +24,14 @@ export function CharacterCard({
   totalCharacters,
   isInView,
   discoverLabel,
-  lang,
   colors,
 }: CharacterCardProps) {
   return (
     <motion.div
       key={`${character.id}-${Math.floor(index / totalCharacters)}`}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: 0.2 + (index % totalCharacters) * 0.1 }}
+      initial={{ opacity: 0, y: 36 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 36 }}
+      transition={{ duration: 0.62, delay: 0.14 + (index % totalCharacters) * 0.1 }}
       className="flex-shrink-0 w-72 group"
     >
       <Link href={`/characters/${character.id}`}>
@@ -56,15 +54,15 @@ export function CharacterCard({
           <div
             className="absolute inset-0"
             style={{
-              background: `linear-gradient(180deg, rgba(0,0,0,0) 0%, ${character.color}40 50%, ${colors.background} 100%)`,
+              background: `linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, ${character.color}40 100%, ${colors.background} 100%)`,
             }}
           />
 
           <div
             className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500"
-            style={{ background: `linear-gradient(to top, ${colors.background} 0%, transparent 50%)` }}
+          
           />
-
+              
           <motion.div
             className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             style={{ boxShadow: `inset 0 0 30px ${character.color}40, 0 0 30px ${character.color}30` }}
@@ -72,10 +70,10 @@ export function CharacterCard({
         </div>
 
         <h3 className="text-2xl font-black tracking-wider mb-1" style={{ color: colors.textPrimary }}>
-          {character.name}
+          {character.name} 
         </h3>
-        <p className="text-xs font-medium mb-3 line-clamp-2" style={{ color: character.color }}>
-          {character.title[lang] || character.title.en}
+        <p className="text- font-medium mb-3 line-clamp-2" style={{ color: character.color }}>
+          {character.title}
         </p>
 
         <motion.span
@@ -83,9 +81,9 @@ export function CharacterCard({
           style={{ color: colors.accentPrimary }}
           whileHover={{ x: 5 }}
         >
-          {discoverLabel}
-          <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}>
-            â†’
+          
+          <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY }}>
+            {discoverLabel} {character.name}
           </motion.span>
         </motion.span>
       </Link>

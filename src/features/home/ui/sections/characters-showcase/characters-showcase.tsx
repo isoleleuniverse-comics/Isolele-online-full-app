@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef } from "react";
+import { useLanguage } from "@/shared/i18n/language-context";
+import { charactersShowcaseData } from "./data";
 import { useInView } from "framer-motion";
-import { useTheme } from "@/lib/theme-context";
-import { useLanguage } from "@/lib/language-context";
-import { SHOWCASE_CHARACTERS, SHOWCASE_LABELS } from "./data";
+import { useTheme } from "@/shared/contexts/theme-context";
 import { ShowcaseHeader } from "./showcase-header";
 import { ShowcaseCharacterCard } from "./showcase-character-card";
 import { ShowcaseCta } from "./showcase-cta";
@@ -12,9 +12,9 @@ import { ShowcaseCta } from "./showcase-cta";
 export function CharactersShowcase() {
   const { currentTheme } = useTheme();
   const { currentLanguage } = useLanguage();
+  const charactersShowcase = charactersShowcaseData[currentLanguage.code] || charactersShowcaseData.en;
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const labels = SHOWCASE_LABELS[currentLanguage.code] || SHOWCASE_LABELS.en;
+  const isInView = useInView(ref, { margin: "-80px" });
 
   return (
     <section
@@ -31,7 +31,12 @@ export function CharactersShowcase() {
 
       <div className="max-w-7xl mx-auto">
         <ShowcaseHeader
-          labels={labels}
+          labels={{
+            eyebrow: charactersShowcase.eyebrow,
+            title: charactersShowcase.title,
+            subtitle: charactersShowcase.subtitle,
+            btn: charactersShowcase.buttonLabel,
+          }}
           isInView={isInView}
           accentColor={currentTheme.colors.accentPrimary}
           textPrimary={currentTheme.colors.textPrimary}
@@ -39,7 +44,7 @@ export function CharactersShowcase() {
         />
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-14">
-          {SHOWCASE_CHARACTERS.map((character, index) => (
+          {charactersShowcase.characters.map((character, index) => (
             <ShowcaseCharacterCard
               key={character.name}
               character={character}
@@ -50,7 +55,7 @@ export function CharactersShowcase() {
         </div>
 
         <ShowcaseCta
-          label={labels.btn}
+          label={charactersShowcase.buttonLabel}
           isInView={isInView}
           accentColor={currentTheme.colors.accentPrimary}
         />

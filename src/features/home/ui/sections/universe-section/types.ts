@@ -5,8 +5,9 @@ export type UniverseIcon = ComponentType<{ className?: string; style?: CSSProper
 export interface UniversePillar {
   key: string;
   icon: UniverseIcon;
-  titleKey: string;
-  descriptionKey: string;
+  title: string;
+  description: string;
   href: string;
   characterName: string;
+  discoverMoreLabel?: string;
 }
