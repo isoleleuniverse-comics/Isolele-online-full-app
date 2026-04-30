@@ -156,7 +156,7 @@ export function BookStoryPage({ page, locale }: { page: BookPageData; locale: Su
             if (section.type === "heading_group") {
               return (
                 <section key={`${section.type}-${index}`} className="grid gap-4">
-                  {section.sections.map((item, itemIndex) => (
+                  {section.sections.map((item) => (
                     <div key={item.heading} className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 md:p-7">
                       <div className="mb-4 flex items-center gap-3">
                         {/* <span

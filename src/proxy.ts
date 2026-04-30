@@ -27,7 +27,7 @@ function detectLocale(req: NextRequest) {
   return DEFAULT_LOCALE;
 }
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
 
   // Public-only mode: block admin and login surfaces.

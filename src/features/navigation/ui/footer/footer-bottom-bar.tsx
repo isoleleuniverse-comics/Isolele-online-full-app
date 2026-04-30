@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import type { FooterContext } from "./footer.types";
 
 export function FooterBottomBar({ currentTheme, t }: FooterContext) {

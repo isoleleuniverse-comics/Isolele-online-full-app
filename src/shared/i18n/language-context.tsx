@@ -62,6 +62,33 @@ function mapBrowserLocaleToSupportedLanguage(): LangCode {
   return "en"
 }
 
+function resolveInitialLanguage(
+  initialLanguage: SupportedLocale | undefined,
+  allowedLanguages: readonly Language[],
+  fallbackLanguage: Language,
+) {
+  if (typeof window === "undefined") {
+    return fallbackLanguage
+  }
+
+  if (initialLanguage) {
+    return getLanguageByCode(initialLanguage, allowedLanguages) ?? fallbackLanguage
+  }
+
+  try {
+    const savedLang = localStorage.getItem("isolele-language")
+    const savedLanguage = savedLang ? getLanguageByCode(savedLang, allowedLanguages) : undefined
+    if (savedLanguage) {
+      return savedLanguage
+    }
+  } catch (error) {
+    console.error("[v0] Error loading language preference:", error)
+  }
+
+  const autoLangCode = mapBrowserLocaleToSupportedLanguage()
+  return getLanguageByCode(autoLangCode, allowedLanguages) ?? fallbackLanguage
+}
+
 interface LanguageProviderProps {
   children: ReactNode
   initialLanguage?: SupportedLocale
@@ -71,30 +98,17 @@ export function LanguageProvider({ children, initialLanguage }: LanguageProvider
   const allowedLanguages = initialLanguage ? publicLanguages : languages
   const fallbackCode = initialLanguage ?? DEFAULT_LOCALE
   const fallbackLanguage = getLanguageByCode(fallbackCode, allowedLanguages) ?? allowedLanguages[0]
-  const [currentLanguage, setCurrentLanguage] = useState<Language>(fallbackLanguage)
+  const [currentLanguage, setCurrentLanguage] = useState<Language>(() =>
+    resolveInitialLanguage(initialLanguage, allowedLanguages, fallbackLanguage),
+  )
 
   useEffect(() => {
     try {
-      if (initialLanguage) {
-        localStorage.setItem("isolele-language", initialLanguage)
-        return
-      }
-
-      const savedLang = localStorage.getItem("isolele-language")
-      const savedLanguage = savedLang ? getLanguageByCode(savedLang, allowedLanguages) : undefined
-      if (savedLanguage) {
-        setCurrentLanguage(savedLanguage)
-        return
-      }
-
-      const autoLangCode = mapBrowserLocaleToSupportedLanguage()
-      const autoLang = getLanguageByCode(autoLangCode, allowedLanguages) ?? fallbackLanguage
-      setCurrentLanguage(autoLang)
-      localStorage.setItem("isolele-language", autoLang.code)
+      localStorage.setItem("isolele-language", currentLanguage.code)
     } catch (error) {
-      console.error("[v0] Error loading language preference:", error)
+      console.error("[v0] Error saving language preference:", error)
     }
-  }, [allowedLanguages, fallbackLanguage, initialLanguage])
+  }, [currentLanguage.code])
 
   const setLanguage = (code: string) => {
     const lang = getLanguageByCode(code, allowedLanguages)

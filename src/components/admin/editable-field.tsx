@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
@@ -27,11 +27,10 @@ export function EditableField({
   const [currentValue, setCurrentValue] = useState(value);
   const [isSaving, setIsSaving] = useState(false);
 
-  useEffect(() => {
-    if (!isEditing) {
-      setCurrentValue(value);
-    }
-  }, [value, isEditing]);
+  const handleStartEditing = () => {
+    setCurrentValue(value);
+    setIsEditing(true);
+  };
 
   const handleBlur = async () => {
     const nextValue = currentValue.trim();
@@ -86,7 +85,7 @@ export function EditableField({
 
   return (
     <div
-      onClick={() => setIsEditing(true)}
+      onClick={handleStartEditing}
       className={cn(
         "cursor-pointer rounded-md p-2 transition-colors hover:bg-amber-500/5",
         isSaving && "pointer-events-none opacity-70",

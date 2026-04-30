@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@server/db/prisma";
 import { createServerClient } from "@server/supabase/server";
-import { Role } from "@/generated/prisma/enums";
+import { Role } from "@prisma/client";
 
 export async function requireAdmin() {
   const supabase = await createServerClient();

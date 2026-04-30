@@ -2,7 +2,7 @@ import {
   Crown, Droplets, Eye, Flame, Shield, Star, Sword, Zap,
 } from "lucide-react";
 import type {
-  Character, CharacterFilter, CharacterProfile, CharactersPageContent,
+  Character, CharacterProfile, CharactersPageContent,
 } from "./characters.types";
 
 // ─────────────────────────────────────────────────────────────────────────────

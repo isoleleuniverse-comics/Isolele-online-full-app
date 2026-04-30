@@ -3,10 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Crown, ArrowRight, Shield, Flame } from "lucide-react";
+import { Crown, ArrowRight } from "lucide-react";
 import { useTheme } from "@/shared/contexts/theme-context";
 import { SupportedLocale } from "@/shared/i18n/locales";
-import { KingKufululaContent, KingKufululaData } from "./data";
+import { KingKufululaData } from "./data";
 
 const KING_PHOTO = {
   src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg",

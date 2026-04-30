@@ -76,6 +76,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# generated prisma client
+/src/generated/prisma/
+
 # sensitive files
 *.key
 *.p12
