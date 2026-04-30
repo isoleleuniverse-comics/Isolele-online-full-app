@@ -13,46 +13,6 @@ export function FooterBottomBar({ currentTheme, t }: FooterContext) {
         {t("footer_copyright")}
       </p>
       <div className="flex flex-wrap justify-center gap-4 text-sm">
-        <Link
-          href="/#hero"
-          className="transition-colors"
-          style={{ color: currentTheme.colors.textSecondary }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = currentTheme.colors.accentPrimary;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = currentTheme.colors.textSecondary;
-          }}
-        >
-          {t("site_map")}
-        </Link>
-        <span style={{ color: currentTheme.colors.textSecondary }}>|</span>
-        <Link
-          href="/#hero"
-          className="transition-colors"
-          style={{ color: currentTheme.colors.textSecondary }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = currentTheme.colors.accentPrimary;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = currentTheme.colors.textSecondary;
-          }}
-        >
-          {t("accessibility")}
-        </Link>
-        <span style={{ color: currentTheme.colors.textSecondary }}>|</span>
-        <button
-          className="transition-colors"
-          style={{ color: currentTheme.colors.textSecondary }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = currentTheme.colors.accentPrimary;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = currentTheme.colors.textSecondary;
-          }}
-        >
-          {t("cookie_settings")}
-        </button>
       </div>
     </div>
   );

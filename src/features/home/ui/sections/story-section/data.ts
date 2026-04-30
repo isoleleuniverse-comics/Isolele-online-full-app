@@ -1,5 +1,5 @@
 export const STORY_IMAGE = {
-  src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/prince-T0hUD9Jlnlyga7D9DnMaSvL510ecuE.jpg",
+  src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
   alt: "Zaiire Prince du Kongo - Le Collier du Destin",
 };
 

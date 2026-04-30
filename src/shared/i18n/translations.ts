@@ -103,7 +103,7 @@ export const translations: Record<Language, TranslationKeys> = {
     error: "Error",
     footer_careers: "Careers",
     footer_contact: "Contact Us",
-    footer_copyright: "© 2026 ISOLELE. All rights reserved.",
+    footer_copyright: "© 2026 ISOLELE. \n All rights reserved. Kongo cultural heritage, characters, stories, and symbols are protected intellectual property of ISOLELE.",
     footer_description: "Isolele is a visionary universe born to restore the soul of African storytelling - a mythological empire where Superheroes are chosen by destiny.",
     footer_email_placeholder: "Your email address",
     footer_explore: "EXPLORE",

@@ -18,6 +18,8 @@ interface CharacterCardProps {
   };
 }
 
+
+
 export function CharacterCard({
   character,
   index,
@@ -81,9 +83,10 @@ export function CharacterCard({
           style={{ color: colors.accentPrimary }}
           whileHover={{ x: 5 }}
         >
+          {character.discover ?? discoverLabel}
           
           <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY }}>
-            {discoverLabel} {character.name}
+            →
           </motion.span>
         </motion.span>
       </Link>

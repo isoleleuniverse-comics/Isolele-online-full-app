@@ -44,6 +44,7 @@ export const charactersData = {
       description: "Legendary monarch, protector of the ISOLELE royal lineage.",
       image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg",
       color: "#8B6914",
+      discover: "Meet the king"
     },
     {
       id: "ensemble",

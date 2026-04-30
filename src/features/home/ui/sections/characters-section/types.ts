@@ -5,5 +5,6 @@ export interface Character {
   description: string;
   image: string;
   color: string;
+  discover?: string;
 }
 
