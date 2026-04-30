@@ -91,7 +91,7 @@ export function BookStoryPage({ page, locale }: { page: BookPageData; locale: Su
             className="max-w-5xl text-3xl leading-tight font-black tracking-tight md:text-5xl lg:text-6xl"
             style={{
               fontFamily: "Montserrat, sans-serif",
-              textShadow: "0 6px 26px rgba(0,0,0,0.65)",
+              textShadow: "0 6px 26px rgba(0, 0, 0, 0.65)",
             }}
           >
             {page.title}
@@ -114,17 +114,17 @@ export function BookStoryPage({ page, locale }: { page: BookPageData; locale: Su
                 : null}
             </div>
             <aside className="space-y-4 rounded-xl border border-white/10 bg-black/35 p-5">
-              <p className="text-[11px] font-bold tracking-[0.16em] text-zinc-300 uppercase">{uiText.universeContext}</p>
-              <p className="text-sm leading-7 text-zinc-200">{uiText.contextBody}</p>
+              <p className="text-[16px] font-bold tracking-[0.16em] text-zinc-300 uppercase">{uiText.universeContext}</p>
+              <p className="text-s leading-7 text-zinc-200">{uiText.contextBody}</p>
               <div className="h-px w-full bg-white/10" />
-              <p className="text-[11px] font-bold tracking-[0.16em] text-zinc-300 uppercase">{uiText.focusKeywords}</p>
-              <div className="flex flex-wrap gap-2">
-                {page.keywords.slice(0, 5).map((keyword) => (
-                  <span key={keyword} className="rounded-full border border-white/20 px-3 py-1 text-[10px] font-semibold tracking-[0.08em] text-zinc-100 uppercase">
-                    {keyword}
-                  </span>
-                ))}
-              </div>
+              {/* <p className="text-[11px] font-bold tracking-[0.16em] text-zinc-300 uppercase">{uiText.focusKeywords}</p> */}
+              {/* <div className="flex flex-wrap gap-2">
+                {/* {page.keywords.slice(0, 5).map((keyword) => (
+                  // <span key={keyword} className="rounded-full border border-white/20 px-3 py-1 text-[10px] font-semibold tracking-[0.08em] text-zinc-100 uppercase">
+                  //   {keyword} 
+                  // </span>
+                ))} */}
+               
             </aside>
           </div>
         </div>
@@ -159,12 +159,12 @@ export function BookStoryPage({ page, locale }: { page: BookPageData; locale: Su
                   {section.sections.map((item, itemIndex) => (
                     <div key={item.heading} className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 md:p-7">
                       <div className="mb-4 flex items-center gap-3">
-                        <span
+                        {/* <span
                           className="inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-extrabold"
                           style={{ backgroundColor: `${page.accentColor}26`, color: page.accentColor }}
                         >
                           {itemIndex + 1}
-                        </span>
+                        </span> */}
                         <h2 className="text-2xl font-extrabold tracking-tight text-white md:text-3xl">{item.heading}</h2>
                       </div>
                       <p className="text-base leading-8 text-zinc-200 md:text-lg">{item.body}</p>
