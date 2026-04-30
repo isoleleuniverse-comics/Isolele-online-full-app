@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/package-lock.json
 /.pnp
 .pnp.*
 .yarn/*
@@ -79,6 +80,14 @@ next-env.d.ts
 # generated prisma client
 /src/generated/prisma/
 
+# local backend-only code kept out of the frontend repo
+/prisma/
+/prisma.config.ts
+/src/server/
+/src/app/(admin)/
+/src/app/login/
+/src/components/admin/
+
 # sensitive files
 *.key
 *.p12
@@ -99,8 +108,6 @@ next-env.d.ts
 *.dump
 
 # admin (temporary exclusion from deploy workflow)
-/src/app/(admin)/
-/src/components/admin/
 /src/lib/auth/require-admin.ts
 /scripts/init-admin.js
 /docs/admin-characters/
