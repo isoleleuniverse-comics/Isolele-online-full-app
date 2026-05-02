@@ -20,7 +20,7 @@ export const storyData = {
   ],
   conclusion: "The destiny of a nation rests around his neck. Will Zaiire embrace it?",
   cta: "Discover the Full Story",
-},
+    },
 fr:{
   "founderLabel": "Créateur & Auteur",
     "title": "LE PRINCE DU KONGO : LE COLLIER DU DESTIN",

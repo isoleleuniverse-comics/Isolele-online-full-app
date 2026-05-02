@@ -30,7 +30,7 @@ export function StoryImagePanel({ theme }: StoryImagePanelProps) {
         <div
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(180deg, transparent 60%, ${theme.colors.backgroundSecondary} 100%)`,
+            background: `linear-gradient(180deg, transparent 100%, ${theme.colors.backgroundSecondary} 100%)`,
           }}
         />
       </div>

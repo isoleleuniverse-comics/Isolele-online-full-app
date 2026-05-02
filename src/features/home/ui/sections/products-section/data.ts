@@ -15,7 +15,7 @@ export const productsData = {
       id: "zaiire-comic-1",
       name: "ZAIIRE - Prince of Kongo",
       description: "Collector comic edition introducing the Necklace of Destiny.",
-      price: 26.99,
+      price: 36.99,
       originalPrice: 99.99,
       image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
       badge: "PREORDER",
