@@ -3,21 +3,23 @@
 import { usePathname, useRouter } from "next/navigation";
 import { ChevronDown, Globe } from "lucide-react";
 import { useTheme } from "@/shared/contexts/theme-context";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, withLocale } from "@/shared/i18n/locales";
+import { getNavigationContent } from "@/features/navigation/content/nav.content";
+import {
+  LOCALE_LABELS,
+  SUPPORTED_LOCALES,
+  resolveLocaleFromPathname,
+  stripLocaleFromPathname,
+  withLocale,
+} from "@/shared/i18n/locales";
 
 export function LanguageSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
   const { currentTheme } = useTheme();
 
-  const firstSegment = pathname.split("/")[1];
-  const locale = (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
-    ? (firstSegment as (typeof SUPPORTED_LOCALES)[number])
-    : DEFAULT_LOCALE;
-  const pathnameNoLocale =
-    (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
-      ? pathname.replace(new RegExp(`^/${firstSegment}`), "") || "/"
-      : pathname;
+  const locale = resolveLocaleFromPathname(pathname);
+  const pathnameNoLocale = stripLocaleFromPathname(pathname);
+  const content = getNavigationContent(locale);
 
   function switchLocale(nextLocale: (typeof SUPPORTED_LOCALES)[number]) {
     const nextPath = withLocale(nextLocale, pathnameNoLocale);
@@ -32,9 +34,10 @@ export function LanguageSwitcher() {
           color: currentTheme.colors.textSecondary,
           borderColor: `${currentTheme.colors.accentPrimary}30`,
         }}
+        aria-label={content.languageSwitcher.buttonLabel}
       >
         <Globe className="h-3.5 w-3.5" />
-        {locale}
+        {LOCALE_LABELS[locale]}
         <ChevronDown className="h-3.5 w-3.5" />
       </button>
       <div
@@ -58,7 +61,7 @@ export function LanguageSwitcher() {
                   : currentTheme.colors.textSecondary,
             }}
           >
-            {lang}
+            {LOCALE_LABELS[lang]}
           </button>
         ))}
       </div>

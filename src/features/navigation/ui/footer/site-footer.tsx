@@ -2,7 +2,8 @@
 
 import { useTheme } from "@/shared/contexts/theme-context";
 import { useLanguage } from "@/shared/i18n/language-context";
-import { quickLinks, resourceLinks } from "./footer.data";
+import { getNavigationContent } from "@/features/navigation/content/nav.content";
+import { getFooterContent } from "./footer.data";
 import { FooterTopBorder } from "./footer-top-border";
 import { FooterBrand } from "./footer-brand";
 import { FooterLinksColumn } from "./footer-links-column";
@@ -12,25 +13,36 @@ import { FooterBackground } from "./footer-background";
 
 export function SiteFooter() {
   const { currentTheme } = useTheme();
-  const { t } = useLanguage();
+  const { locale } = useLanguage();
+  const navigation = getNavigationContent(locale);
+  const footerContent = getFooterContent(locale, navigation.footer);
 
   return (
     <footer className="relative overflow-hidden" style={{ backgroundColor: currentTheme.colors.backgroundSecondary }}>
       <FooterTopBorder currentTheme={currentTheme} />
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-          <FooterBrand currentTheme={currentTheme} t={t} />
-          <FooterLinksColumn currentTheme={currentTheme} t={t} titleKey="footer_explore" links={quickLinks} />
-          <FooterLinksColumn currentTheme={currentTheme} t={t} titleKey="footer_resources" links={resourceLinks} />
-          <FooterNewsletter currentTheme={currentTheme} t={t} />
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
+          <FooterBrand currentTheme={currentTheme} content={footerContent} />
+          <FooterLinksColumn
+            currentTheme={currentTheme}
+            content={footerContent}
+            title={footerContent.exploreTitle}
+            links={footerContent.quickLinks ?? []}
+          />
+          <FooterLinksColumn
+            currentTheme={currentTheme}
+            content={footerContent}
+            title={footerContent.resourcesTitle}
+            links={footerContent.resourceLinks ?? []}
+          />
+          <FooterNewsletter currentTheme={currentTheme} content={footerContent} />
         </div>
 
-        <FooterBottomBar currentTheme={currentTheme} t={t} />
+        <FooterBottomBar currentTheme={currentTheme} content={footerContent} />
       </div>
 
       <FooterBackground currentTheme={currentTheme} />
     </footer>
   );
 }
-

@@ -6,24 +6,18 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { useTheme } from "@/shared/contexts/theme-context";
-import { navContent } from "@/features/navigation/content/nav.content";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, withLocale } from "@/shared/i18n/locales";
+import { getNavigationContent } from "@/features/navigation/content/nav.content";
+import { resolveLocaleFromPathname, stripLocaleFromPathname, withLocale } from "@/shared/i18n/locales";
 import { NAV_LINKS, CHARACTER_NAV_LINKS, isActive } from "../../config/nav.config";
 
 export function DesktopNav() {
   const pathname = usePathname();
   const { currentTheme } = useTheme();
-  
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
-  const firstSegment = pathname.split("/")[1];
-  const locale = (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
-    ? (firstSegment as (typeof SUPPORTED_LOCALES)[number])
-    : DEFAULT_LOCALE;
-  const pathnameNoLocale =
-    (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
-      ? pathname.replace(new RegExp(`^/${firstSegment}`), "") || "/"
-      : pathname;
+  const locale = resolveLocaleFromPathname(pathname);
+  const pathnameNoLocale = stripLocaleFromPathname(pathname);
+  const content = getNavigationContent(locale);
 
   function localizedHref(href: string) {
     return withLocale(locale, href);
@@ -46,7 +40,7 @@ export function DesktopNav() {
               className="inline-flex items-center text-sm font-semibold tracking-wide"
               style={{ color: active ? currentTheme.colors.accentPrimary : currentTheme.colors.textSecondary }}
             >
-              {navContent[locale][item.key]}
+              {content.labels[item.key]}
               {item.hasDropdown ? <ChevronDown className="ml-1 h-4 w-4" /> : null}
             </Link>
             {active ? (
@@ -74,7 +68,7 @@ export function DesktopNav() {
                     borderColor: `${currentTheme.colors.accentPrimary}22`,
                   }}
                 >
-                  {navContent[locale].nav_all_characters}
+                  {content.labels.nav_all_characters}
                 </Link>
                 {CHARACTER_NAV_LINKS.map((character) => (
                   <Link

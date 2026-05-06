@@ -5,6 +5,11 @@ export const DEFAULT_LOCALE: SupportedLocale = "fr";
 
 export const LOCALE_COOKIE_NAME = "isolele_locale";
 
+export const LOCALE_LABELS: Record<SupportedLocale, string> = {
+  fr: "Francais",
+  en: "English",
+};
+
 export function isSupportedLocale(value: string | undefined | null): value is SupportedLocale {
   return !!value && (SUPPORTED_LOCALES as readonly string[]).includes(value);
 }
@@ -19,6 +24,10 @@ export function stripLocaleFromPathname(pathname: string): string {
   if (!locale) return pathname;
   const stripped = pathname.replace(new RegExp(`^/${locale}`), "");
   return stripped.length ? stripped : "/";
+}
+
+export function resolveLocaleFromPathname(pathname: string): SupportedLocale {
+  return getLocaleFromPathname(pathname) ?? DEFAULT_LOCALE;
 }
 
 export function withLocale(locale: SupportedLocale, href: string): string {

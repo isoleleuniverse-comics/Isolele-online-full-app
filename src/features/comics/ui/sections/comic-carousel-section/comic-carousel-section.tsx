@@ -4,18 +4,28 @@ import { useRef } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { ComicBook, TranslationFn } from "@/features/comics/model/comics.types";
+import type { ComicBook } from "@/features/comics/model/comics.types";
 import { ComicCard } from "./comic-card";
 
 interface ComicCarouselSectionProps {
-  titleEn: string;
-  titleFr: string;
+  title: string;
+  ctaLabel: string;
+  ctaHref: string;
   books: ComicBook[];
-  isFrench: boolean;
-  t: TranslationFn;
+  readLabel: string;
+  scrollLeftLabel: string;
+  scrollRightLabel: string;
 }
 
-export function ComicCarouselSection({ titleEn, titleFr, books, isFrench, t }: ComicCarouselSectionProps) {
+export function ComicCarouselSection({
+  title,
+  ctaLabel,
+  ctaHref,
+  books,
+  readLabel,
+  scrollLeftLabel,
+  scrollRightLabel,
+}: ComicCarouselSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const scrollBy = (direction: "left" | "right") => {
@@ -37,9 +47,9 @@ export function ComicCarouselSection({ titleEn, titleFr, books, isFrench, t }: C
       className="mb-16"
     >
       <div className="mb-6 flex items-center justify-between px-6">
-        <h2 className="text-2xl font-bold text-[var(--isolele-text)] md:text-3xl">{isFrench ? titleFr : titleEn}</h2>
-        <Link href="#" className="text-sm font-semibold text-[var(--isolele-accent)] hover:underline">
-          {isFrench ? "Voir tout" : "See all"}
+        <h2 className="text-2xl font-bold text-[var(--isolele-text)] md:text-3xl">{title}</h2>
+        <Link href={ctaHref} className="text-sm font-semibold text-[var(--isolele-accent)] hover:underline">
+          {ctaLabel}
         </Link>
       </div>
 
@@ -54,7 +64,7 @@ export function ComicCarouselSection({ titleEn, titleFr, books, isFrench, t }: C
               transition={{ duration: 0.35, delay: Math.min(index * 0.06, 0.4) }}
               className="w-72 flex-shrink-0 sm:w-80"
             >
-              <ComicCard book={book} isFrench={isFrench} t={t} />
+              <ComicCard book={book} readLabel={readLabel} />
             </motion.div>
           ))}
         </div>
@@ -62,14 +72,14 @@ export function ComicCarouselSection({ titleEn, titleFr, books, isFrench, t }: C
         <button
           onClick={() => scrollBy("left")}
           className="absolute left-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/65 p-2 text-white opacity-0 transition-opacity hover:bg-black/80 group-hover:opacity-100"
-          aria-label={isFrench ? "Defiler vers la gauche" : "Scroll left"}
+          aria-label={scrollLeftLabel}
         >
           <ChevronLeft size={22} />
         </button>
         <button
           onClick={() => scrollBy("right")}
           className="absolute right-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/65 p-2 text-white opacity-0 transition-opacity hover:bg-black/80 group-hover:opacity-100"
-          aria-label={isFrench ? "Defiler vers la droite" : "Scroll right"}
+          aria-label={scrollRightLabel}
         >
           <ChevronRight size={22} />
         </button>
@@ -77,4 +87,3 @@ export function ComicCarouselSection({ titleEn, titleFr, books, isFrench, t }: C
     </motion.section>
   );
 }
-

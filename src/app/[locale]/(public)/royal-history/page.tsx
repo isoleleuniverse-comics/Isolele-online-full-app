@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { isSupportedLocale, DEFAULT_LOCALE, type SupportedLocale } from "@/shared/i18n/locales";
+import { getRoyalHistoryPageContent } from "@/features/royal-history/model/royal-history.data";
 import { RoyalHistoryPage } from "@/features/royal-history/ui/royal-history-page";
 
 export async function generateMetadata({
@@ -9,10 +10,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
-
-  const title = "You Have Always Been Royal: The African History They Never Taught You";
-  const description =
-    "The first kings of Rome were Black. Europe was named after an African princess. The Moors ruled Europe for 700 years. The Kongo Empire was one of the greatest civilizations in human history. This is the truth ISOLELE was born to restore.";
+  const content = getRoyalHistoryPageContent(safeLocale);
+  const title = content.seo.title;
+  const description = content.seo.description;
 
   return {
     title,
@@ -29,7 +29,14 @@ export async function generateMetadata({
   };
 }
 
-export default function Page() {
-  return <RoyalHistoryPage />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
+
+  return <RoyalHistoryPage locale={safeLocale} />;
 }
 

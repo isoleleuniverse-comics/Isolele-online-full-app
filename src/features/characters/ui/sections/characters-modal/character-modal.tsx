@@ -43,7 +43,7 @@ export function CharacterModal({ character, locale, ui, onClose }: CharacterModa
           onClick={onClose}
           className="absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full"
           style={{ backgroundColor: `${character.color}30`, color: character.color }}
-          aria-label="Close character modal"
+          aria-label={ui.closeModalLabel}
         >
           <X className="h-5 w-5" />
         </button>

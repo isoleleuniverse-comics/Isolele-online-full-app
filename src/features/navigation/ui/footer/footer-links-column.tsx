@@ -1,34 +1,34 @@
 "use client";
 
 import Link from "next/link";
-import type { FooterContext, FooterLink } from "./footer.types";
+import type { FooterLink, FooterSectionContext } from "./footer.types";
 
-interface FooterLinksColumnProps extends FooterContext {
-  titleKey: string;
+interface FooterLinksColumnProps extends FooterSectionContext {
+  title: string;
   links: FooterLink[];
 }
 
-export function FooterLinksColumn({ currentTheme, t, titleKey, links }: FooterLinksColumnProps) {
+export function FooterLinksColumn({ currentTheme, title, links }: FooterLinksColumnProps) {
   return (
     <div>
-      <h3 className="text-lg font-bold tracking-wider mb-6" style={{ color: currentTheme.colors.accentPrimary }}>
-        {t(titleKey)}
+      <h3 className="mb-6 text-lg font-bold tracking-wider" style={{ color: currentTheme.colors.accentPrimary }}>
+        {title}
       </h3>
       <ul className="space-y-3">
         {links.map((link) => (
-          <li key={link.key}>
+          <li key={`${link.label}-${link.href}`}>
             <Link
               href={link.href}
-              className="text-sm transition-colors hover:translate-x-1 inline-block"
+              className="inline-block text-sm transition-colors hover:translate-x-1"
               style={{ color: currentTheme.colors.textSecondary }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = currentTheme.colors.accentPrimary;
+              onMouseEnter={(event) => {
+                event.currentTarget.style.color = currentTheme.colors.accentPrimary;
               }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = currentTheme.colors.textSecondary;
+              onMouseLeave={(event) => {
+                event.currentTarget.style.color = currentTheme.colors.textSecondary;
               }}
             >
-              {t(link.key)}
+              {link.label}
             </Link>
           </li>
         ))}
@@ -36,4 +36,3 @@ export function FooterLinksColumn({ currentTheme, t, titleKey, links }: FooterLi
     </div>
   );
 }
-

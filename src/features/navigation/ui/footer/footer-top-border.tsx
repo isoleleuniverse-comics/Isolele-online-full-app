@@ -1,8 +1,8 @@
 "use client";
 
-import type { FooterContext } from "./footer.types";
+import type { FooterSectionContext } from "./footer.types";
 
-export function FooterTopBorder({ currentTheme }: Pick<FooterContext, "currentTheme">) {
+export function FooterTopBorder({ currentTheme }: Pick<FooterSectionContext, "currentTheme">) {
   return (
     <div
       className="h-1"

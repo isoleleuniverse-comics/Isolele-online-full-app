@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { CharacterDetailPage } from "@/features/characters/ui/character-detail-page";
 import { getCharacterMetadata, getCharacterStaticParams } from "@/features/characters/model/characters-seo";
-import { SUPPORTED_LOCALES } from "@/shared/i18n/locales";
+import { DEFAULT_LOCALE, isSupportedLocale, SUPPORTED_LOCALES, type SupportedLocale } from "@/shared/i18n/locales";
 
 export function generateStaticParams() {
   const characters = getCharacterStaticParams();
@@ -23,6 +23,7 @@ export default async function Page({
   params: Promise<{ locale: string; character: string }>;
 }) {
   const { locale, character } = await params;
-  return <CharacterDetailPage character={character} locale={locale === "en" ? "en" : "fr"} />;
+  const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
+  return <CharacterDetailPage character={character} locale={safeLocale} />;
 }
 
