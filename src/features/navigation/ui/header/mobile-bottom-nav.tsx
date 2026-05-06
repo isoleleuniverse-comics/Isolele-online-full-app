@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { getNavigationContent } from "@/features/navigation/content/nav.content";
 import { cn } from "@/shared/lib/utils";
 import { useTheme } from "@/shared/contexts/theme-context";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, withLocale } from "@/shared/i18n/locales";
+import { resolveLocaleFromPathname, stripLocaleFromPathname, withLocale } from "@/shared/i18n/locales";
 import { CartButton } from "./cart-button";
 import { NAV_LINKS, isActive } from "../../config/nav.config";
 
@@ -13,14 +14,9 @@ export function MobileBottomNav() {
   const pathname = usePathname();
   const { currentTheme } = useTheme();
 
-  const firstSegment = pathname.split("/")[1];
-  const locale = (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
-    ? (firstSegment as (typeof SUPPORTED_LOCALES)[number])
-    : DEFAULT_LOCALE;
-  const pathnameNoLocale =
-    (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
-      ? pathname.replace(new RegExp(`^/${firstSegment}`), "") || "/"
-      : pathname;
+  const locale = resolveLocaleFromPathname(pathname);
+  const pathnameNoLocale = stripLocaleFromPathname(pathname);
+  const content = getNavigationContent(locale);
 
   function localizedHref(href: string) {
     return withLocale(locale, href);
@@ -41,7 +37,7 @@ export function MobileBottomNav() {
           const Icon = item.icon;
 
           return (
-            <Link key={item.href} href={localizedHref(item.href)} aria-label={item.mobileLabel}>
+            <Link key={item.href} href={localizedHref(item.href)} aria-label={content.labels[item.key]}>
               <motion.span
                 whileTap={{ scale: 0.9 }}
                 className={cn("inline-flex rounded-2xl p-3")}

@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import {
   DEFAULT_LOCALE,
   isSupportedLocale,
@@ -7,33 +8,37 @@ import {
 } from "@/shared/i18n/locales";
 
 function shouldIgnorePath(pathname: string) {
-  // Skip Next internals, API, and static assets.
   if (pathname.startsWith("/_next")) return true;
   if (pathname.startsWith("/api")) return true;
   if (pathname === "/robots.txt" || pathname === "/sitemap.xml") return true;
   return pathname.includes(".");
 }
 
-function detectLocale(req: NextRequest) {
-  const cookieLocale = req.cookies.get(LOCALE_COOKIE_NAME)?.value;
+function detectLocale(request: NextRequest) {
+  const cookieLocale = request.cookies.get(LOCALE_COOKIE_NAME)?.value;
   if (isSupportedLocale(cookieLocale)) return cookieLocale;
 
-  const header = req.headers.get("accept-language") ?? "";
+  const header = request.headers.get("accept-language") ?? "";
   const lower = header.toLowerCase();
-  // Very small parser: look for "fr" or "en" in preference order.
+
   for (const locale of SUPPORTED_LOCALES) {
     if (lower.includes(locale)) return locale;
   }
+
   return DEFAULT_LOCALE;
 }
 
+<<<<<<< HEAD
 export function proxy(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
+=======
+export function proxy(request: NextRequest) {
+  const { pathname, search } = request.nextUrl;
+>>>>>>> refactor
 
-  // Public-only mode: block admin and login surfaces.
   if (pathname.startsWith("/admin") || pathname === "/login" || pathname.startsWith("/login/")) {
-    const locale = detectLocale(req);
-    const url = req.nextUrl.clone();
+    const locale = detectLocale(request);
+    const url = request.nextUrl.clone();
     url.pathname = `/${locale}`;
     url.search = "";
     return NextResponse.redirect(url);
@@ -45,37 +50,37 @@ export function proxy(req: NextRequest) {
 
   const pathLocale = pathname.split("/")[1];
   if (isSupportedLocale(pathLocale)) {
-    // Propagate locale to server components via request headers.
-    const requestHeaders = new Headers(req.headers);
+    const requestHeaders = new Headers(request.headers);
     requestHeaders.set("x-locale", pathLocale);
 
-    const res = NextResponse.next({
+    const response = NextResponse.next({
       request: {
         headers: requestHeaders,
       },
     });
 
-    // Persist last chosen locale.
-    res.cookies.set(LOCALE_COOKIE_NAME, pathLocale, {
+    response.cookies.set(LOCALE_COOKIE_NAME, pathLocale, {
       path: "/",
       httpOnly: false,
       sameSite: "lax",
     });
-    return res;
+
+    return response;
   }
 
-  const locale = detectLocale(req);
-  const url = req.nextUrl.clone();
+  const locale = detectLocale(request);
+  const url = request.nextUrl.clone();
   url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
   url.search = search;
 
-  const res = NextResponse.redirect(url);
-  res.cookies.set(LOCALE_COOKIE_NAME, locale, {
+  const response = NextResponse.redirect(url);
+  response.cookies.set(LOCALE_COOKIE_NAME, locale, {
     path: "/",
     httpOnly: false,
     sameSite: "lax",
   });
-  return res;
+
+  return response;
 }
 
 export const config = {

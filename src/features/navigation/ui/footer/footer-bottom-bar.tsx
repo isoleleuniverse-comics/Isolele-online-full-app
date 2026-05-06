@@ -1,19 +1,39 @@
 "use client";
 
-import type { FooterContext } from "./footer.types";
+import Link from "next/link";
+import type { FooterSectionContext } from "./footer.types";
 
-export function FooterBottomBar({ currentTheme, t }: FooterContext) {
+export function FooterBottomBar({ currentTheme, content }: FooterSectionContext) {
   return (
     <div
-      className="mt-16 pt-8 border-t flex flex-col md:flex-row items-center justify-between gap-4"
+      className="mt-16 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row"
       style={{ borderColor: `${currentTheme.colors.accentPrimary}20` }}
     >
-      <p className="text-sm text-center md:text-left flex items-center gap-2" style={{ color: currentTheme.colors.textSecondary }}>
-        {t("footer_copyright")}
+      <p className="flex items-center gap-2 text-center text-sm md:text-left" style={{ color: currentTheme.colors.textSecondary }}>
+        {content.copyright}
       </p>
       <div className="flex flex-wrap justify-center gap-4 text-sm">
+        {content.bottomLinks.map((link, index) => (
+          <div key={`${link.label}-${link.href}`} className="flex items-center gap-4">
+            <Link
+              href={link.href}
+              className="transition-colors"
+              style={{ color: currentTheme.colors.textSecondary }}
+              onMouseEnter={(event) => {
+                event.currentTarget.style.color = currentTheme.colors.accentPrimary;
+              }}
+              onMouseLeave={(event) => {
+                event.currentTarget.style.color = currentTheme.colors.textSecondary;
+              }}
+            >
+              {link.label}
+            </Link>
+            {index < content.bottomLinks.length - 1 ? (
+              <span style={{ color: currentTheme.colors.textSecondary }}>|</span>
+            ) : null}
+          </div>
+        ))}
       </div>
     </div>
   );
 }
-

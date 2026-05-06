@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { withLocale, type SupportedLocale } from "@/shared/i18n/locales";
+import { bookPageUiContent } from "@/features/books/model/books.data";
 import { getBookBreadcrumbJsonLd, getBookJsonLd } from "@/features/books/model/books-json-ld";
 import type { BookCta, BookPageData } from "@/features/books/model/books.types";
 
@@ -36,22 +37,7 @@ export function BookStoryPage({ page, locale }: { page: BookPageData; locale: Su
   const articleJsonLd = getBookJsonLd(page, locale);
   const breadcrumbJsonLd = getBookBreadcrumbJsonLd(page, locale);
   const introProse = page.sections.find((section) => section.type === "prose");
-  const uiText =
-    locale === "fr"
-      ? {
-          universeContext: "Contexte Univers",
-          contextBody: "Produit a Kinshasa, RDC. Construit comme partie de l'univers narratif africain noir ISOLELE.",
-          focusKeywords: "Mots-cles",
-          quote: "Citation",
-          continueJourney: "Continuer l'aventure",
-        }
-      : {
-          universeContext: "Universe Context",
-          contextBody: "Produced in Kinshasa, DRC. Built as part of the ISOLELE Black African storytelling universe.",
-          focusKeywords: "Focus Keywords",
-          quote: "Quote",
-          continueJourney: "Continue The Journey",
-        };
+  const uiText = bookPageUiContent[locale] ?? bookPageUiContent.en;
 
   return (
     <article

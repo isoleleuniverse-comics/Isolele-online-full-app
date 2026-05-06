@@ -4,22 +4,22 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { socialLinks } from "./footer.data";
-import type { FooterContext } from "./footer.types";
+import type { FooterSectionContext } from "./footer.types";
 
-export function FooterBrand({ currentTheme, t }: FooterContext) {
+export function FooterBrand({ currentTheme, content }: FooterSectionContext) {
   return (
     <div className="space-y-6">
       <Link href="/" className="flex items-center">
         <Image
           src="/isolele-logo-official.png"
-          alt="ISOLELE â€” The Chosen Ones"
+          alt={content.brandAlt}
           width={160}
           height={80}
           className="h-auto object-contain"
         />
       </Link>
       <p className="text-sm leading-relaxed" style={{ color: currentTheme.colors.textSecondary }}>
-        {t("footer_description")}
+        {content.description}
       </p>
       <div className="flex gap-4">
         {socialLinks.map((social) => (
@@ -28,7 +28,7 @@ export function FooterBrand({ currentTheme, t }: FooterContext) {
             href={social.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-full transition-colors"
+            className="rounded-full p-2 transition-colors"
             style={{
               backgroundColor: `${currentTheme.colors.accentPrimary}20`,
               color: currentTheme.colors.textSecondary,
@@ -47,4 +47,3 @@ export function FooterBrand({ currentTheme, t }: FooterContext) {
     </div>
   );
 }
-

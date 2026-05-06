@@ -2,6 +2,32 @@ import type { SupportedLocale } from "@/shared/i18n/locales";
 import type { BookPageData, BookSlug } from "./books.types";
 import { BOOKS_CTA_LINKS } from "./books-cta-links";
 
+export const bookPageUiContent: Record<
+  SupportedLocale,
+  {
+    universeContext: string;
+    contextBody: string;
+    focusKeywords: string;
+    quote: string;
+    continueJourney: string;
+  }
+> = {
+  en: {
+    universeContext: "Universe Context",
+    contextBody: "Produced in Kinshasa, DRC. Built as part of the ISOLELE Black African storytelling universe.",
+    focusKeywords: "Focus Keywords",
+    quote: "Quote",
+    continueJourney: "Continue The Journey",
+  },
+  fr: {
+    universeContext: "Contexte univers",
+    contextBody: "Produit a Kinshasa, RDC. Construit comme partie de l'univers narratif africain noir ISOLELE.",
+    focusKeywords: "Mots cles",
+    quote: "Citation",
+    continueJourney: "Continuer l'aventure",
+  },
+};
+
 const zaiireBookICover =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg";
 const zaiireBookIICover =

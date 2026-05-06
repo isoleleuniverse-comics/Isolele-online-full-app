@@ -1,23 +1,44 @@
 import { Camera, Globe, MessageCircle, PlayCircle } from "lucide-react";
-import type { FooterLink, FooterSocialLink } from "./footer.types";
+import type { SupportedLocale } from "@/shared/i18n/locales";
+import type { FooterContent, FooterLink, FooterSocialLink } from "./footer.types";
 
-export const quickLinks: FooterLink[] = [
-  { key: "nav_home", href: "/" },
-  { key: "nav_about", href: "/#hero" },
-  { key: "nav_founder", href: "/#hero" },
-  { key: "nav_news", href: "/#hero" },
-  { key: "nav_characters", href: "/characters" },
-  { key: "nav_shop", href: "/#hero" },
-];
+const quickLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
+  fr: [
+    { label: "Accueil", href: "/" },
+    { label: "A propos", href: "/#hero" },
+    { label: "Fondateur", href: "/#hero" },
+    { label: "Actualites", href: "/#hero" },
+    { label: "Personnages", href: "/characters" },
+    { label: "Boutique", href: "/#hero" },
+  ],
+  en: [
+    { label: "Home", href: "/" },
+    { label: "About", href: "/#hero" },
+    { label: "Founder", href: "/#hero" },
+    { label: "News", href: "/#hero" },
+    { label: "Characters", href: "/characters" },
+    { label: "Shop", href: "/#hero" },
+  ],
+};
 
-export const resourceLinks: FooterLink[] = [
-  { key: "footer_press", href: "/#hero" },
-  { key: "footer_careers", href: "/#hero" },
-  { key: "footer_contact", href: "/#hero" },
-  { key: "footer_faq", href: "/#hero" },
-  { key: "footer_terms", href: "/#hero" },
-  { key: "footer_privacy", href: "/#hero" },
-];
+const resourceLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
+  fr: [
+    { label: "Presse", href: "/#hero" },
+    { label: "Carrieres", href: "/#hero" },
+    { label: "Contact", href: "/#hero" },
+    { label: "FAQ", href: "/#hero" },
+    { label: "Conditions", href: "/#hero" },
+    { label: "Confidentialite", href: "/#hero" },
+  ],
+  en: [
+    { label: "Press", href: "/#hero" },
+    { label: "Careers", href: "/#hero" },
+    { label: "Contact", href: "/#hero" },
+    { label: "FAQ", href: "/#hero" },
+    { label: "Terms", href: "/#hero" },
+    { label: "Privacy", href: "/#hero" },
+  ],
+};
 
 export const socialLinks: FooterSocialLink[] = [
   { icon: Camera, href: "https://instagram.com/isolele", label: "Instagram" },
@@ -26,3 +47,10 @@ export const socialLinks: FooterSocialLink[] = [
   { icon: PlayCircle, href: "https://youtube.com/isolele", label: "YouTube" },
 ];
 
+export function getFooterContent(locale: SupportedLocale, content: FooterContent) {
+  return {
+    ...content,
+    quickLinks: quickLinksByLocale[locale] ?? quickLinksByLocale.en,
+    resourceLinks: resourceLinksByLocale[locale] ?? resourceLinksByLocale.en,
+  };
+}

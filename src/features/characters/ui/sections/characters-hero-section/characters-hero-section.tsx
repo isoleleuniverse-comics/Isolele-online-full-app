@@ -71,8 +71,8 @@ export function CharactersHeroSection({ characterCount, ui }: CharactersHeroSect
       >
         {[
           { label: ui.statCharacters, value: `${characterCount}+` },
-          { label: ui.statKingdoms, value: "12+" },
-          { label: ui.statUniverses, value: "3" },
+          { label: ui.statKingdoms, value: ui.statKingdomsValue },
+          { label: ui.statUniverses, value: ui.statUniversesValue },
         ].map((stat) => (
           <div key={stat.label} className="text-center">
             <p className="text-3xl font-black" style={{ color: currentTheme.colors.accentPrimary }}>

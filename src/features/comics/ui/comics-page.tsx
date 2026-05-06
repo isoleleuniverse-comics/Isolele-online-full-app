@@ -1,34 +1,42 @@
 "use client";
 
-import { comicsData } from "@/features/comics/model/comics.data";
-import { useLanguage } from "@/shared/i18n/language-context";
-import {
-  ComicCarouselSection,
-  ComicsPageFooter,
-  ComicsPageHeader,
-  ComicsStructuredData,
-} from "@/features/comics/ui/sections";
+import type { SupportedLocale } from "@/shared/i18n/locales";
+import { getComicsPageContent } from "@/features/comics/model/comics.data";
+import { ComicCarouselSection, ComicsPageFooter, ComicsPageHeader, ComicsStructuredData } from "@/features/comics/ui/sections";
 
-export function ComicsPage() {
-  const { t, currentLanguage } = useLanguage();
-  const isFrench = currentLanguage.code === "fr";
+interface ComicsPageProps {
+  locale: SupportedLocale;
+}
 
-  const featured = comicsData.filter((book) => book.category === "featured");
-  const bestsellers = comicsData.filter((book) => book.category === "bestseller");
-  const newReleases = comicsData.filter((book) => book.category === "new");
+export function ComicsPage({ locale }: ComicsPageProps) {
+  const content = getComicsPageContent(locale);
 
   return (
     <main className="min-h-screen bg-background pb-24 pt-32">
       <ComicsStructuredData />
 
-      <ComicsPageHeader isFrench={isFrench} />
+      <ComicsPageHeader title={content.hero.title} description={content.hero.description} />
 
-      <ComicCarouselSection titleEn="Featured Collections" titleFr="Collections Vedettes" books={featured} isFrench={isFrench} t={t} />
-      <ComicCarouselSection titleEn="Best Sellers" titleFr="Meilleures Ventes" books={bestsellers} isFrench={isFrench} t={t} />
-      <ComicCarouselSection titleEn="New Releases" titleFr="Nouvelles Sorties" books={newReleases} isFrench={isFrench} t={t} />
+      {content.sections.map((section) => (
+        <ComicCarouselSection
+          key={section.id}
+          title={section.title}
+          ctaLabel={section.ctaLabel}
+          ctaHref={section.ctaHref}
+          books={section.books}
+          readLabel={content.ui.readLabel}
+          scrollLeftLabel={content.ui.scrollLeftLabel}
+          scrollRightLabel={content.ui.scrollRightLabel}
+        />
+      ))}
 
-      <ComicsPageFooter isFrench={isFrench} />
+      <ComicsPageFooter
+        description={content.footer.description}
+        primaryCtaLabel={content.footer.primaryCtaLabel}
+        primaryCtaHref={content.footer.primaryCtaHref}
+        secondaryCtaLabel={content.footer.secondaryCtaLabel}
+        secondaryCtaHref={content.footer.secondaryCtaHref}
+      />
     </main>
   );
 }
-

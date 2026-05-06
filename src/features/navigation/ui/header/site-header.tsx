@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { useTheme } from "@/shared/contexts/theme-context";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, withLocale } from "@/shared/i18n/locales";
+import { resolveLocaleFromPathname, stripLocaleFromPathname, withLocale } from "@/shared/i18n/locales";
 
 import { DesktopNav } from "./desktop-nav";
 import { MobileTopBar } from "./mobile-top-bar";
@@ -20,14 +20,8 @@ export function SiteHeader() {
   const pathname = usePathname();
   const { currentTheme } = useTheme();
 
-  const firstSegment = pathname.split("/")[1];
-  const locale = (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
-    ? (firstSegment as (typeof SUPPORTED_LOCALES)[number])
-    : DEFAULT_LOCALE;
-  const pathnameNoLocale =
-    (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
-      ? pathname.replace(new RegExp(`^/${firstSegment}`), "") || "/"
-      : pathname;
+  const locale = resolveLocaleFromPathname(pathname);
+  const pathnameNoLocale = stripLocaleFromPathname(pathname);
   const isHomePage = pathnameNoLocale === "/";
 
   function localizedHref(href: string) {

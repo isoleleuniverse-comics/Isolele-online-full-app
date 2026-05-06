@@ -2,15 +2,16 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import type { Character } from "@/features/characters/model/characters.types";
+import type { Character, CharactersUIStrings } from "@/features/characters/model/characters.types";
 import { useTheme } from "@/shared/contexts/theme-context";
 
 interface CharacterCardProps {
   character: Character;
+  ui: CharactersUIStrings;
   onSelect: (character: Character) => void;
 }
 
-export function CharacterCard({ character, onSelect }: CharacterCardProps) {
+export function CharacterCard({ character, ui, onSelect }: CharacterCardProps) {
   const { currentTheme } = useTheme();
 
   return (
@@ -77,7 +78,7 @@ export function CharacterCard({ character, onSelect }: CharacterCardProps) {
             }}
             whileHover={{ backgroundColor: character.color, color: "#000000" }}
           >
-            VIEW PROFILE
+            {ui.viewProfile}
           </motion.button>
         </div>
       </div>

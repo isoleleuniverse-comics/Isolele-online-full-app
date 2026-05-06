@@ -8,12 +8,15 @@ export interface CharactersUIStrings {
   statCharacters: string;
   statKingdoms: string;
   statUniverses: string;
+  statKingdomsValue: string;
+  statUniversesValue: string;
   viewProfile: string;
   powersTitle: string;
   biography: string;
   backToCharacters: string;
   exploreComics: string;
   discoverPrefix: string;
+  closeModalLabel: string;
 }
 
 export interface Character {

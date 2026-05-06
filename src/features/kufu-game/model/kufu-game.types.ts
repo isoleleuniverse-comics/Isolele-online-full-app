@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { SupportedLocale } from "@/shared/i18n/locales";
 
 export type KufuTab = "overview" | "characters" | "reviews";
 
@@ -44,3 +45,37 @@ export interface KufuReview {
   text: string;
 }
 
+export interface KufuGamePageContent {
+  locale: SupportedLocale;
+  hero: {
+    backLabel: string;
+    coverAlt: string;
+    logoAlt: string;
+    boardAlt: string;
+    shortDescription: string;
+    orderLabel: string;
+    comicsLabel: string;
+    ratingLabel: string;
+    currencyLabel: string;
+    infoChips: Array<{ id: string; label: string }>;
+  };
+  tabs: Array<{ id: KufuTab; label: string }>;
+  overview: {
+    aboutTitle: string;
+    featuresTitle: string;
+    universeBadge: string;
+    infoTitle: string;
+    infoRows: Array<{ label: string; value: string }>;
+    languagesTitle: string;
+  };
+  characters: {
+    intro: string;
+  };
+  reviews: {
+    ratingCountLabel: string;
+  };
+  footer: {
+    studioLabel: string;
+    studioSubtitle: string;
+  };
+}

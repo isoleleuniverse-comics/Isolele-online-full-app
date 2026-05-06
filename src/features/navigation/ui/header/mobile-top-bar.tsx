@@ -7,8 +7,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useTheme, themes } from "@/shared/contexts/theme-context";
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES, withLocale } from "@/shared/i18n/locales";
-import { navContent } from "@/features/navigation/content/nav.content";
+import { getNavigationContent } from "@/features/navigation/content/nav.content";
+import {
+  LOCALE_LABELS,
+  SUPPORTED_LOCALES,
+  resolveLocaleFromPathname,
+  stripLocaleFromPathname,
+  withLocale,
+} from "@/shared/i18n/locales";
 import { NAV_LINKS, HEADER_LOGO_SRC, isActive } from "../../config/nav.config";
 import { HeaderBackButton } from "./header-back-button";
 
@@ -19,14 +25,9 @@ export function MobileTopBar() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const firstSegment = pathname.split("/")[1];
-  const locale = (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
-    ? (firstSegment as (typeof SUPPORTED_LOCALES)[number])
-    : DEFAULT_LOCALE;
-  const pathnameNoLocale =
-    (SUPPORTED_LOCALES as readonly string[]).includes(firstSegment)
-      ? pathname.replace(new RegExp(`^/${firstSegment}`), "") || "/"
-      : pathname;
+  const locale = resolveLocaleFromPathname(pathname);
+  const pathnameNoLocale = stripLocaleFromPathname(pathname);
+  const content = getNavigationContent(locale);
   const isHomePage = pathnameNoLocale === "/";
 
   function localizedHref(href: string) {
@@ -67,7 +68,7 @@ export function MobileTopBar() {
             onClick={() => setMobileMenuOpen((open) => !open)}
             className="justify-self-end rounded-md border p-2"
             style={{ borderColor: `${currentTheme.colors.accentPrimary}35`, color: currentTheme.colors.textSecondary }}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-label={mobileMenuOpen ? content.mobileMenu.closeLabel : content.mobileMenu.openLabel}
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -100,14 +101,14 @@ export function MobileTopBar() {
                     color: isActive(pathnameNoLocale, item.href) ? currentTheme.colors.accentPrimary : currentTheme.colors.textSecondary,
                   }}
                 >
-                  {navContent[locale][item.key]}
+                  {content.labels[item.key]}
                 </Link>
               ))}
             </nav>
 
             <div className="mt-4 space-y-3">
               <p className="text-[11px] font-bold uppercase tracking-wider" style={{ color: currentTheme.colors.textSecondary }}>
-                Language
+                {content.mobileMenu.languageLabel}
               </p>
               <div className="flex flex-wrap gap-2">
                 {SUPPORTED_LOCALES.map((lang) => (
@@ -129,13 +130,13 @@ export function MobileTopBar() {
                           : currentTheme.colors.textSecondary,
                     }}
                   >
-                    {lang}
+                    {LOCALE_LABELS[lang]}
                   </button>
                 ))}
               </div>
 
               <p className="pt-1 text-[11px] font-bold uppercase tracking-wider" style={{ color: currentTheme.colors.textSecondary }}>
-                Theme
+                {content.mobileMenu.themeLabel}
               </p>
               <div className="flex flex-wrap gap-2">
                 {themes.map((theme) => (
@@ -147,7 +148,7 @@ export function MobileTopBar() {
                       backgroundColor: theme.colors.accentPrimary,
                       borderColor: theme.id === currentTheme.id ? "#FFFFFF" : "transparent",
                     }}
-                    aria-label={`Theme ${theme.name}`}
+                    aria-label={`${content.mobileMenu.themeButtonLabel} ${theme.name}`}
                   />
                 ))}
               </div>
