@@ -28,13 +28,10 @@ function detectLocale(request: NextRequest) {
   return DEFAULT_LOCALE;
 }
 
-<<<<<<< HEAD
-export function proxy(req: NextRequest) {
-  const { pathname, search } = req.nextUrl;
-=======
+
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
->>>>>>> refactor
+
 
   if (pathname.startsWith("/admin") || pathname === "/login" || pathname.startsWith("/login/")) {
     const locale = detectLocale(request);
