@@ -53,7 +53,7 @@ export const productsData: Record<HomeLocale, HomeProductsContent> = {
         id: "zaiire-comic-1",
         name: "ZAIIRE - Prince du Kongo",
         description: "Édition collector de la bande dessinée présentant le Collier de la Destinée.",
-        price: 26.99,
+        price: 36.99,
         originalPrice: 99.99,
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
         badge: "PRÉCOMMANDE",

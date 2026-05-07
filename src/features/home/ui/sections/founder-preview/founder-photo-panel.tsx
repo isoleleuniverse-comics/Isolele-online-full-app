@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import type { Theme } from "@/shared/contexts/theme-context";
 import { FOUNDER_IMAGE } from "./data";
 import { FOUNDER_IMAGE_BLUR_DATA_URL } from "./types";
+import Link from "next/link";
+
 
 interface FounderPhotoPanelProps {
   theme: Theme;
@@ -47,6 +49,7 @@ export function FounderPhotoPanel({ theme, locationLabel, roleLabel }: FounderPh
         />
       </div>
 
+      <Link href="/king-kufulula" className="absolute inset-0" aria-label="Learn more about King Kufulula">
       <motion.div
         className="absolute bottom-6 left-1/2 -translate-x-1/2 px-5 py-2.5 rounded-xl text-center whitespace-nowrap"
         style={{
@@ -59,6 +62,9 @@ export function FounderPhotoPanel({ theme, locationLabel, roleLabel }: FounderPh
         <p className="text-xs font-black tracking-widest uppercase">{locationLabel}</p>
         <p className="text-[10px] opacity-75 tracking-wider">{roleLabel}</p>
       </motion.div>
+      
+      </Link>
+
     </motion.div>
   );
 }
