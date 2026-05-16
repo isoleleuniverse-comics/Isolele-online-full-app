@@ -20,7 +20,7 @@ export const productsData: Record<HomeLocale, HomeProductsContent> = {
       price: 36.99,
       originalPrice: 99.99,
       image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
-      badge: "PREORDER",
+      badge: "AVAILABLE",
       type: "comic",
     },
     {
@@ -56,7 +56,7 @@ export const productsData: Record<HomeLocale, HomeProductsContent> = {
         price: 36.99,
         originalPrice: 99.99,
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg",
-        badge: "PRÉCOMMANDE",
+        badge: "DISPONIBLE",
         type: "comic",
       },
       {

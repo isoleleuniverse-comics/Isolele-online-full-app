@@ -128,3 +128,73 @@
     @apply font-sans;
   }
 }
+
+@layer components {
+  .cms-editor-content p.is-editor-empty:first-child::before {
+    color: color-mix(in oklab, var(--muted-foreground) 70%, transparent);
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .cms-editor-content h1,
+  .cms-public-content h1 {
+    @apply mt-10 mb-4 text-4xl font-black leading-tight;
+  }
+
+  .cms-editor-content h2,
+  .cms-public-content h2 {
+    @apply mt-9 mb-3 text-3xl font-bold leading-tight;
+  }
+
+  .cms-editor-content h3,
+  .cms-public-content h3 {
+    @apply mt-8 mb-3 text-2xl font-bold leading-tight;
+  }
+
+  .cms-editor-content p,
+  .cms-public-content p {
+    @apply my-5 leading-8;
+  }
+
+  .cms-editor-content ul,
+  .cms-public-content ul {
+    @apply my-5 list-disc pl-6;
+  }
+
+  .cms-editor-content ol,
+  .cms-public-content ol {
+    @apply my-5 list-decimal pl-6;
+  }
+
+  .cms-editor-content blockquote,
+  .cms-public-content blockquote {
+    @apply my-6 border-l-4 border-amber-500 pl-5 italic text-muted-foreground;
+  }
+
+  .cms-editor-content pre,
+  .cms-public-content pre {
+    @apply my-6 overflow-x-auto rounded-lg bg-neutral-950 p-4 text-sm text-white;
+  }
+
+  .cms-editor-content img,
+  .cms-public-content img {
+    @apply my-8 h-auto w-full rounded-lg border border-border;
+  }
+
+  .cms-editor-content a,
+  .cms-public-content a {
+    @apply font-medium text-amber-700 underline underline-offset-4;
+  }
+
+  .cms-editor-content p:has(a[href$=".pdf"]),
+  .cms-public-content p:has(a[href$=".pdf"]) {
+    @apply rounded-lg border border-border bg-muted/50 px-4 py-3;
+  }
+
+  .cms-editor-content iframe,
+  .cms-public-content iframe {
+    @apply my-8 aspect-video h-auto w-full rounded-lg border border-border;
+  }
+}

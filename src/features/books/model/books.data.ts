@@ -57,7 +57,7 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
         ],
       },
     ],
-    ctas: [{ id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/" }],
+    ctas: [{ id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/#hero" }],
   },
   mokele: {
     slug: "mokele",
@@ -86,7 +86,7 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "read-book-1", label: "READ BOOK I", href: BOOKS_CTA_LINKS.mokeleBookI },
-      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/#hero", style: "secondary" },
     ],
   },
   bambula: {
@@ -115,7 +115,7 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "read-chapter-1", label: "READ CHAPTER I", href: BOOKS_CTA_LINKS.bambulaChapterI },
-      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/#hero", style: "secondary" },
     ],
   },
   makanda: {
@@ -146,7 +146,7 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "read-book-1", label: "READ BOOK I", href: BOOKS_CTA_LINKS.makandaBookI },
-      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/#hero", style: "secondary" },
     ],
   },
   zaiire: {
@@ -194,7 +194,7 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
     ctas: [
       { id: "read-book-1", label: "READ BOOK I", href: BOOKS_CTA_LINKS.zaiireBookI },
       { id: "preorder-book-2", label: "PRE-ORDER BOOK II", href: BOOKS_CTA_LINKS.zaiireBookIIPreorder },
-      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/#hero", style: "secondary" },
     ],
   },
   kufu: {
@@ -237,7 +237,7 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "preorder-kufu", label: "PRE-ORDER KUFU", href: BOOKS_CTA_LINKS.kufuPreorder },
-      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/#hero", style: "secondary" },
     ],
   },
   zattar: {
@@ -276,7 +276,7 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "read-book-1", label: "READ BOOK I", href: BOOKS_CTA_LINKS.zattarBookI },
-      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/#hero", style: "secondary" },
     ],
   },
   zaiko: {
@@ -319,7 +319,7 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "read-book-1", label: "READ BOOK I", href: BOOKS_CTA_LINKS.zaikoBookI },
-      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORE THE UNIVERSE", href: "/#hero", style: "secondary" },
     ],
   },
 };
@@ -343,7 +343,7 @@ const booksPagesFr: Record<BookSlug, BookPageData> = {
         ],
       },
     ],
-    ctas: [{ id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/" }],
+    ctas: [{ id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/#hero" }],
   },
   mokele: {
     ...booksPagesEn.mokele,
@@ -369,7 +369,7 @@ const booksPagesFr: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "read-book-1", label: "LIRE LE LIVRE I", href: BOOKS_CTA_LINKS.mokeleBookI },
-      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/#hero", style: "secondary" },
     ],
   },
   bambula: {
@@ -395,7 +395,7 @@ const booksPagesFr: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "read-chapter-1", label: "LIRE LE CHAPITRE I", href: BOOKS_CTA_LINKS.bambulaChapterI },
-      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/#hero", style: "secondary" },
     ],
   },
   makanda: {
@@ -421,7 +421,7 @@ const booksPagesFr: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "read-book-1", label: "LIRE LE LIVRE I", href: BOOKS_CTA_LINKS.makandaBookI },
-      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/#hero", style: "secondary" },
     ],
   },
   zaiire: {
@@ -466,7 +466,7 @@ const booksPagesFr: Record<BookSlug, BookPageData> = {
     ctas: [
       { id: "read-book-1", label: "LIRE LE LIVRE I", href: BOOKS_CTA_LINKS.zaiireBookI },
       { id: "preorder-book-2", label: "PRECOMMANDER LE LIVRE II", href: BOOKS_CTA_LINKS.zaiireBookIIPreorder },
-      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/#hero", style: "secondary" },
     ],
   },
   kufu: {
@@ -506,21 +506,21 @@ const booksPagesFr: Record<BookSlug, BookPageData> = {
     ],
     ctas: [
       { id: "preorder-kufu", label: "PRECOMMANDER KUFU", href: BOOKS_CTA_LINKS.kufuPreorder },
-      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/#hero", style: "secondary" },
     ],
   },
   zattar: {
     ...booksPagesEn.zattar,
     ctas: [
       { id: "read-book-1", label: "LIRE LE LIVRE I", href: BOOKS_CTA_LINKS.zattarBookI },
-      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/#hero", style: "secondary" },
     ],
   },
   zaiko: {
     ...booksPagesEn.zaiko,
     ctas: [
       { id: "read-book-1", label: "LIRE LE LIVRE I", href: BOOKS_CTA_LINKS.zaikoBookI },
-      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/", style: "secondary" },
+      { id: "explore-universe", label: "EXPLORER L'UNIVERS", href: "/#hero", style: "secondary" },
     ],
   },
 };

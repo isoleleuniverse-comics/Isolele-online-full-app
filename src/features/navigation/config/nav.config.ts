@@ -3,7 +3,7 @@ import type { NavLinkLabelKey } from "@/features/navigation/content/nav.content"
 import { BookOpen, Gamepad2, Home, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-export const HEADER_LOGO_SRC = "/LOGO%20HORIZONTAL.png";
+export const HEADER_LOGO_SRC = "/isolele-official-logo.png";
 
 export interface NavLink {
   key: NavLinkLabelKey;

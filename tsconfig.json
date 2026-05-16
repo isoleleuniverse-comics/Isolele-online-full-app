@@ -26,6 +26,9 @@
       "@/*": [
         "./src/*"
       ],
+      "@private/*": [
+        "./private/*"
+      ],
       "@shared/*": [
         "./src/shared/*"
       ],
