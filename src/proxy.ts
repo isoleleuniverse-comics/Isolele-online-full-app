@@ -7,12 +7,9 @@ import {
   SUPPORTED_LOCALES,
 } from "@/shared/i18n/locales";
 
-const CMS_COOKIE_NAME = "isolele_cms_session";
-
 function shouldIgnorePath(pathname: string) {
   if (pathname.startsWith("/_next")) return true;
   if (pathname.startsWith("/api")) return true;
-  if (pathname.startsWith("/dashboard")) return true;
   if (pathname === "/robots.txt" || pathname === "/sitemap.xml") return true;
   return pathname.includes(".");
 }
@@ -34,22 +31,6 @@ function detectLocale(request: NextRequest) {
 
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
-
-  if (pathname === "/dashboard/login") {
-    return NextResponse.next();
-  }
-
-  if (pathname === "/dashboard" || pathname.startsWith("/dashboard/")) {
-    const cmsSessionSecret = process.env.CMS_SESSION_SECRET || "dev-cms-session-secret";
-    if (request.cookies.get(CMS_COOKIE_NAME)?.value === cmsSessionSecret) {
-      return NextResponse.next();
-    }
-
-    const url = request.nextUrl.clone();
-    url.pathname = "/dashboard/login";
-    url.search = "";
-    return NextResponse.redirect(url);
-  }
 
   if (pathname.startsWith("/admin") || pathname === "/login" || pathname.startsWith("/login/")) {
     const locale = detectLocale(request);

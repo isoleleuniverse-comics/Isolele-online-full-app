@@ -26,9 +26,6 @@
       "@/*": [
         "./src/*"
       ],
-      "@private/*": [
-        "./private/*"
-      ],
       "@shared/*": [
         "./src/shared/*"
       ],
@@ -46,6 +43,7 @@
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "private"
   ]
 }
