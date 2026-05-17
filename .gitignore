@@ -77,12 +77,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# generated prisma client
-/src/generated/prisma/
-
 # local backend-only code kept out of the frontend repo
-/prisma/
-/prisma.config.ts
 /src/server/
 /src/app/(admin)/
 /src/app/login/

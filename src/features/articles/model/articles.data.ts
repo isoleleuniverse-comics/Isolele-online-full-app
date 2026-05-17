@@ -417,7 +417,7 @@ const ARTICLES_BY_LOCALE: Record<SupportedLocale, StaticArticle[]> = {
 };
 
 // ---------------------------------------------------------------------------
-// Public helpers — same API shape as the Prisma service, but static
+// Public helpers — same API shape as the data service, but static
 // ---------------------------------------------------------------------------
 
 /** Returns published articles for a given locale, sorted newest-first. */
