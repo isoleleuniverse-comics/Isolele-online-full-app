@@ -36,7 +36,7 @@ export function CharacterCard({
       transition={{ duration: 0.62, delay: 0.14 + (index % totalCharacters) * 0.1 }}
       className="flex-shrink-0 w-72 group"
     >
-      <Link href={`/characters/${character.id}`}>
+      <Link href="/#hero">
         <div
           className="relative h-96 rounded-2xl overflow-hidden mb-4 transition-all duration-500 cursor-pointer"
           style={{
