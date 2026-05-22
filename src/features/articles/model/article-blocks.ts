@@ -1,11 +1,12 @@
 export type ArticleBlockType =
   | "heading"
-  | "text"
+  | "paragraph"
   | "image"
   | "quote"
   | "video"
   | "divider"
-  | "cta";
+  | "cta"
+  | "unsupported";
 
 export type ArticleBlockBase = {
   id: string;
@@ -15,10 +16,11 @@ export type ArticleBlockBase = {
 export type HeadingBlock = ArticleBlockBase & {
   type: "heading";
   text: string;
+  level?: 1 | 2 | 3;
 };
 
-export type TextBlock = ArticleBlockBase & {
-  type: "text";
+export type ParagraphBlock = ArticleBlockBase & {
+  type: "paragraph";
   text: string;
 };
 
@@ -32,7 +34,7 @@ export type ImageBlock = ArticleBlockBase & {
 export type QuoteBlock = ArticleBlockBase & {
   type: "quote";
   text: string;
-  source?: string;
+  author?: string;
 };
 
 export type VideoBlock = ArticleBlockBase & {
@@ -53,23 +55,31 @@ export type CtaBlock = ArticleBlockBase & {
   href: string;
 };
 
+export type UnsupportedBlock = ArticleBlockBase & {
+  type: "unsupported";
+  originalType: string;
+  raw: Record<string, unknown>;
+};
+
 export type ArticleBlock =
   | HeadingBlock
-  | TextBlock
+  | ParagraphBlock
   | ImageBlock
   | QuoteBlock
   | VideoBlock
   | DividerBlock
-  | CtaBlock;
+  | CtaBlock
+  | UnsupportedBlock;
 
 const ARTICLE_BLOCK_TYPES: ArticleBlockType[] = [
   "heading",
-  "text",
+  "paragraph",
   "image",
   "quote",
   "video",
   "divider",
   "cta",
+  "unsupported",
 ];
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -84,23 +94,76 @@ function optionalString(value: unknown) {
   return typeof value === "string" ? value : "";
 }
 
-export function normalizeArticleBlocks(value: unknown): ArticleBlock[] {
-  if (!Array.isArray(value)) return [];
+function optionalHeadingLevel(value: unknown): 1 | 2 | 3 | undefined {
+  return value === 1 || value === 2 || value === 3 ? value : undefined;
+}
+
+type NormalizeResult = {
+  blocks: ArticleBlock[];
+  warnings: string[];
+};
+
+export function normalizeArticleBlocksDetailed(value: unknown): NormalizeResult {
+  if (!Array.isArray(value)) {
+    return {
+      blocks: [],
+      warnings: ["blocksJson must be an array"],
+    };
+  }
+
   const blocks: ArticleBlock[] = [];
+  const warnings: string[] = [];
 
   value.forEach((raw, index) => {
-    if (!isRecord(raw) || !isArticleBlockType(raw.type)) return;
-    const id = optionalString(raw.id) || `${raw.type}-${index}`;
+    if (!isRecord(raw)) {
+      warnings.push(`Block ${index + 1} is not an object and was ignored.`);
+      return;
+    }
 
-    if (raw.type === "heading") {
-      blocks.push({ id, type: "heading", text: optionalString(raw.text) });
+    const normalizedType = raw.type === "text" ? "paragraph" : raw.type;
+    const fallbackId = `block-${index}`;
+    const id = optionalString(raw.id) || fallbackId;
+
+    if (normalizedType === "unsupported") {
+      blocks.push({
+        id,
+        type: "unsupported",
+        originalType: optionalString(raw.originalType) || "unsupported",
+        raw,
+      });
+      warnings.push(`Block ${index + 1} uses an unsupported type and was preserved as read-only.`);
       return;
     }
-    if (raw.type === "text") {
-      blocks.push({ id, type: "text", text: optionalString(raw.text) });
+
+    if (!isArticleBlockType(normalizedType)) {
+      blocks.push({
+        id,
+        type: "unsupported",
+        originalType: optionalString(raw.type) || "unknown",
+        raw,
+      });
+      warnings.push(`Block ${index + 1} uses an unsupported type and was preserved as read-only.`);
       return;
     }
-    if (raw.type === "image") {
+
+    if (normalizedType === "heading") {
+      blocks.push({
+        id,
+        type: "heading",
+        text: optionalString(raw.text ?? raw.content),
+        level: optionalHeadingLevel(raw.level),
+      });
+      return;
+    }
+    if (normalizedType === "paragraph") {
+      blocks.push({
+        id,
+        type: "paragraph",
+        text: optionalString(raw.text ?? raw.content),
+      });
+      return;
+    }
+    if (normalizedType === "image") {
       blocks.push({
         id,
         type: "image",
@@ -110,15 +173,20 @@ export function normalizeArticleBlocks(value: unknown): ArticleBlock[] {
       });
       return;
     }
-    if (raw.type === "quote") {
-      blocks.push({ id, type: "quote", text: optionalString(raw.text), source: optionalString(raw.source) });
+    if (normalizedType === "quote") {
+      blocks.push({
+        id,
+        type: "quote",
+        text: optionalString(raw.text ?? raw.content),
+        author: optionalString(raw.author ?? raw.source),
+      });
       return;
     }
-    if (raw.type === "video") {
+    if (normalizedType === "video") {
       blocks.push({ id, type: "video", url: optionalString(raw.url), title: optionalString(raw.title) });
       return;
     }
-    if (raw.type === "cta") {
+    if (normalizedType === "cta") {
       blocks.push({
         id,
         type: "cta",
@@ -133,19 +201,45 @@ export function normalizeArticleBlocks(value: unknown): ArticleBlock[] {
     blocks.push({ id, type: "divider" });
   });
 
-  return blocks;
+  return { blocks, warnings };
+}
+
+export function normalizeArticleBlocks(value: unknown): ArticleBlock[] {
+  return normalizeArticleBlocksDetailed(value).blocks;
+}
+
+export function sanitizeArticleBlocks(value: unknown): NormalizeResult {
+  const result = normalizeArticleBlocksDetailed(value);
+  return {
+    blocks: result.blocks.map((block, index) => {
+      if (block.type === "unsupported") {
+        return {
+          id: block.id || `unsupported-${index}`,
+          type: "unsupported",
+          originalType: block.originalType,
+          raw: block.raw,
+        };
+      }
+
+      return block;
+    }),
+    warnings: result.warnings,
+  };
 }
 
 export function createArticleBlock(type: ArticleBlockType): ArticleBlock {
   const id = globalThis.crypto?.randomUUID?.() ?? `${type}-${Date.now()}`;
 
-  if (type === "heading") return { id, type, text: "" };
-  if (type === "text") return { id, type, text: "" };
+  if (type === "heading") return { id, type, text: "", level: 2 };
+  if (type === "paragraph") return { id, type, text: "" };
   if (type === "image") return { id, type, url: "", alt: "", caption: "" };
-  if (type === "quote") return { id, type, text: "", source: "" };
+  if (type === "quote") return { id, type, text: "", author: "" };
   if (type === "video") return { id, type, url: "", title: "" };
   if (type === "cta") {
     return { id, type, title: "", description: "", buttonLabel: "Read more", href: "/" };
+  }
+  if (type === "unsupported") {
+    return { id, type, originalType: "unknown", raw: {} };
   }
 
   return { id, type };
@@ -154,7 +248,7 @@ export function createArticleBlock(type: ArticleBlockType): ArticleBlock {
 export function getArticlePlainText(blocks: ArticleBlock[]) {
   return blocks
     .map((block) => {
-      if (block.type === "heading" || block.type === "text" || block.type === "quote") {
+      if (block.type === "heading" || block.type === "paragraph" || block.type === "quote") {
         return block.text;
       }
       if (block.type === "image") return [block.alt, block.caption].filter(Boolean).join(" ");

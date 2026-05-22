@@ -106,3 +106,5 @@ next-env.d.ts
 /src/lib/auth/require-admin.ts
 /scripts/init-admin.js
 /docs/admin-characters/
+
+/src/generated/prisma

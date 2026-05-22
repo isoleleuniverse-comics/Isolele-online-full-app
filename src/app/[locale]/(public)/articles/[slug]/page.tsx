@@ -3,8 +3,8 @@ import { notFound } from "next/navigation";
 import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import { absoluteUrl } from "@/shared/seo/site-url";
 import { normalizeArticleBlocks } from "@/features/articles/model/article-blocks";
+import { getPublicArticleBySlug } from "@/features/articles/services/articles.services";
 import { ArticleTemplate } from "@/features/articles/ui/article-template";
-import { getStaticArticleBySlug } from "@/features/articles/model/articles.data";
 
 export async function generateMetadata({
   params,
@@ -13,7 +13,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params;
   const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
-  const article = getStaticArticleBySlug(slug, safeLocale);
+  const article = await getPublicArticleBySlug(slug, safeLocale);
 
   if (!article) {
     return {
@@ -22,10 +22,11 @@ export async function generateMetadata({
   }
 
   const path = `/${safeLocale}/articles/${article.slug}`;
-  const description = article.excerpt || `Read ${article.title} on ISOLELE.`;
+  const metadataTitle = article.seoTitle || article.title;
+  const description = article.seoDescription || article.excerpt || `Read ${article.title} on ISOLELE.`;
 
   return {
-    title: article.title,
+    title: metadataTitle,
     description,
     alternates: {
       canonical: path,
@@ -33,7 +34,7 @@ export async function generateMetadata({
     openGraph: {
       type: "article",
       url: path,
-      title: article.title,
+      title: metadataTitle,
       description,
       images: article.coverImage
         ? [
@@ -41,14 +42,14 @@ export async function generateMetadata({
               url: article.coverImage.startsWith("http")
                 ? article.coverImage
                 : absoluteUrl(article.coverImage),
-              alt: article.title,
+              alt: metadataTitle,
             },
           ]
         : undefined,
     },
     twitter: {
       card: "summary_large_image",
-      title: article.title,
+      title: metadataTitle,
       description,
       images: article.coverImage ? [article.coverImage] : undefined,
     },
@@ -62,7 +63,7 @@ export default async function ArticlePage({
 }) {
   const { locale, slug } = await params;
   const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
-  const article = getStaticArticleBySlug(slug, safeLocale);
+  const article = await getPublicArticleBySlug(slug, safeLocale);
 
   if (!article) notFound();
   const blocks = normalizeArticleBlocks(article.blocksJson);

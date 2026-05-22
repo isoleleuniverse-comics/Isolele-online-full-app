@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum ArticleStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+model Article {
+  id                 String   @id @default(cuid())
+
+  translationGroupId String
+
+  locale             String
+
+  slug               String   @unique
+
+  title              String
+  excerpt            String?
+
+  coverImage         String?
+
+  blocksJson         Json
+
+  status             ArticleStatus @default(DRAFT)
+
+  seoTitle           String?
+  seoDescription     String?
+
+  publishedAt        DateTime?
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([translationGroupId])
+  @@index([locale])
+  @@index([status])
+}

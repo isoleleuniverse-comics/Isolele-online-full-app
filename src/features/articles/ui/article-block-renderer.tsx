@@ -34,6 +34,7 @@ export function ArticleBlockRenderer({ blocks }: { blocks: ArticleBlock[] }) {
       {blocks.map((block) => {
         if (block.type === "heading") {
           if (!block.text.trim()) return null;
+          const HeadingTag = block.level === 1 ? "h1" : block.level === 3 ? "h3" : "h2";
           return (
             <section key={block.id} className="mt-16 first:mt-0">
               <div className="mb-5 flex items-center gap-4">
@@ -42,14 +43,14 @@ export function ArticleBlockRenderer({ blocks }: { blocks: ArticleBlock[] }) {
                   Section
                 </span>
               </div>
-              <h2 className="font-serif text-3xl font-light leading-tight text-[#f4ecdf] sm:text-5xl">
+              <HeadingTag className="font-serif text-3xl font-light leading-tight text-[#f4ecdf] sm:text-5xl">
                 {block.text}
-              </h2>
+              </HeadingTag>
             </section>
           );
         }
 
-        if (block.type === "text") {
+        if (block.type === "paragraph") {
           const parts = paragraphs(block.text);
           if (parts.length === 0) return null;
           return (
@@ -90,9 +91,9 @@ export function ArticleBlockRenderer({ blocks }: { blocks: ArticleBlock[] }) {
               <blockquote className="font-serif text-2xl font-light italic leading-snug text-[#ede5d8] sm:text-3xl">
                 &ldquo;{block.text}&rdquo;
               </blockquote>
-              {block.source ? (
+              {block.author ? (
                 <figcaption className="mt-5 text-xs font-medium uppercase tracking-[0.18em] text-[#7d6630]">
-                  {block.source}
+                  {block.author}
                 </figcaption>
               ) : null}
             </figure>
@@ -150,6 +151,17 @@ export function ArticleBlockRenderer({ blocks }: { blocks: ArticleBlock[] }) {
                   {block.buttonLabel}
                 </Link>
               ) : null}
+            </aside>
+          );
+        }
+
+        if (block.type === "unsupported") {
+          return (
+            <aside
+              key={block.id}
+              className="my-10 rounded border border-dashed border-[#7d6630] bg-[#161412] px-5 py-4 text-sm text-[#a79b8b]"
+            >
+              Unsupported block type: {block.originalType}
             </aside>
           );
         }

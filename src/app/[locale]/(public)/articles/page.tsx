@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
-import { getStaticPublishedArticles } from "@/features/articles/model/articles.data";
+import { getPublicPublishedArticles } from "@/features/articles/services/articles.services";
 
 export async function generateMetadata({
   params,
@@ -37,7 +37,7 @@ export default async function ArticlesPage({
 }) {
   const { locale } = await params;
   const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
-  const articles = getStaticPublishedArticles(safeLocale);
+  const articles = await getPublicPublishedArticles(safeLocale);
 
   return (
     <main className="bg-background text-foreground">
