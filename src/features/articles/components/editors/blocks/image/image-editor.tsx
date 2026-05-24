@@ -36,7 +36,7 @@ export function ImageBlockEditor({
                             url: event.target.value,
                         })
                     }
-                    placeholder="URL image"
+                    placeholder="URL de l'image de contenu"
                     className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
                 />
             </div>
@@ -48,10 +48,10 @@ export function ImageBlockEditor({
             >
                 <ImagePlus className="h-8 w-8 text-[#d2b26d]" />
                 <p className="mt-4 text-base text-[#f4efe7]">
-                    {imageBlock.url ? "Remplacer l'image" : "Ajouter une image"}
+                    {imageBlock.url ? "Remplacer l'image de contenu" : "Ajouter une image de contenu"}
                 </p>
                 <p className="mt-2 text-sm text-[#9d9386]">
-                    Clique pour importer un visuel qui soutient le rythme du texte.
+                    Clique pour importer une image dans le corps de l&apos;article.
                 </p>
             </button>
 
@@ -88,7 +88,7 @@ export function ImageBlockEditor({
                             caption: event.target.value,
                         })
                     }
-                    placeholder="Legende"
+                    placeholder="Legende de l'image de contenu"
                     className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
                 />
                 <Input

@@ -14,7 +14,7 @@ const sidebarPanels = [
 function getBlockTitle(block: ArticleBlock) {
     if (block.type === "heading") return block.text.trim() || "Section";
     if (block.type === "paragraph") return block.text.trim().slice(0, 54) || "Introduction";
-    if (block.type === "image") return block.caption?.trim() || "Image";
+    if (block.type === "image") return block.caption?.trim() || "Image de contenu";
     if (block.type === "quote") return block.text.trim().slice(0, 54) || "Citation";
     if (block.type === "video") return block.title?.trim() || "Video";
     if (block.type === "cta") return block.title.trim() || "CTA";
@@ -187,7 +187,7 @@ export function ArticlesEditorSidebar() {
                     <div className="space-y-4">
                         <div className="rounded-lg bg-[#1d1d1d] p-4">
                             <p className="text-[11px] uppercase tracking-[0.28em] text-[#c9a84c]">
-                                Cover Image
+                                Image de couverture
                             </p>
                             <p className="mt-2 text-sm leading-6 text-[#9d9386]">
                                 Prepare une bibliotheque media reutilisable sans changer le modele actuel.

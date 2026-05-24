@@ -28,7 +28,7 @@ export const articleBlockRegistry: Record<ArticleBlockType, ArticleBlockRegistry
         editor: ParagraphBlockEditor,
     },
     image: {
-        label: "Image",
+        label: "Image de contenu",
         editor: ImageBlockEditor,
     },
     quote: {

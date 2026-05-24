@@ -20,7 +20,7 @@ function getBlockIcon(type: ArticleBlockType) {
 function getBlockTitle(block: ArticleBlock) {
     if (block.type === "heading") return block.text.trim() || "Titre";
     if (block.type === "paragraph") return block.text.trim().slice(0, 72) || "Paragraphe";
-    if (block.type === "image") return block.caption?.trim() || "Image";
+    if (block.type === "image") return block.caption?.trim() || "Image de contenu";
     if (block.type === "quote") return block.text.trim().slice(0, 72) || "Citation";
     if (block.type === "video") return block.title?.trim() || "Video";
     if (block.type === "cta") return block.title.trim() || "CTA";
