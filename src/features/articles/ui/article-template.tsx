@@ -33,14 +33,8 @@ export function ArticleTemplate({
       <ArticleReadingProgress />
 
       <article>
-        <header className="relative flex min-h-[calc(100vh-5rem)] items-end overflow-hidden">
-          <img
-            src={coverImage}
-            alt=""
-            className="absolute inset-0 h-full w-full scale-105 object-cover opacity-75"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0d0c0b]/20 via-[#0d0c0b]/55 to-[#0d0c0b]" />
-          <div className="relative z-10 max-w-5xl px-6 pb-16 pt-24 sm:px-10 lg:px-16">
+        <header className="px-6 pb-16 pt-24 sm:px-10 lg:px-16">
+          <div className="mx-auto max-w-5xl">
             <p className="mb-6 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.26em] text-[#c9a84c]">
               <span className="h-px w-9 bg-[#c9a84c]" />
               ISOLELE Editorial
@@ -57,6 +51,14 @@ export function ArticleTemplate({
               <span>{date}</span>
               <span className="text-[#7d6630]">/</span>
               <span>{readingTime} min read</span>
+            </div>
+
+            <div className="mt-12 overflow-hidden border border-[#2a2620] bg-[#161412]">
+              <img
+                src={coverImage}
+                alt=""
+                className="h-auto max-h-[720px] w-full object-cover"
+              />
             </div>
           </div>
         </header>

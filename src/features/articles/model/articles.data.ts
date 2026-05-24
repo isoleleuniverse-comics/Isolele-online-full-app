@@ -10,6 +10,8 @@ export interface StaticArticle {
   slug: string;
   excerpt: string | null;
   coverImage: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
   published: boolean;
   blocksJson: ArticleBlock[];
   createdAt: Date;

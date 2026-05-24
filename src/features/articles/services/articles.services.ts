@@ -192,3 +192,11 @@ export async function updateArticleStatus(
         },
     });
 }
+
+export async function deleteArticle(id: string) {
+    return prisma.article.delete({
+        where: {
+            id,
+        },
+    });
+}

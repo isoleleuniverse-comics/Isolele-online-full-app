@@ -7,6 +7,7 @@ import { sanitizeArticleBlocks, type ArticleBlock } from "../model/article-block
 import { translateArticleFromEnglish } from "../services/articles-translation.service";
 
 import {
+    deleteArticle,
     updateArticle,
     updateArticleStatus,
 } from "../services/articles.services";
@@ -87,4 +88,18 @@ export async function translateArticleAction(
     revalidatePath(`/${article.locale}/articles/${article.slug}`);
 
     return article;
+}
+
+type DeleteInput = {
+    id: string;
+    locale: string;
+};
+
+export async function deleteArticleAction(input: DeleteInput) {
+    const article = await deleteArticle(input.id);
+
+    revalidatePath(`/${input.locale}/admin/articles`);
+    revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
+    revalidatePath(`/${article.locale}/articles`);
+    revalidatePath(`/${article.locale}/articles/${article.slug}`);
 }
