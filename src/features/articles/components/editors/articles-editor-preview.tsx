@@ -1,6 +1,7 @@
 "use client";
 
 import { getReadingTimeMinutes } from "@/features/articles/model/article-blocks";
+import { shouldShowEditorPreview } from "@/features/articles/model/article-editor-ui";
 import { ArticleBlockRenderer } from "@/features/articles/ui/article-block-renderer";
 import { cn } from "@/shared/lib/utils";
 import { useArticleEditor } from "./articles-editor-context";
@@ -15,7 +16,7 @@ export function ArticlesEditorPreview() {
         previewMode,
     } = useArticleEditor();
 
-    if (previewMode === "edit") {
+    if (!shouldShowEditorPreview(previewMode)) {
         return null;
     }
 

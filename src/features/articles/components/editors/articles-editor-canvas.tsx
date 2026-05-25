@@ -4,6 +4,7 @@ import { ImagePlus } from "lucide-react";
 import { AutoResizeTextarea } from "@/components/editor/auto-resize-textarea";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { shouldShowEditorCanvas } from "@/features/articles/model/article-editor-ui";
 import { cn } from "@/shared/lib/utils";
 import { useArticleEditor } from "./articles-editor-context";
 import { ArticlesEditorBlockList } from "./articles-editor-block-list";
@@ -48,7 +49,7 @@ export function ArticlesEditorCanvas() {
         uploadImageFile,
     } = useArticleEditor();
 
-    if (previewMode === "preview") {
+    if (!shouldShowEditorCanvas(previewMode)) {
         return null;
     }
 

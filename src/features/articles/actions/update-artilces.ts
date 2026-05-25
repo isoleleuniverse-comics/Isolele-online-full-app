@@ -2,14 +2,17 @@
 
 import { revalidatePath } from "next/cache";
 import { Prisma, type ArticleStatus } from "@/generated/prisma/client";
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import type { LanguageCode } from "@/features/languages/config/languages";
 import { sanitizeArticleBlocks, type ArticleBlock } from "../model/article-blocks";
-import { translateArticleFromEnglish } from "../services/articles-translation.service";
+import { translateArticle } from "../services/articles-translation.service";
 import {
   buildEditorArticlePayload,
   deleteArticle,
+  duplicateArticle,
+  getArticleManagerItems,
   getArticleById,
   getArticleByTranslationGroupAndLocale,
+  updateArticleTranslationSettings,
   updateArticle,
   updateArticleStatus,
 } from "../services/articles.services";
@@ -65,11 +68,11 @@ export async function updateArticleStatusAction(input: StatusInput) {
 type TranslateInput = {
   id: string;
   adminLocale: string;
-  targetLocale: SupportedLocale;
+  targetLocale: LanguageCode;
 };
 
 export async function translateArticleAction(input: TranslateInput) {
-  const article = await translateArticleFromEnglish(input.id, input.targetLocale);
+  const article = await translateArticle(input.id, input.targetLocale);
 
   revalidatePath(`/${input.adminLocale}/admin/articles`);
   revalidatePath(`/${input.adminLocale}/admin/articles/${input.id}`);
@@ -82,7 +85,7 @@ export async function translateArticleAction(input: TranslateInput) {
 type SwitchTranslationInput = {
   id: string;
   adminLocale: string;
-  targetLocale: SupportedLocale;
+  targetLocale: LanguageCode;
 };
 
 export async function switchArticleTranslationAction(input: SwitchTranslationInput) {
@@ -94,18 +97,22 @@ export async function switchArticleTranslationAction(input: SwitchTranslationInp
   let targetArticle =
     (await getArticleByTranslationGroupAndLocale(currentArticle.translationGroupId, input.targetLocale)) ??
     null;
+  const currentPayload = await buildEditorArticlePayload(currentArticle, input.adminLocale);
 
-  if (!targetArticle && input.targetLocale !== "en") {
+  if (!targetArticle && input.targetLocale !== currentPayload.sourceLocale) {
     const sourceArticle =
-      currentArticle.locale === "en"
+      currentArticle.locale === currentPayload.sourceLocale
         ? currentArticle
-        : await getArticleByTranslationGroupAndLocale(currentArticle.translationGroupId, "en");
+        : await getArticleByTranslationGroupAndLocale(
+            currentArticle.translationGroupId,
+            currentPayload.sourceLocale,
+          );
 
     if (!sourceArticle) {
-      throw new Error("English source article was not found for this translation group.");
+      throw new Error("Source article was not found for this translation group.");
     }
 
-    targetArticle = await translateArticleFromEnglish(sourceArticle.id, input.targetLocale);
+    targetArticle = await translateArticle(sourceArticle.id, input.targetLocale);
   }
 
   if (!targetArticle) {
@@ -128,4 +135,35 @@ export async function deleteArticleAction(input: DeleteInput) {
   revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
   revalidatePath(`/${article.locale}/articles`);
   revalidatePath(`/${article.locale}/articles/${article.slug}`);
+}
+
+export async function duplicateArticleAction(input: { id: string; locale: string }) {
+  const copiedArticle = await duplicateArticle(input.id);
+
+  revalidatePath(`/${input.locale}/admin/articles`);
+  revalidatePath(`/${input.locale}/admin/articles/${copiedArticle.id}`);
+
+  return buildEditorArticlePayload(copiedArticle, input.locale);
+}
+
+export async function getArticleManagerItemsAction() {
+  return getArticleManagerItems();
+}
+
+export async function updateArticleTranslationSettingsAction(input: {
+  id: string;
+  adminLocale: string;
+  sourceLocale: LanguageCode;
+  targetLocales: LanguageCode[];
+}) {
+  const article = await updateArticleTranslationSettings({
+    articleId: input.id,
+    sourceLocale: input.sourceLocale,
+    targetLocales: input.targetLocales,
+  });
+
+  revalidatePath(`/${input.adminLocale}/admin/articles`);
+  revalidatePath(`/${input.adminLocale}/admin/articles/${input.id}`);
+
+  return buildEditorArticlePayload(article, input.adminLocale);
 }

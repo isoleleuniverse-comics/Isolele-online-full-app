@@ -1,4 +1,8 @@
-import type { SupportedLocale } from "../../../shared/i18n/locales.ts";
+import {
+  getDefaultLanguage,
+  getEnabledLanguages,
+  type LanguageCode,
+} from "../../languages/config/languages.ts";
 import type { ArticleBlock } from "./article-blocks.ts";
 import { createArticleBlock, normalizeArticleBlocks } from "./article-blocks.ts";
 
@@ -56,13 +60,14 @@ export type BlockTranslationPlan = {
 };
 
 export type TranslationLocaleSummary = {
-  locale: SupportedLocale;
+  locale: LanguageCode;
   articleId: string | null;
   status: TranslationStatusRecord | "MISSING";
   isMissing: boolean;
+  isSource: boolean;
 };
 
-export const SOURCE_LOCALE: SupportedLocale = "en";
+export const SOURCE_LOCALE: LanguageCode = getDefaultLanguage().code;
 
 function getBlockKey(block: Pick<ArticleBlock, "id" | "translationKey">) {
   return block.translationKey ?? `legacy-${block.id}`;
@@ -208,15 +213,22 @@ export function getTranslationStatusAfterSync(params: {
   return "UP_TO_DATE";
 }
 
-export function getTranslationStatusAfterManualEdit(locale: string, currentStatus: TranslationStatusRecord) {
-  if (locale === SOURCE_LOCALE) {
-    return currentStatus;
+export function getTranslationStatusAfterManualEdit(params: {
+  articleLocale: string;
+  sourceLocale: string;
+  currentStatus: TranslationStatusRecord;
+}) {
+  if (params.articleLocale === params.sourceLocale) {
+    return params.currentStatus;
   }
   return "REVIEWING" satisfies TranslationStatusRecord;
 }
 
-export function getTranslationStatusAfterSourceUpdate(locale: string) {
-  if (locale === SOURCE_LOCALE) {
+export function getTranslationStatusAfterSourceUpdate(params: {
+  articleLocale: string;
+  sourceLocale: string;
+}) {
+  if (params.articleLocale === params.sourceLocale) {
     return "UP_TO_DATE" satisfies TranslationStatusRecord;
   }
   return "NEEDS_UPDATE" satisfies TranslationStatusRecord;
@@ -512,23 +524,26 @@ export function prepareTranslationPlan(params: {
 }
 
 export function buildTranslationLocaleSummaries(params: {
-  locales: readonly SupportedLocale[];
+  locales?: readonly LanguageCode[];
+  sourceLocale: string;
   translations: Array<{ id: string; locale: string; translationStatus: TranslationStatusRecord }>;
 }) {
-  return params.locales.map((locale) => {
+  const locales = params.locales ?? getEnabledLanguages().map((language) => language.code);
+  return locales.map((locale) => {
     const translation = params.translations.find((item) => item.locale === locale) ?? null;
     return {
       locale,
       articleId: translation?.id ?? null,
       status: translation?.translationStatus ?? "MISSING",
       isMissing: !translation,
+      isSource: locale === params.sourceLocale,
     } satisfies TranslationLocaleSummary;
   });
 }
 
 export function resolveTranslationByLocale<T extends { translationGroupId: string; locale: string }>(params: {
   translationGroupId: string;
-  targetLocale: SupportedLocale;
+  targetLocale: LanguageCode;
   articles: T[];
 }) {
   return (

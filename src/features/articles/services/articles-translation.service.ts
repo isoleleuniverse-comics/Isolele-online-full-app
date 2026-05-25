@@ -1,12 +1,11 @@
 import { Prisma } from "@/generated/prisma/client";
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import type { LanguageCode } from "@/features/languages/config/languages";
 import {
   collectArticleEntries,
   collectBlockEntries,
   getTranslatableBlockSignature,
   getTranslationStatusAfterSync,
   mergeTranslatedBlocks,
-  SOURCE_LOCALE,
   type TranslationResponse,
 } from "../model/article-translation-workflow";
 import { normalizeArticleBlocks } from "../model/article-blocks";
@@ -16,7 +15,7 @@ import {
   upsertArticleTranslation,
 } from "./articles.services";
 
-const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
+const OPENAI_RESPONSES_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 function requireOpenAiApiKey() {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -27,7 +26,7 @@ function requireOpenAiApiKey() {
 }
 
 function getTranslationModel() {
-  return process.env.OPENAI_TRANSLATION_MODEL || "gpt-5";
+  return process.env.OPENAI_TRANSLATION_MODEL || "meta-llama/llama-3.3-70b-instruct:free";
 }
 
 function slugify(value: string) {
@@ -74,8 +73,9 @@ function getResponseText(payload: Record<string, unknown>) {
 }
 
 async function translateEntriesWithGpt(params: {
+  sourceLocale: string;
   sourceSlug: string;
-  targetLocale: SupportedLocale;
+  targetLocale: LanguageCode;
   entries: Array<{
     key: string;
     text: string;
@@ -83,68 +83,112 @@ async function translateEntriesWithGpt(params: {
   }>;
 }) {
   const apiKey = requireOpenAiApiKey();
-  const response = await fetch(OPENAI_RESPONSES_URL, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: getTranslationModel(),
-      reasoning: { effort: "low" },
-      input: [
-        {
-          role: "developer",
-          content:
-            "You are a professional editorial translator. Translate English article content into the requested target language. Preserve paragraph breaks, tone, and factual meaning. Do not invent new content. Keep URLs, identifiers, and proper nouns unchanged unless they have a standard localized form. Return only valid JSON matching the schema.",
-        },
-        {
-          role: "user",
-          content: JSON.stringify({
-            sourceLocale: SOURCE_LOCALE,
-            targetLocale: params.targetLocale,
-            sourceSlug: params.sourceSlug,
-            entries: params.entries,
-            instructions: [
-              "Translate every entry.text value into the target locale.",
-              "Keep the same key values unchanged.",
-              "Return a localized slug in lowercase kebab-case suitable for a public URL.",
-              "The slug must not include a leading slash.",
-            ],
-          }),
-        },
-      ],
-      text: {
-        format: {
-          type: "json_schema",
-          name: "article_translation_payload",
-          schema: {
-            type: "object",
-            properties: {
-              slug: {
-                type: "string",
-              },
-              translations: {
-                type: "array",
-                items: {
-                  type: "object",
-                  properties: {
-                    key: { type: "string" },
-                    text: { type: "string" },
+
+  const estimatedSize = JSON.stringify(params.entries).length / 1024;
+
+  console.log("========== TRANSLATION REQUEST ==========");
+  console.log("Entries count:", params.entries.length);
+  console.log("Payload size:", `${estimatedSize.toFixed(2)} KB`);
+  console.log(
+    "Estimated chars:",
+    params.entries.reduce((acc, entry) => acc + entry.text.length, 0),
+  );
+  console.log("=========================================");
+
+  let response: Response | null = null;
+
+  for (let attempt = 0; attempt < 4; attempt++) {
+    response = await fetch(OPENAI_RESPONSES_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "http://localhost:3000",
+        "X-Title": "ISOLELE CMS",
+      },
+      body: JSON.stringify({
+        model: getTranslationModel(),
+        reasoning: { effort: "low" },
+        messages: [
+          {
+            role: "developer",
+            content:
+              "You are a professional editorial translator. Translate English article content into the requested target language. Preserve paragraph breaks, tone, and factual meaning. Do not invent new content. Keep URLs, identifiers, and proper nouns unchanged unless they have a standard localized form. Return only valid JSON matching the schema.",
+          },
+          {
+            role: "user",
+            content: JSON.stringify({
+              sourceLocale: params.sourceLocale,
+              targetLocale: params.targetLocale,
+              sourceSlug: params.sourceSlug,
+              entries: params.entries,
+              instructions: [
+                "Translate every entry.text value into the target locale.",
+                "Keep the same key values unchanged.",
+                "Return a localized slug in lowercase kebab-case suitable for a public URL.",
+                "The slug must not include a leading slash.",
+              ],
+            }),
+          },
+        ],
+        response_format: {
+          
+            type: "json_object",
+            name: "article_translation_payload",
+            schema: {
+              type: "object",
+              properties: {
+                slug: {
+                  type: "string",
+                },
+                translations: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      key: { type: "string" },
+                      text: { type: "string" },
+                    },
+                    required: ["key", "text"],
+                    additionalProperties: false,
                   },
-                  required: ["key", "text"],
-                  additionalProperties: false,
                 },
               },
+              required: ["slug", "translations"],
+              additionalProperties: false,
             },
-            required: ["slug", "translations"],
-            additionalProperties: false,
+            strict: true,
           },
-          strict: true,
         },
-      },
-    }),
-  });
+      ),
+    });
+
+    if (response.ok) {
+      break;
+    }
+
+    const errorText = await response.text();
+
+    console.error(
+      `Translation attempt ${attempt + 1} failed:`,
+      response.status,
+      errorText,
+    );
+
+    if (response.status !== 429 && response.status < 500) {
+      throw new Error(errorText);
+    }
+
+    const delay = 2000 * (attempt + 1);
+
+    console.log(`Retrying in ${delay}ms...`);
+
+    await new Promise((resolve) => setTimeout(resolve, delay));
+  }
+
+  if (!response) {
+    throw new Error("Translation failed after multiple retries.");
+  }
 
   if (!response.ok) {
     throw new Error(`OpenAI translation failed with status ${response.status}.`);
@@ -155,18 +199,10 @@ async function translateEntriesWithGpt(params: {
   return JSON.parse(text) as TranslationResponse;
 }
 
-export async function translateArticleFromEnglish(articleId: string, targetLocale: SupportedLocale) {
-  if (targetLocale === SOURCE_LOCALE) {
-    throw new Error("Target locale must be different from the English source locale.");
-  }
-
+export async function translateArticle(articleId: string, targetLocale: LanguageCode) {
   const sourceArticle = await getArticleById(articleId);
   if (!sourceArticle) {
     throw new Error("Source article was not found.");
-  }
-
-  if (sourceArticle.locale !== SOURCE_LOCALE) {
-    throw new Error("Only English source articles can be translated in this first version.");
   }
 
   const existingTranslation = await getArticleByTranslationGroupAndLocale(
@@ -218,6 +254,7 @@ export async function translateArticleFromEnglish(articleId: string, targetLocal
   const translatedPayload =
     entries.length > 0
       ? await translateEntriesWithGpt({
+          sourceLocale: sourceArticle.locale,
           sourceSlug: sourceArticle.slug,
           targetLocale,
           entries,

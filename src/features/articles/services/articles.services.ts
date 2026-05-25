@@ -4,6 +4,15 @@ import {
   type ArticleStatus,
   type TranslationStatus,
 } from "@/generated/prisma/client";
+import {
+  getDefaultLanguage,
+  getEnabledLanguages,
+  getLanguageByCode,
+  type LanguageCode,
+} from "@/features/languages/config/languages";
+import {
+  type SupportedLocale,
+} from "@/shared/i18n/locales";
 import { getStaticArticleBySlug, getStaticPublishedArticles } from "../model/articles.data";
 import {
   buildTranslationLocaleSummaries,
@@ -17,10 +26,11 @@ import {
   sanitizeArticleBlocks,
   type ArticleBlock,
 } from "../model/article-blocks";
-import {
-  SUPPORTED_LOCALES,
-  type SupportedLocale,
-} from "@/shared/i18n/locales";
+
+type TranslationGroupMeta = {
+  sourceLocale: LanguageCode;
+  targetLocales: LanguageCode[];
+};
 
 type PersistedArticle = {
   id: string;
@@ -47,6 +57,8 @@ type EditorArticlePayload = {
   translationGroupId: string;
   adminLocale: string;
   articleLocale: string;
+  sourceLocale: LanguageCode;
+  targetLocales: LanguageCode[];
   title: string;
   excerpt: string | null;
   coverImage: string | null;
@@ -57,6 +69,28 @@ type EditorArticlePayload = {
   translationStatus: TranslationStatus;
   sourceVersion: number;
   translatedFromVersion: number | null;
+  translations: TranslationLocaleSummary[];
+};
+
+export type ArticleManagerItem = {
+  id: string;
+  translationGroupId: string;
+  sourceLocale: LanguageCode;
+  targetLocales: LanguageCode[];
+  locale: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  coverImage: string | null;
+  status: ArticleStatus;
+  translationStatus: TranslationStatus;
+  sourceVersion: number;
+  translatedFromVersion: number | null;
+  publishedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  translationCount: number;
+  missingLocaleCount: number;
   translations: TranslationLocaleSummary[];
 };
 
@@ -111,14 +145,103 @@ async function getTranslationsForArticle(article: Pick<PersistedArticle, "transl
   })) as Array<PersistedArticle>;
 }
 
+async function getTranslationGroupMeta(translationGroupId: string): Promise<TranslationGroupMeta | null> {
+  try {
+    const rows = await prisma.$queryRaw<Array<{ sourceLocale: string; targetLocales: unknown }>>(Prisma.sql`
+      SELECT sourceLocale, targetLocales
+      FROM TranslationGroup
+      WHERE id = ${translationGroupId}
+      LIMIT 1
+    `);
+    const row = rows[0];
+    if (!row) return null;
+    const resolvedSourceLocale = getLanguageByCode(row.sourceLocale)?.code;
+    if (!resolvedSourceLocale) {
+      return null;
+    }
+
+    if (Array.isArray(row.targetLocales)) {
+      return {
+        sourceLocale: resolvedSourceLocale,
+        targetLocales: row.targetLocales.filter((item): item is LanguageCode => typeof item === "string"),
+      };
+    }
+
+    if (typeof row.targetLocales === "string") {
+      try {
+        const parsed = JSON.parse(row.targetLocales) as unknown;
+        return {
+          sourceLocale: resolvedSourceLocale,
+          targetLocales: Array.isArray(parsed)
+            ? parsed.filter((item): item is LanguageCode => typeof item === "string")
+            : [],
+        };
+      } catch {
+        return {
+          sourceLocale: resolvedSourceLocale,
+          targetLocales: [],
+        };
+      }
+    }
+
+    return {
+      sourceLocale: resolvedSourceLocale,
+      targetLocales: [],
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function upsertTranslationGroupMeta(translationGroupId: string, meta: TranslationGroupMeta) {
+  try {
+    await prisma.$executeRaw(Prisma.sql`
+      INSERT INTO TranslationGroup (id, sourceLocale, targetLocales, createdAt, updatedAt)
+      VALUES (
+        ${translationGroupId},
+        ${meta.sourceLocale},
+        ${JSON.stringify(meta.targetLocales)},
+        NOW(),
+        NOW()
+      )
+      ON DUPLICATE KEY UPDATE
+        sourceLocale = VALUES(sourceLocale),
+        targetLocales = VALUES(targetLocales),
+        updatedAt = NOW()
+    `);
+  } catch {
+    // The editor can still function with heuristic metadata if this table is unavailable.
+  }
+}
+
+async function resolveTranslationGroupMeta(article: Pick<PersistedArticle, "translationGroupId" | "locale">) {
+  const storedMeta = await getTranslationGroupMeta(article.translationGroupId);
+  const enabledCodes = getEnabledLanguages().map((language) => language.code);
+  const sourceLocale =
+    getLanguageByCode(storedMeta?.sourceLocale)?.code ??
+    getLanguageByCode(article.locale)?.code ??
+    getDefaultLanguage().code;
+  const targetLocales = (
+    storedMeta?.targetLocales ?? enabledCodes.filter((code) => code !== sourceLocale)
+  ).filter((locale): locale is LanguageCode => locale !== sourceLocale && enabledCodes.includes(locale as LanguageCode));
+
+  return {
+    sourceLocale,
+    targetLocales,
+  };
+}
+
 export async function buildEditorArticlePayload(article: PersistedArticle, adminLocale: string): Promise<EditorArticlePayload> {
   const translations = await getTranslationsForArticle(article);
+  const translationGroup = await resolveTranslationGroupMeta(article);
 
   return {
     id: article.id,
     translationGroupId: article.translationGroupId,
     adminLocale,
     articleLocale: article.locale,
+    sourceLocale: translationGroup.sourceLocale,
+    targetLocales: translationGroup.targetLocales,
     title: article.title,
     excerpt: article.excerpt,
     coverImage: article.coverImage,
@@ -130,7 +253,8 @@ export async function buildEditorArticlePayload(article: PersistedArticle, admin
     sourceVersion: article.sourceVersion,
     translatedFromVersion: article.translatedFromVersion,
     translations: buildTranslationLocaleSummaries({
-      locales: SUPPORTED_LOCALES,
+      locales: getEnabledLanguages().map((language) => language.code),
+      sourceLocale: translationGroup.sourceLocale,
       translations,
     }),
   };
@@ -142,6 +266,55 @@ export async function getAllArticles() {
       createdAt: "desc",
     },
   });
+}
+
+export async function getArticleManagerItems(): Promise<ArticleManagerItem[]> {
+  const articles = (await prisma.article.findMany({
+    orderBy: {
+      updatedAt: "desc",
+    },
+  })) as PersistedArticle[];
+
+  const translationsByGroup = new Map<string, PersistedArticle[]>();
+  articles.forEach((article) => {
+    const current = translationsByGroup.get(article.translationGroupId) ?? [];
+    current.push(article);
+    translationsByGroup.set(article.translationGroupId, current);
+  });
+
+  return Promise.all(
+    articles.map(async (article) => {
+      const groupArticles = translationsByGroup.get(article.translationGroupId) ?? [];
+      const translationGroup = await resolveTranslationGroupMeta(article);
+      const summaries = buildTranslationLocaleSummaries({
+        locales: getEnabledLanguages().map((language) => language.code),
+        sourceLocale: translationGroup.sourceLocale,
+        translations: groupArticles,
+      });
+
+      return {
+        id: article.id,
+        translationGroupId: article.translationGroupId,
+        sourceLocale: translationGroup.sourceLocale,
+        targetLocales: translationGroup.targetLocales,
+        locale: article.locale,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt,
+        coverImage: article.coverImage,
+        status: article.status,
+        translationStatus: article.translationStatus,
+        sourceVersion: article.sourceVersion,
+        translatedFromVersion: article.translatedFromVersion,
+        publishedAt: article.publishedAt,
+        createdAt: article.createdAt,
+        updatedAt: article.updatedAt,
+        translationCount: groupArticles.length,
+        missingLocaleCount: summaries.filter((summary) => summary.isMissing).length,
+        translations: summaries,
+      } satisfies ArticleManagerItem;
+    }),
+  );
 }
 
 export async function getPublishedArticles(locale?: string) {
@@ -197,10 +370,19 @@ export async function getPublicArticleBySlug(slug: string, locale: SupportedLoca
 }
 
 export async function createArticle() {
+  const sourceLocale = getDefaultLanguage().code;
+  const translationGroupId = crypto.randomUUID();
+  await upsertTranslationGroupMeta(translationGroupId, {
+    sourceLocale,
+    targetLocales: getEnabledLanguages()
+      .map((language) => language.code)
+      .filter((code) => code !== sourceLocale),
+  });
+
   return prisma.article.create({
     data: {
-      translationGroupId: crypto.randomUUID(),
-      locale: "en",
+      translationGroupId,
+      locale: sourceLocale,
       slug: `article-${Date.now()}`,
       title: "Nouvel article",
       blocksJson: [] as Prisma.InputJsonValue,
@@ -210,6 +392,59 @@ export async function createArticle() {
       translatedFromVersion: 1,
     },
   });
+}
+
+export async function duplicateArticle(id: string) {
+  const currentArticle = await getArticleById(id);
+  if (!currentArticle) {
+    throw new Error("Article not found.");
+  }
+  const sourceLocale = getLanguageByCode(currentArticle.locale)?.code ?? getDefaultLanguage().code;
+
+  const translationGroupId = crypto.randomUUID();
+  await upsertTranslationGroupMeta(translationGroupId, {
+    sourceLocale,
+    targetLocales: getEnabledLanguages()
+      .map((language) => language.code)
+      .filter((code) => code !== sourceLocale),
+  });
+
+  return prisma.article.create({
+    data: {
+      translationGroupId,
+      locale: sourceLocale,
+      slug: `${currentArticle.slug}-${Date.now()}`,
+      title: `${currentArticle.title} (Copy)`,
+      excerpt: currentArticle.excerpt,
+      coverImage: currentArticle.coverImage,
+      seoTitle: currentArticle.seoTitle,
+      seoDescription: currentArticle.seoDescription,
+      blocksJson: currentArticle.blocksJson as Prisma.InputJsonValue,
+      status: "DRAFT",
+      translationStatus: "UP_TO_DATE",
+      sourceVersion: 1,
+      translatedFromVersion: 1,
+    },
+  });
+}
+
+export async function updateArticleTranslationSettings(input: {
+  articleId: string;
+  sourceLocale: LanguageCode;
+  targetLocales: LanguageCode[];
+}) {
+  const article = await getArticleById(input.articleId);
+  if (!article) {
+    throw new Error("Article not found.");
+  }
+
+  const targetLocales = input.targetLocales.filter((locale) => locale !== input.sourceLocale);
+  await upsertTranslationGroupMeta(article.translationGroupId, {
+    sourceLocale: input.sourceLocale,
+    targetLocales,
+  });
+
+  return article;
 }
 
 type UpdateArticleInput = {
@@ -226,6 +461,7 @@ export async function updateArticle(id: string, data: UpdateArticleInput) {
   if (!currentArticle) {
     throw new Error("Article not found.");
   }
+  const translationGroup = await resolveTranslationGroupMeta(currentArticle);
 
   const nextBlocks = sanitizeArticleBlocks(data.blocksJson ?? currentArticle.blocksJson).blocks;
   const currentBlocks = normalizeArticleBlocks(currentArticle.blocksJson);
@@ -256,7 +492,7 @@ export async function updateArticle(id: string, data: UpdateArticleInput) {
     });
   }
 
-  if (currentArticle.locale === "en") {
+  if (currentArticle.locale === translationGroup.sourceLocale) {
     return prisma.$transaction(async (tx) => {
       const updatedArticle = await tx.article.update({
         where: {
@@ -272,7 +508,10 @@ export async function updateArticle(id: string, data: UpdateArticleInput) {
           sourceVersion: {
             increment: 1,
           },
-          translationStatus: getTranslationStatusAfterSourceUpdate(currentArticle.locale),
+          translationStatus: getTranslationStatusAfterSourceUpdate({
+            articleLocale: currentArticle.locale,
+            sourceLocale: translationGroup.sourceLocale,
+          }),
           translatedFromVersion: currentArticle.sourceVersion + 1,
         },
       });
@@ -306,10 +545,11 @@ export async function updateArticle(id: string, data: UpdateArticleInput) {
       seoTitle: data.seoTitle,
       seoDescription: data.seoDescription,
       blocksJson: manuallyEditedBlocks as Prisma.InputJsonValue,
-      translationStatus: getTranslationStatusAfterManualEdit(
-        currentArticle.locale,
-        currentArticle.translationStatus,
-      ),
+      translationStatus: getTranslationStatusAfterManualEdit({
+        articleLocale: currentArticle.locale,
+        sourceLocale: translationGroup.sourceLocale,
+        currentStatus: currentArticle.translationStatus,
+      }),
     },
   });
 }
@@ -410,7 +650,7 @@ export async function deleteArticle(id: string) {
   });
 }
 
-export async function getOrCreateArticleTranslationVariant(articleId: string, targetLocale: SupportedLocale) {
+export async function getOrCreateArticleTranslationVariant(articleId: string, targetLocale: LanguageCode) {
   const currentArticle = await getArticleById(articleId);
   if (!currentArticle) {
     throw new Error("Article not found.");

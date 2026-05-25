@@ -110,8 +110,21 @@ test("translation statuses reflect creation, manual edits, and source updates", 
     getTranslationStatusAfterSync({ isNewTranslation: true, hasPendingManualReview: false }),
     "TRANSLATED",
   );
-  assert.equal(getTranslationStatusAfterManualEdit("fr", "UP_TO_DATE"), "REVIEWING");
-  assert.equal(getTranslationStatusAfterSourceUpdate("fr"), "NEEDS_UPDATE");
+  assert.equal(
+    getTranslationStatusAfterManualEdit({
+      articleLocale: "fr",
+      sourceLocale: "en",
+      currentStatus: "UP_TO_DATE",
+    }),
+    "REVIEWING",
+  );
+  assert.equal(
+    getTranslationStatusAfterSourceUpdate({
+      articleLocale: "fr",
+      sourceLocale: "en",
+    }),
+    "NEEDS_UPDATE",
+  );
 });
 
 test("language switching resolves the correct linked translation and missing locales are exposed", () => {
@@ -122,7 +135,8 @@ test("language switching resolves the correct linked translation and missing loc
   ];
 
   const summaries = buildTranslationLocaleSummaries({
-    locales: ["fr", "en"],
+    locales: ["fr", "en", "sw"],
+    sourceLocale: "en",
     translations: [
       { id: "en-1", locale: "en", translationStatus: "UP_TO_DATE" },
     ],
@@ -137,4 +151,6 @@ test("language switching resolves the correct linked translation and missing loc
   assert.equal(resolved?.id, "fr-1");
   assert.equal(summaries[0]?.isMissing, true);
   assert.equal(summaries[1]?.articleId, "en-1");
+  assert.equal(summaries[1]?.isSource, true);
+  assert.equal(summaries[2]?.locale, "sw");
 });

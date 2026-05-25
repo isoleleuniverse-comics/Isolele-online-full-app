@@ -42,6 +42,7 @@ The content is organized as follows:
 <directory_structure>
 actions/update-artilces.ts
 components/articles-editors.tsx
+components/articles-manager.tsx
 components/editors/articles-editor-block-list.tsx
 components/editors/articles-editor-canvas.tsx
 components/editors/articles-editor-context.tsx
@@ -49,6 +50,7 @@ components/editors/articles-editor-preview.tsx
 components/editors/articles-editor-shell.tsx
 components/editors/articles-editor-sidebar.tsx
 components/editors/articles-editor-topbar.tsx
+components/editors/articles-editor-translation-panel.tsx
 components/editors/articles-editor-types.ts
 components/editors/blocks/article-block-registry.ts
 components/editors/blocks/heading/heading-editor.tsx
@@ -57,6 +59,8 @@ components/editors/blocks/paragraph/paragraph-editor.tsx
 components/editors/blocks/quote/quote-editor.tsx
 components/editors/blocks/unsupported/unsupported-editor.tsx
 model/article-blocks.ts
+model/article-editor-ui.ts
+model/article-translation-workflow.ts
 model/articles.data.ts
 model/articles.types.ts
 services/articles-translation.service.ts
@@ -74,121 +78,190 @@ This section contains the contents of the repository's files.
 
 import { revalidatePath } from "next/cache";
 import { Prisma, type ArticleStatus } from "@/generated/prisma/client";
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import type { LanguageCode } from "@/features/languages/config/languages";
 import { sanitizeArticleBlocks, type ArticleBlock } from "../model/article-blocks";
-import { translateArticleFromEnglish } from "../services/articles-translation.service";
-
+import { translateArticle } from "../services/articles-translation.service";
 import {
-    deleteArticle,
-    updateArticle,
-    updateArticleStatus,
+  buildEditorArticlePayload,
+  deleteArticle,
+  duplicateArticle,
+  getArticleManagerItems,
+  getArticleById,
+  getArticleByTranslationGroupAndLocale,
+  updateArticleTranslationSettings,
+  updateArticle,
+  updateArticleStatus,
 } from "../services/articles.services";
 
 type Input = {
-    id: string;
-    locale: string;
-    title?: string;
-    excerpt?: string;
-    coverImage?: string | null;
-    seoTitle?: string | null;
-    seoDescription?: string | null;
-    blocksJson?: ArticleBlock[];
+  id: string;
+  locale: string;
+  title?: string;
+  excerpt?: string;
+  coverImage?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  blocksJson?: ArticleBlock[];
 };
 
-export async function updateArticleAction(
-    input: Input,
-) {
-    const { blocks } = sanitizeArticleBlocks(
-        input.blocksJson ?? [],
-    );
+export async function updateArticleAction(input: Input) {
+  const { blocks } = sanitizeArticleBlocks(input.blocksJson ?? []);
 
-    const article = await updateArticle(
-        input.id,
-        {
-            title: input.title,
-            excerpt: input.excerpt,
-            coverImage: input.coverImage,
-            seoTitle: input.seoTitle,
-            seoDescription: input.seoDescription,
-            blocksJson: blocks as Prisma.InputJsonValue,
-        },
-    );
+  const article = await updateArticle(input.id, {
+    title: input.title,
+    excerpt: input.excerpt,
+    coverImage: input.coverImage,
+    seoTitle: input.seoTitle,
+    seoDescription: input.seoDescription,
+    blocksJson: blocks as Prisma.InputJsonValue,
+  });
 
-    revalidatePath(`/${input.locale}/admin/articles`);
-    revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
-    revalidatePath(`/${article.locale}/articles`);
-    revalidatePath(`/${article.locale}/articles/${article.slug}`);
+  revalidatePath(`/${input.locale}/admin/articles`);
+  revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
+  revalidatePath(`/${article.locale}/articles`);
+  revalidatePath(`/${article.locale}/articles/${article.slug}`);
+
+  return buildEditorArticlePayload(article, input.locale);
 }
 
 type StatusInput = {
-    id: string;
-    locale: string;
-    status: ArticleStatus;
+  id: string;
+  locale: string;
+  status: ArticleStatus;
 };
 
-export async function updateArticleStatusAction(
-    input: StatusInput,
-) {
-    const article = await updateArticleStatus(
-        input.id,
-        input.status,
-    );
+export async function updateArticleStatusAction(input: StatusInput) {
+  const article = await updateArticleStatus(input.id, input.status);
 
-    revalidatePath(`/${input.locale}/admin/articles`);
-    revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
-    revalidatePath(`/${article.locale}/articles`);
-    revalidatePath(`/${article.locale}/articles/${article.slug}`);
+  revalidatePath(`/${input.locale}/admin/articles`);
+  revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
+  revalidatePath(`/${article.locale}/articles`);
+  revalidatePath(`/${article.locale}/articles/${article.slug}`);
+
+  return buildEditorArticlePayload(article, input.locale);
 }
 
 type TranslateInput = {
-    id: string;
-    adminLocale: string;
-    targetLocale: SupportedLocale;
+  id: string;
+  adminLocale: string;
+  targetLocale: LanguageCode;
 };
 
-export async function translateArticleAction(
-    input: TranslateInput,
-) {
-    const article = await translateArticleFromEnglish(
-        input.id,
-        input.targetLocale,
-    );
+export async function translateArticleAction(input: TranslateInput) {
+  const article = await translateArticle(input.id, input.targetLocale);
 
-    revalidatePath(`/${input.adminLocale}/admin/articles`);
-    revalidatePath(`/${input.adminLocale}/admin/articles/${input.id}`);
-    revalidatePath(`/${article.locale}/articles`);
-    revalidatePath(`/${article.locale}/articles/${article.slug}`);
+  revalidatePath(`/${input.adminLocale}/admin/articles`);
+  revalidatePath(`/${input.adminLocale}/admin/articles/${input.id}`);
+  revalidatePath(`/${article.locale}/articles`);
+  revalidatePath(`/${article.locale}/articles/${article.slug}`);
 
-    return article;
+  return buildEditorArticlePayload(article, input.adminLocale);
+}
+
+type SwitchTranslationInput = {
+  id: string;
+  adminLocale: string;
+  targetLocale: LanguageCode;
+};
+
+export async function switchArticleTranslationAction(input: SwitchTranslationInput) {
+  const currentArticle = await getArticleById(input.id);
+  if (!currentArticle) {
+    throw new Error("Article not found.");
+  }
+
+  let targetArticle =
+    (await getArticleByTranslationGroupAndLocale(currentArticle.translationGroupId, input.targetLocale)) ??
+    null;
+  const currentPayload = await buildEditorArticlePayload(currentArticle, input.adminLocale);
+
+  if (!targetArticle && input.targetLocale !== currentPayload.sourceLocale) {
+    const sourceArticle =
+      currentArticle.locale === currentPayload.sourceLocale
+        ? currentArticle
+        : await getArticleByTranslationGroupAndLocale(
+            currentArticle.translationGroupId,
+            currentPayload.sourceLocale,
+          );
+
+    if (!sourceArticle) {
+      throw new Error("Source article was not found for this translation group.");
+    }
+
+    targetArticle = await translateArticle(sourceArticle.id, input.targetLocale);
+  }
+
+  if (!targetArticle) {
+    throw new Error("Target translation does not exist yet.");
+  }
+
+  revalidatePath(`/${input.adminLocale}/admin/articles/${targetArticle.id}`);
+  return buildEditorArticlePayload(targetArticle, input.adminLocale);
 }
 
 type DeleteInput = {
-    id: string;
-    locale: string;
+  id: string;
+  locale: string;
 };
 
 export async function deleteArticleAction(input: DeleteInput) {
-    const article = await deleteArticle(input.id);
+  const article = await deleteArticle(input.id);
 
-    revalidatePath(`/${input.locale}/admin/articles`);
-    revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
-    revalidatePath(`/${article.locale}/articles`);
-    revalidatePath(`/${article.locale}/articles/${article.slug}`);
+  revalidatePath(`/${input.locale}/admin/articles`);
+  revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
+  revalidatePath(`/${article.locale}/articles`);
+  revalidatePath(`/${article.locale}/articles/${article.slug}`);
+}
+
+export async function duplicateArticleAction(input: { id: string; locale: string }) {
+  const copiedArticle = await duplicateArticle(input.id);
+
+  revalidatePath(`/${input.locale}/admin/articles`);
+  revalidatePath(`/${input.locale}/admin/articles/${copiedArticle.id}`);
+
+  return buildEditorArticlePayload(copiedArticle, input.locale);
+}
+
+export async function getArticleManagerItemsAction() {
+  return getArticleManagerItems();
+}
+
+export async function updateArticleTranslationSettingsAction(input: {
+  id: string;
+  adminLocale: string;
+  sourceLocale: LanguageCode;
+  targetLocales: LanguageCode[];
+}) {
+  const article = await updateArticleTranslationSettings({
+    articleId: input.id,
+    sourceLocale: input.sourceLocale,
+    targetLocales: input.targetLocales,
+  });
+
+  revalidatePath(`/${input.adminLocale}/admin/articles`);
+  revalidatePath(`/${input.adminLocale}/admin/articles/${input.id}`);
+
+  return buildEditorArticlePayload(article, input.adminLocale);
 }
 </file>
 
 <file path="components/articles-editors.tsx">
 "use client";
 
-import type { ArticleStatus } from "@/generated/prisma";
+import type { ArticleStatus, TranslationStatus } from "@/generated/prisma/client";
+import type { LanguageCode } from "@/features/languages/config/languages";
 import { normalizeArticleBlocksDetailed } from "@/features/articles/model/article-blocks";
 import { ArticlesEditorShell } from "./editors/articles-editor-shell";
+import type { TranslationLocaleSummary } from "../model/article-translation-workflow";
 
 type Props = {
     article: {
         id: string;
+        translationGroupId: string;
         adminLocale: string;
         articleLocale: string;
+        sourceLocale: LanguageCode;
+        targetLocales: LanguageCode[];
         title: string;
         excerpt: string | null;
         coverImage: string | null;
@@ -196,6 +269,10 @@ type Props = {
         seoDescription: string | null;
         blocksJson: unknown;
         status: string;
+        translationStatus: string;
+        sourceVersion: number;
+        translatedFromVersion: number | null;
+        translations: TranslationLocaleSummary[];
     };
 };
 
@@ -203,20 +280,417 @@ export function ArticlesEditors({ article }: Props) {
     const normalized = normalizeArticleBlocksDetailed(article.blocksJson);
 
     return (
-        <ArticlesEditorShell
-            id={article.id}
-            locale={article.adminLocale}
-            articleLocale={article.articleLocale}
-            initialTitle={article.title}
+            <ArticlesEditorShell
+                id={article.id}
+                translationGroupId={article.translationGroupId}
+                locale={article.adminLocale}
+                articleLocale={article.articleLocale}
+                sourceLocale={article.sourceLocale}
+                targetLocales={article.targetLocales}
+                initialTitle={article.title}
             initialExcerpt={article.excerpt ?? ""}
             initialCoverImage={article.coverImage}
             initialSeoTitle={article.seoTitle}
-            initialSeoDescription={article.seoDescription}
-            initialBlocks={normalized.blocks}
-            initialStatus={article.status as ArticleStatus}
-            initialWarnings={normalized.warnings}
-        />
+                initialSeoDescription={article.seoDescription}
+                initialBlocks={normalized.blocks}
+                initialStatus={article.status as ArticleStatus}
+                initialTranslationStatus={article.translationStatus as TranslationStatus}
+                initialSourceVersion={article.sourceVersion}
+                initialTranslatedFromVersion={article.translatedFromVersion}
+                initialTranslations={article.translations}
+                initialWarnings={normalized.warnings}
+            />
+        );
+}
+</file>
+
+<file path="components/articles-manager.tsx">
+"use client";
+
+import { useState, useTransition } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  Archive,
+  ChevronDown,
+  Grid2X2,
+  Languages,
+  List,
+  MoreHorizontal,
+  Search,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  deleteArticleAction,
+  duplicateArticleAction,
+  getArticleManagerItemsAction,
+  translateArticleAction,
+  updateArticleStatusAction,
+} from "@/features/articles/actions/update-artilces";
+import {
+  buildQuickActions,
+  filterAndSortArticles,
+  getArticleManagerCollectionClassName,
+  getArticleManagerEmptyState,
+  getArticleStatusLabel,
+  getAvailableLanguageOptions,
+  getMissingTranslationLocales,
+  getTranslationStatusLabel,
+  type ArticleManagerSort,
+  type ArticleManagerView,
+  type QuickActionId,
+} from "@/features/articles/model/article-editor-ui";
+import { getLanguageByCode } from "@/features/languages/config/languages";
+import { cn } from "@/shared/lib/utils";
+import type { ArticleManagerItem } from "../services/articles.services";
+
+type SerializableArticleManagerItem = Omit<
+  ArticleManagerItem,
+  "createdAt" | "updatedAt" | "publishedAt"
+> & {
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string | null;
+};
+
+type Props = {
+  adminLocale: string;
+  initialArticles: SerializableArticleManagerItem[];
+};
+
+function hydrateArticles(items: SerializableArticleManagerItem[]): ArticleManagerItem[] {
+  return items.map((item) => ({
+    ...item,
+    createdAt: new Date(item.createdAt),
+    updatedAt: new Date(item.updatedAt),
+    publishedAt: item.publishedAt ? new Date(item.publishedAt) : null,
+  }));
+}
+
+const dateFormatter = new Intl.DateTimeFormat("en", {
+  dateStyle: "medium",
+  timeStyle: "short",
+});
+
+export function ArticlesManager({ adminLocale, initialArticles }: Props) {
+  const router = useRouter();
+  const [articles, setArticles] = useState<ArticleManagerItem[]>(() => hydrateArticles(initialArticles));
+  const [query, setQuery] = useState("");
+  const [localeFilter, setLocaleFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [sort, setSort] = useState<ArticleManagerSort>("updated-desc");
+  const [view, setView] = useState<ArticleManagerView>("list");
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
+
+  const filteredArticles = filterAndSortArticles({
+    articles,
+    query,
+    locale: localeFilter,
+    status: statusFilter,
+    sort,
+  });
+
+  const emptyState = getArticleManagerEmptyState({
+    totalArticles: articles.length,
+    filteredArticles: filteredArticles.length,
+    query,
+  });
+
+  async function refreshArticles() {
+    const nextItems = await getArticleManagerItemsAction();
+    setArticles(
+      hydrateArticles(
+        nextItems.map((item) => ({
+          ...item,
+          createdAt: item.createdAt instanceof Date ? item.createdAt.toISOString() : String(item.createdAt),
+          updatedAt: item.updatedAt instanceof Date ? item.updatedAt.toISOString() : String(item.updatedAt),
+          publishedAt:
+            item.publishedAt instanceof Date
+              ? item.publishedAt.toISOString()
+              : item.publishedAt
+                ? String(item.publishedAt)
+                : null,
+        })),
+      ),
     );
+  }
+
+  function handleQuickAction(article: ArticleManagerItem, action: QuickActionId) {
+    setOpenMenuId(null);
+
+    if (action === "edit") {
+      router.push(`/${adminLocale}/admin/articles/${article.id}`);
+      return;
+    }
+
+    if (action === "preview") {
+      window.open(`/${article.locale}/articles/${article.slug}`, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    startTransition(async () => {
+      if (action === "duplicate") {
+        await duplicateArticleAction({ id: article.id, locale: adminLocale });
+      }
+
+      if (action === "create-translation") {
+        const targetLocale = getMissingTranslationLocales(article.translations)[0];
+        const sourceArticleId =
+          article.locale === article.sourceLocale
+            ? article.id
+            : (article.translations.find((translation) => translation.locale === article.sourceLocale)?.articleId ??
+              null);
+
+        if (targetLocale && sourceArticleId) {
+          const payload = await translateArticleAction({
+            id: sourceArticleId,
+            adminLocale,
+            targetLocale,
+          });
+          router.push(`/${adminLocale}/admin/articles/${payload.id}`);
+        }
+      }
+
+      if (action === "publish") {
+        await updateArticleStatusAction({ id: article.id, locale: adminLocale, status: "PUBLISHED" });
+      }
+
+      if (action === "archive") {
+        await updateArticleStatusAction({ id: article.id, locale: adminLocale, status: "ARCHIVED" });
+      }
+
+      if (action === "delete") {
+        if (!window.confirm("Delete this article? This cannot be undone.")) {
+          return;
+        }
+        await deleteArticleAction({ id: article.id, locale: adminLocale });
+      }
+
+      await refreshArticles();
+    });
+  }
+
+  return (
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(210,178,109,0.08),_transparent_35%),linear-gradient(180deg,#111111_0%,#171717_100%)] px-4 py-6 text-[#f4eee7] lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6 flex flex-col gap-4 rounded-[28px] border border-white/10 bg-[#191919]/90 p-5 shadow-[0_30px_80px_rgba(0,0,0,0.32)]">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.28em] text-[#aa9d8f]">Editorial library</p>
+              <h1 className="text-3xl font-semibold text-[#faf4eb]">Articles</h1>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href={`/${adminLocale}/admin/articles/new`}
+                className="inline-flex h-10 items-center justify-center rounded-full bg-[#d2b26d] px-4 text-sm font-medium text-[#16120d] transition hover:bg-[#e0c07c]"
+              >
+                New article
+              </Link>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+            <div className="relative flex-1">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8f8478]" />
+              <Input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search by title, slug, or excerpt"
+                className="h-11 rounded-full border-white/10 bg-[#111111] pl-10 text-[#f5eee3]"
+              />
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <select
+                value={localeFilter}
+                onChange={(event) => setLocaleFilter(event.target.value)}
+                className="h-11 rounded-full border border-white/10 bg-[#111111] px-4 text-sm text-[#efe5d9]"
+              >
+                <option value="all">All locales</option>
+                {getAvailableLanguageOptions().map((language) => (
+                  <option key={language.code} value={language.code}>
+                    {language.nativeName}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                value={statusFilter}
+                onChange={(event) => setStatusFilter(event.target.value)}
+                className="h-11 rounded-full border border-white/10 bg-[#111111] px-4 text-sm text-[#efe5d9]"
+              >
+                <option value="all">All statuses</option>
+                <option value="DRAFT">Draft</option>
+                <option value="REVIEW">In review</option>
+                <option value="PUBLISHED">Published</option>
+                <option value="ARCHIVED">Archived</option>
+                <option value="NEEDS_UPDATE">Needs update</option>
+                <option value="UP_TO_DATE">Up to date</option>
+              </select>
+
+              <select
+                value={sort}
+                onChange={(event) => setSort(event.target.value as ArticleManagerSort)}
+                className="h-11 rounded-full border border-white/10 bg-[#111111] px-4 text-sm text-[#efe5d9]"
+              >
+                <option value="updated-desc">Newest first</option>
+                <option value="updated-asc">Oldest first</option>
+              </select>
+
+              <div className="inline-flex rounded-full border border-white/10 bg-[#111111] p-1">
+                <button
+                  type="button"
+                  onClick={() => setView("list")}
+                  className={cn(
+                    "rounded-full px-3 py-2 text-sm transition",
+                    view === "list" ? "bg-[#d2b26d] text-[#16120d]" : "text-[#d5c8ba]",
+                  )}
+                >
+                  <List className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setView("grid")}
+                  className={cn(
+                    "rounded-full px-3 py-2 text-sm transition",
+                    view === "grid" ? "bg-[#d2b26d] text-[#16120d]" : "text-[#d5c8ba]",
+                  )}
+                >
+                  <Grid2X2 className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {emptyState ? (
+          <div className="rounded-[28px] border border-dashed border-white/10 bg-[#171717] p-10 text-center">
+            <h2 className="text-2xl font-semibold text-[#faf3e9]">{emptyState.title}</h2>
+            <p className="mt-2 text-sm text-[#a99d90]">{emptyState.description}</p>
+          </div>
+        ) : (
+          <div className={cn("gap-4", getArticleManagerCollectionClassName(view))}>
+            {filteredArticles.map((article) => {
+              const currentLanguage = getLanguageByCode(article.locale);
+              const missingLocales = getMissingTranslationLocales(article.translations);
+              const quickActions = buildQuickActions(article);
+
+              return (
+                <article
+                  key={article.id}
+                  className={cn(
+                    "relative overflow-hidden rounded-[28px] border border-white/10 bg-[#191919] transition hover:border-white/20 hover:bg-[#1d1d1d]",
+                    view === "list" && "flex flex-col md:flex-row",
+                  )}
+                >
+                  <div className={cn("bg-[#121212]", view === "list" ? "md:w-52" : "aspect-[16/10] w-full")}>
+                    {article.coverImage ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={article.coverImage}
+                        alt={article.title}
+                        loading="lazy"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full min-h-40 items-center justify-center bg-[linear-gradient(135deg,#2a241a,#141414)] text-[#8d7f6e]">
+                        <Archive className="h-6 w-6" />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex flex-1 flex-col p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <div className="mb-2 flex flex-wrap items-center gap-2">
+                          <span className="rounded-full border border-white/10 bg-[#111111] px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-[#d8ccbe]">
+                            {(currentLanguage?.flag ?? "🌐") + " " + article.locale.toUpperCase()}
+                          </span>
+                          <span className="rounded-full border border-[#5f4b20] bg-[#2e2516] px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-[#e6ca84]">
+                            {getArticleStatusLabel(article.status)}
+                          </span>
+                          <span className="rounded-full border border-[#36543c] bg-[#1b2d20] px-2.5 py-1 text-[10px] uppercase tracking-[0.2em] text-[#9ed4ac]">
+                            {getTranslationStatusLabel(article.translationStatus)}
+                          </span>
+                        </div>
+                        <h2 className="truncate text-xl font-semibold text-[#f7f1e8]">{article.title}</h2>
+                        <p className="mt-1 text-sm text-[#8f8378]">{article.slug}</p>
+                      </div>
+
+                      <div className="relative">
+                        <button
+                          type="button"
+                          onClick={() => setOpenMenuId((current) => (current === article.id ? null : article.id))}
+                          className="rounded-full border border-white/10 bg-[#111111] p-2 text-[#dbcfc2] transition hover:border-white/20 hover:bg-white/5"
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
+                        </button>
+
+                        {openMenuId === article.id ? (
+                          <div className="absolute right-0 top-12 z-20 min-w-56 rounded-2xl border border-white/10 bg-[#121212] p-2 shadow-2xl">
+                            {quickActions.map((action) => (
+                              <button
+                                key={action.id}
+                                type="button"
+                                disabled={action.disabled || isPending}
+                                onClick={() => handleQuickAction(article, action.id)}
+                                className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm text-[#efe4d7] transition hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-50"
+                              >
+                                <span>{action.label}</span>
+                                {action.id === "create-translation" ? <Languages className="h-4 w-4 text-[#d2b26d]" /> : null}
+                                {action.id === "publish" || action.id === "archive" ? <ChevronDown className="h-4 w-4 text-[#8e8276]" /> : null}
+                              </button>
+                            ))}
+                          </div>
+                        ) : null}
+                      </div>
+                    </div>
+
+                    <p className="mt-3 line-clamp-2 text-sm text-[#b6a99b]">
+                      {article.excerpt || "No excerpt yet for this article."}
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap items-center gap-2">
+                      {article.translations.map((translation) => {
+                        const language = getLanguageByCode(translation.locale);
+                        return (
+                          <span
+                            key={translation.locale}
+                            className={cn(
+                              "rounded-full border px-2.5 py-1 text-[11px]",
+                              translation.isMissing
+                                ? "border-dashed border-white/10 text-[#968a7c]"
+                                : translation.isSource
+                                  ? "border-[#d2b26d]/40 bg-[#d2b26d]/10 text-[#e5c887]"
+                                  : "border-white/10 bg-[#121212] text-[#ddd0c2]",
+                            )}
+                          >
+                            {(language?.flag ?? "🌐") + " " + translation.locale.toUpperCase()}
+                          </span>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-4 text-sm text-[#9c9084]">
+                      <div>
+                        Updated {dateFormatter.format(article.updatedAt)}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span>{article.translationCount} version(s)</span>
+                        <span>{missingLocales.length} missing</span>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 </file>
 
@@ -389,6 +863,7 @@ import { ImagePlus } from "lucide-react";
 import { AutoResizeTextarea } from "@/components/editor/auto-resize-textarea";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { shouldShowEditorCanvas } from "@/features/articles/model/article-editor-ui";
 import { cn } from "@/shared/lib/utils";
 import { useArticleEditor } from "./articles-editor-context";
 import { ArticlesEditorBlockList } from "./articles-editor-block-list";
@@ -433,7 +908,7 @@ export function ArticlesEditorCanvas() {
         uploadImageFile,
     } = useArticleEditor();
 
-    if (previewMode === "preview") {
+    if (!shouldShowEditorCanvas(previewMode)) {
         return null;
     }
 
@@ -639,6 +1114,7 @@ export function useArticleEditor() {
 "use client";
 
 import { getReadingTimeMinutes } from "@/features/articles/model/article-blocks";
+import { shouldShowEditorPreview } from "@/features/articles/model/article-editor-ui";
 import { ArticleBlockRenderer } from "@/features/articles/ui/article-block-renderer";
 import { cn } from "@/shared/lib/utils";
 import { useArticleEditor } from "./articles-editor-context";
@@ -653,7 +1129,7 @@ export function ArticlesEditorPreview() {
         previewMode,
     } = useArticleEditor();
 
-    if (previewMode === "edit") {
+    if (!shouldShowEditorPreview(previewMode)) {
         return null;
     }
 
@@ -735,278 +1211,502 @@ export function ArticlesEditorPreview() {
 import { useId, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
-    createArticleBlock,
-    type ArticleBlock,
-    type ArticleBlockType,
+  deleteArticleAction,
+  duplicateArticleAction,
+  translateArticleAction,
+  switchArticleTranslationAction,
+  updateArticleTranslationSettingsAction,
+  updateArticleAction,
+  updateArticleStatusAction,
+} from "@/features/articles/actions/update-artilces";
+import {
+  shouldShowEditorPreview,
+  shouldShowEditorSidebar,
+  shouldShowTranslationWorkspace,
+} from "@/features/articles/model/article-editor-ui";
+import {
+  duplicateArticleBlock,
+  normalizeArticleBlocksDetailed,
+  type ArticleBlock,
+  type ArticleBlockType,
 } from "@/features/articles/model/article-blocks";
 import {
-    deleteArticleAction,
-    updateArticleAction,
-    updateArticleStatusAction,
-} from "@/features/articles/actions/update-artilces";
+  getTranslationStatusAfterManualEdit,
+  type TranslationLocaleSummary,
+} from "@/features/articles/model/article-translation-workflow";
+import { getEnabledLanguages, type LanguageCode } from "@/features/languages/config/languages";
 import { cn } from "@/shared/lib/utils";
 import { ArticleEditorProvider } from "./articles-editor-context";
 import { ArticlesEditorCanvas } from "./articles-editor-canvas";
 import { ArticlesEditorPreview } from "./articles-editor-preview";
 import { ArticlesEditorSidebar } from "./articles-editor-sidebar";
+import { ArticlesEditorTranslationPanel } from "./articles-editor-translation-panel";
 import { ArticlesEditorTopbar } from "./articles-editor-topbar";
 import type {
-    ArticleEditorContextValue,
-    ArticleEditorProps,
-    ArticleEditorSidebarPanel,
+  ArticleEditorContextValue,
+  ArticleEditorPreviewMode,
+  ArticleEditorProps,
+  ArticleEditorSidebarPanel,
 } from "./articles-editor-types";
-
-function withNewId(block: ArticleBlock): ArticleBlock {
-    return {
-        ...block,
-        id: globalThis.crypto?.randomUUID?.() ?? `${block.type}-${Date.now()}`,
-    };
-}
+import { createArticleBlock } from "../../model/article-blocks";
 
 export function ArticlesEditorShell(props: ArticleEditorProps) {
-    const router = useRouter();
-    const [title, setTitle] = useState(props.initialTitle);
-    const [excerpt, setExcerpt] = useState(props.initialExcerpt);
-    const [coverImage, setCoverImage] = useState(props.initialCoverImage ?? "");
-    const [seoTitle, setSeoTitle] = useState(props.initialSeoTitle ?? "");
-    const [seoDescription, setSeoDescription] = useState(props.initialSeoDescription ?? "");
-    const [status, setStatus] = useState(props.initialStatus);
-    const [blocks, setBlocks] = useState(props.initialBlocks);
-    const [previewMode, setPreviewMode] = useState<"edit" | "split" | "preview">("split");
-    const [activeSidebarPanel, setActiveSidebarPanel] =
-        useState<ArticleEditorSidebarPanel>("structure");
-    const [focusedBlockId, setFocusedBlockId] = useState<string | null>(props.initialBlocks[0]?.id ?? null);
-    const [uploadError, setUploadError] = useState<string | null>(null);
-    const [activityMessage, setActivityMessage] = useState<string | null>(null);
-    const [isSaving, startSaveTransition] = useTransition();
-    const [isStatusPending, startStatusTransition] = useTransition();
-    const [isDeleting, startDeleteTransition] = useTransition();
-    const [isUploading, startUploadTransition] = useTransition();
-    const coverImageInputId = useId();
+  const router = useRouter();
+  const [articleId, setArticleId] = useState(props.id);
+  const [translationGroupId, setTranslationGroupId] = useState(props.translationGroupId);
+  const [articleLocale, setArticleLocale] = useState(props.articleLocale);
+  const [sourceLocale, setSourceLocale] = useState(props.sourceLocale);
+  const [targetLocales, setTargetLocales] = useState(props.targetLocales);
+  const [translationStatus, setTranslationStatus] = useState(props.initialTranslationStatus);
+  const [sourceVersion, setSourceVersion] = useState(props.initialSourceVersion);
+  const [translatedFromVersion, setTranslatedFromVersion] = useState(props.initialTranslatedFromVersion);
+  const [translations, setTranslations] = useState<TranslationLocaleSummary[]>(props.initialTranslations);
+  const [title, setTitleState] = useState(props.initialTitle);
+  const [excerpt, setExcerptState] = useState(props.initialExcerpt);
+  const [coverImage, setCoverImageState] = useState(props.initialCoverImage ?? "");
+  const [seoTitle, setSeoTitleState] = useState(props.initialSeoTitle ?? "");
+  const [seoDescription, setSeoDescriptionState] = useState(props.initialSeoDescription ?? "");
+  const [status, setStatus] = useState(props.initialStatus);
+  const [blocks, setBlocks] = useState(props.initialBlocks);
+  const [warnings, setWarnings] = useState(props.initialWarnings);
+  const [previewMode, setPreviewMode] = useState<ArticleEditorPreviewMode>("split");
+  const [activeSidebarPanel, setActiveSidebarPanel] =
+    useState<ArticleEditorSidebarPanel>("structure");
+  const [focusedBlockId, setFocusedBlockId] = useState<string | null>(props.initialBlocks[0]?.id ?? null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [activityMessage, setActivityMessage] = useState<string | null>(null);
+  const [isSaving, startSaveTransition] = useTransition();
+  const [isStatusPending, startStatusTransition] = useTransition();
+  const [isDeleting, startDeleteTransition] = useTransition();
+  const [isUploading, startUploadTransition] = useTransition();
+  const [isSwitchingLocale, startSwitchLocaleTransition] = useTransition();
+  const [isTranslating, startTranslateTransition] = useTransition();
+  const [isDuplicating, startDuplicateTransition] = useTransition();
+  const coverImageInputId = useId();
 
-    function focusBlock(id: string) {
-        setFocusedBlockId(id);
-        setActiveSidebarPanel("structure");
-        const element = document.getElementById(`block-${id}`);
-        if (element) {
-            element.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-    }
+  function updateTranslationMetadata(payload: {
+    id: string;
+    translationGroupId: string;
+    articleLocale: string;
+    sourceLocale: LanguageCode;
+    targetLocales: LanguageCode[];
+    translationStatus: ArticleEditorProps["initialTranslationStatus"];
+    sourceVersion: number;
+    translatedFromVersion: number | null;
+    translations: TranslationLocaleSummary[];
+  }) {
+    setArticleId(payload.id);
+    setTranslationGroupId(payload.translationGroupId);
+    setArticleLocale(payload.articleLocale);
+    setSourceLocale(payload.sourceLocale);
+    setTargetLocales(payload.targetLocales);
+    setTranslationStatus(payload.translationStatus);
+    setSourceVersion(payload.sourceVersion);
+    setTranslatedFromVersion(payload.translatedFromVersion);
+    setTranslations(payload.translations);
+  }
 
-    function addBlock(type: ArticleBlockType, index?: number) {
-        const nextBlock = createArticleBlock(type);
-        setBlocks((current) => {
-            if (typeof index !== "number" || index < 0 || index > current.length) {
-                return [...current, nextBlock];
-            }
+  function applyEditorPayload(payload: {
+    id: string;
+    translationGroupId: string;
+    articleLocale: string;
+    sourceLocale: LanguageCode;
+    targetLocales: LanguageCode[];
+    title: string;
+    excerpt: string | null;
+    coverImage: string | null;
+    seoTitle: string | null;
+    seoDescription: string | null;
+    blocksJson: unknown;
+    status: ArticleEditorProps["initialStatus"];
+    translationStatus: ArticleEditorProps["initialTranslationStatus"];
+    sourceVersion: number;
+    translatedFromVersion: number | null;
+    translations: TranslationLocaleSummary[];
+  }) {
+    const normalized = normalizeArticleBlocksDetailed(payload.blocksJson);
+    updateTranslationMetadata(payload);
+    setTitleState(payload.title);
+    setExcerptState(payload.excerpt ?? "");
+    setCoverImageState(payload.coverImage ?? "");
+    setSeoTitleState(payload.seoTitle ?? "");
+    setSeoDescriptionState(payload.seoDescription ?? "");
+    setBlocks(normalized.blocks);
+    setWarnings(normalized.warnings);
+    setStatus(payload.status);
+    setFocusedBlockId(normalized.blocks[0]?.id ?? null);
+    setActivityMessage(null);
+    setUploadError(null);
+  }
 
-            const next = [...current];
-            next.splice(index, 0, nextBlock);
-            return next;
-        });
-        setFocusedBlockId(nextBlock.id);
-        setActiveSidebarPanel("structure");
-        setActivityMessage(`Bloc ${type} ajoute.`);
-    }
-
-    function duplicateBlock(id: string) {
-        setBlocks((current) => {
-            const index = current.findIndex((block) => block.id === id);
-            if (index === -1) return current;
-            const clone = withNewId(current[index]);
-            const next = [...current];
-            next.splice(index + 1, 0, clone);
-            setFocusedBlockId(clone.id);
-            return next;
-        });
-        setActivityMessage("Bloc duplique.");
-    }
-
-    function removeBlock(id: string) {
-        setBlocks((current) => current.filter((block) => block.id !== id));
-        setFocusedBlockId((current) => (current === id ? null : current));
-        setActivityMessage("Bloc supprime.");
-    }
-
-    function moveBlock(id: string, delta: number) {
-        setBlocks((current) => {
-            const index = current.findIndex((block) => block.id === id);
-            if (index === -1) return current;
-
-            const nextIndex = Math.max(0, Math.min(current.length - 1, index + delta));
-            if (nextIndex === index) return current;
-
-            const next = [...current];
-            const [moved] = next.splice(index, 1);
-            next.splice(nextIndex, 0, moved);
-            return next;
-        });
-        setFocusedBlockId(id);
-    }
-
-    function updateBlock(block: ArticleBlock) {
-        setBlocks((current) => current.map((item) => (item.id === block.id ? block : item)));
-    }
-
-    async function uploadImageFile(file: File, blockId?: string) {
-        return new Promise<void>((resolve) => {
-            startUploadTransition(async () => {
-                setUploadError(null);
-
-                const formData = new FormData();
-                formData.append("file", file);
-                formData.append("folder", "articles");
-
-                try {
-                    const response = await fetch("/api/uploads/images", {
-                        method: "POST",
-                        body: formData,
-                    });
-
-                    if (!response.ok) {
-                        setUploadError("Impossible d'envoyer l'image pour le moment.");
-                        resolve();
-                        return;
-                    }
-
-                    const payload = (await response.json()) as { url: string };
-
-                    if (blockId) {
-                        setBlocks((current) =>
-                            current.map((block) =>
-                                block.id === blockId && block.type === "image"
-                                    ? { ...block, url: payload.url }
-                                    : block,
-                            ),
-                        );
-                        setFocusedBlockId(blockId);
-                    } else {
-                        setCoverImage(payload.url);
-                    }
-
-                    setActivityMessage("Image importee.");
-                } catch {
-                    setUploadError("Impossible d'envoyer l'image pour le moment.");
-                } finally {
-                    resolve();
-                }
-            });
-        });
-    }
-
-    function saveArticle() {
-        startSaveTransition(async () => {
-            setActivityMessage(null);
-            await updateArticleAction({
-                id: props.id,
-                locale: props.locale,
-                title,
-                excerpt,
-                coverImage: coverImage.trim() || null,
-                seoTitle: seoTitle.trim() || null,
-                seoDescription: seoDescription.trim() || null,
-                blocksJson: blocks,
-            });
-            setActivityMessage("Article sauvegarde.");
-        });
-    }
-
-    function changeStatus(value: typeof status) {
-        startStatusTransition(async () => {
-            await updateArticleStatusAction({
-                id: props.id,
-                locale: props.locale,
-                status: value,
-            });
-            setStatus(value);
-            setActivityMessage(`Statut mis a jour: ${value}.`);
-        });
-    }
-
-    function deleteArticle() {
-        startDeleteTransition(async () => {
-            await deleteArticleAction({
-                id: props.id,
-                locale: props.locale,
-            });
-            router.push(`/${props.locale}/admin/articles`);
-            router.refresh();
-        });
-    }
-
-    const contextValue: ArticleEditorContextValue = {
-        id: props.id,
-        locale: props.locale,
-        articleLocale: props.articleLocale,
-        title,
-        setTitle,
-        excerpt,
-        setExcerpt,
-        coverImage,
-        setCoverImage,
-        seoTitle,
-        setSeoTitle,
-        seoDescription,
-        setSeoDescription,
-        status,
-        blocks,
-        setBlocks,
-        warnings: props.initialWarnings,
-        previewMode,
-        setPreviewMode,
-        activeSidebarPanel,
-        setActiveSidebarPanel,
-        focusedBlockId,
-        setFocusedBlockId,
-        isSaving,
-        isStatusPending,
-        isDeleting,
-        isUploading,
-        uploadError,
-        activityMessage,
-        coverImageInputId,
-        saveArticle,
-        changeStatus,
-        deleteArticle,
-        triggerCoverImagePicker: () => {
-            document.getElementById(coverImageInputId)?.click();
-            setActiveSidebarPanel("media");
-        },
-        addBlock,
-        duplicateBlock,
-        removeBlock,
-        moveBlock,
-        updateBlock,
-        focusBlock,
-        uploadImageFile,
-    };
-
-    return (
-        <ArticleEditorProvider value={contextValue}>
-            <div className="h-screen overflow-hidden bg-[#121212] text-[#f2ede6]">
-                <div className="flex h-full flex-col">
-                    <ArticlesEditorTopbar />
-
-                    <div className="flex min-h-0 flex-1 overflow-hidden">
-                        <ArticlesEditorSidebar />
-
-                        <main className="flex min-h-0 flex-1 overflow-hidden bg-[#181818]">
-                            <div
-                                className={cn(
-                                    "flex min-h-0 flex-1 overflow-hidden",
-                                    previewMode === "split" &&
-                                        "xl:grid xl:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)]",
-                                )}
-	                            >
-	                                <ArticlesEditorCanvas />
-	                                <ArticlesEditorPreview />
-	                            </div>
-	                        </main>
-	                    </div>
-	                </div>
-	            </div>
-        </ArticleEditorProvider>
+  function markTranslationAsReviewing() {
+    setTranslationStatus((current) =>
+      getTranslationStatusAfterManualEdit({
+        articleLocale,
+        sourceLocale,
+        currentStatus: current,
+      }),
     );
+  }
+
+  function setTitle(value: string) {
+    setTitleState(value);
+    markTranslationAsReviewing();
+  }
+
+  function setExcerpt(value: string) {
+    setExcerptState(value);
+    markTranslationAsReviewing();
+  }
+
+  function setCoverImage(value: string) {
+    setCoverImageState(value);
+    markTranslationAsReviewing();
+  }
+
+  function setSeoTitle(value: string) {
+    setSeoTitleState(value);
+    markTranslationAsReviewing();
+  }
+
+  function setSeoDescription(value: string) {
+    setSeoDescriptionState(value);
+    markTranslationAsReviewing();
+  }
+
+  function focusBlock(id: string) {
+    setFocusedBlockId(id);
+    setActiveSidebarPanel("structure");
+    const element = document.getElementById(`block-${id}`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
+  function addBlock(type: ArticleBlockType, index?: number) {
+    const nextBlock = createArticleBlock(type);
+    setBlocks((current) => {
+      if (typeof index !== "number" || index < 0 || index > current.length) {
+        return [...current, nextBlock];
+      }
+
+      const next = [...current];
+      next.splice(index, 0, nextBlock);
+      return next;
+    });
+    setFocusedBlockId(nextBlock.id);
+    setActiveSidebarPanel("structure");
+    setActivityMessage(`Bloc ${type} ajoute.`);
+    markTranslationAsReviewing();
+  }
+
+  function duplicateBlock(id: string) {
+    setBlocks((current) => {
+      const index = current.findIndex((block) => block.id === id);
+      if (index === -1) return current;
+      const clone = duplicateArticleBlock(current[index]);
+      const next = [...current];
+      next.splice(index + 1, 0, clone);
+      setFocusedBlockId(clone.id);
+      return next;
+    });
+    setActivityMessage("Bloc duplique.");
+    markTranslationAsReviewing();
+  }
+
+  function removeBlock(id: string) {
+    setBlocks((current) => current.filter((block) => block.id !== id));
+    setFocusedBlockId((current) => (current === id ? null : current));
+    setActivityMessage("Bloc supprime.");
+    markTranslationAsReviewing();
+  }
+
+  function moveBlock(id: string, delta: number) {
+    setBlocks((current) => {
+      const index = current.findIndex((block) => block.id === id);
+      if (index === -1) return current;
+
+      const nextIndex = Math.max(0, Math.min(current.length - 1, index + delta));
+      if (nextIndex === index) return current;
+
+      const next = [...current];
+      const [moved] = next.splice(index, 1);
+      next.splice(nextIndex, 0, moved);
+      return next;
+    });
+    setFocusedBlockId(id);
+    markTranslationAsReviewing();
+  }
+
+  function updateBlock(block: ArticleBlock) {
+    setBlocks((current) => current.map((item) => (item.id === block.id ? block : item)));
+    markTranslationAsReviewing();
+  }
+
+  async function uploadImageFile(file: File, blockId?: string) {
+    return new Promise<void>((resolve) => {
+      startUploadTransition(async () => {
+        setUploadError(null);
+
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("folder", "articles");
+
+        try {
+          const response = await fetch("/api/uploads/images", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (!response.ok) {
+            setUploadError("Impossible d'envoyer l'image pour le moment.");
+            resolve();
+            return;
+          }
+
+          const payload = (await response.json()) as { url: string };
+
+          if (blockId) {
+            setBlocks((current) =>
+              current.map((block) =>
+                block.id === blockId && block.type === "image"
+                  ? { ...block, url: payload.url }
+                  : block,
+              ),
+            );
+            setFocusedBlockId(blockId);
+          } else {
+            setCoverImageState(payload.url);
+          }
+
+          setActivityMessage("Image importee.");
+          markTranslationAsReviewing();
+        } catch {
+          setUploadError("Impossible d'envoyer l'image pour le moment.");
+        } finally {
+          resolve();
+        }
+      });
+    });
+  }
+
+  function saveArticle() {
+    startSaveTransition(async () => {
+      setActivityMessage(null);
+      const payload = await updateArticleAction({
+        id: articleId,
+        locale: props.locale,
+        title,
+        excerpt,
+        coverImage: coverImage.trim() || null,
+        seoTitle: seoTitle.trim() || null,
+        seoDescription: seoDescription.trim() || null,
+        blocksJson: blocks,
+      });
+      applyEditorPayload(payload);
+      setActivityMessage("Article sauvegarde.");
+    });
+  }
+
+  function changeStatus(value: typeof status) {
+    startStatusTransition(async () => {
+      const payload = await updateArticleStatusAction({
+        id: articleId,
+        locale: props.locale,
+        status: value,
+      });
+      applyEditorPayload(payload);
+      setStatus(value);
+      setActivityMessage(`Statut mis a jour: ${value}.`);
+    });
+  }
+
+  function deleteArticle() {
+    startDeleteTransition(async () => {
+      await deleteArticleAction({
+        id: articleId,
+        locale: props.locale,
+      });
+      router.push(`/${props.locale}/admin/articles`);
+      router.refresh();
+    });
+  }
+
+  async function switchLocale(locale: LanguageCode) {
+    if (locale === articleLocale) return;
+
+    startSwitchLocaleTransition(async () => {
+      const payload = await switchArticleTranslationAction({
+        id: articleId,
+        adminLocale: props.locale,
+        targetLocale: locale,
+      });
+      applyEditorPayload(payload);
+      window.history.replaceState(null, "", `/${props.locale}/admin/articles/${payload.id}`);
+      setActivityMessage(`Version ${locale.toUpperCase()} chargee.`);
+    });
+  }
+
+  function selectSourceLocale(locale: LanguageCode) {
+    startSaveTransition(async () => {
+      const nextTargetLocales = getEnabledLanguages()
+        .map((language) => language.code)
+        .filter((code) => code !== locale);
+      const payload = await updateArticleTranslationSettingsAction({
+        id: articleId,
+        adminLocale: props.locale,
+        sourceLocale: locale,
+        targetLocales: nextTargetLocales,
+      });
+      applyEditorPayload(payload);
+      setActivityMessage(`Source language set to ${locale.toUpperCase()}.`);
+    });
+  }
+
+  function toggleTargetLocale(locale: LanguageCode) {
+    startSaveTransition(async () => {
+      const nextTargetLocales = targetLocales.includes(locale)
+        ? targetLocales.filter((item) => item !== locale)
+        : [...targetLocales, locale];
+      const payload = await updateArticleTranslationSettingsAction({
+        id: articleId,
+        adminLocale: props.locale,
+        sourceLocale,
+        targetLocales: nextTargetLocales,
+      });
+      applyEditorPayload(payload);
+      setActivityMessage(`Target languages updated.`);
+    });
+  }
+
+  function createTranslation(locale: LanguageCode) {
+    startTranslateTransition(async () => {
+      const sourceArticleId =
+        articleLocale === sourceLocale
+          ? articleId
+          : (translations.find((translation) => translation.locale === sourceLocale)?.articleId ?? null);
+
+      if (!sourceArticleId) {
+        setActivityMessage("Select a source version that already exists before translating.");
+        return;
+      }
+
+      const payload = await translateArticleAction({
+        id: sourceArticleId,
+        adminLocale: props.locale,
+        targetLocale: locale,
+      });
+      applyEditorPayload(payload);
+      setActivityMessage(`Version ${locale.toUpperCase()} creee.`);
+    });
+  }
+
+  function duplicateArticle() {
+    startDuplicateTransition(async () => {
+      const payload = await duplicateArticleAction({
+        id: articleId,
+        locale: props.locale,
+      });
+      applyEditorPayload(payload);
+      window.history.replaceState(null, "", `/${props.locale}/admin/articles/${payload.id}`);
+      setActivityMessage("Copie de l'article prete.");
+    });
+  }
+
+  const contextValue: ArticleEditorContextValue = {
+    id: articleId,
+    translationGroupId,
+    locale: props.locale,
+    articleLocale,
+    sourceLocale,
+    targetLocales,
+    translationStatus,
+    sourceVersion,
+    translatedFromVersion,
+    translations,
+    title,
+    setTitle,
+    excerpt,
+    setExcerpt,
+    coverImage,
+    setCoverImage,
+    seoTitle,
+    setSeoTitle,
+    seoDescription,
+    setSeoDescription,
+    status,
+    blocks,
+    setBlocks,
+    warnings,
+    previewMode,
+    setPreviewMode,
+    activeSidebarPanel,
+    setActiveSidebarPanel,
+    focusedBlockId,
+    setFocusedBlockId,
+    isSaving,
+    isStatusPending,
+    isDeleting,
+    isUploading,
+    isSwitchingLocale,
+    isTranslating,
+    isDuplicating,
+    uploadError,
+    activityMessage,
+    coverImageInputId,
+    saveArticle,
+    changeStatus,
+    deleteArticle,
+    switchLocale,
+    selectSourceLocale,
+    toggleTargetLocale,
+    createTranslation,
+    duplicateArticle,
+    triggerCoverImagePicker: () => {
+      document.getElementById(coverImageInputId)?.click();
+      setActiveSidebarPanel("media");
+    },
+    addBlock,
+    duplicateBlock,
+    removeBlock,
+    moveBlock,
+    updateBlock,
+    focusBlock,
+    uploadImageFile,
+  };
+
+  return (
+    <ArticleEditorProvider value={contextValue}>
+      <div className="h-screen overflow-hidden bg-[#121212] text-[#f2ede6]">
+        <div className="flex h-full flex-col">
+          <ArticlesEditorTopbar />
+
+          <div className="flex min-h-0 flex-1 overflow-hidden">
+            {shouldShowEditorSidebar(previewMode) ? <ArticlesEditorSidebar /> : null}
+
+            <main className="flex min-h-0 flex-1 overflow-hidden bg-[#181818]">
+              {shouldShowTranslationWorkspace(previewMode) ? (
+                <div className="flex min-h-0 flex-1 overflow-y-auto p-4 lg:p-6">
+                  <ArticlesEditorTranslationPanel />
+                </div>
+              ) : (
+                <div
+                  className={cn(
+                    "flex min-h-0 flex-1 overflow-hidden transition-all duration-300",
+                    previewMode === "split" &&
+                      "xl:grid xl:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)]",
+                  )}
+                >
+                  <ArticlesEditorCanvas />
+                  {shouldShowEditorPreview(previewMode) ? <ArticlesEditorPreview /> : null}
+                </div>
+              )}
+            </main>
+          </div>
+        </div>
+      </div>
+    </ArticleEditorProvider>
+  );
 }
 </file>
 
@@ -1241,177 +1941,450 @@ export function ArticlesEditorSidebar() {
 "use client";
 
 import { useState } from "react";
-import type { ArticleStatus } from "@/generated/prisma";
-import { Archive, ChevronDown, Eye, LayoutPanelTop, PencilLine, Save, Send, Trash2 } from "lucide-react";
+import type { ArticleStatus } from "@/generated/prisma/client";
+import {
+  Archive,
+  ChevronDown,
+  Copy,
+  Eye,
+  LayoutPanelTop,
+  Languages,
+  PencilLine,
+  Save,
+  Send,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  ARTICLE_EDITOR_WORKSPACE_MODES,
+  getArticleStatusLabel,
+  getTranslationStatusLabel,
+} from "@/features/articles/model/article-editor-ui";
+import { getLanguageByCode } from "@/features/languages/config/languages";
 import { cn } from "@/shared/lib/utils";
 import { useArticleEditor } from "./articles-editor-context";
 
-const previewModes = [
-    { value: "edit", label: "Edit" },
-    { value: "split", label: "Split" },
-    { value: "preview", label: "Preview" },
-] as const;
-
-function getStatusLabel(status: ArticleStatus) {
-    if (status === "DRAFT") return "Brouillon";
-    if (status === "REVIEW") return "En revision";
-    if (status === "PUBLISHED") return "Publie";
-    return "Archive";
-}
+const workspaceIcons = {
+  edit: PencilLine,
+  split: LayoutPanelTop,
+  preview: Eye,
+  translations: Languages,
+} as const;
 
 export function ArticlesEditorTopbar() {
-    const [publishMenuOpen, setPublishMenuOpen] = useState(false);
-    const {
-        articleLocale,
-        title,
-        status,
-        previewMode,
-        setPreviewMode,
-        saveArticle,
-        changeStatus,
-        deleteArticle,
-        isSaving,
-        isStatusPending,
-        isDeleting,
-    } = useArticleEditor();
+  const [publishMenuOpen, setPublishMenuOpen] = useState(false);
+  const {
+    articleLocale,
+    sourceLocale,
+    translationStatus,
+    title,
+    status,
+    previewMode,
+    setPreviewMode,
+    saveArticle,
+    changeStatus,
+    deleteArticle,
+    duplicateArticle,
+    isSaving,
+    isStatusPending,
+    isDeleting,
+    isDuplicating,
+  } = useArticleEditor();
 
-    return (
-        <header className="border-b border-white/10 bg-[#1b1b1b]">
-            <div className="grid gap-4 px-4 py-3 lg:px-6 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:items-center">
-                <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-3">
-                        <h1 className="truncate text-xl font-semibold text-[#f6f0e8]">
-                            {title.trim() || "Nouvel article"}
-                        </h1>
-                        <span className="rounded-md border border-white/10 bg-[#252525] px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-[#b9ac9a]">
-                            {articleLocale}
-                        </span>
-                        <span className="rounded-md border border-[#574827] bg-[#2a2417] px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-[#d7be7e]">
-                            {getStatusLabel(status)}
-                        </span>
-                    </div>
-                </div>
+  const localeLabel = getLanguageByCode(articleLocale);
+  const sourceLabel = getLanguageByCode(sourceLocale);
 
-                <div className="flex justify-start xl:justify-center">
-                    <div className="inline-flex w-fit rounded-lg border border-white/10 bg-[#202020] p-1">
-                        {previewModes.map((mode) => (
-                            <button
-                                key={mode.value}
-                                type="button"
-                                onClick={() => setPreviewMode(mode.value)}
-                                className={cn(
-                                    "rounded-md px-4 py-2 text-xs uppercase tracking-[0.18em] transition",
-                                    previewMode === mode.value
-                                        ? "bg-[#d2b26d] text-[#16120d]"
-                                        : "text-[#c1b6a9] hover:bg-white/5 hover:text-[#f2ede6]",
-                                )}
-                            >
-                                <span className="flex items-center gap-2">
-                                    {mode.value === "edit" ? <PencilLine className="h-3.5 w-3.5" /> : null}
-                                    {mode.value === "split" ? <LayoutPanelTop className="h-3.5 w-3.5" /> : null}
-                                    {mode.value === "preview" ? <Eye className="h-3.5 w-3.5" /> : null}
-                                    {mode.label}
-                                </span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
+  function handleStatusChange(nextStatus: ArticleStatus) {
+    setPublishMenuOpen(false);
+    changeStatus(nextStatus);
+  }
 
-                <div className="flex flex-wrap items-center justify-start gap-2 xl:justify-end">
-                    <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={saveArticle}
-                        disabled={isSaving}
-                        className="rounded-md border-white/10 bg-[#252525] px-4 text-[#f0e7db]"
-                    >
-                        <Save className="h-3.5 w-3.5" />
-                        {isSaving ? "Sauvegarde..." : "Save"}
-                    </Button>
-                    <div className="relative">
-                        <Button
-                            type="button"
-                            size="sm"
-                            onClick={() => setPublishMenuOpen((open) => !open)}
-                            disabled={isStatusPending || isDeleting}
-                            className="rounded-md bg-[#d2b26d] px-5 text-[#16120d] hover:bg-[#e3c57f]"
-                        >
-                            Publish
-                            <ChevronDown className="h-3.5 w-3.5" />
-                        </Button>
+  return (
+    <header className="border-b border-white/10 bg-[#1b1b1b]">
+      <div className="grid gap-4 px-4 py-3 lg:px-6 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:items-center">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="truncate text-xl font-semibold text-[#f6f0e8]">
+              {title.trim() || "Nouvel article"}
+            </h1>
+            <span className="rounded-md border border-white/10 bg-[#252525] px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-[#b9ac9a]">
+              {(localeLabel?.flag ?? "🌐") + " " + articleLocale.toUpperCase()}
+            </span>
+            <span className="rounded-md border border-[#574827] bg-[#2a2417] px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-[#d7be7e]">
+              {getArticleStatusLabel(status)}
+            </span>
+            <span className="rounded-md border border-[#35503c] bg-[#1d2d22] px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-[#9fd3ab]">
+              {getTranslationStatusLabel(translationStatus)}
+            </span>
+            <span className="rounded-md border border-white/10 bg-[#202020] px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-[#c6b9ab]">
+              Source {sourceLabel?.nativeName ?? sourceLocale.toUpperCase()}
+            </span>
+          </div>
+        </div>
 
-                        {publishMenuOpen ? (
-                            <div className="absolute right-0 top-[calc(100%+0.75rem)] z-20 min-w-56 rounded-2xl border border-white/10 bg-[#15120e] p-2 shadow-2xl">
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setPublishMenuOpen(false);
-                                        changeStatus("PUBLISHED");
-                                    }}
-                                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#f4efe7] transition hover:bg-white/5"
-                                >
-                                    <Send className="h-4 w-4 text-[#d2b26d]" />
-                                    Publish
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setPublishMenuOpen(false);
-                                        changeStatus("DRAFT");
-                                    }}
-                                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#d7cec2] transition hover:bg-white/5"
-                                >
-                                    <Save className="h-4 w-4 text-[#9d9386]" />
-                                    Save draft
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setPublishMenuOpen(false);
-                                        changeStatus("ARCHIVED");
-                                    }}
-                                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#d7cec2] transition hover:bg-white/5"
-                                >
-                                    <Archive className="h-4 w-4 text-[#9d9386]" />
-                                    Archive
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setPublishMenuOpen(false);
-                                        if (window.confirm("Supprimer cet article ? Cette action est irreversible.")) {
-                                            deleteArticle();
-                                        }
-                                    }}
-                                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#f3b7ae] transition hover:bg-white/5"
-                                >
-                                    <Trash2 className="h-4 w-4" />
-                                    {isDeleting ? "Suppression..." : "Delete article"}
-                                </button>
-                            </div>
-                        ) : null}
-                    </div>
-                </div>
+        <div className="flex justify-start xl:justify-center">
+          <div className="inline-flex w-fit rounded-lg border border-white/10 bg-[#202020] p-1">
+            {ARTICLE_EDITOR_WORKSPACE_MODES.map((mode) => {
+              const Icon = workspaceIcons[mode.value];
+              return (
+                <button
+                  key={mode.value}
+                  type="button"
+                  onClick={() => setPreviewMode(mode.value)}
+                  className={cn(
+                    "rounded-md px-4 py-2 text-xs uppercase tracking-[0.18em] transition",
+                    previewMode === mode.value
+                      ? "bg-[#d2b26d] text-[#16120d]"
+                      : "text-[#c1b6a9] hover:bg-white/5 hover:text-[#f2ede6]",
+                  )}
+                >
+                  <span className="flex items-center gap-2">
+                    <Icon className="h-3.5 w-3.5" />
+                    {mode.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-start gap-2 xl:justify-end">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={duplicateArticle}
+            disabled={isDuplicating}
+            className="rounded-md border-white/10 bg-[#252525] px-4 text-[#f0e7db]"
+          >
+            <Copy className="h-3.5 w-3.5" />
+            {isDuplicating ? "Duplicating..." : "Duplicate"}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={saveArticle}
+            disabled={isSaving}
+            className="rounded-md border-white/10 bg-[#252525] px-4 text-[#f0e7db]"
+          >
+            <Save className="h-3.5 w-3.5" />
+            {isSaving ? "Saving..." : "Save"}
+          </Button>
+          <div className="relative">
+            <Button
+              type="button"
+              size="sm"
+              onClick={() => setPublishMenuOpen((open) => !open)}
+              disabled={isStatusPending || isDeleting}
+              className="rounded-md bg-[#d2b26d] px-5 text-[#16120d] hover:bg-[#e3c57f]"
+            >
+              Manage
+              <ChevronDown className="h-3.5 w-3.5" />
+            </Button>
+
+            {publishMenuOpen ? (
+              <div className="absolute right-0 top-[calc(100%+0.75rem)] z-20 min-w-56 rounded-2xl border border-white/10 bg-[#15120e] p-2 shadow-2xl">
+                <button
+                  type="button"
+                  onClick={() => handleStatusChange("PUBLISHED")}
+                  className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#f4efe7] transition hover:bg-white/5"
+                >
+                  <Send className="h-4 w-4 text-[#d2b26d]" />
+                  Publish
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleStatusChange("DRAFT")}
+                  className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#d7cec2] transition hover:bg-white/5"
+                >
+                  <Save className="h-4 w-4 text-[#9d9386]" />
+                  Save draft
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleStatusChange("ARCHIVED")}
+                  className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#d7cec2] transition hover:bg-white/5"
+                >
+                  <Archive className="h-4 w-4 text-[#9d9386]" />
+                  Archive
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPublishMenuOpen(false);
+                    if (window.confirm("Supprimer cet article ? Cette action est irreversible.")) {
+                      deleteArticle();
+                    }
+                  }}
+                  className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#f3b7ae] transition hover:bg-white/5"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  {isDeleting ? "Deleting..." : "Delete article"}
+                </button>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+</file>
+
+<file path="components/editors/articles-editor-translation-panel.tsx">
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  buildTranslationPanelItems,
+  buildTranslationWorkspaceSummary,
+  getAvailableLanguageOptions,
+  getTranslationStatusTone,
+} from "@/features/articles/model/article-editor-ui";
+import { cn } from "@/shared/lib/utils";
+import { useArticleEditor } from "./articles-editor-context";
+
+const toneClasses = {
+  success: "border-emerald-500/30 bg-emerald-500/10 text-emerald-200",
+  accent: "border-amber-500/30 bg-amber-500/10 text-amber-100",
+  warning: "border-orange-500/30 bg-orange-500/10 text-orange-200",
+  danger: "border-rose-500/30 bg-rose-500/10 text-rose-200",
+  muted: "border-white/10 bg-white/5 text-[#d5c8b9]",
+  ghost: "border-dashed border-white/10 bg-transparent text-[#ab9f92]",
+} as const;
+
+export function ArticlesEditorTranslationPanel() {
+  const {
+    articleLocale,
+    sourceLocale,
+    targetLocales,
+    translations,
+    isSwitchingLocale,
+    isTranslating,
+    isSaving,
+    activityMessage,
+    selectSourceLocale,
+    toggleTargetLocale,
+    createTranslation,
+    switchLocale,
+  } = useArticleEditor();
+
+  const languageOptions = getAvailableLanguageOptions();
+  const translationItems = buildTranslationPanelItems({
+    articleLocale,
+    sourceLocale,
+    translations,
+  });
+  const summary = buildTranslationWorkspaceSummary(translations);
+
+  return (
+    <section className="mx-auto flex w-full max-w-7xl flex-col gap-5">
+      <div className="rounded-[32px] border border-white/10 bg-[linear-gradient(135deg,rgba(210,178,109,0.1),rgba(24,24,24,0.92)_40%,rgba(18,18,18,0.98))] p-5 lg:p-7">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-2xl">
+            <p className="text-xs uppercase tracking-[0.26em] text-[#aa9d8f]">Translations workspace</p>
+            <h2 className="mt-3 text-3xl font-semibold text-[#f7f1e8]">Source, coverage, and delivery</h2>
+            <p className="mt-3 text-sm leading-7 text-[#b3a79b]">
+              Manage language relationships without interrupting writing. Source language, targets,
+              translation status, and creation actions live here.
+            </p>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#a89987]">Coverage</p>
+              <p className="mt-2 text-2xl font-semibold text-[#f8f2ea]">{summary.coveragePercent}%</p>
             </div>
-        </header>
-    );
+            <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#a89987]">Available</p>
+              <p className="mt-2 text-2xl font-semibold text-[#f8f2ea]">{summary.available}</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-[#a89987]">Missing</p>
+              <p className="mt-2 text-2xl font-semibold text-[#f8f2ea]">{summary.missing}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 h-2 overflow-hidden rounded-full bg-white/8">
+          <div
+            className="h-full rounded-full bg-[#d2b26d] transition-all duration-300"
+            style={{ width: `${summary.coveragePercent}%` }}
+          />
+        </div>
+
+        {activityMessage ? (
+          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-[#e7dccf]">
+            {activityMessage}
+          </div>
+        ) : null}
+      </div>
+
+      <div className="grid gap-5 xl:grid-cols-[1.25fr_0.95fr]">
+        <div className="rounded-[28px] border border-white/10 bg-[#171717] p-5 lg:p-6">
+          <div className="mb-4">
+            <p className="text-xs uppercase tracking-[0.22em] text-[#a89987]">Source language</p>
+            <h3 className="mt-2 text-xl font-semibold text-[#f7f1e8]">Choose the editorial origin</h3>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {languageOptions.map((language) => (
+              <button
+                key={language.code}
+                type="button"
+                onClick={() => selectSourceLocale(language.code)}
+                disabled={isSaving}
+                className={cn(
+                  "rounded-full border px-3 py-2 text-sm transition",
+                  sourceLocale === language.code
+                    ? "border-[#d2b26d] bg-[#d2b26d] text-[#16120d]"
+                    : "border-white/10 bg-[#202020] text-[#ddd0c1] hover:border-white/20 hover:bg-white/5",
+                )}
+              >
+                <span className="mr-2">{language.flag}</span>
+                {language.nativeName}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-6">
+            <p className="text-xs uppercase tracking-[0.22em] text-[#a89987]">Language variants</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {targetLocales.length > 0 ? (
+                targetLocales.map((locale) => {
+                  const language = languageOptions.find((item) => item.code === locale);
+                  return (
+                    <button
+                      key={locale}
+                      type="button"
+                      onClick={() => toggleTargetLocale(locale)}
+                      disabled={isSaving}
+                      className="rounded-full border border-[#d2b26d]/30 bg-[#d2b26d]/10 px-3 py-2 text-sm text-[#f2dfb8] transition hover:border-[#d2b26d]/50 hover:bg-[#d2b26d]/15"
+                    >
+                      <span className="mr-2">{language?.flag ?? "🌐"}</span>
+                      {language?.nativeName ?? locale.toUpperCase()}
+                    </button>
+                  );
+                })
+              ) : (
+                <div className="rounded-2xl border border-dashed border-white/10 bg-[#151515] px-4 py-4 text-sm text-[#aa9d8f]">
+                  No target languages configured yet.
+                </div>
+              )}
+            </div>
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              {languageOptions
+                .filter((language) => language.code !== sourceLocale && !targetLocales.includes(language.code))
+                .map((language) => (
+                  <button
+                    key={language.code}
+                    type="button"
+                    onClick={() => toggleTargetLocale(language.code)}
+                    disabled={isSaving}
+                    className="rounded-full border border-dashed border-white/10 bg-transparent px-3 py-2 text-sm text-[#aa9d90] transition hover:border-white/20 hover:bg-white/5"
+                  >
+                    <span className="mr-2">{language.flag}</span>
+                    Add {language.nativeName}
+                  </button>
+                ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-[28px] border border-white/10 bg-[#171717] p-5 lg:p-6">
+          <p className="text-xs uppercase tracking-[0.22em] text-[#a89987]">Coverage snapshot</p>
+          <h3 className="mt-2 text-xl font-semibold text-[#f7f1e8]">Translation status by language</h3>
+          <div className="mt-5 space-y-3">
+            {translationItems.map((translation) => {
+              const tone = getTranslationStatusTone(translation.status);
+              return (
+                <div
+                  key={translation.locale}
+                  className={cn(
+                    "rounded-2xl border border-white/10 bg-[#1f1f1f] p-4 transition",
+                    translation.isActive && "border-[#d2b26d]/45 bg-[#2a2419]",
+                  )}
+                >
+                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-lg">{translation.flag}</span>
+                        <span className="font-medium text-[#f5eee4]">{translation.nativeName}</span>
+                        {translation.isSource ? (
+                          <span className="rounded-full border border-[#d2b26d]/40 bg-[#d2b26d]/10 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-[#e6c988]">
+                            Source
+                          </span>
+                        ) : null}
+                        {translation.isActive ? (
+                          <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-[#ddd2c4]">
+                            Open
+                          </span>
+                        ) : null}
+                      </div>
+                      <p className="mt-1 text-sm text-[#aa9d8f]">{translation.languageName}</p>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className={cn("rounded-full border px-2.5 py-1 text-xs", toneClasses[tone])}>
+                        {translation.statusLabel}
+                      </span>
+                      {translation.isMissing ? (
+                        <Button
+                          type="button"
+                          size="sm"
+                          onClick={() => createTranslation(translation.locale)}
+                          disabled={isTranslating || translation.isSource}
+                          className="rounded-full bg-[#d2b26d] text-[#16120d] hover:bg-[#e0c07c]"
+                        >
+                          {isTranslating ? "Creating..." : "Create translation"}
+                        </Button>
+                      ) : (
+                        <Button
+                          type="button"
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {
+                            void switchLocale(translation.locale);
+                          }}
+                          disabled={isSwitchingLocale}
+                          className="rounded-full border-white/10 bg-transparent text-[#efe5d7]"
+                        >
+                          Open version
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 </file>
 
 <file path="components/editors/articles-editor-types.ts">
 import type { Dispatch, ReactNode, SetStateAction } from "react";
-import type { ArticleStatus } from "@/generated/prisma";
+import type { ArticleStatus, TranslationStatus } from "@/generated/prisma/client";
+import type { LanguageCode } from "@/features/languages/config/languages";
 import type { ArticleBlock, ArticleBlockType } from "../../model/article-blocks";
+import type { ArticleEditorWorkspaceMode } from "../../model/article-editor-ui";
+import type { TranslationLocaleSummary } from "../../model/article-translation-workflow";
 
-export type ArticleEditorPreviewMode = "edit" | "split" | "preview";
+export type ArticleEditorPreviewMode = ArticleEditorWorkspaceMode;
 export type ArticleEditorSidebarPanel = "structure" | "seo" | "media";
 
 export type ArticleEditorProps = {
     id: string;
+    translationGroupId: string;
     locale: string;
     articleLocale: string;
+    sourceLocale: LanguageCode;
+    targetLocales: LanguageCode[];
     initialTitle: string;
     initialExcerpt: string;
     initialCoverImage: string | null;
@@ -1419,13 +2392,24 @@ export type ArticleEditorProps = {
     initialSeoDescription: string | null;
     initialBlocks: ArticleBlock[];
     initialStatus: ArticleStatus;
+    initialTranslationStatus: TranslationStatus;
+    initialSourceVersion: number;
+    initialTranslatedFromVersion: number | null;
+    initialTranslations: TranslationLocaleSummary[];
     initialWarnings: string[];
 };
 
 export type ArticleEditorContextValue = {
     id: string;
+    translationGroupId: string;
     locale: string;
     articleLocale: string;
+    sourceLocale: LanguageCode;
+    targetLocales: LanguageCode[];
+    translationStatus: TranslationStatus;
+    sourceVersion: number;
+    translatedFromVersion: number | null;
+    translations: TranslationLocaleSummary[];
     title: string;
     setTitle: (value: string) => void;
     excerpt: string;
@@ -1450,12 +2434,20 @@ export type ArticleEditorContextValue = {
     isStatusPending: boolean;
     isDeleting: boolean;
     isUploading: boolean;
+    isSwitchingLocale: boolean;
+    isTranslating: boolean;
+    isDuplicating: boolean;
     uploadError: string | null;
     activityMessage: string | null;
     coverImageInputId: string;
     saveArticle: () => void;
     changeStatus: (value: ArticleStatus) => void;
     deleteArticle: () => void;
+    switchLocale: (locale: LanguageCode) => Promise<void>;
+    selectSourceLocale: (locale: LanguageCode) => void;
+    toggleTargetLocale: (locale: LanguageCode) => void;
+    createTranslation: (locale: LanguageCode) => void;
+    duplicateArticle: () => void;
     triggerCoverImagePicker: () => void;
     addBlock: (type: ArticleBlockType, index?: number) => void;
     duplicateBlock: (id: string) => void;
@@ -1791,6 +2783,9 @@ export type ArticleBlockType =
 export type ArticleBlockBase = {
   id: string;
   type: ArticleBlockType;
+  translationKey?: string;
+  manuallyEdited?: boolean;
+  sourceFingerprint?: string;
 };
 
 export type HeadingBlock = ArticleBlockBase & {
@@ -1874,6 +2869,10 @@ function optionalString(value: unknown) {
   return typeof value === "string" ? value : "";
 }
 
+function optionalBoolean(value: unknown) {
+  return typeof value === "boolean" ? value : undefined;
+}
+
 function optionalHeadingLevel(value: unknown): 1 | 2 | 3 | undefined {
   return value === 1 || value === 2 || value === 3 ? value : undefined;
 }
@@ -1882,6 +2881,25 @@ type NormalizeResult = {
   blocks: ArticleBlock[];
   warnings: string[];
 };
+
+function createBlockToken(type: string) {
+  return globalThis.crypto?.randomUUID?.() ?? `${type}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function createBlockId(type: ArticleBlockType) {
+  return createBlockToken(type);
+}
+
+function createBlockTranslationKey(type: ArticleBlockType) {
+  return `tk-${createBlockToken(type)}`;
+}
+
+function getLegacyTranslationKey(raw: Record<string, unknown>, fallbackId: string) {
+  const rawTranslationKey = optionalString(raw.translationKey);
+  if (rawTranslationKey) return rawTranslationKey;
+  const rawId = optionalString(raw.id) || fallbackId;
+  return `legacy-${rawId}`;
+}
 
 export function normalizeArticleBlocksDetailed(value: unknown): NormalizeResult {
   if (!Array.isArray(value)) {
@@ -1903,11 +2921,17 @@ export function normalizeArticleBlocksDetailed(value: unknown): NormalizeResult 
     const normalizedType = raw.type === "text" ? "paragraph" : raw.type;
     const fallbackId = `block-${index}`;
     const id = optionalString(raw.id) || fallbackId;
+    const translationKey = getLegacyTranslationKey(raw, fallbackId);
+    const manuallyEdited = optionalBoolean(raw.manuallyEdited);
+    const sourceFingerprint = optionalString(raw.sourceFingerprint) || undefined;
 
     if (normalizedType === "unsupported") {
       blocks.push({
         id,
         type: "unsupported",
+        translationKey,
+        manuallyEdited,
+        sourceFingerprint,
         originalType: optionalString(raw.originalType) || "unsupported",
         raw,
       });
@@ -1919,6 +2943,9 @@ export function normalizeArticleBlocksDetailed(value: unknown): NormalizeResult 
       blocks.push({
         id,
         type: "unsupported",
+        translationKey,
+        manuallyEdited,
+        sourceFingerprint,
         originalType: optionalString(raw.type) || "unknown",
         raw,
       });
@@ -1930,6 +2957,9 @@ export function normalizeArticleBlocksDetailed(value: unknown): NormalizeResult 
       blocks.push({
         id,
         type: "heading",
+        translationKey,
+        manuallyEdited,
+        sourceFingerprint,
         text: optionalString(raw.text ?? raw.content),
         level: optionalHeadingLevel(raw.level),
       });
@@ -1939,6 +2969,9 @@ export function normalizeArticleBlocksDetailed(value: unknown): NormalizeResult 
       blocks.push({
         id,
         type: "paragraph",
+        translationKey,
+        manuallyEdited,
+        sourceFingerprint,
         text: optionalString(raw.text ?? raw.content),
       });
       return;
@@ -1947,6 +2980,9 @@ export function normalizeArticleBlocksDetailed(value: unknown): NormalizeResult 
       blocks.push({
         id,
         type: "image",
+        translationKey,
+        manuallyEdited,
+        sourceFingerprint,
         url: optionalString(raw.url),
         alt: optionalString(raw.alt),
         caption: optionalString(raw.caption),
@@ -1957,19 +2993,33 @@ export function normalizeArticleBlocksDetailed(value: unknown): NormalizeResult 
       blocks.push({
         id,
         type: "quote",
+        translationKey,
+        manuallyEdited,
+        sourceFingerprint,
         text: optionalString(raw.text ?? raw.content),
         author: optionalString(raw.author ?? raw.source),
       });
       return;
     }
     if (normalizedType === "video") {
-      blocks.push({ id, type: "video", url: optionalString(raw.url), title: optionalString(raw.title) });
+      blocks.push({
+        id,
+        type: "video",
+        translationKey,
+        manuallyEdited,
+        sourceFingerprint,
+        url: optionalString(raw.url),
+        title: optionalString(raw.title),
+      });
       return;
     }
     if (normalizedType === "cta") {
       blocks.push({
         id,
         type: "cta",
+        translationKey,
+        manuallyEdited,
+        sourceFingerprint,
         title: optionalString(raw.title),
         description: optionalString(raw.description),
         buttonLabel: optionalString(raw.buttonLabel),
@@ -1978,7 +3028,13 @@ export function normalizeArticleBlocksDetailed(value: unknown): NormalizeResult 
       return;
     }
 
-    blocks.push({ id, type: "divider" });
+    blocks.push({
+      id,
+      type: "divider",
+      translationKey,
+      manuallyEdited,
+      sourceFingerprint,
+    });
   });
 
   return { blocks, warnings };
@@ -1996,6 +3052,9 @@ export function sanitizeArticleBlocks(value: unknown): NormalizeResult {
         return {
           id: block.id || `unsupported-${index}`,
           type: "unsupported",
+          translationKey: block.translationKey || `legacy-unsupported-${index}`,
+          manuallyEdited: block.manuallyEdited,
+          sourceFingerprint: block.sourceFingerprint,
           originalType: block.originalType,
           raw: block.raw,
         };
@@ -2008,21 +3067,32 @@ export function sanitizeArticleBlocks(value: unknown): NormalizeResult {
 }
 
 export function createArticleBlock(type: ArticleBlockType): ArticleBlock {
-  const id = globalThis.crypto?.randomUUID?.() ?? `${type}-${Date.now()}`;
+  const id = createBlockId(type);
+  const translationKey = createBlockTranslationKey(type);
 
-  if (type === "heading") return { id, type, text: "", level: 2 };
-  if (type === "paragraph") return { id, type, text: "" };
-  if (type === "image") return { id, type, url: "", alt: "", caption: "" };
-  if (type === "quote") return { id, type, text: "", author: "" };
-  if (type === "video") return { id, type, url: "", title: "" };
+  if (type === "heading") return { id, type, translationKey, text: "", level: 2 };
+  if (type === "paragraph") return { id, type, translationKey, text: "" };
+  if (type === "image") return { id, type, translationKey, url: "", alt: "", caption: "" };
+  if (type === "quote") return { id, type, translationKey, text: "", author: "" };
+  if (type === "video") return { id, type, translationKey, url: "", title: "" };
   if (type === "cta") {
-    return { id, type, title: "", description: "", buttonLabel: "Read more", href: "/" };
+    return { id, type, translationKey, title: "", description: "", buttonLabel: "Read more", href: "/" };
   }
   if (type === "unsupported") {
-    return { id, type, originalType: "unknown", raw: {} };
+    return { id, type, translationKey, originalType: "unknown", raw: {} };
   }
 
-  return { id, type };
+  return { id, type, translationKey };
+}
+
+export function duplicateArticleBlock(block: ArticleBlock): ArticleBlock {
+  return {
+    ...block,
+    id: createBlockId(block.type),
+    translationKey: createBlockTranslationKey(block.type),
+    manuallyEdited: undefined,
+    sourceFingerprint: undefined,
+  };
 }
 
 export function getArticlePlainText(blocks: ArticleBlock[]) {
@@ -2044,6 +3114,765 @@ export function getArticlePlainText(blocks: ArticleBlock[]) {
 export function getReadingTimeMinutes(blocks: ArticleBlock[]) {
   const words = getArticlePlainText(blocks).trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.ceil(words / 220));
+}
+</file>
+
+<file path="model/article-editor-ui.ts">
+import { getEnabledLanguages, getLanguageByCode } from "../../languages/config/languages.ts";
+import type { ArticleStatus, TranslationStatus } from "../../../generated/prisma/client";
+import type { TranslationLocaleSummary } from "./article-translation-workflow";
+import type { ArticleManagerItem } from "../services/articles.services";
+
+export type ArticleManagerView = "grid" | "list";
+export type ArticleManagerSort = "updated-desc" | "updated-asc";
+export type ArticleEditorWorkspaceMode = "edit" | "split" | "preview" | "translations";
+export type QuickActionId =
+  | "edit"
+  | "preview"
+  | "duplicate"
+  | "create-translation"
+  | "publish"
+  | "archive"
+  | "delete";
+
+export const ARTICLE_EDITOR_WORKSPACE_MODES = [
+  { value: "edit", label: "Edit" },
+  { value: "split", label: "Split" },
+  { value: "preview", label: "Preview" },
+  { value: "translations", label: "Translations" },
+] as const satisfies ReadonlyArray<{ value: ArticleEditorWorkspaceMode; label: string }>;
+
+export function getArticleStatusLabel(status: ArticleStatus) {
+  if (status === "DRAFT") return "Draft";
+  if (status === "REVIEW") return "In review";
+  if (status === "PUBLISHED") return "Published";
+  return "Archived";
+}
+
+export function getTranslationStatusLabel(status: TranslationStatus | "MISSING") {
+  if (status === "TRANSLATED") return "Translated";
+  if (status === "REVIEWING") return "Reviewing";
+  if (status === "UP_TO_DATE") return "Up to date";
+  if (status === "NEEDS_UPDATE") return "Needs update";
+  if (status === "DRAFT") return "Draft";
+  return "Missing";
+}
+
+export function getTranslationStatusTone(status: TranslationStatus | "MISSING") {
+  if (status === "UP_TO_DATE") return "success";
+  if (status === "TRANSLATED") return "accent";
+  if (status === "REVIEWING") return "warning";
+  if (status === "NEEDS_UPDATE") return "danger";
+  if (status === "DRAFT") return "muted";
+  return "ghost";
+}
+
+export function getMissingTranslationLocales(translations: TranslationLocaleSummary[]) {
+  return translations.filter((translation) => translation.isMissing).map((translation) => translation.locale);
+}
+
+export function buildTranslationPanelItems(params: {
+  articleLocale: string;
+  sourceLocale: string;
+  translations: TranslationLocaleSummary[];
+}) {
+  return params.translations.map((translation) => {
+    const language = getLanguageByCode(translation.locale);
+    return {
+      locale: translation.locale,
+      languageName: language?.name ?? translation.locale.toUpperCase(),
+      nativeName: language?.nativeName ?? translation.locale.toUpperCase(),
+      flag: language?.flag ?? "🌐",
+      isActive: translation.locale === params.articleLocale,
+      isSource: translation.locale === params.sourceLocale,
+      isMissing: translation.isMissing,
+      status: translation.status,
+      statusLabel: translation.isMissing ? "Missing" : getTranslationStatusLabel(translation.status),
+    };
+  });
+}
+
+export function buildTranslationWorkspaceSummary(translations: TranslationLocaleSummary[]) {
+  const availableTranslations = translations.filter((translation) => !translation.isMissing);
+  const missingTranslations = translations.filter((translation) => translation.isMissing);
+  const upToDateCount = translations.filter((translation) => translation.status === "UP_TO_DATE").length;
+  const coveragePercent =
+    translations.length === 0 ? 0 : Math.round((availableTranslations.length / translations.length) * 100);
+
+  return {
+    total: translations.length,
+    available: availableTranslations.length,
+    missing: missingTranslations.length,
+    upToDate: upToDateCount,
+    coveragePercent,
+  };
+}
+
+export function shouldShowTranslationWorkspace(mode: ArticleEditorWorkspaceMode) {
+  return mode === "translations";
+}
+
+export function shouldShowEditorCanvas(mode: ArticleEditorWorkspaceMode) {
+  return mode === "edit" || mode === "split";
+}
+
+export function shouldShowEditorPreview(mode: ArticleEditorWorkspaceMode) {
+  return mode === "split" || mode === "preview";
+}
+
+export function shouldShowEditorSidebar(mode: ArticleEditorWorkspaceMode) {
+  return mode !== "translations";
+}
+
+export function buildQuickActions(item: ArticleManagerItem) {
+  const missingTranslations = getMissingTranslationLocales(item.translations);
+
+  return [
+    { id: "edit", label: "Edit" },
+    { id: "preview", label: "Preview" },
+    { id: "duplicate", label: "Duplicate" },
+    {
+      id: "create-translation",
+      label: missingTranslations[0] ? `Create ${missingTranslations[0].toUpperCase()}` : "Create translation",
+      disabled: missingTranslations.length === 0,
+    },
+    { id: "publish", label: "Publish" },
+    { id: "archive", label: "Archive" },
+    { id: "delete", label: "Delete" },
+  ] satisfies Array<{ id: QuickActionId; label: string; disabled?: boolean }>;
+}
+
+export function filterAndSortArticles(params: {
+  articles: ArticleManagerItem[];
+  query: string;
+  locale: string;
+  status: string;
+  sort: ArticleManagerSort;
+}) {
+  const normalizedQuery = params.query.trim().toLowerCase();
+
+  const filtered = params.articles.filter((article) => {
+    const matchesQuery =
+      !normalizedQuery ||
+      article.title.toLowerCase().includes(normalizedQuery) ||
+      article.slug.toLowerCase().includes(normalizedQuery) ||
+      (article.excerpt ?? "").toLowerCase().includes(normalizedQuery);
+    const matchesLocale = params.locale === "all" || article.locale === params.locale;
+    const matchesStatus =
+      params.status === "all" ||
+      article.status === params.status ||
+      article.translationStatus === params.status;
+
+    return matchesQuery && matchesLocale && matchesStatus;
+  });
+
+  return filtered.sort((left, right) => {
+    if (params.sort === "updated-asc") {
+      return left.updatedAt.getTime() - right.updatedAt.getTime();
+    }
+    return right.updatedAt.getTime() - left.updatedAt.getTime();
+  });
+}
+
+export function getArticleManagerEmptyState(params: {
+  totalArticles: number;
+  filteredArticles: number;
+  query: string;
+}) {
+  if (params.totalArticles === 0) {
+    return {
+      title: "No articles yet",
+      description: "Create your first story to start building the editorial library.",
+    };
+  }
+
+  if (params.filteredArticles === 0 && params.query.trim()) {
+    return {
+      title: "No search results",
+      description: "Try a different keyword, locale, or status filter.",
+    };
+  }
+
+  if (params.filteredArticles === 0) {
+    return {
+      title: "Nothing matches these filters",
+      description: "Adjust the current view to surface more articles.",
+    };
+  }
+
+  return null;
+}
+
+export function getArticleManagerCollectionClassName(view: ArticleManagerView) {
+  return view === "grid" ? "grid md:grid-cols-2 xl:grid-cols-3" : "space-y-3";
+}
+
+export function getAvailableLanguageOptions() {
+  return getEnabledLanguages().map((language) => ({
+    code: language.code,
+    label: language.name,
+    nativeName: language.nativeName,
+    flag: language.flag,
+  }));
+}
+</file>
+
+<file path="model/article-translation-workflow.ts">
+import {
+  getDefaultLanguage,
+  getEnabledLanguages,
+  type LanguageCode,
+} from "../../languages/config/languages.ts";
+import type { ArticleBlock } from "./article-blocks.ts";
+import { createArticleBlock, normalizeArticleBlocks } from "./article-blocks.ts";
+
+export type TranslationStatusValue =
+  | "draft"
+  | "translated"
+  | "reviewing"
+  | "up_to_date"
+  | "needs_update";
+
+export type TranslationStatusRecord =
+  | "DRAFT"
+  | "TRANSLATED"
+  | "REVIEWING"
+  | "UP_TO_DATE"
+  | "NEEDS_UPDATE";
+
+export type TranslationEntry = {
+  key: string;
+  text: string;
+  context: string;
+};
+
+export type TranslationResponse = {
+  slug: string;
+  translations: Array<{
+    key: string;
+    text: string;
+  }>;
+};
+
+export type TranslationArticleLike = {
+  locale: string;
+  title: string;
+  excerpt: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  blocksJson: unknown;
+  sourceVersion: number;
+  translatedFromVersion: number | null;
+  translationStatus: TranslationStatusRecord;
+};
+
+export type TranslationPlan = {
+  entries: TranslationEntry[];
+  blocks: ArticleBlock[];
+  staleManualBlocks: string[];
+  hasStructuralChanges: boolean;
+};
+
+export type BlockTranslationPlan = {
+  changedKeys: Set<string>;
+  staleManualBlocks: string[];
+  hasStructuralChanges: boolean;
+};
+
+export type TranslationLocaleSummary = {
+  locale: LanguageCode;
+  articleId: string | null;
+  status: TranslationStatusRecord | "MISSING";
+  isMissing: boolean;
+  isSource: boolean;
+};
+
+export const SOURCE_LOCALE: LanguageCode = getDefaultLanguage().code;
+
+function getBlockKey(block: Pick<ArticleBlock, "id" | "translationKey">) {
+  return block.translationKey ?? `legacy-${block.id}`;
+}
+
+function stableStringify(value: unknown): string {
+  if (Array.isArray(value)) {
+    return `[${value.map((item) => stableStringify(item)).join(",")}]`;
+  }
+
+  if (value && typeof value === "object") {
+    const entries = Object.entries(value as Record<string, unknown>).sort(([a], [b]) =>
+      a.localeCompare(b),
+    );
+    return `{${entries
+      .map(([key, item]) => `${JSON.stringify(key)}:${stableStringify(item)}`)
+      .join(",")}}`;
+  }
+
+  return JSON.stringify(value);
+}
+
+function cloneBlockForTranslation(sourceBlock: ArticleBlock, existingBlock?: ArticleBlock): ArticleBlock {
+  const sourceKey = getBlockKey(sourceBlock);
+  if (existingBlock) {
+    return {
+      ...sourceBlock,
+      id: existingBlock.id,
+      translationKey: getBlockKey(existingBlock),
+      manuallyEdited: existingBlock.manuallyEdited,
+      sourceFingerprint: existingBlock.sourceFingerprint,
+    };
+  }
+
+  const created = createArticleBlock(sourceBlock.type);
+  return {
+    ...sourceBlock,
+    id: created.id,
+    translationKey: sourceKey,
+    manuallyEdited: undefined,
+    sourceFingerprint: undefined,
+  };
+}
+
+function preserveExistingTranslatedText(sourceBlock: ArticleBlock, existingBlock: ArticleBlock): ArticleBlock {
+  if (sourceBlock.type === "heading" && existingBlock.type === "heading") {
+    return {
+      ...sourceBlock,
+      id: existingBlock.id,
+      translationKey: getBlockKey(existingBlock),
+      text: existingBlock.text,
+      manuallyEdited: existingBlock.manuallyEdited,
+      sourceFingerprint: existingBlock.sourceFingerprint,
+    };
+  }
+
+  if (sourceBlock.type === "paragraph" && existingBlock.type === "paragraph") {
+    return {
+      ...sourceBlock,
+      id: existingBlock.id,
+      translationKey: getBlockKey(existingBlock),
+      text: existingBlock.text,
+      manuallyEdited: existingBlock.manuallyEdited,
+      sourceFingerprint: existingBlock.sourceFingerprint,
+    };
+  }
+
+  if (sourceBlock.type === "quote" && existingBlock.type === "quote") {
+    return {
+      ...sourceBlock,
+      id: existingBlock.id,
+      translationKey: getBlockKey(existingBlock),
+      text: existingBlock.text,
+      author: existingBlock.author,
+      manuallyEdited: existingBlock.manuallyEdited,
+      sourceFingerprint: existingBlock.sourceFingerprint,
+    };
+  }
+
+  if (sourceBlock.type === "image" && existingBlock.type === "image") {
+    return {
+      ...sourceBlock,
+      id: existingBlock.id,
+      translationKey: getBlockKey(existingBlock),
+      alt: existingBlock.alt,
+      caption: existingBlock.caption,
+      manuallyEdited: existingBlock.manuallyEdited,
+      sourceFingerprint: existingBlock.sourceFingerprint,
+    };
+  }
+
+  if (sourceBlock.type === "video" && existingBlock.type === "video") {
+    return {
+      ...sourceBlock,
+      id: existingBlock.id,
+      translationKey: getBlockKey(existingBlock),
+      title: existingBlock.title,
+      manuallyEdited: existingBlock.manuallyEdited,
+      sourceFingerprint: existingBlock.sourceFingerprint,
+    };
+  }
+
+  if (sourceBlock.type === "cta" && existingBlock.type === "cta") {
+    return {
+      ...sourceBlock,
+      id: existingBlock.id,
+      translationKey: getBlockKey(existingBlock),
+      title: existingBlock.title,
+      description: existingBlock.description,
+      buttonLabel: existingBlock.buttonLabel,
+      manuallyEdited: existingBlock.manuallyEdited,
+      sourceFingerprint: existingBlock.sourceFingerprint,
+    };
+  }
+
+  return cloneBlockForTranslation(sourceBlock, existingBlock);
+}
+
+function hasTranslatedEntryForBlock(translated: Map<string, string>, blockKey: string) {
+  const prefix = `block:${blockKey}:`;
+  for (const key of translated.keys()) {
+    if (key.startsWith(prefix)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function getTranslationStatusLabel(status: TranslationStatusRecord): TranslationStatusValue {
+  if (status === "DRAFT") return "draft";
+  if (status === "TRANSLATED") return "translated";
+  if (status === "REVIEWING") return "reviewing";
+  if (status === "UP_TO_DATE") return "up_to_date";
+  return "needs_update";
+}
+
+export function getTranslationStatusAfterSync(params: {
+  isNewTranslation: boolean;
+  hasPendingManualReview: boolean;
+}): TranslationStatusRecord {
+  if (params.isNewTranslation) return "TRANSLATED";
+  if (params.hasPendingManualReview) return "REVIEWING";
+  return "UP_TO_DATE";
+}
+
+export function getTranslationStatusAfterManualEdit(params: {
+  articleLocale: string;
+  sourceLocale: string;
+  currentStatus: TranslationStatusRecord;
+}) {
+  if (params.articleLocale === params.sourceLocale) {
+    return params.currentStatus;
+  }
+  return "REVIEWING" satisfies TranslationStatusRecord;
+}
+
+export function getTranslationStatusAfterSourceUpdate(params: {
+  articleLocale: string;
+  sourceLocale: string;
+}) {
+  if (params.articleLocale === params.sourceLocale) {
+    return "UP_TO_DATE" satisfies TranslationStatusRecord;
+  }
+  return "NEEDS_UPDATE" satisfies TranslationStatusRecord;
+}
+
+export function getTranslatableBlockSignature(block: ArticleBlock): string | null {
+  if (block.type === "heading") {
+    return stableStringify({ type: block.type, text: block.text });
+  }
+  if (block.type === "paragraph") {
+    return stableStringify({ type: block.type, text: block.text });
+  }
+  if (block.type === "quote") {
+    return stableStringify({ type: block.type, text: block.text });
+  }
+  if (block.type === "image") {
+    return stableStringify({ type: block.type, alt: block.alt ?? "", caption: block.caption ?? "" });
+  }
+  if (block.type === "video") {
+    return stableStringify({ type: block.type, title: block.title ?? "" });
+  }
+  if (block.type === "cta") {
+    return stableStringify({
+      type: block.type,
+      title: block.title,
+      description: block.description ?? "",
+      buttonLabel: block.buttonLabel,
+    });
+  }
+  return null;
+}
+
+export function collectBlockEntries(blocks: ArticleBlock[], changedKeys?: Set<string>) {
+  const entries: TranslationEntry[] = [];
+
+  blocks.forEach((block) => {
+    if (changedKeys && !changedKeys.has(getBlockKey(block))) {
+      return;
+    }
+
+    if (block.type === "heading" || block.type === "paragraph" || block.type === "quote") {
+      if (block.text.trim()) {
+        entries.push({
+          key: `block:${getBlockKey(block)}:text`,
+          text: block.text,
+          context: `${block.type} text`,
+        });
+      }
+    }
+
+    if (block.type === "image") {
+      if (block.alt?.trim()) {
+        entries.push({
+          key: `block:${getBlockKey(block)}:alt`,
+          text: block.alt,
+          context: "image alt text",
+        });
+      }
+
+      if (block.caption?.trim()) {
+        entries.push({
+          key: `block:${getBlockKey(block)}:caption`,
+          text: block.caption,
+          context: "image caption",
+        });
+      }
+    }
+
+    if (block.type === "cta") {
+      if (block.title.trim()) {
+        entries.push({
+          key: `block:${getBlockKey(block)}:title`,
+          text: block.title,
+          context: "call to action title",
+        });
+      }
+
+      if (block.description?.trim()) {
+        entries.push({
+          key: `block:${getBlockKey(block)}:description`,
+          text: block.description,
+          context: "call to action description",
+        });
+      }
+
+      if (block.buttonLabel.trim()) {
+        entries.push({
+          key: `block:${getBlockKey(block)}:buttonLabel`,
+          text: block.buttonLabel,
+          context: "call to action button label",
+        });
+      }
+    }
+
+    if (block.type === "video" && block.title?.trim()) {
+      entries.push({
+        key: `block:${getBlockKey(block)}:title`,
+        text: block.title,
+        context: "video title",
+      });
+    }
+  });
+
+  return entries;
+}
+
+export function collectArticleEntries(article: {
+  title: string;
+  excerpt: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+}) {
+  const entries: TranslationEntry[] = [
+    {
+      key: "article:title",
+      text: article.title,
+      context: "article title",
+    },
+  ];
+
+  if (article.excerpt?.trim()) {
+    entries.push({
+      key: "article:excerpt",
+      text: article.excerpt,
+      context: "article excerpt",
+    });
+  }
+
+  if (article.seoTitle?.trim()) {
+    entries.push({
+      key: "article:seoTitle",
+      text: article.seoTitle,
+      context: "SEO title",
+    });
+  }
+
+  if (article.seoDescription?.trim()) {
+    entries.push({
+      key: "article:seoDescription",
+      text: article.seoDescription,
+      context: "SEO description",
+    });
+  }
+
+  return entries;
+}
+
+export function applyTranslatedText(block: ArticleBlock, translated: Map<string, string>): ArticleBlock {
+  if (block.type === "heading" || block.type === "paragraph" || block.type === "quote") {
+    return {
+      ...block,
+      text: translated.get(`block:${getBlockKey(block)}:text`) ?? block.text,
+    };
+  }
+
+  if (block.type === "image") {
+    return {
+      ...block,
+      alt: translated.get(`block:${getBlockKey(block)}:alt`) ?? block.alt,
+      caption: translated.get(`block:${getBlockKey(block)}:caption`) ?? block.caption,
+    };
+  }
+
+  if (block.type === "cta") {
+    return {
+      ...block,
+      title: translated.get(`block:${getBlockKey(block)}:title`) ?? block.title,
+      description: translated.get(`block:${getBlockKey(block)}:description`) ?? block.description,
+      buttonLabel: translated.get(`block:${getBlockKey(block)}:buttonLabel`) ?? block.buttonLabel,
+    };
+  }
+
+  if (block.type === "video") {
+    return {
+      ...block,
+      title: translated.get(`block:${getBlockKey(block)}:title`) ?? block.title,
+    };
+  }
+
+  return block;
+}
+
+export function buildTranslationPlan(params: {
+  sourceBlocks: ArticleBlock[];
+  existingTranslationBlocks?: ArticleBlock[];
+}): BlockTranslationPlan {
+  const existingBlocksByKey = new Map(
+    (params.existingTranslationBlocks ?? []).map((block) => [getBlockKey(block), block]),
+  );
+  const changedKeys = new Set<string>();
+  const staleManualBlocks: string[] = [];
+  let hasStructuralChanges = false;
+
+  params.sourceBlocks.forEach((sourceBlock) => {
+    const existingBlock = existingBlocksByKey.get(getBlockKey(sourceBlock));
+    const nextSignature = getTranslatableBlockSignature(sourceBlock);
+
+    if (!existingBlock) {
+      changedKeys.add(getBlockKey(sourceBlock));
+      hasStructuralChanges = true;
+      return;
+    }
+
+    const existingSignature = existingBlock.sourceFingerprint ?? null;
+    if (nextSignature !== existingSignature) {
+      if (existingBlock.manuallyEdited) {
+        staleManualBlocks.push(getBlockKey(sourceBlock));
+      } else {
+        changedKeys.add(getBlockKey(sourceBlock));
+      }
+    }
+  });
+
+  (params.existingTranslationBlocks ?? []).forEach((block) => {
+    const stillExists = params.sourceBlocks.some((sourceBlock) => getBlockKey(sourceBlock) === getBlockKey(block));
+    if (!stillExists) {
+      hasStructuralChanges = true;
+    }
+  });
+
+  return {
+    changedKeys,
+    staleManualBlocks,
+    hasStructuralChanges,
+  };
+}
+
+export function mergeTranslatedBlocks(params: {
+  sourceBlocks: ArticleBlock[];
+  existingTranslationBlocks?: ArticleBlock[];
+  translatedMap: Map<string, string>;
+}) {
+  const existingBlocksByKey = new Map(
+    (params.existingTranslationBlocks ?? []).map((block) => [getBlockKey(block), block]),
+  );
+  const mergedKeys = new Set<string>();
+
+  const blocks: ArticleBlock[] = params.sourceBlocks.map((sourceBlock) => {
+    const sourceKey = getBlockKey(sourceBlock);
+    const existingBlock = existingBlocksByKey.get(sourceKey);
+    mergedKeys.add(sourceKey);
+
+    const baseBlock = existingBlock
+      ? preserveExistingTranslatedText(sourceBlock, existingBlock)
+      : cloneBlockForTranslation(sourceBlock, existingBlock);
+    const translatedBlock = existingBlock?.manuallyEdited
+      ? existingBlock
+      : hasTranslatedEntryForBlock(params.translatedMap, sourceKey)
+        ? applyTranslatedText(baseBlock, params.translatedMap)
+        : baseBlock;
+
+    return {
+      ...translatedBlock,
+      translationKey: sourceKey,
+      sourceFingerprint: getTranslatableBlockSignature(sourceBlock) ?? undefined,
+    };
+  });
+
+  (params.existingTranslationBlocks ?? []).forEach((block) => {
+    const blockKey = getBlockKey(block);
+    if (!mergedKeys.has(blockKey) && (block.manuallyEdited || block.type === "unsupported")) {
+      blocks.push(block);
+    }
+  });
+
+  return blocks;
+}
+
+export function prepareTranslationPlan(params: {
+  sourceArticle: TranslationArticleLike;
+  existingTranslation?: TranslationArticleLike | null;
+}): TranslationPlan {
+  const sourceBlocks = normalizeArticleBlocks(params.sourceArticle.blocksJson);
+  const existingBlocks = params.existingTranslation
+    ? normalizeArticleBlocks(params.existingTranslation.blocksJson)
+    : undefined;
+  const { changedKeys, staleManualBlocks, hasStructuralChanges } = buildTranslationPlan({
+    sourceBlocks,
+    existingTranslationBlocks: existingBlocks,
+  });
+
+  const entries = [
+    ...collectArticleEntries(params.sourceArticle),
+    ...collectBlockEntries(sourceBlocks, changedKeys),
+  ];
+
+  return {
+    entries,
+    blocks: sourceBlocks,
+    staleManualBlocks,
+    hasStructuralChanges,
+  };
+}
+
+export function buildTranslationLocaleSummaries(params: {
+  locales?: readonly LanguageCode[];
+  sourceLocale: string;
+  translations: Array<{ id: string; locale: string; translationStatus: TranslationStatusRecord }>;
+}) {
+  const locales = params.locales ?? getEnabledLanguages().map((language) => language.code);
+  return locales.map((locale) => {
+    const translation = params.translations.find((item) => item.locale === locale) ?? null;
+    return {
+      locale,
+      articleId: translation?.id ?? null,
+      status: translation?.translationStatus ?? "MISSING",
+      isMissing: !translation,
+      isSource: locale === params.sourceLocale,
+    } satisfies TranslationLocaleSummary;
+  });
+}
+
+export function resolveTranslationByLocale<T extends { translationGroupId: string; locale: string }>(params: {
+  translationGroupId: string;
+  targetLocale: LanguageCode;
+  articles: T[];
+}) {
+  return (
+    params.articles.find(
+      (article) =>
+        article.translationGroupId === params.translationGroupId &&
+        article.locale === params.targetLocale,
+    ) ?? null
+  );
 }
 </file>
 
@@ -2501,33 +4330,23 @@ export type {
 
 <file path="services/articles-translation.service.ts">
 import { Prisma } from "@/generated/prisma/client";
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import type { LanguageCode } from "@/features/languages/config/languages";
 import {
-  normalizeArticleBlocks,
-  type ArticleBlock,
-} from "../model/article-blocks";
+  collectArticleEntries,
+  collectBlockEntries,
+  getTranslatableBlockSignature,
+  getTranslationStatusAfterSync,
+  mergeTranslatedBlocks,
+  type TranslationResponse,
+} from "../model/article-translation-workflow";
+import { normalizeArticleBlocks } from "../model/article-blocks";
 import {
   getArticleById,
   getArticleByTranslationGroupAndLocale,
   upsertArticleTranslation,
 } from "./articles.services";
 
-type TranslationEntry = {
-  key: string;
-  text: string;
-  context: string;
-};
-
-type TranslationResponse = {
-  slug: string;
-  translations: Array<{
-    key: string;
-    text: string;
-  }>;
-};
-
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
-const SOURCE_LOCALE: SupportedLocale = "en";
 
 function requireOpenAiApiKey() {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -2549,152 +4368,6 @@ function slugify(value: string) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 120) || `article-${Date.now()}`;
-}
-
-function collectBlockEntries(blocks: ArticleBlock[]) {
-  const entries: TranslationEntry[] = [];
-
-  blocks.forEach((block) => {
-    if (block.type === "heading" || block.type === "paragraph" || block.type === "quote") {
-      if (block.text.trim()) {
-        entries.push({
-          key: `block:${block.id}:text`,
-          text: block.text,
-          context: `${block.type} text`,
-        });
-      }
-    }
-
-    if (block.type === "image") {
-      if (block.alt?.trim()) {
-        entries.push({
-          key: `block:${block.id}:alt`,
-          text: block.alt,
-          context: "image alt text",
-        });
-      }
-
-      if (block.caption?.trim()) {
-        entries.push({
-          key: `block:${block.id}:caption`,
-          text: block.caption,
-          context: "image caption",
-        });
-      }
-    }
-
-    if (block.type === "cta") {
-      if (block.title.trim()) {
-        entries.push({
-          key: `block:${block.id}:title`,
-          text: block.title,
-          context: "call to action title",
-        });
-      }
-
-      if (block.description?.trim()) {
-        entries.push({
-          key: `block:${block.id}:description`,
-          text: block.description,
-          context: "call to action description",
-        });
-      }
-
-      if (block.buttonLabel.trim()) {
-        entries.push({
-          key: `block:${block.id}:buttonLabel`,
-          text: block.buttonLabel,
-          context: "call to action button label",
-        });
-      }
-    }
-
-    if (block.type === "video" && block.title?.trim()) {
-      entries.push({
-        key: `block:${block.id}:title`,
-        text: block.title,
-        context: "video title",
-      });
-    }
-  });
-
-  return entries;
-}
-
-function collectArticleEntries(article: {
-  title: string;
-  excerpt: string | null;
-  seoTitle: string | null;
-  seoDescription: string | null;
-}) {
-  const entries: TranslationEntry[] = [
-    {
-      key: "article:title",
-      text: article.title,
-      context: "article title",
-    },
-  ];
-
-  if (article.excerpt?.trim()) {
-    entries.push({
-      key: "article:excerpt",
-      text: article.excerpt,
-      context: "article excerpt",
-    });
-  }
-
-  if (article.seoTitle?.trim()) {
-    entries.push({
-      key: "article:seoTitle",
-      text: article.seoTitle,
-      context: "SEO title",
-    });
-  }
-
-  if (article.seoDescription?.trim()) {
-    entries.push({
-      key: "article:seoDescription",
-      text: article.seoDescription,
-      context: "SEO description",
-    });
-  }
-
-  return entries;
-}
-
-function applyTranslatedText(block: ArticleBlock, translated: Map<string, string>): ArticleBlock {
-  if (block.type === "heading" || block.type === "paragraph" || block.type === "quote") {
-    return {
-      ...block,
-      text: translated.get(`block:${block.id}:text`) ?? block.text,
-    };
-  }
-
-  if (block.type === "image") {
-    return {
-      ...block,
-      alt: translated.get(`block:${block.id}:alt`) ?? block.alt,
-      caption: translated.get(`block:${block.id}:caption`) ?? block.caption,
-    };
-  }
-
-  if (block.type === "cta") {
-    return {
-      ...block,
-      title: translated.get(`block:${block.id}:title`) ?? block.title,
-      description: translated.get(`block:${block.id}:description`) ?? block.description,
-      buttonLabel: translated.get(`block:${block.id}:buttonLabel`) ?? block.buttonLabel,
-    };
-  }
-
-  if (block.type === "video") {
-    return {
-      ...block,
-      title: translated.get(`block:${block.id}:title`) ?? block.title,
-    };
-  }
-
-  return block;
 }
 
 function getResponseText(payload: Record<string, unknown>) {
@@ -2731,9 +4404,14 @@ function getResponseText(payload: Record<string, unknown>) {
 }
 
 async function translateEntriesWithGpt(params: {
+  sourceLocale: string;
   sourceSlug: string;
-  targetLocale: SupportedLocale;
-  entries: TranslationEntry[];
+  targetLocale: LanguageCode;
+  entries: Array<{
+    key: string;
+    text: string;
+    context: string;
+  }>;
 }) {
   const apiKey = requireOpenAiApiKey();
   const response = await fetch(OPENAI_RESPONSES_URL, {
@@ -2754,7 +4432,7 @@ async function translateEntriesWithGpt(params: {
         {
           role: "user",
           content: JSON.stringify({
-            sourceLocale: SOURCE_LOCALE,
+            sourceLocale: params.sourceLocale,
             targetLocale: params.targetLocale,
             sourceSlug: params.sourceSlug,
             entries: params.entries,
@@ -2803,277 +4481,796 @@ async function translateEntriesWithGpt(params: {
     throw new Error(`OpenAI translation failed with status ${response.status}.`);
   }
 
-  const payload = await response.json() as Record<string, unknown>;
+  const payload = (await response.json()) as Record<string, unknown>;
   const text = getResponseText(payload);
   return JSON.parse(text) as TranslationResponse;
 }
 
-export async function translateArticleFromEnglish(
-  articleId: string,
-  targetLocale: SupportedLocale,
-) {
-  if (targetLocale === SOURCE_LOCALE) {
-    throw new Error("Target locale must be different from the English source locale.");
-  }
-
+export async function translateArticle(articleId: string, targetLocale: LanguageCode) {
   const sourceArticle = await getArticleById(articleId);
   if (!sourceArticle) {
     throw new Error("Source article was not found.");
   }
-
-  if (sourceArticle.locale !== SOURCE_LOCALE) {
-    throw new Error("Only English source articles can be translated in this first version.");
-  }
-
-  const blocks = normalizeArticleBlocks(sourceArticle.blocksJson);
-  const entries = [
-    ...collectArticleEntries(sourceArticle),
-    ...collectBlockEntries(blocks),
-  ];
-
-  if (entries.length === 0) {
-    throw new Error("There is no translatable content in this article yet.");
-  }
-
-  const translatedPayload = await translateEntriesWithGpt({
-    sourceSlug: sourceArticle.slug,
-    targetLocale,
-    entries,
-  });
-
-  const translatedMap = new Map(
-    translatedPayload.translations.map((entry) => [entry.key, entry.text]),
-  );
-
-  const translatedBlocks = blocks.map((block) =>
-    applyTranslatedText(block, translatedMap),
-  );
 
   const existingTranslation = await getArticleByTranslationGroupAndLocale(
     sourceArticle.translationGroupId,
     targetLocale,
   );
 
-  const nextSlug = slugify(translatedPayload.slug || translatedMap.get("article:title") || sourceArticle.slug);
+  const sourceBlocks = normalizeArticleBlocks(sourceArticle.blocksJson);
+  const existingBlocks = existingTranslation
+    ? normalizeArticleBlocks(existingTranslation.blocksJson)
+    : [];
+  const existingByKey = new Map(existingBlocks.map((block) => [block.translationKey, block]));
+
+  const changedBlockKeys = new Set<string>();
+  const staleManualBlocks: string[] = [];
+
+  sourceBlocks.forEach((block) => {
+    const sourceFingerprint = getTranslatableBlockSignature(block);
+    const currentTranslationBlock = existingByKey.get(block.translationKey);
+
+    if (!currentTranslationBlock) {
+      changedBlockKeys.add(block.translationKey);
+      return;
+    }
+
+    if ((currentTranslationBlock.sourceFingerprint ?? null) !== sourceFingerprint) {
+      if (currentTranslationBlock.manuallyEdited) {
+        staleManualBlocks.push(block.translationKey);
+      } else {
+        changedBlockKeys.add(block.translationKey);
+      }
+    }
+  });
+
+  const shouldRetranslateArticleMeta =
+    !existingTranslation ||
+    existingTranslation.translatedFromVersion !== sourceArticle.sourceVersion ||
+    existingTranslation.translationStatus === "NEEDS_UPDATE";
+
+  const entries = [
+    ...(shouldRetranslateArticleMeta ? collectArticleEntries(sourceArticle) : []),
+    ...collectBlockEntries(sourceBlocks, changedBlockKeys),
+  ];
+
+  if (!existingTranslation && entries.length === 0) {
+    throw new Error("There is no translatable content in this article yet.");
+  }
+
+  const translatedPayload =
+    entries.length > 0
+      ? await translateEntriesWithGpt({
+          sourceLocale: sourceArticle.locale,
+          sourceSlug: sourceArticle.slug,
+          targetLocale,
+          entries,
+        })
+      : ({
+          slug: existingTranslation?.slug ?? sourceArticle.slug,
+          translations: [],
+        } satisfies TranslationResponse);
+
+  const translatedMap = new Map(
+    translatedPayload.translations.map((entry) => [entry.key, entry.text]),
+  );
+
+  const translatedBlocks = mergeTranslatedBlocks({
+    sourceBlocks,
+    existingTranslationBlocks: existingBlocks,
+    translatedMap,
+  });
+
+  const nextSlug = slugify(
+    translatedPayload.slug ||
+      translatedMap.get("article:title") ||
+      existingTranslation?.slug ||
+      sourceArticle.slug,
+  );
+
+  const hasPendingManualReview = staleManualBlocks.length > 0;
+  const isNewTranslation = !existingTranslation;
 
   return upsertArticleTranslation({
     existingTranslationId: existingTranslation?.id,
     translationGroupId: sourceArticle.translationGroupId,
     locale: targetLocale,
     slug: nextSlug,
-    title: translatedMap.get("article:title") ?? sourceArticle.title,
-    excerpt: translatedMap.get("article:excerpt") ?? sourceArticle.excerpt,
+    title:
+      translatedMap.get("article:title") ??
+      existingTranslation?.title ??
+      sourceArticle.title,
+    excerpt:
+      translatedMap.get("article:excerpt") ??
+      existingTranslation?.excerpt ??
+      sourceArticle.excerpt,
     coverImage: sourceArticle.coverImage,
-    seoTitle: translatedMap.get("article:seoTitle") ?? sourceArticle.seoTitle,
+    seoTitle:
+      translatedMap.get("article:seoTitle") ??
+      existingTranslation?.seoTitle ??
+      sourceArticle.seoTitle,
     seoDescription:
-      translatedMap.get("article:seoDescription") ?? sourceArticle.seoDescription,
+      translatedMap.get("article:seoDescription") ??
+      existingTranslation?.seoDescription ??
+      sourceArticle.seoDescription,
     blocksJson: translatedBlocks as Prisma.InputJsonValue,
+    sourceVersion: sourceArticle.sourceVersion,
+    translatedFromVersion: hasPendingManualReview
+      ? existingTranslation?.translatedFromVersion ?? sourceArticle.sourceVersion
+      : sourceArticle.sourceVersion,
+    translationStatus: getTranslationStatusAfterSync({
+      isNewTranslation,
+      hasPendingManualReview,
+    }),
   });
 }
 </file>
 
 <file path="services/articles.services.ts">
 import { prisma } from "@/lib/prisma";
-import { Prisma, type ArticleStatus } from "@/generated/prisma/client";
+import {
+  Prisma,
+  type ArticleStatus,
+  type TranslationStatus,
+} from "@/generated/prisma/client";
+import {
+  getDefaultLanguage,
+  getEnabledLanguages,
+  getLanguageByCode,
+  type LanguageCode,
+} from "@/features/languages/config/languages";
+import {
+  type SupportedLocale,
+} from "@/shared/i18n/locales";
 import { getStaticArticleBySlug, getStaticPublishedArticles } from "../model/articles.data";
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import {
+  buildTranslationLocaleSummaries,
+  getTranslatableBlockSignature,
+  getTranslationStatusAfterManualEdit,
+  getTranslationStatusAfterSourceUpdate,
+  type TranslationLocaleSummary,
+} from "../model/article-translation-workflow";
+import {
+  normalizeArticleBlocks,
+  sanitizeArticleBlocks,
+  type ArticleBlock,
+} from "../model/article-blocks";
+
+type TranslationGroupMeta = {
+  sourceLocale: LanguageCode;
+  targetLocales: LanguageCode[];
+};
+
+type PersistedArticle = {
+  id: string;
+  translationGroupId: string;
+  locale: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  coverImage: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  blocksJson: unknown;
+  status: ArticleStatus;
+  translationStatus: TranslationStatus;
+  sourceVersion: number;
+  translatedFromVersion: number | null;
+  publishedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type EditorArticlePayload = {
+  id: string;
+  translationGroupId: string;
+  adminLocale: string;
+  articleLocale: string;
+  sourceLocale: LanguageCode;
+  targetLocales: LanguageCode[];
+  title: string;
+  excerpt: string | null;
+  coverImage: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  blocksJson: unknown;
+  status: ArticleStatus;
+  translationStatus: TranslationStatus;
+  sourceVersion: number;
+  translatedFromVersion: number | null;
+  translations: TranslationLocaleSummary[];
+};
+
+export type ArticleManagerItem = {
+  id: string;
+  translationGroupId: string;
+  sourceLocale: LanguageCode;
+  targetLocales: LanguageCode[];
+  locale: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  coverImage: string | null;
+  status: ArticleStatus;
+  translationStatus: TranslationStatus;
+  sourceVersion: number;
+  translatedFromVersion: number | null;
+  publishedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  translationCount: number;
+  missingLocaleCount: number;
+  translations: TranslationLocaleSummary[];
+};
+
+function haveTextFieldsChanged(current: PersistedArticle, next: UpdateArticleInput) {
+  return (
+    current.title !== next.title ||
+    (current.excerpt ?? "") !== (next.excerpt ?? "") ||
+    (current.coverImage ?? "") !== (next.coverImage ?? "") ||
+    (current.seoTitle ?? "") !== (next.seoTitle ?? "") ||
+    (current.seoDescription ?? "") !== (next.seoDescription ?? "")
+  );
+}
+
+function markManuallyEditedBlocks(currentBlocks: ArticleBlock[], nextBlocks: ArticleBlock[]) {
+  const currentByKey = new Map(currentBlocks.map((block) => [block.translationKey, block]));
+
+  return nextBlocks.map((block) => {
+    const current = currentByKey.get(block.translationKey);
+    if (!current) {
+      return {
+        ...block,
+        manuallyEdited: true,
+      };
+    }
+
+    if (JSON.stringify(current) !== JSON.stringify(block)) {
+      return {
+        ...block,
+        manuallyEdited: true,
+      };
+    }
+
+    return block;
+  });
+}
+
+function attachSourceFingerprints(blocks: ArticleBlock[]) {
+  return blocks.map((block) => ({
+    ...block,
+    sourceFingerprint: getTranslatableBlockSignature(block) ?? undefined,
+  }));
+}
+
+async function getTranslationsForArticle(article: Pick<PersistedArticle, "translationGroupId">) {
+  return (await prisma.article.findMany({
+    where: {
+      translationGroupId: article.translationGroupId,
+    },
+    orderBy: {
+      locale: "asc",
+    },
+  })) as Array<PersistedArticle>;
+}
+
+async function getTranslationGroupMeta(translationGroupId: string): Promise<TranslationGroupMeta | null> {
+  try {
+    const rows = await prisma.$queryRaw<Array<{ sourceLocale: string; targetLocales: unknown }>>(Prisma.sql`
+      SELECT sourceLocale, targetLocales
+      FROM TranslationGroup
+      WHERE id = ${translationGroupId}
+      LIMIT 1
+    `);
+    const row = rows[0];
+    if (!row) return null;
+    const resolvedSourceLocale = getLanguageByCode(row.sourceLocale)?.code;
+    if (!resolvedSourceLocale) {
+      return null;
+    }
+
+    if (Array.isArray(row.targetLocales)) {
+      return {
+        sourceLocale: resolvedSourceLocale,
+        targetLocales: row.targetLocales.filter((item): item is LanguageCode => typeof item === "string"),
+      };
+    }
+
+    if (typeof row.targetLocales === "string") {
+      try {
+        const parsed = JSON.parse(row.targetLocales) as unknown;
+        return {
+          sourceLocale: resolvedSourceLocale,
+          targetLocales: Array.isArray(parsed)
+            ? parsed.filter((item): item is LanguageCode => typeof item === "string")
+            : [],
+        };
+      } catch {
+        return {
+          sourceLocale: resolvedSourceLocale,
+          targetLocales: [],
+        };
+      }
+    }
+
+    return {
+      sourceLocale: resolvedSourceLocale,
+      targetLocales: [],
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function upsertTranslationGroupMeta(translationGroupId: string, meta: TranslationGroupMeta) {
+  try {
+    await prisma.$executeRaw(Prisma.sql`
+      INSERT INTO TranslationGroup (id, sourceLocale, targetLocales, createdAt, updatedAt)
+      VALUES (
+        ${translationGroupId},
+        ${meta.sourceLocale},
+        ${JSON.stringify(meta.targetLocales)},
+        NOW(),
+        NOW()
+      )
+      ON DUPLICATE KEY UPDATE
+        sourceLocale = VALUES(sourceLocale),
+        targetLocales = VALUES(targetLocales),
+        updatedAt = NOW()
+    `);
+  } catch {
+    // The editor can still function with heuristic metadata if this table is unavailable.
+  }
+}
+
+async function resolveTranslationGroupMeta(article: Pick<PersistedArticle, "translationGroupId" | "locale">) {
+  const storedMeta = await getTranslationGroupMeta(article.translationGroupId);
+  const enabledCodes = getEnabledLanguages().map((language) => language.code);
+  const sourceLocale =
+    getLanguageByCode(storedMeta?.sourceLocale)?.code ??
+    getLanguageByCode(article.locale)?.code ??
+    getDefaultLanguage().code;
+  const targetLocales = (
+    storedMeta?.targetLocales ?? enabledCodes.filter((code) => code !== sourceLocale)
+  ).filter((locale): locale is LanguageCode => locale !== sourceLocale && enabledCodes.includes(locale as LanguageCode));
+
+  return {
+    sourceLocale,
+    targetLocales,
+  };
+}
+
+export async function buildEditorArticlePayload(article: PersistedArticle, adminLocale: string): Promise<EditorArticlePayload> {
+  const translations = await getTranslationsForArticle(article);
+  const translationGroup = await resolveTranslationGroupMeta(article);
+
+  return {
+    id: article.id,
+    translationGroupId: article.translationGroupId,
+    adminLocale,
+    articleLocale: article.locale,
+    sourceLocale: translationGroup.sourceLocale,
+    targetLocales: translationGroup.targetLocales,
+    title: article.title,
+    excerpt: article.excerpt,
+    coverImage: article.coverImage,
+    seoTitle: article.seoTitle,
+    seoDescription: article.seoDescription,
+    blocksJson: article.blocksJson,
+    status: article.status,
+    translationStatus: article.translationStatus,
+    sourceVersion: article.sourceVersion,
+    translatedFromVersion: article.translatedFromVersion,
+    translations: buildTranslationLocaleSummaries({
+      locales: getEnabledLanguages().map((language) => language.code),
+      sourceLocale: translationGroup.sourceLocale,
+      translations,
+    }),
+  };
+}
 
 export async function getAllArticles() {
-    return prisma.article.findMany({
-        orderBy: {
-            createdAt: "desc",
-        },
-    });
+  return prisma.article.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
+export async function getArticleManagerItems(): Promise<ArticleManagerItem[]> {
+  const articles = (await prisma.article.findMany({
+    orderBy: {
+      updatedAt: "desc",
+    },
+  })) as PersistedArticle[];
+
+  const translationsByGroup = new Map<string, PersistedArticle[]>();
+  articles.forEach((article) => {
+    const current = translationsByGroup.get(article.translationGroupId) ?? [];
+    current.push(article);
+    translationsByGroup.set(article.translationGroupId, current);
+  });
+
+  return Promise.all(
+    articles.map(async (article) => {
+      const groupArticles = translationsByGroup.get(article.translationGroupId) ?? [];
+      const translationGroup = await resolveTranslationGroupMeta(article);
+      const summaries = buildTranslationLocaleSummaries({
+        locales: getEnabledLanguages().map((language) => language.code),
+        sourceLocale: translationGroup.sourceLocale,
+        translations: groupArticles,
+      });
+
+      return {
+        id: article.id,
+        translationGroupId: article.translationGroupId,
+        sourceLocale: translationGroup.sourceLocale,
+        targetLocales: translationGroup.targetLocales,
+        locale: article.locale,
+        slug: article.slug,
+        title: article.title,
+        excerpt: article.excerpt,
+        coverImage: article.coverImage,
+        status: article.status,
+        translationStatus: article.translationStatus,
+        sourceVersion: article.sourceVersion,
+        translatedFromVersion: article.translatedFromVersion,
+        publishedAt: article.publishedAt,
+        createdAt: article.createdAt,
+        updatedAt: article.updatedAt,
+        translationCount: groupArticles.length,
+        missingLocaleCount: summaries.filter((summary) => summary.isMissing).length,
+        translations: summaries,
+      } satisfies ArticleManagerItem;
+    }),
+  );
 }
 
 export async function getPublishedArticles(locale?: string) {
-    return prisma.article.findMany({
-        where: {
-            status: "PUBLISHED",
-            ...(locale ? { locale } : {}),
-        },
-        orderBy: {
-            publishedAt: "desc",
-        },
-    });
+  return prisma.article.findMany({
+    where: {
+      status: "PUBLISHED",
+      ...(locale ? { locale } : {}),
+    },
+    orderBy: {
+      publishedAt: "desc",
+    },
+  });
 }
 
-export async function getPublicPublishedArticles(
-    locale: SupportedLocale,
-) {
-    const dbArticles = await getPublishedArticles(locale);
-    if (dbArticles.length > 0) {
-        return dbArticles;
-    }
-    return getStaticPublishedArticles(locale);
+export async function getPublicPublishedArticles(locale: SupportedLocale) {
+  const dbArticles = await getPublishedArticles(locale);
+  if (dbArticles.length > 0) {
+    return dbArticles;
+  }
+  return getStaticPublishedArticles(locale);
 }
 
 export async function getArticleById(id: string) {
-    return prisma.article.findUnique({
-        where: {
-            id,
-        },
-    });
+  return (await prisma.article.findUnique({
+    where: {
+      id,
+    },
+  })) as PersistedArticle | null;
 }
 
-export async function getArticleBySlug(
-    slug: string,
-    locale?: string,
-) {
-    const article = await prisma.article.findFirst({
-        where: {
-            slug,
-            status: "PUBLISHED",
-            ...(locale ? { locale } : {}),
-        },
-    });
-    if (!article) {
-        return null;
-    }
-    return article;
+export async function getArticleBySlug(slug: string, locale?: string) {
+  const article = await prisma.article.findFirst({
+    where: {
+      slug,
+      status: "PUBLISHED",
+      ...(locale ? { locale } : {}),
+    },
+  });
+  if (!article) {
+    return null;
+  }
+  return article;
 }
 
-export async function getPublicArticleBySlug(
-    slug: string,
-    locale: SupportedLocale,
-) {
-    const dbArticle = await getArticleBySlug(
-        slug,
-        locale,
-    );
+export async function getPublicArticleBySlug(slug: string, locale: SupportedLocale) {
+  const dbArticle = await getArticleBySlug(slug, locale);
 
-    if (dbArticle) {
-        return dbArticle;
-    }
+  if (dbArticle) {
+    return dbArticle;
+  }
 
-    return getStaticArticleBySlug(
-        slug,
-        locale,
-    );
+  return getStaticArticleBySlug(slug, locale);
 }
 
 export async function createArticle() {
-    return prisma.article.create({
-        data: {
-            translationGroupId: crypto.randomUUID(),
+  const sourceLocale = getDefaultLanguage().code;
+  const translationGroupId = crypto.randomUUID();
+  await upsertTranslationGroupMeta(translationGroupId, {
+    sourceLocale,
+    targetLocales: getEnabledLanguages()
+      .map((language) => language.code)
+      .filter((code) => code !== sourceLocale),
+  });
 
-            locale: "en",
-
-            slug: `article-${Date.now()}`,
-
-            title: "Nouvel article",
-
-            blocksJson: [] as Prisma.InputJsonValue,
-
-            status: "DRAFT",
-        },
-    });
+  return prisma.article.create({
+    data: {
+      translationGroupId,
+      locale: sourceLocale,
+      slug: `article-${Date.now()}`,
+      title: "Nouvel article",
+      blocksJson: [] as Prisma.InputJsonValue,
+      status: "DRAFT",
+      translationStatus: "UP_TO_DATE",
+      sourceVersion: 1,
+      translatedFromVersion: 1,
+    },
+  });
 }
 
-// Update an article by its ID
+export async function duplicateArticle(id: string) {
+  const currentArticle = await getArticleById(id);
+  if (!currentArticle) {
+    throw new Error("Article not found.");
+  }
+  const sourceLocale = getLanguageByCode(currentArticle.locale)?.code ?? getDefaultLanguage().code;
+
+  const translationGroupId = crypto.randomUUID();
+  await upsertTranslationGroupMeta(translationGroupId, {
+    sourceLocale,
+    targetLocales: getEnabledLanguages()
+      .map((language) => language.code)
+      .filter((code) => code !== sourceLocale),
+  });
+
+  return prisma.article.create({
+    data: {
+      translationGroupId,
+      locale: sourceLocale,
+      slug: `${currentArticle.slug}-${Date.now()}`,
+      title: `${currentArticle.title} (Copy)`,
+      excerpt: currentArticle.excerpt,
+      coverImage: currentArticle.coverImage,
+      seoTitle: currentArticle.seoTitle,
+      seoDescription: currentArticle.seoDescription,
+      blocksJson: currentArticle.blocksJson as Prisma.InputJsonValue,
+      status: "DRAFT",
+      translationStatus: "UP_TO_DATE",
+      sourceVersion: 1,
+      translatedFromVersion: 1,
+    },
+  });
+}
+
+export async function updateArticleTranslationSettings(input: {
+  articleId: string;
+  sourceLocale: LanguageCode;
+  targetLocales: LanguageCode[];
+}) {
+  const article = await getArticleById(input.articleId);
+  if (!article) {
+    throw new Error("Article not found.");
+  }
+
+  const targetLocales = input.targetLocales.filter((locale) => locale !== input.sourceLocale);
+  await upsertTranslationGroupMeta(article.translationGroupId, {
+    sourceLocale: input.sourceLocale,
+    targetLocales,
+  });
+
+  return article;
+}
+
 type UpdateArticleInput = {
-    title?: string;
-    excerpt?: string;
-    coverImage?: string | null;
-    seoTitle?: string | null;
-    seoDescription?: string | null;
-    blocksJson?: Prisma.InputJsonValue;
-}
+  title?: string;
+  excerpt?: string;
+  coverImage?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  blocksJson?: Prisma.InputJsonValue;
+};
 
-export async function updateArticle(
-    id: string,
-    data: UpdateArticleInput
-){
+export async function updateArticle(id: string, data: UpdateArticleInput) {
+  const currentArticle = await getArticleById(id);
+  if (!currentArticle) {
+    throw new Error("Article not found.");
+  }
+  const translationGroup = await resolveTranslationGroupMeta(currentArticle);
+
+  const nextBlocks = sanitizeArticleBlocks(data.blocksJson ?? currentArticle.blocksJson).blocks;
+  const currentBlocks = normalizeArticleBlocks(currentArticle.blocksJson);
+  const blocksChanged = JSON.stringify(currentBlocks) !== JSON.stringify(nextBlocks);
+  const textFieldsChanged = haveTextFieldsChanged(currentArticle, {
+    title: data.title ?? currentArticle.title,
+    excerpt: data.excerpt ?? currentArticle.excerpt,
+    coverImage: data.coverImage ?? currentArticle.coverImage,
+    seoTitle: data.seoTitle ?? currentArticle.seoTitle,
+    seoDescription: data.seoDescription ?? currentArticle.seoDescription,
+    blocksJson: (data.blocksJson ?? currentArticle.blocksJson) as Prisma.InputJsonValue,
+  });
+  const contentChanged = blocksChanged || textFieldsChanged;
+
+  if (!contentChanged) {
     return prisma.article.update({
-        where :{
-            id,
+      where: {
+        id,
+      },
+      data: {
+        title: data.title,
+        excerpt: data.excerpt,
+        coverImage: data.coverImage,
+        seoTitle: data.seoTitle,
+        seoDescription: data.seoDescription,
+        blocksJson: nextBlocks as Prisma.InputJsonValue,
+      },
+    });
+  }
+
+  if (currentArticle.locale === translationGroup.sourceLocale) {
+    return prisma.$transaction(async (tx) => {
+      const updatedArticle = await tx.article.update({
+        where: {
+          id,
         },
-        data
-    })
+        data: {
+          title: data.title,
+          excerpt: data.excerpt,
+          coverImage: data.coverImage,
+          seoTitle: data.seoTitle,
+          seoDescription: data.seoDescription,
+          blocksJson: attachSourceFingerprints(nextBlocks) as Prisma.InputJsonValue,
+          sourceVersion: {
+            increment: 1,
+          },
+          translationStatus: getTranslationStatusAfterSourceUpdate({
+            articleLocale: currentArticle.locale,
+            sourceLocale: translationGroup.sourceLocale,
+          }),
+          translatedFromVersion: currentArticle.sourceVersion + 1,
+        },
+      });
+
+      await tx.article.updateMany({
+        where: {
+          translationGroupId: currentArticle.translationGroupId,
+          NOT: {
+            id,
+          },
+        },
+        data: {
+          translationStatus: "NEEDS_UPDATE",
+        },
+      });
+
+      return updatedArticle;
+    });
+  }
+
+  const manuallyEditedBlocks = markManuallyEditedBlocks(currentBlocks, nextBlocks);
+
+  return prisma.article.update({
+    where: {
+      id,
+    },
+    data: {
+      title: data.title,
+      excerpt: data.excerpt,
+      coverImage: data.coverImage,
+      seoTitle: data.seoTitle,
+      seoDescription: data.seoDescription,
+      blocksJson: manuallyEditedBlocks as Prisma.InputJsonValue,
+      translationStatus: getTranslationStatusAfterManualEdit({
+        articleLocale: currentArticle.locale,
+        sourceLocale: translationGroup.sourceLocale,
+        currentStatus: currentArticle.translationStatus,
+      }),
+    },
+  });
 }
 
-export async function getArticleByTranslationGroupAndLocale(
-    translationGroupId: string,
-    locale: string,
-) {
-    return prisma.article.findFirst({
-        where: {
-            translationGroupId,
-            locale,
-        },
-    });
+export async function getArticleByTranslationGroupAndLocale(translationGroupId: string, locale: string) {
+  return (await prisma.article.findFirst({
+    where: {
+      translationGroupId,
+      locale,
+    },
+  })) as PersistedArticle | null;
+}
+
+export async function getArticleTranslations(translationGroupId: string) {
+  return (await prisma.article.findMany({
+    where: {
+      translationGroupId,
+    },
+    orderBy: {
+      locale: "asc",
+    },
+  })) as PersistedArticle[];
 }
 
 type UpsertArticleTranslationInput = {
-    existingTranslationId?: string;
-    translationGroupId: string;
-    locale: string;
-    slug: string;
-    title: string;
-    excerpt: string | null;
-    coverImage: string | null;
-    seoTitle: string | null;
-    seoDescription: string | null;
-    blocksJson: Prisma.InputJsonValue;
-}
+  existingTranslationId?: string;
+  translationGroupId: string;
+  locale: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  coverImage: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  blocksJson: Prisma.InputJsonValue;
+  sourceVersion: number;
+  translatedFromVersion: number;
+  translationStatus: TranslationStatus;
+};
 
-export async function upsertArticleTranslation(
-    input: UpsertArticleTranslationInput,
-) {
-    if (input.existingTranslationId) {
-        return prisma.article.update({
-            where: {
-                id: input.existingTranslationId,
-            },
-            data: {
-                slug: input.slug,
-                title: input.title,
-                excerpt: input.excerpt,
-                coverImage: input.coverImage,
-                seoTitle: input.seoTitle,
-                seoDescription: input.seoDescription,
-                blocksJson: input.blocksJson,
-            },
-        });
-    }
-
-    return prisma.article.create({
-        data: {
-            translationGroupId: input.translationGroupId,
-            locale: input.locale,
-            slug: input.slug,
-            title: input.title,
-            excerpt: input.excerpt,
-            coverImage: input.coverImage,
-            seoTitle: input.seoTitle,
-            seoDescription: input.seoDescription,
-            blocksJson: input.blocksJson,
-            status: "DRAFT",
-        },
-    });
-}
-
-export async function updateArticleStatus(
-    id: string,
-    status: ArticleStatus,
-) {
+export async function upsertArticleTranslation(input: UpsertArticleTranslationInput) {
+  if (input.existingTranslationId) {
     return prisma.article.update({
-        where: {
-            id,
-        },
-        data: {
-            status,
-            publishedAt: status === "PUBLISHED" ? new Date() : null,
-        },
+      where: {
+        id: input.existingTranslationId,
+      },
+      data: {
+        slug: input.slug,
+        title: input.title,
+        excerpt: input.excerpt,
+        coverImage: input.coverImage,
+        seoTitle: input.seoTitle,
+        seoDescription: input.seoDescription,
+        blocksJson: input.blocksJson,
+        sourceVersion: input.sourceVersion,
+        translatedFromVersion: input.translatedFromVersion,
+        translationStatus: input.translationStatus,
+      },
     });
+  }
+
+  return prisma.article.create({
+    data: {
+      translationGroupId: input.translationGroupId,
+      locale: input.locale,
+      slug: input.slug,
+      title: input.title,
+      excerpt: input.excerpt,
+      coverImage: input.coverImage,
+      seoTitle: input.seoTitle,
+      seoDescription: input.seoDescription,
+      blocksJson: input.blocksJson,
+      status: "DRAFT",
+      translationStatus: input.translationStatus,
+      sourceVersion: input.sourceVersion,
+      translatedFromVersion: input.translatedFromVersion,
+    },
+  });
+}
+
+export async function updateArticleStatus(id: string, status: ArticleStatus) {
+  return prisma.article.update({
+    where: {
+      id,
+    },
+    data: {
+      status,
+      publishedAt: status === "PUBLISHED" ? new Date() : null,
+    },
+  });
 }
 
 export async function deleteArticle(id: string) {
-    return prisma.article.delete({
-        where: {
-            id,
-        },
-    });
+  return prisma.article.delete({
+    where: {
+      id,
+    },
+  });
+}
+
+export async function getOrCreateArticleTranslationVariant(articleId: string, targetLocale: LanguageCode) {
+  const currentArticle = await getArticleById(articleId);
+  if (!currentArticle) {
+    throw new Error("Article not found.");
+  }
+
+  const variant = await getArticleByTranslationGroupAndLocale(currentArticle.translationGroupId, targetLocale);
+  if (variant) {
+    return variant;
+  }
+
+  return null;
 }
 </file>
 

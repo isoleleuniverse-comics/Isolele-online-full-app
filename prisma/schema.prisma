@@ -11,54 +11,71 @@ generator client {
 datasource db {
   provider = "mysql"
 }
+model Language {
+  code        String @id
+  name        String
+  nativeName  String
 
-enum ArticleStatus {
-  DRAFT
-  REVIEW
-  PUBLISHED
-  ARCHIVED
+  enabled     Boolean @default(true)
+  isDefault   Boolean @default(false)
+
+  createdAt   DateTime @default(now())
+
+  articles    Article[]
 }
 
-enum TranslationStatus {
-  DRAFT
-  TRANSLATED
-  REVIEWING
-  UP_TO_DATE
-  NEEDS_UPDATE
+model TranslationGroup {
+  id String @id @default(cuid())
+
+  sourceLocale String
+
+  targetLocales Json
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  articles Article[]
 }
 
 model Article {
-  id                 String   @id @default(cuid())
+  id String @id @default(cuid())
 
   translationGroupId String
+  translationGroup TranslationGroup
+    @relation(fields: [translationGroupId], references: [id])
 
-  locale             String
+  locale String
+  language Language
+    @relation(fields: [locale], references: [code])
 
-  slug               String   @unique
+  slug String
 
-  title              String
-  excerpt            String?
+  title String
+  excerpt String?
 
-  coverImage         String?
+  coverImage String?
 
-  blocksJson         Json
+  blocksJson Json
 
-  status             ArticleStatus @default(DRAFT)
-  translationStatus  TranslationStatus @default(UP_TO_DATE)
-  sourceVersion      Int               @default(1)
+  status ArticleStatus @default(DRAFT)
+
+  translationStatus TranslationStatus
+    @default(UP_TO_DATE)
+
+  sourceVersion Int @default(1)
   translatedFromVersion Int?
 
-  seoTitle           String?
-  seoDescription     String?
+  seoTitle String?
+  seoDescription String?
 
-  publishedAt        DateTime?
+  publishedAt DateTime?
 
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@index([translationGroupId])
+  @@unique([translationGroupId, locale])
+  @@unique([locale, slug])
+
   @@index([locale])
   @@index([status])
-  @@index([translationStatus])
-  @@unique([translationGroupId, locale])
 }

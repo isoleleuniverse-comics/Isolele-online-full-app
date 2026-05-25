@@ -4,10 +4,18 @@ import { useId, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   deleteArticleAction,
+  duplicateArticleAction,
+  translateArticleAction,
   switchArticleTranslationAction,
+  updateArticleTranslationSettingsAction,
   updateArticleAction,
   updateArticleStatusAction,
 } from "@/features/articles/actions/update-artilces";
+import {
+  shouldShowEditorPreview,
+  shouldShowEditorSidebar,
+  shouldShowTranslationWorkspace,
+} from "@/features/articles/model/article-editor-ui";
 import {
   duplicateArticleBlock,
   normalizeArticleBlocksDetailed,
@@ -18,15 +26,17 @@ import {
   getTranslationStatusAfterManualEdit,
   type TranslationLocaleSummary,
 } from "@/features/articles/model/article-translation-workflow";
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import { getEnabledLanguages, type LanguageCode } from "@/features/languages/config/languages";
 import { cn } from "@/shared/lib/utils";
 import { ArticleEditorProvider } from "./articles-editor-context";
 import { ArticlesEditorCanvas } from "./articles-editor-canvas";
 import { ArticlesEditorPreview } from "./articles-editor-preview";
 import { ArticlesEditorSidebar } from "./articles-editor-sidebar";
+import { ArticlesEditorTranslationPanel } from "./articles-editor-translation-panel";
 import { ArticlesEditorTopbar } from "./articles-editor-topbar";
 import type {
   ArticleEditorContextValue,
+  ArticleEditorPreviewMode,
   ArticleEditorProps,
   ArticleEditorSidebarPanel,
 } from "./articles-editor-types";
@@ -37,6 +47,8 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
   const [articleId, setArticleId] = useState(props.id);
   const [translationGroupId, setTranslationGroupId] = useState(props.translationGroupId);
   const [articleLocale, setArticleLocale] = useState(props.articleLocale);
+  const [sourceLocale, setSourceLocale] = useState(props.sourceLocale);
+  const [targetLocales, setTargetLocales] = useState(props.targetLocales);
   const [translationStatus, setTranslationStatus] = useState(props.initialTranslationStatus);
   const [sourceVersion, setSourceVersion] = useState(props.initialSourceVersion);
   const [translatedFromVersion, setTranslatedFromVersion] = useState(props.initialTranslatedFromVersion);
@@ -49,7 +61,7 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
   const [status, setStatus] = useState(props.initialStatus);
   const [blocks, setBlocks] = useState(props.initialBlocks);
   const [warnings, setWarnings] = useState(props.initialWarnings);
-  const [previewMode, setPreviewMode] = useState<"edit" | "split" | "preview">("split");
+  const [previewMode, setPreviewMode] = useState<ArticleEditorPreviewMode>("split");
   const [activeSidebarPanel, setActiveSidebarPanel] =
     useState<ArticleEditorSidebarPanel>("structure");
   const [focusedBlockId, setFocusedBlockId] = useState<string | null>(props.initialBlocks[0]?.id ?? null);
@@ -60,12 +72,16 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
   const [isDeleting, startDeleteTransition] = useTransition();
   const [isUploading, startUploadTransition] = useTransition();
   const [isSwitchingLocale, startSwitchLocaleTransition] = useTransition();
+  const [isTranslating, startTranslateTransition] = useTransition();
+  const [isDuplicating, startDuplicateTransition] = useTransition();
   const coverImageInputId = useId();
 
   function updateTranslationMetadata(payload: {
     id: string;
     translationGroupId: string;
     articleLocale: string;
+    sourceLocale: LanguageCode;
+    targetLocales: LanguageCode[];
     translationStatus: ArticleEditorProps["initialTranslationStatus"];
     sourceVersion: number;
     translatedFromVersion: number | null;
@@ -74,6 +90,8 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
     setArticleId(payload.id);
     setTranslationGroupId(payload.translationGroupId);
     setArticleLocale(payload.articleLocale);
+    setSourceLocale(payload.sourceLocale);
+    setTargetLocales(payload.targetLocales);
     setTranslationStatus(payload.translationStatus);
     setSourceVersion(payload.sourceVersion);
     setTranslatedFromVersion(payload.translatedFromVersion);
@@ -84,6 +102,8 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
     id: string;
     translationGroupId: string;
     articleLocale: string;
+    sourceLocale: LanguageCode;
+    targetLocales: LanguageCode[];
     title: string;
     excerpt: string | null;
     coverImage: string | null;
@@ -112,7 +132,13 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
   }
 
   function markTranslationAsReviewing() {
-    setTranslationStatus((current) => getTranslationStatusAfterManualEdit(articleLocale, current));
+    setTranslationStatus((current) =>
+      getTranslationStatusAfterManualEdit({
+        articleLocale,
+        sourceLocale,
+        currentStatus: current,
+      }),
+    );
   }
 
   function setTitle(value: string) {
@@ -298,7 +324,7 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
     });
   }
 
-  async function switchLocale(locale: SupportedLocale) {
+  async function switchLocale(locale: LanguageCode) {
     if (locale === articleLocale) return;
 
     startSwitchLocaleTransition(async () => {
@@ -313,11 +339,79 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
     });
   }
 
+  function selectSourceLocale(locale: LanguageCode) {
+    startSaveTransition(async () => {
+      const nextTargetLocales = getEnabledLanguages()
+        .map((language) => language.code)
+        .filter((code) => code !== locale);
+      const payload = await updateArticleTranslationSettingsAction({
+        id: articleId,
+        adminLocale: props.locale,
+        sourceLocale: locale,
+        targetLocales: nextTargetLocales,
+      });
+      applyEditorPayload(payload);
+      setActivityMessage(`Source language set to ${locale.toUpperCase()}.`);
+    });
+  }
+
+  function toggleTargetLocale(locale: LanguageCode) {
+    startSaveTransition(async () => {
+      const nextTargetLocales = targetLocales.includes(locale)
+        ? targetLocales.filter((item) => item !== locale)
+        : [...targetLocales, locale];
+      const payload = await updateArticleTranslationSettingsAction({
+        id: articleId,
+        adminLocale: props.locale,
+        sourceLocale,
+        targetLocales: nextTargetLocales,
+      });
+      applyEditorPayload(payload);
+      setActivityMessage(`Target languages updated.`);
+    });
+  }
+
+  function createTranslation(locale: LanguageCode) {
+    startTranslateTransition(async () => {
+      const sourceArticleId =
+        articleLocale === sourceLocale
+          ? articleId
+          : (translations.find((translation) => translation.locale === sourceLocale)?.articleId ?? null);
+
+      if (!sourceArticleId) {
+        setActivityMessage("Select a source version that already exists before translating.");
+        return;
+      }
+
+      const payload = await translateArticleAction({
+        id: sourceArticleId,
+        adminLocale: props.locale,
+        targetLocale: locale,
+      });
+      applyEditorPayload(payload);
+      setActivityMessage(`Version ${locale.toUpperCase()} creee.`);
+    });
+  }
+
+  function duplicateArticle() {
+    startDuplicateTransition(async () => {
+      const payload = await duplicateArticleAction({
+        id: articleId,
+        locale: props.locale,
+      });
+      applyEditorPayload(payload);
+      window.history.replaceState(null, "", `/${props.locale}/admin/articles/${payload.id}`);
+      setActivityMessage("Copie de l'article prete.");
+    });
+  }
+
   const contextValue: ArticleEditorContextValue = {
     id: articleId,
     translationGroupId,
     locale: props.locale,
     articleLocale,
+    sourceLocale,
+    targetLocales,
     translationStatus,
     sourceVersion,
     translatedFromVersion,
@@ -347,6 +441,8 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
     isDeleting,
     isUploading,
     isSwitchingLocale,
+    isTranslating,
+    isDuplicating,
     uploadError,
     activityMessage,
     coverImageInputId,
@@ -354,6 +450,10 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
     changeStatus,
     deleteArticle,
     switchLocale,
+    selectSourceLocale,
+    toggleTargetLocale,
+    createTranslation,
+    duplicateArticle,
     triggerCoverImagePicker: () => {
       document.getElementById(coverImageInputId)?.click();
       setActiveSidebarPanel("media");
@@ -374,19 +474,25 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
           <ArticlesEditorTopbar />
 
           <div className="flex min-h-0 flex-1 overflow-hidden">
-            <ArticlesEditorSidebar />
+            {shouldShowEditorSidebar(previewMode) ? <ArticlesEditorSidebar /> : null}
 
             <main className="flex min-h-0 flex-1 overflow-hidden bg-[#181818]">
-              <div
-                className={cn(
-                  "flex min-h-0 flex-1 overflow-hidden",
-                  previewMode === "split" &&
-                    "xl:grid xl:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)]",
-                )}
-              >
-                <ArticlesEditorCanvas />
-                <ArticlesEditorPreview />
-              </div>
+              {shouldShowTranslationWorkspace(previewMode) ? (
+                <div className="flex min-h-0 flex-1 overflow-y-auto p-4 lg:p-6">
+                  <ArticlesEditorTranslationPanel />
+                </div>
+              ) : (
+                <div
+                  className={cn(
+                    "flex min-h-0 flex-1 overflow-hidden transition-all duration-300",
+                    previewMode === "split" &&
+                      "xl:grid xl:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)]",
+                  )}
+                >
+                  <ArticlesEditorCanvas />
+                  {shouldShowEditorPreview(previewMode) ? <ArticlesEditorPreview /> : null}
+                </div>
+              )}
             </main>
           </div>
         </div>

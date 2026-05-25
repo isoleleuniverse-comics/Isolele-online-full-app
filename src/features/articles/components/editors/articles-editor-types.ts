@@ -1,10 +1,11 @@
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 import type { ArticleStatus, TranslationStatus } from "@/generated/prisma/client";
+import type { LanguageCode } from "@/features/languages/config/languages";
 import type { ArticleBlock, ArticleBlockType } from "../../model/article-blocks";
+import type { ArticleEditorWorkspaceMode } from "../../model/article-editor-ui";
 import type { TranslationLocaleSummary } from "../../model/article-translation-workflow";
-import type { SupportedLocale } from "@/shared/i18n/locales";
 
-export type ArticleEditorPreviewMode = "edit" | "split" | "preview";
+export type ArticleEditorPreviewMode = ArticleEditorWorkspaceMode;
 export type ArticleEditorSidebarPanel = "structure" | "seo" | "media";
 
 export type ArticleEditorProps = {
@@ -12,6 +13,8 @@ export type ArticleEditorProps = {
     translationGroupId: string;
     locale: string;
     articleLocale: string;
+    sourceLocale: LanguageCode;
+    targetLocales: LanguageCode[];
     initialTitle: string;
     initialExcerpt: string;
     initialCoverImage: string | null;
@@ -31,6 +34,8 @@ export type ArticleEditorContextValue = {
     translationGroupId: string;
     locale: string;
     articleLocale: string;
+    sourceLocale: LanguageCode;
+    targetLocales: LanguageCode[];
     translationStatus: TranslationStatus;
     sourceVersion: number;
     translatedFromVersion: number | null;
@@ -60,13 +65,19 @@ export type ArticleEditorContextValue = {
     isDeleting: boolean;
     isUploading: boolean;
     isSwitchingLocale: boolean;
+    isTranslating: boolean;
+    isDuplicating: boolean;
     uploadError: string | null;
     activityMessage: string | null;
     coverImageInputId: string;
     saveArticle: () => void;
     changeStatus: (value: ArticleStatus) => void;
     deleteArticle: () => void;
-    switchLocale: (locale: SupportedLocale) => Promise<void>;
+    switchLocale: (locale: LanguageCode) => Promise<void>;
+    selectSourceLocale: (locale: LanguageCode) => void;
+    toggleTargetLocale: (locale: LanguageCode) => void;
+    createTranslation: (locale: LanguageCode) => void;
+    duplicateArticle: () => void;
     triggerCoverImagePicker: () => void;
     addBlock: (type: ArticleBlockType, index?: number) => void;
     duplicateBlock: (id: string) => void;
