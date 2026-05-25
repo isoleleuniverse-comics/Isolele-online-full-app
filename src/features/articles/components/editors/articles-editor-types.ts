@@ -1,12 +1,15 @@
 import type { Dispatch, ReactNode, SetStateAction } from "react";
-import type { ArticleStatus } from "@/generated/prisma";
+import type { ArticleStatus, TranslationStatus } from "@/generated/prisma/client";
 import type { ArticleBlock, ArticleBlockType } from "../../model/article-blocks";
+import type { TranslationLocaleSummary } from "../../model/article-translation-workflow";
+import type { SupportedLocale } from "@/shared/i18n/locales";
 
 export type ArticleEditorPreviewMode = "edit" | "split" | "preview";
 export type ArticleEditorSidebarPanel = "structure" | "seo" | "media";
 
 export type ArticleEditorProps = {
     id: string;
+    translationGroupId: string;
     locale: string;
     articleLocale: string;
     initialTitle: string;
@@ -16,13 +19,22 @@ export type ArticleEditorProps = {
     initialSeoDescription: string | null;
     initialBlocks: ArticleBlock[];
     initialStatus: ArticleStatus;
+    initialTranslationStatus: TranslationStatus;
+    initialSourceVersion: number;
+    initialTranslatedFromVersion: number | null;
+    initialTranslations: TranslationLocaleSummary[];
     initialWarnings: string[];
 };
 
 export type ArticleEditorContextValue = {
     id: string;
+    translationGroupId: string;
     locale: string;
     articleLocale: string;
+    translationStatus: TranslationStatus;
+    sourceVersion: number;
+    translatedFromVersion: number | null;
+    translations: TranslationLocaleSummary[];
     title: string;
     setTitle: (value: string) => void;
     excerpt: string;
@@ -47,12 +59,14 @@ export type ArticleEditorContextValue = {
     isStatusPending: boolean;
     isDeleting: boolean;
     isUploading: boolean;
+    isSwitchingLocale: boolean;
     uploadError: string | null;
     activityMessage: string | null;
     coverImageInputId: string;
     saveArticle: () => void;
     changeStatus: (value: ArticleStatus) => void;
     deleteArticle: () => void;
+    switchLocale: (locale: SupportedLocale) => Promise<void>;
     triggerCoverImagePicker: () => void;
     addBlock: (type: ArticleBlockType, index?: number) => void;
     duplicateBlock: (id: string) => void;

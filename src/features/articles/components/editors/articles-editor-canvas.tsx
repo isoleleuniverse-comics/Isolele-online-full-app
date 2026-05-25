@@ -1,6 +1,7 @@
 "use client";
 
 import { ImagePlus } from "lucide-react";
+import { AutoResizeTextarea } from "@/components/editor/auto-resize-textarea";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/shared/lib/utils";
@@ -74,18 +75,20 @@ export function ArticlesEditorCanvas() {
                     className="overflow-hidden rounded-xl border border-white/10 bg-[#f7f3ec] text-[#2b2824]"
                 >
                     <div className="space-y-6 p-6 lg:p-8">
-                        <Textarea
+                        <AutoResizeTextarea
                             value={title}
                             onChange={(event) => setTitle(event.target.value)}
                             placeholder="Titre de l'article"
-                            className="min-h-24 resize-none border-0 bg-transparent px-0 py-0 text-5xl font-semibold leading-[1.02] text-[#3a342c] shadow-none focus-visible:ring-0"
+                            rows={1}
+                            className="h-auto overflow-hidden resize-none border-0 bg-transparent px-0 py-0 text-5xl font-semibold leading-[1.02] text-[#2b2824] placeholder:text-[#b8afa2] shadow-none outline-none focus:outline-none"
                         />
 
-                        <Textarea
+                        <AutoResizeTextarea
                             value={excerpt}
                             onChange={(event) => setExcerpt(event.target.value)}
                             placeholder="Resume editoriale, intention ou promesse de lecture"
-                            className="min-h-20 resize-none border-0 bg-transparent px-0 py-0 text-lg leading-8 text-[#6c6458] shadow-none focus-visible:ring-0"
+                            rows={1}
+                            className="h-auto overflow-hidden resize-none border-0 bg-transparent px-0 py-0 text-lg leading-8 text-[#6c6458] placeholder:text-[#b8afa2] shadow-none outline-none focus:outline-none"
                         />
 
                         {coverImage ? (
@@ -147,11 +150,11 @@ export function ArticlesEditorCanvas() {
                                 value={seoDescription}
                                 onChange={(event) => setSeoDescription(event.target.value)}
                                 placeholder="Legende / description courte"
-                                className="border-[#d6cec1] bg-white text-[#2b2824]"
+                                className="border-[#d6cec1] bg-white text-[#2b2824] placeholder:text-[#b8afa2]"
                             />
                             <Input
                                 placeholder="Credits / source media"
-                                className="border-[#d6cec1] bg-white text-[#2b2824]"
+                                className="border-[#d6cec1] bg-white text-[#2b2824] placeholder:text-[#b8afa2]"
                             />
                         </div>
                     </div>
@@ -190,7 +193,7 @@ export function ArticlesEditorCanvas() {
                                     value={seoTitle}
                                     onChange={(event) => setSeoTitle(event.target.value)}
                                     placeholder="Titre SEO"
-                                    className="border-white/10 bg-[#191919] text-[#f4efe7]"
+                                    className="border-white/10 bg-[#191919] text-[#f4efe7] placeholder:text-[#b8afa2]"
                                 />
                             </div>
 
@@ -205,7 +208,7 @@ export function ArticlesEditorCanvas() {
                                     value={seoDescription}
                                     onChange={(event) => setSeoDescription(event.target.value)}
                                     placeholder="Description SEO"
-                                    className="min-h-28 resize-y border-white/10 bg-[#191919] text-[#f4efe7]"
+                                    className="resize-y border-white/10 bg-[#191919] text-[#f4efe7] placeholder:text-[#b8afa2]"
                                 />
                             </div>
                         </div>

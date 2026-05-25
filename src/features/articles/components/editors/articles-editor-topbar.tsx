@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import type { ArticleStatus } from "@/generated/prisma";
+import type { ArticleStatus, TranslationStatus } from "@/generated/prisma/client";
 import { Archive, ChevronDown, Eye, LayoutPanelTop, PencilLine, Save, Send, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LOCALE_LABELS } from "@/shared/i18n/locales";
 import { cn } from "@/shared/lib/utils";
 import { useArticleEditor } from "./articles-editor-context";
 
@@ -20,10 +21,21 @@ function getStatusLabel(status: ArticleStatus) {
     return "Archive";
 }
 
+function getTranslationStatusLabel(status: TranslationStatus | "MISSING") {
+    if (status === "TRANSLATED") return "Translated";
+    if (status === "REVIEWING") return "Reviewing";
+    if (status === "UP_TO_DATE") return "Up to date";
+    if (status === "NEEDS_UPDATE") return "Needs update";
+    if (status === "DRAFT") return "Draft";
+    return "Missing";
+}
+
 export function ArticlesEditorTopbar() {
     const [publishMenuOpen, setPublishMenuOpen] = useState(false);
     const {
         articleLocale,
+        translationStatus,
+        translations,
         title,
         status,
         previewMode,
@@ -31,9 +43,11 @@ export function ArticlesEditorTopbar() {
         saveArticle,
         changeStatus,
         deleteArticle,
+        switchLocale,
         isSaving,
         isStatusPending,
         isDeleting,
+        isSwitchingLocale,
     } = useArticleEditor();
 
     return (
@@ -49,6 +63,9 @@ export function ArticlesEditorTopbar() {
                         </span>
                         <span className="rounded-md border border-[#574827] bg-[#2a2417] px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-[#d7be7e]">
                             {getStatusLabel(status)}
+                        </span>
+                        <span className="rounded-md border border-[#35503c] bg-[#1d2d22] px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-[#9fd3ab]">
+                            {getTranslationStatusLabel(translationStatus)}
                         </span>
                     </div>
                 </div>
@@ -79,6 +96,33 @@ export function ArticlesEditorTopbar() {
                 </div>
 
                 <div className="flex flex-wrap items-center justify-start gap-2 xl:justify-end">
+                    <div className="flex flex-wrap items-center gap-2 rounded-md border border-white/10 bg-[#202020] px-2 py-2">
+                        {translations.map((translation) => (
+                            <button
+                                key={translation.locale}
+                                type="button"
+                                onClick={() => {
+                                    void switchLocale(translation.locale);
+                                }}
+                                disabled={isSwitchingLocale}
+                                className={cn(
+                                    "rounded-md px-3 py-2 text-left transition",
+                                    translation.locale === articleLocale
+                                        ? "bg-[#d2b26d] text-[#16120d]"
+                                        : "bg-transparent text-[#cbbfb0] hover:bg-white/5 hover:text-[#f4efe7]",
+                                )}
+                            >
+                                <span className="block text-[11px] uppercase tracking-[0.18em]">
+                                    {translation.locale}
+                                </span>
+                                <span className="block text-[11px] text-current/80">
+                                    {translation.isMissing
+                                        ? `${LOCALE_LABELS[translation.locale]} Missing`
+                                        : `${LOCALE_LABELS[translation.locale]} ${getTranslationStatusLabel(translation.status)}`}
+                                </span>
+                            </button>
+                        ))}
+                    </div>
                     <Button
                         type="button"
                         variant="outline"

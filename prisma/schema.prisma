@@ -19,6 +19,14 @@ enum ArticleStatus {
   ARCHIVED
 }
 
+enum TranslationStatus {
+  DRAFT
+  TRANSLATED
+  REVIEWING
+  UP_TO_DATE
+  NEEDS_UPDATE
+}
+
 model Article {
   id                 String   @id @default(cuid())
 
@@ -36,6 +44,9 @@ model Article {
   blocksJson         Json
 
   status             ArticleStatus @default(DRAFT)
+  translationStatus  TranslationStatus @default(UP_TO_DATE)
+  sourceVersion      Int               @default(1)
+  translatedFromVersion Int?
 
   seoTitle           String?
   seoDescription     String?
@@ -48,4 +59,6 @@ model Article {
   @@index([translationGroupId])
   @@index([locale])
   @@index([status])
+  @@index([translationStatus])
+  @@unique([translationGroupId, locale])
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ArticleBlock, ArticleBlockType } from "@/features/articles/model/article-blocks";
+import type { ArticleBlockType } from "@/features/articles/model/article-blocks";
 import { ArrowDown, ArrowUp, Heading1, ImageIcon, Pilcrow, Quote, Copy, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/shared/lib/utils";
@@ -15,17 +15,6 @@ function getBlockIcon(type: ArticleBlockType) {
     if (type === "image") return <ImageIcon className="h-4 w-4" />;
     if (type === "quote") return <Quote className="h-4 w-4" />;
     return <Pilcrow className="h-4 w-4" />;
-}
-
-function getBlockTitle(block: ArticleBlock) {
-    if (block.type === "heading") return block.text.trim() || "Titre";
-    if (block.type === "paragraph") return block.text.trim().slice(0, 72) || "Paragraphe";
-    if (block.type === "image") return block.caption?.trim() || "Image de contenu";
-    if (block.type === "quote") return block.text.trim().slice(0, 72) || "Citation";
-    if (block.type === "video") return block.title?.trim() || "Video";
-    if (block.type === "cta") return block.title.trim() || "CTA";
-    if (block.type === "divider") return "Separateur";
-    return "Bloc preserve";
 }
 
 function BlockInserter({ index }: { index: number }) {
@@ -90,9 +79,6 @@ export function ArticlesEditorBlockList() {
                                 <div>
                                     <p className="text-[11px] uppercase tracking-[0.18em] text-[#8b7e6a]">
                                         {registry.label}
-                                    </p>
-                                    <p className="mt-2 text-sm leading-6 text-[#4f493f]">
-                                        {getBlockTitle(block)}
                                     </p>
                                 </div>
 

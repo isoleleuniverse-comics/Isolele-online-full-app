@@ -40,29 +40,191 @@ The content is organized as follows:
 </file_summary>
 
 <directory_structure>
-articles-editor-block-list.tsx
-articles-editor-canvas.tsx
-articles-editor-context.tsx
-articles-editor-preview.tsx
-articles-editor-shell.tsx
-articles-editor-sidebar.tsx
-articles-editor-topbar.tsx
-articles-editor-types.ts
-blocks/article-block-registry.ts
-blocks/heading/heading-editor.tsx
-blocks/image/image-editor.tsx
-blocks/paragraph/paragraph-editor.tsx
-blocks/quote/quote-editor.tsx
-blocks/unsupported/unsupported-editor.tsx
+actions/update-artilces.ts
+components/articles-editors.tsx
+components/editors/articles-editor-block-list.tsx
+components/editors/articles-editor-canvas.tsx
+components/editors/articles-editor-context.tsx
+components/editors/articles-editor-preview.tsx
+components/editors/articles-editor-shell.tsx
+components/editors/articles-editor-sidebar.tsx
+components/editors/articles-editor-topbar.tsx
+components/editors/articles-editor-types.ts
+components/editors/blocks/article-block-registry.ts
+components/editors/blocks/heading/heading-editor.tsx
+components/editors/blocks/image/image-editor.tsx
+components/editors/blocks/paragraph/paragraph-editor.tsx
+components/editors/blocks/quote/quote-editor.tsx
+components/editors/blocks/unsupported/unsupported-editor.tsx
+model/article-blocks.ts
+model/articles.data.ts
+model/articles.types.ts
+services/articles-translation.service.ts
+services/articles.services.ts
+ui/article-block-renderer.tsx
+ui/article-reading-progress.tsx
+ui/article-template.tsx
 </directory_structure>
 
 <files>
 This section contains the contents of the repository's files.
 
-<file path="articles-editor-block-list.tsx">
+<file path="actions/update-artilces.ts">
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { Prisma, type ArticleStatus } from "@/generated/prisma/client";
+import type { SupportedLocale } from "@/shared/i18n/locales";
+import { sanitizeArticleBlocks, type ArticleBlock } from "../model/article-blocks";
+import { translateArticleFromEnglish } from "../services/articles-translation.service";
+
+import {
+    deleteArticle,
+    updateArticle,
+    updateArticleStatus,
+} from "../services/articles.services";
+
+type Input = {
+    id: string;
+    locale: string;
+    title?: string;
+    excerpt?: string;
+    coverImage?: string | null;
+    seoTitle?: string | null;
+    seoDescription?: string | null;
+    blocksJson?: ArticleBlock[];
+};
+
+export async function updateArticleAction(
+    input: Input,
+) {
+    const { blocks } = sanitizeArticleBlocks(
+        input.blocksJson ?? [],
+    );
+
+    const article = await updateArticle(
+        input.id,
+        {
+            title: input.title,
+            excerpt: input.excerpt,
+            coverImage: input.coverImage,
+            seoTitle: input.seoTitle,
+            seoDescription: input.seoDescription,
+            blocksJson: blocks as Prisma.InputJsonValue,
+        },
+    );
+
+    revalidatePath(`/${input.locale}/admin/articles`);
+    revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
+    revalidatePath(`/${article.locale}/articles`);
+    revalidatePath(`/${article.locale}/articles/${article.slug}`);
+}
+
+type StatusInput = {
+    id: string;
+    locale: string;
+    status: ArticleStatus;
+};
+
+export async function updateArticleStatusAction(
+    input: StatusInput,
+) {
+    const article = await updateArticleStatus(
+        input.id,
+        input.status,
+    );
+
+    revalidatePath(`/${input.locale}/admin/articles`);
+    revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
+    revalidatePath(`/${article.locale}/articles`);
+    revalidatePath(`/${article.locale}/articles/${article.slug}`);
+}
+
+type TranslateInput = {
+    id: string;
+    adminLocale: string;
+    targetLocale: SupportedLocale;
+};
+
+export async function translateArticleAction(
+    input: TranslateInput,
+) {
+    const article = await translateArticleFromEnglish(
+        input.id,
+        input.targetLocale,
+    );
+
+    revalidatePath(`/${input.adminLocale}/admin/articles`);
+    revalidatePath(`/${input.adminLocale}/admin/articles/${input.id}`);
+    revalidatePath(`/${article.locale}/articles`);
+    revalidatePath(`/${article.locale}/articles/${article.slug}`);
+
+    return article;
+}
+
+type DeleteInput = {
+    id: string;
+    locale: string;
+};
+
+export async function deleteArticleAction(input: DeleteInput) {
+    const article = await deleteArticle(input.id);
+
+    revalidatePath(`/${input.locale}/admin/articles`);
+    revalidatePath(`/${input.locale}/admin/articles/${input.id}`);
+    revalidatePath(`/${article.locale}/articles`);
+    revalidatePath(`/${article.locale}/articles/${article.slug}`);
+}
+</file>
+
+<file path="components/articles-editors.tsx">
 "use client";
 
-import type { ArticleBlock, ArticleBlockType } from "@/features/articles/model/article-blocks";
+import type { ArticleStatus } from "@/generated/prisma";
+import { normalizeArticleBlocksDetailed } from "@/features/articles/model/article-blocks";
+import { ArticlesEditorShell } from "./editors/articles-editor-shell";
+
+type Props = {
+    article: {
+        id: string;
+        adminLocale: string;
+        articleLocale: string;
+        title: string;
+        excerpt: string | null;
+        coverImage: string | null;
+        seoTitle: string | null;
+        seoDescription: string | null;
+        blocksJson: unknown;
+        status: string;
+    };
+};
+
+export function ArticlesEditors({ article }: Props) {
+    const normalized = normalizeArticleBlocksDetailed(article.blocksJson);
+
+    return (
+        <ArticlesEditorShell
+            id={article.id}
+            locale={article.adminLocale}
+            articleLocale={article.articleLocale}
+            initialTitle={article.title}
+            initialExcerpt={article.excerpt ?? ""}
+            initialCoverImage={article.coverImage}
+            initialSeoTitle={article.seoTitle}
+            initialSeoDescription={article.seoDescription}
+            initialBlocks={normalized.blocks}
+            initialStatus={article.status as ArticleStatus}
+            initialWarnings={normalized.warnings}
+        />
+    );
+}
+</file>
+
+<file path="components/editors/articles-editor-block-list.tsx">
+"use client";
+
+import type { ArticleBlockType } from "@/features/articles/model/article-blocks";
+import { ArrowDown, ArrowUp, Heading1, ImageIcon, Pilcrow, Quote, Copy, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 import { useArticleEditor } from "./articles-editor-context";
@@ -70,15 +232,12 @@ import { articleBlockRegistry } from "./blocks/article-block-registry";
 
 const insertableBlocks: ArticleBlockType[] = ["paragraph", "heading", "image", "quote"];
 
-function getBlockTitle(block: ArticleBlock) {
-    if (block.type === "heading") return block.text.trim() || "Titre";
-    if (block.type === "paragraph") return block.text.trim().slice(0, 72) || "Paragraphe";
-    if (block.type === "image") return block.caption?.trim() || "Image";
-    if (block.type === "quote") return block.text.trim().slice(0, 72) || "Citation";
-    if (block.type === "video") return block.title?.trim() || "Video";
-    if (block.type === "cta") return block.title.trim() || "CTA";
-    if (block.type === "divider") return "Separateur";
-    return "Bloc preserve";
+function getBlockIcon(type: ArticleBlockType) {
+    if (type === "paragraph") return <Pilcrow className="h-4 w-4" />;
+    if (type === "heading") return <Heading1 className="h-4 w-4" />;
+    if (type === "image") return <ImageIcon className="h-4 w-4" />;
+    if (type === "quote") return <Quote className="h-4 w-4" />;
+    return <Pilcrow className="h-4 w-4" />;
 }
 
 function BlockInserter({ index }: { index: number }) {
@@ -86,17 +245,18 @@ function BlockInserter({ index }: { index: number }) {
 
     return (
         <div className="group relative py-3">
-            <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-white/10" />
+            <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[#d8cfc1]" />
             <div className="relative flex justify-center">
-                <div className="flex flex-wrap items-center justify-center gap-2 rounded-full border border-white/10 bg-[#0f0d0b]/90 px-2 py-2 opacity-0 shadow-lg transition group-hover:opacity-100 group-focus-within:opacity-100">
+                <div className="grid w-full max-w-2xl grid-cols-2 gap-2 rounded-xl border border-[#d8cfc1] bg-[#fffdf8] p-2 opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-within:opacity-100 sm:grid-cols-4">
                     {insertableBlocks.map((type) => (
                         <button
                             key={type}
                             type="button"
                             onClick={() => addBlock(type, index)}
-                            className="rounded-full border border-white/10 px-3 py-1.5 text-[11px] uppercase tracking-[0.22em] text-[#cdbd9e] transition hover:border-[#5b4b30] hover:text-[#f4efe7]"
+                            className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm text-[#61584b] transition hover:bg-[#f3ede3] hover:text-[#2b2824]"
                         >
-                            + {articleBlockRegistry[type].label}
+                            <span className="text-[#b99b59]">{getBlockIcon(type)}</span>
+                            <span>{articleBlockRegistry[type].label}</span>
                         </button>
                     ))}
                 </div>
@@ -118,7 +278,7 @@ export function ArticlesEditorBlockList() {
     } = useArticleEditor();
 
     return (
-        <div className="space-y-1">
+        <div className="space-y-2">
             <BlockInserter index={0} />
 
             {blocks.map((block, index) => {
@@ -131,73 +291,74 @@ export function ArticlesEditorBlockList() {
                         <article
                             id={`block-${block.id}`}
                             className={cn(
-                                "group rounded-[1.8rem] border bg-[#12100d]/70 p-5 shadow-[0_16px_50px_rgba(0,0,0,0.18)] transition",
+                                "group rounded-lg border border-[#e2dbcf] bg-[#fffdf8] p-5 transition",
                                 active
-                                    ? "border-[#655331] ring-1 ring-[#8f753d]/35"
-                                    : "border-white/10 hover:border-white/20",
+                                    ? "border-[#cfb575] ring-1 ring-[#cfb575]/25"
+                                    : "hover:border-[#d4cab9]",
                             )}
                             onClick={() => setFocusedBlockId(block.id)}
                         >
                             <div className="mb-5 flex flex-wrap items-start justify-between gap-4">
                                 <div>
-                                    <p className="text-[11px] uppercase tracking-[0.28em] text-[#c9a84c]">
+                                    <p className="text-[11px] uppercase tracking-[0.18em] text-[#8b7e6a]">
                                         {registry.label}
-                                    </p>
-                                    <p className="mt-2 text-sm leading-6 text-[#d9d0c3]">
-                                        {getBlockTitle(block)}
                                     </p>
                                 </div>
 
-                                <div className="flex flex-wrap items-center gap-2 opacity-100 transition xl:opacity-0 xl:group-hover:opacity-100 xl:group-focus-within:opacity-100">
+                                <div className="flex flex-wrap items-center gap-1 opacity-100 transition xl:opacity-70 xl:group-hover:opacity-100 xl:group-focus-within:opacity-100">
                                     <Button
                                         type="button"
                                         variant="ghost"
-                                        size="sm"
+                                        size="icon-sm"
                                         onClick={(event) => {
                                             event.stopPropagation();
                                             moveBlock(block.id, -1);
                                         }}
                                         disabled={index === 0}
-                                        className="rounded-full text-[#bcae9d]"
+                                        className="rounded-md border border-[#d8cfc1] bg-[#f8f3eb] text-[#5c5448]"
+                                        aria-label="Monter le bloc"
                                     >
-                                        Haut
+                                        <ArrowUp className="h-4 w-4" />
                                     </Button>
                                     <Button
                                         type="button"
                                         variant="ghost"
-                                        size="sm"
+                                        size="icon-sm"
                                         onClick={(event) => {
                                             event.stopPropagation();
                                             moveBlock(block.id, 1);
                                         }}
                                         disabled={index === blocks.length - 1}
-                                        className="rounded-full text-[#bcae9d]"
+                                        className="rounded-md border border-[#d8cfc1] bg-[#f8f3eb] text-[#5c5448]"
+                                        aria-label="Descendre le bloc"
                                     >
-                                        Bas
+                                        <ArrowDown className="h-4 w-4" />
                                     </Button>
                                     <Button
                                         type="button"
                                         variant="ghost"
-                                        size="sm"
+                                        size="icon-sm"
                                         onClick={(event) => {
                                             event.stopPropagation();
                                             duplicateBlock(block.id);
                                         }}
-                                        className="rounded-full text-[#bcae9d]"
+                                        className="rounded-md border border-[#d8cfc1] bg-[#f8f3eb] text-[#5c5448]"
+                                        aria-label="Dupliquer le bloc"
                                     >
-                                        Dupliquer
+                                        <Copy className="h-4 w-4" />
                                     </Button>
                                     <Button
                                         type="button"
                                         variant="ghost"
-                                        size="sm"
+                                        size="icon-sm"
                                         onClick={(event) => {
                                             event.stopPropagation();
                                             removeBlock(block.id);
                                         }}
-                                        className="rounded-full text-[#e1b0a8]"
+                                        className="rounded-md border border-[#ead1cb] bg-[#fff1ef] text-[#b65c4d]"
+                                        aria-label="Supprimer le bloc"
                                     >
-                                        Supprimer
+                                        <Trash2 className="h-4 w-4" />
                                     </Button>
                                 </div>
                             </div>
@@ -221,10 +382,11 @@ export function ArticlesEditorBlockList() {
 }
 </file>
 
-<file path="articles-editor-canvas.tsx">
+<file path="components/editors/articles-editor-canvas.tsx">
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { ImagePlus } from "lucide-react";
+import { AutoResizeTextarea } from "@/components/editor/auto-resize-textarea";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/shared/lib/utils";
@@ -276,24 +438,15 @@ export function ArticlesEditorCanvas() {
     }
 
     return (
-        <section className={cn("overflow-y-auto", previewMode === "split" ? "border-r border-white/10" : "flex-1")}>
-            <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-6 lg:px-8 lg:py-8 xl:px-10">
-                <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
-                    <div className="flex flex-wrap items-start justify-between gap-4">
-                        <div>
-                            <p className="text-[11px] uppercase tracking-[0.32em] text-[#c9a84c]">
-                                Editorial Surface
-                            </p>
-                            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#9d9386]">
-                                Hero, intention editoriale, SEO et blocs restent separes pour garder un studio net et maintenable.
-                            </p>
-                        </div>
-                        <div className="rounded-full border border-white/10 bg-black/20 px-4 py-2 text-xs uppercase tracking-[0.22em] text-[#b5a795]">
-                            Immersive block editor
-                        </div>
-                    </div>
-
-                    <div className="mt-6 space-y-4">
+        <section
+            className={cn(
+                "min-h-0 overflow-y-auto bg-[#1e1e1e]",
+                previewMode === "split" ? "border-r border-white/10" : "flex-1",
+            )}
+        >
+            <div className="flex min-h-full w-full flex-col gap-6 p-4 lg:p-5">
+                <div className="space-y-4">
+                    <div className="space-y-4">
                         {warnings.map((warning) => (
                             <Banner key={warning} tone="warning" message={warning} />
                         ))}
@@ -304,39 +457,64 @@ export function ArticlesEditorCanvas() {
 
                 <div
                     id="article-editor-hero"
-                    className="overflow-hidden rounded-[2rem] border border-white/10 bg-[#12100d]/80 shadow-[0_30px_80px_rgba(0,0,0,0.2)]"
+                    className="overflow-hidden rounded-xl border border-white/10 bg-[#f7f3ec] text-[#2b2824]"
                 >
-                    {coverImage ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                            src={coverImage}
-                            alt=""
-                            className="h-72 w-full object-cover opacity-80"
-                        />
-                    ) : (
-                        <div className="flex h-48 items-center justify-center bg-[linear-gradient(135deg,_rgba(210,178,109,0.12),_rgba(255,255,255,0.02))] px-6">
-                            <p className="text-sm uppercase tracking-[0.24em] text-[#aa9d8a]">
-                                Add a cinematic cover
-                            </p>
-                        </div>
-                    )}
-
                     <div className="space-y-6 p-6 lg:p-8">
-                        <div className="flex flex-wrap items-center gap-3">
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={() => document.getElementById(coverImageInputId)?.click()}
-                                className="rounded-full border-white/10 bg-transparent text-[#f4efe7]"
-                            >
-                                Importer la couverture
-                            </Button>
+                        <AutoResizeTextarea
+                            value={title}
+                            onChange={(event) => setTitle(event.target.value)}
+                            placeholder="Titre de l'article"
+                            rows={1}
+                            className="h-auto overflow-hidden resize-none border-0 bg-transparent px-0 py-0 text-5xl font-semibold leading-[1.02] text-[#2b2824] placeholder:text-[#b8afa2] shadow-none outline-none focus:outline-none"
+                        />
+
+                        <AutoResizeTextarea
+                            value={excerpt}
+                            onChange={(event) => setExcerpt(event.target.value)}
+                            placeholder="Resume editoriale, intention ou promesse de lecture"
+                            rows={1}
+                            className="h-auto overflow-hidden resize-none border-0 bg-transparent px-0 py-0 text-lg leading-8 text-[#6c6458] placeholder:text-[#b8afa2] shadow-none outline-none focus:outline-none"
+                        />
+
+                        {coverImage ? (
+                            <div className="overflow-hidden rounded-lg border border-[#d9d2c6] bg-[#f2ede4]">
+                                <div className="border-b border-[#d9d2c6] px-4 py-2 text-[11px] uppercase tracking-[0.16em] text-[#8b7e6a]">
+                                    Image de couverture
+                                </div>
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                    src={coverImage}
+                                    alt=""
+                                    className="h-64 w-full object-cover"
+                                />
+                            </div>
+                        ) : null}
+
+                        <div className="grid gap-3 lg:grid-cols-2">
                             <Input
                                 value={coverImage}
                                 onChange={(event) => setCoverImage(event.target.value)}
-                                placeholder="URL image de couverture"
-                                className="min-w-[280px] flex-1 border-white/10 bg-white/[0.03] text-[#f4efe7]"
+                                placeholder="URL de l'image de couverture"
+                                className="border-[#d6cec1] bg-white text-[#2b2824]"
                             />
+                            <Input
+                                value={seoTitle}
+                                onChange={(event) => setSeoTitle(event.target.value)}
+                                placeholder="Texte alternatif / intention SEO"
+                                className="border-[#d6cec1] bg-white text-[#2b2824]"
+                            />
+                        </div>
+
+                        <button
+                            type="button"
+                            onClick={() => document.getElementById(coverImageInputId)?.click()}
+                            className="flex min-h-44 w-full flex-col items-center justify-center rounded-lg border border-dashed border-[#cfc5b5] bg-[#fbf8f2] px-6 text-center transition hover:border-[#b99b59] hover:bg-[#f8f2e7]"
+                        >
+                            <ImagePlus className="h-8 w-8 text-[#b99b59]" />
+                            <p className="mt-4 text-base font-medium text-[#2b2824]">Importer une couverture</p>
+                            <p className="mt-2 text-sm text-[#7f7568]">
+                                Clique pour ajouter une image forte sous le titre.
+                            </p>
                             <input
                                 id={coverImageInputId}
                                 type="file"
@@ -350,33 +528,32 @@ export function ArticlesEditorCanvas() {
                                     });
                                 }}
                             />
+                        </button>
+
+                        <div className="grid gap-3 lg:grid-cols-2">
+                            <Input
+                                value={seoDescription}
+                                onChange={(event) => setSeoDescription(event.target.value)}
+                                placeholder="Legende / description courte"
+                                className="border-[#d6cec1] bg-white text-[#2b2824] placeholder:text-[#b8afa2]"
+                            />
+                            <Input
+                                placeholder="Credits / source media"
+                                className="border-[#d6cec1] bg-white text-[#2b2824] placeholder:text-[#b8afa2]"
+                            />
                         </div>
-
-                        <Textarea
-                            value={title}
-                            onChange={(event) => setTitle(event.target.value)}
-                            placeholder="Titre de l'article"
-                            className="min-h-28 resize-none border-0 bg-transparent px-0 py-0 font-serif text-5xl font-light leading-[1.02] text-[#f8f2ea] shadow-none focus-visible:ring-0"
-                        />
-
-                        <Textarea
-                            value={excerpt}
-                            onChange={(event) => setExcerpt(event.target.value)}
-                            placeholder="Resume editoriale, intention ou promesse de lecture"
-                            className="min-h-24 resize-none border-0 bg-transparent px-0 py-0 text-lg leading-8 text-[#b7aa99] shadow-none focus-visible:ring-0"
-                        />
                     </div>
                 </div>
 
-                <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
-                    <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-[0_30px_80px_rgba(0,0,0,0.18)]">
-                        <div className="mb-6 flex items-center justify-between gap-4">
+                <div className="grid min-h-0 flex-1 gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
+                    <div className="rounded-xl border border-white/10 bg-[#f7f3ec] p-6 text-[#2b2824]">
+                        <div className="mb-6">
                             <div>
-                                <p className="text-[11px] uppercase tracking-[0.32em] text-[#c9a84c]">
-                                    Story Blocks
+                                <p className="text-[11px] uppercase tracking-[0.18em] text-[#8b7e6a]">
+                                    Write
                                 </p>
-                                <p className="mt-2 text-sm leading-6 text-[#9d9386]">
-                                    Edition modulaire, inserteurs flottants et actions contextuelles par bloc.
+                                <p className="mt-2 text-sm leading-6 text-[#7f7568]">
+                                    Ecris section par section, sans bruit.
                                 </p>
                             </div>
                         </div>
@@ -384,15 +561,15 @@ export function ArticlesEditorCanvas() {
                         <ArticlesEditorBlockList />
                     </div>
 
-                    <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-6">
-                        <p className="text-[11px] uppercase tracking-[0.32em] text-[#c9a84c]">
+                    <div className="rounded-xl border border-white/10 bg-[#232323] p-6">
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-[#c9a84c]">
                             SEO Notes
                         </p>
 
                         <div className="mt-6 space-y-5">
                             <div>
                                 <div className="mb-2 flex items-center justify-between gap-3">
-                                    <p className="text-xs uppercase tracking-[0.22em] text-[#9d9386]">
+                                    <p className="text-xs uppercase tracking-[0.16em] text-[#9d9386]">
                                         SEO title
                                     </p>
                                     <p className="text-xs text-[#7f7568]">{seoTitle.length}/60</p>
@@ -401,13 +578,13 @@ export function ArticlesEditorCanvas() {
                                     value={seoTitle}
                                     onChange={(event) => setSeoTitle(event.target.value)}
                                     placeholder="Titre SEO"
-                                    className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
+                                    className="border-white/10 bg-[#191919] text-[#f4efe7] placeholder:text-[#b8afa2]"
                                 />
                             </div>
 
                             <div>
                                 <div className="mb-2 flex items-center justify-between gap-3">
-                                    <p className="text-xs uppercase tracking-[0.22em] text-[#9d9386]">
+                                    <p className="text-xs uppercase tracking-[0.16em] text-[#9d9386]">
                                         SEO description
                                     </p>
                                     <p className="text-xs text-[#7f7568]">{seoDescription.length}/160</p>
@@ -416,7 +593,7 @@ export function ArticlesEditorCanvas() {
                                     value={seoDescription}
                                     onChange={(event) => setSeoDescription(event.target.value)}
                                     placeholder="Description SEO"
-                                    className="min-h-28 resize-y border-white/10 bg-white/[0.03] text-[#f4efe7]"
+                                    className="resize-y border-white/10 bg-[#191919] text-[#f4efe7] placeholder:text-[#b8afa2]"
                                 />
                             </div>
                         </div>
@@ -428,7 +605,7 @@ export function ArticlesEditorCanvas() {
 }
 </file>
 
-<file path="articles-editor-context.tsx">
+<file path="components/editors/articles-editor-context.tsx">
 "use client";
 
 import { createContext, useContext } from "react";
@@ -458,7 +635,7 @@ export function useArticleEditor() {
 }
 </file>
 
-<file path="articles-editor-preview.tsx">
+<file path="components/editors/articles-editor-preview.tsx">
 "use client";
 
 import { getReadingTimeMinutes } from "@/features/articles/model/article-blocks";
@@ -491,53 +668,55 @@ export function ArticlesEditorPreview() {
     return (
         <aside
             className={cn(
-                "overflow-y-auto bg-[#0b0a09]",
+                "min-h-0 overflow-y-auto bg-[#111111]",
                 previewMode === "preview" ? "flex-1" : "min-w-0",
             )}
         >
             <div className="min-h-full">
-                <div className="border-b border-white/10 px-6 py-4 text-[#a79b8b]">
-                    <p className="text-[11px] uppercase tracking-[0.3em] text-[#c9a84c]">
-                        Live Preview
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-[#8c8070]">
-                        Rendu editorial base sur le renderer public existant.
-                    </p>
+                <div className="border-b border-white/10 px-6 py-3 text-[#a79b8b]">
+                    <p className="text-[11px] uppercase tracking-[0.18em] text-[#c9a84c]">Preview</p>
                 </div>
 
                 <article>
-                    <header className="relative flex min-h-[420px] items-end overflow-hidden">
+                    <header className="relative min-h-[720px] overflow-hidden">
                         {coverImage ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                                src={coverImage}
-                                alt=""
-                                className="absolute inset-0 h-full w-full object-cover opacity-75"
-                            />
-                        ) : null}
+                            <>
+                                <div className="absolute inset-0">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src={coverImage}
+                                        alt=""
+                                        className="absolute inset-0 h-full w-full object-cover"
+                                    />
+                                </div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/20" />
+                            </>
+                        ) : (
+                            <div className="absolute inset-0 bg-[#111111]" />
+                        )}
 
-                        <div className="absolute inset-0 bg-gradient-to-b from-[#0d0c0b]/20 via-[#0d0c0b]/55 to-[#0d0c0b]" />
-
-                        <div className="relative z-10 px-6 pb-10 pt-20">
-                            <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.28em] text-[#c9a84c]">
-                                <span className="h-px w-9 bg-[#c9a84c]" />
-                                ISOLELE {articleLocale.toUpperCase()}
-                            </p>
-
-                            <h1 className="max-w-4xl font-serif text-4xl font-light leading-[1.03] text-white sm:text-5xl">
-                                {title.trim() || "Titre de l'article"}
-                            </h1>
-
-                            {excerpt.trim() ? (
-                                <p className="mt-6 max-w-2xl text-base font-light leading-8 text-[#e8e0d4]/75">
-                                    {excerpt}
+                        <div className="relative z-10 flex min-h-[720px] items-end px-6 pb-16 pt-24">
+                            <div className="mx-auto w-full max-w-5xl">
+                                <p className="mb-6 flex items-center gap-3 text-xs uppercase tracking-[0.28em] text-[#d6b870]">
+                                    <span className="h-px w-9 bg-[#d6b870]" />
+                                    ISOLELE {articleLocale.toUpperCase()}
                                 </p>
-                            ) : null}
 
-                            <div className="mt-8 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-[#8c8070]">
-                                <span>{previewDate}</span>
-                                <span className="text-[#7d6630]">/</span>
-                                <span>{readingTime} min read</span>
+                                <h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] text-white sm:text-7xl">
+                                    {title.trim() || "Titre de l'article"}
+                                </h1>
+
+                                {excerpt.trim() ? (
+                                    <p className="mt-8 max-w-2xl text-lg font-light leading-9 text-white/80">
+                                        {excerpt}
+                                    </p>
+                                ) : null}
+
+                                <div className="mt-10 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.18em] text-white/60">
+                                    <span>{previewDate}</span>
+                                    <span className="text-[#d6b870]">/</span>
+                                    <span>{readingTime} min read</span>
+                                </div>
                             </div>
                         </div>
                     </header>
@@ -550,17 +729,18 @@ export function ArticlesEditorPreview() {
 }
 </file>
 
-<file path="articles-editor-shell.tsx">
+<file path="components/editors/articles-editor-shell.tsx">
 "use client";
 
 import { useId, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import {
     createArticleBlock,
     type ArticleBlock,
     type ArticleBlockType,
 } from "@/features/articles/model/article-blocks";
 import {
-    translateArticleAction,
+    deleteArticleAction,
     updateArticleAction,
     updateArticleStatusAction,
 } from "@/features/articles/actions/update-artilces";
@@ -584,6 +764,7 @@ function withNewId(block: ArticleBlock): ArticleBlock {
 }
 
 export function ArticlesEditorShell(props: ArticleEditorProps) {
+    const router = useRouter();
     const [title, setTitle] = useState(props.initialTitle);
     const [excerpt, setExcerpt] = useState(props.initialExcerpt);
     const [coverImage, setCoverImage] = useState(props.initialCoverImage ?? "");
@@ -596,11 +777,10 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
         useState<ArticleEditorSidebarPanel>("structure");
     const [focusedBlockId, setFocusedBlockId] = useState<string | null>(props.initialBlocks[0]?.id ?? null);
     const [uploadError, setUploadError] = useState<string | null>(null);
-    const [translationMessage, setTranslationMessage] = useState<string | null>(null);
     const [activityMessage, setActivityMessage] = useState<string | null>(null);
     const [isSaving, startSaveTransition] = useTransition();
     const [isStatusPending, startStatusTransition] = useTransition();
-    const [isTranslating, startTranslateTransition] = useTransition();
+    const [isDeleting, startDeleteTransition] = useTransition();
     const [isUploading, startUploadTransition] = useTransition();
     const coverImageInputId = useId();
 
@@ -701,12 +881,7 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
                         );
                         setFocusedBlockId(blockId);
                     } else {
-                        const nextBlock = {
-                            ...createArticleBlock("image"),
-                            url: payload.url,
-                        } as ArticleBlock;
-                        setBlocks((current) => [...current, nextBlock]);
-                        setFocusedBlockId(nextBlock.id);
+                        setCoverImage(payload.url);
                     }
 
                     setActivityMessage("Image importee.");
@@ -748,26 +923,14 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
         });
     }
 
-    function translateToFrench() {
-        startTranslateTransition(async () => {
-            setTranslationMessage(null);
-
-            try {
-                const translatedArticle = await translateArticleAction({
-                    id: props.id,
-                    adminLocale: props.locale,
-                    targetLocale: "fr",
-                });
-
-                setTranslationMessage(
-                    `Version ${translatedArticle.locale.toUpperCase()} mise a jour: ${translatedArticle.title}`,
-                );
-                setActiveSidebarPanel("translations");
-            } catch (error) {
-                setTranslationMessage(
-                    error instanceof Error ? error.message : "La traduction a echoue.",
-                );
-            }
+    function deleteArticle() {
+        startDeleteTransition(async () => {
+            await deleteArticleAction({
+                id: props.id,
+                locale: props.locale,
+            });
+            router.push(`/${props.locale}/admin/articles`);
+            router.refresh();
         });
     }
 
@@ -797,15 +960,14 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
         setFocusedBlockId,
         isSaving,
         isStatusPending,
-        isTranslating,
+        isDeleting,
         isUploading,
         uploadError,
-        translationMessage,
         activityMessage,
         coverImageInputId,
         saveArticle,
         changeStatus,
-        translateToFrench,
+        deleteArticle,
         triggerCoverImagePicker: () => {
             document.getElementById(coverImageInputId)?.click();
             setActiveSidebarPanel("media");
@@ -821,39 +983,37 @@ export function ArticlesEditorShell(props: ArticleEditorProps) {
 
     return (
         <ArticleEditorProvider value={contextValue}>
-            <div className="min-h-screen bg-[#0a0908] text-[#f2ede6]">
-                <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(201,168,76,0.16),_transparent_30%),linear-gradient(180deg,_#13110f_0%,_#0a0908_45%,_#090807_100%)]">
-                    <div className="flex min-h-screen flex-col">
-                        <ArticlesEditorTopbar />
+            <div className="h-screen overflow-hidden bg-[#121212] text-[#f2ede6]">
+                <div className="flex h-full flex-col">
+                    <ArticlesEditorTopbar />
 
-                        <div className="flex flex-1 overflow-hidden">
-                            <ArticlesEditorSidebar />
+                    <div className="flex min-h-0 flex-1 overflow-hidden">
+                        <ArticlesEditorSidebar />
 
-                            <main className="flex flex-1 overflow-hidden">
-                                <div
-                                    className={cn(
-                                        "flex flex-1 overflow-hidden",
-                                        previewMode === "split" && "xl:grid xl:grid-cols-[minmax(0,1.15fr)_minmax(380px,0.85fr)]",
-                                    )}
-                                >
-                                    <ArticlesEditorCanvas />
-                                    <ArticlesEditorPreview />
-                                </div>
-                            </main>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <main className="flex min-h-0 flex-1 overflow-hidden bg-[#181818]">
+                            <div
+                                className={cn(
+                                    "flex min-h-0 flex-1 overflow-hidden",
+                                    previewMode === "split" &&
+                                        "xl:grid xl:grid-cols-[minmax(0,1.05fr)_minmax(420px,0.95fr)]",
+                                )}
+	                            >
+	                                <ArticlesEditorCanvas />
+	                                <ArticlesEditorPreview />
+	                            </div>
+	                        </main>
+	                    </div>
+	                </div>
+	            </div>
         </ArticleEditorProvider>
     );
 }
 </file>
 
-<file path="articles-editor-sidebar.tsx">
+<file path="components/editors/articles-editor-sidebar.tsx">
 "use client";
 
 import type { ArticleBlock } from "@/features/articles/model/article-blocks";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 import { useArticleEditor } from "./articles-editor-context";
 import { articleBlockRegistry } from "./blocks/article-block-registry";
@@ -862,13 +1022,12 @@ const sidebarPanels = [
     { value: "structure", label: "Structure" },
     { value: "seo", label: "SEO" },
     { value: "media", label: "Media" },
-    { value: "translations", label: "Translations" },
 ] as const;
 
 function getBlockTitle(block: ArticleBlock) {
     if (block.type === "heading") return block.text.trim() || "Section";
     if (block.type === "paragraph") return block.text.trim().slice(0, 54) || "Introduction";
-    if (block.type === "image") return block.caption?.trim() || "Image";
+    if (block.type === "image") return block.caption?.trim() || "Image de contenu";
     if (block.type === "quote") return block.text.trim().slice(0, 54) || "Citation";
     if (block.type === "video") return block.title?.trim() || "Video";
     if (block.type === "cta") return block.title.trim() || "CTA";
@@ -890,37 +1049,34 @@ export function ArticlesEditorSidebar() {
         coverImage,
         triggerCoverImagePicker,
         articleLocale,
-        translateToFrench,
-        isTranslating,
-        translationMessage,
     } = useArticleEditor();
 
     const seoTitleCount = seoTitle.trim().length || title.trim().length;
     const seoDescriptionCount = seoDescription.trim().length || excerpt.trim().length;
 
     return (
-        <aside className="hidden w-[320px] shrink-0 border-r border-white/10 bg-[#0d0c0b]/90 xl:flex xl:flex-col">
-            <div className="border-b border-white/10 px-5 py-5">
-                <p className="text-[11px] uppercase tracking-[0.32em] text-[#c9a84c]">
-                    Story Map
+        <aside className="hidden w-[272px] shrink-0 border-r border-white/10 bg-[#161616] xl:flex xl:flex-col">
+            <div className="border-b border-white/10 px-4 py-4">
+                <p className="text-[11px] uppercase tracking-[0.24em] text-[#c9a84c]">
+                    Explorer
                 </p>
-                <p className="mt-2 text-sm leading-6 text-[#9d9386]">
-                    Navigation structurelle, diffusion et workflows autour de l&apos;article.
+                <p className="mt-2 text-sm text-[#9d9386]">
+                    Structure, SEO et media
                 </p>
             </div>
 
-            <div className="border-b border-white/10 px-3 py-3">
-                <div className="grid grid-cols-2 gap-2">
+            <div className="px-3 py-3">
+                <div className="grid grid-cols-3 gap-2">
                     {sidebarPanels.map((panel) => (
                         <button
                             key={panel.value}
                             type="button"
                             onClick={() => setActiveSidebarPanel(panel.value)}
                             className={cn(
-                                "rounded-2xl border px-3 py-3 text-left text-xs uppercase tracking-[0.22em] transition",
+                                "rounded-md px-3 py-2 text-center text-[11px] uppercase tracking-[0.16em] transition",
                                 activeSidebarPanel === panel.value
-                                    ? "border-[#4f4026] bg-[#1b1711] text-[#f4e1b0]"
-                                    : "border-white/10 bg-white/[0.03] text-[#9d9386] hover:text-[#f2ede6]",
+                                    ? "bg-[#242424] text-[#f4e1b0]"
+                                    : "bg-[#1d1d1d] text-[#9d9386] hover:text-[#f2ede6]",
                             )}
                         >
                             {panel.label}
@@ -931,7 +1087,7 @@ export function ArticlesEditorSidebar() {
 
             <div className="flex-1 overflow-y-auto px-3 py-4">
                 {activeSidebarPanel === "structure" ? (
-                    <div className="space-y-3">
+                    <div className="space-y-1.5">
                         <button
                             type="button"
                             onClick={() =>
@@ -940,16 +1096,16 @@ export function ArticlesEditorSidebar() {
                                     block: "start",
                                 })
                             }
-                            className="w-full rounded-[1.4rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-left transition hover:border-white/20"
+                            className="w-full rounded-lg bg-[#1d1d1d] px-4 py-4 text-left transition hover:bg-[#252525]"
                         >
                             <p className="text-[11px] uppercase tracking-[0.26em] text-[#c9a84c]">
-                                Hero
+                                Hero + Couverture
                             </p>
                             <p className="mt-2 truncate font-serif text-lg font-light text-[#f4efe7]">
                                 {title.trim() || "Nouvel article"}
                             </p>
                             <p className="mt-2 line-clamp-2 text-sm leading-6 text-[#9d9386]">
-                                {excerpt.trim() || "Titre, couverture et tonalite editoriale."}
+                                {excerpt.trim() || "Titre, image de couverture et tonalite editoriale."}
                             </p>
                         </button>
 
@@ -963,10 +1119,10 @@ export function ArticlesEditorSidebar() {
                                     type="button"
                                     onClick={() => focusBlock(block.id)}
                                     className={cn(
-                                        "w-full rounded-[1.35rem] border px-4 py-4 text-left transition",
+                                        "w-full rounded-lg px-4 py-3 text-left transition",
                                         isActive
-                                            ? "border-[#5f4d2e] bg-[#1e1811]"
-                                            : "border-white/10 bg-white/[0.02] hover:border-white/20",
+                                            ? "bg-[#252018]"
+                                            : "bg-transparent hover:bg-[#202020]",
                                     )}
                                 >
                                     <div className="flex items-center justify-between gap-3">
@@ -988,7 +1144,7 @@ export function ArticlesEditorSidebar() {
 
                 {activeSidebarPanel === "seo" ? (
                     <div className="space-y-4">
-                        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-4">
+                        <div className="rounded-lg bg-[#1d1d1d] p-4">
                             <p className="text-[11px] uppercase tracking-[0.28em] text-[#c9a84c]">
                                 Search Presence
                             </p>
@@ -1021,7 +1177,7 @@ export function ArticlesEditorSidebar() {
                             </div>
                         </div>
 
-                        <div className="rounded-[1.6rem] border border-white/10 bg-[#13100c] p-4">
+                        <div className="rounded-lg bg-[#1d1d1d] p-4">
                             <p className="text-sm text-[#f4efe7]">Apercu moteur de recherche</p>
                             <div className="mt-4 space-y-1">
                                 <p className="text-lg leading-7 text-[#8ab4f8]">
@@ -1042,24 +1198,23 @@ export function ArticlesEditorSidebar() {
 
                 {activeSidebarPanel === "media" ? (
                     <div className="space-y-4">
-                        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-4">
+                        <div className="rounded-lg bg-[#1d1d1d] p-4">
                             <p className="text-[11px] uppercase tracking-[0.28em] text-[#c9a84c]">
-                                Cover Image
+                                Image de couverture
                             </p>
                             <p className="mt-2 text-sm leading-6 text-[#9d9386]">
                                 Prepare une bibliotheque media reutilisable sans changer le modele actuel.
                             </p>
-                            <Button
+                            <button
                                 type="button"
-                                variant="outline"
                                 onClick={triggerCoverImagePicker}
-                                className="mt-4 w-full rounded-full border-white/10 bg-transparent text-[#f4efe7]"
+                                className="mt-4 w-full rounded-md bg-[#2a2417] px-4 py-3 text-sm text-[#f4efe7] transition hover:bg-[#352d1c]"
                             >
                                 Importer une couverture
-                            </Button>
+                            </button>
                         </div>
 
-                        <div className="overflow-hidden rounded-[1.6rem] border border-white/10 bg-[#13100c]">
+                        <div className="overflow-hidden rounded-lg bg-[#1d1d1d]">
                             {coverImage ? (
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img
@@ -1076,64 +1231,18 @@ export function ArticlesEditorSidebar() {
                     </div>
                 ) : null}
 
-                {activeSidebarPanel === "translations" ? (
-                    <div className="space-y-4">
-                        <div className="rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-4">
-                            <p className="text-[11px] uppercase tracking-[0.28em] text-[#c9a84c]">
-                                Translation Workflow
-                            </p>
-                            <div className="mt-4 space-y-3">
-                                <div className="flex items-center justify-between rounded-2xl border border-[#4f4026] bg-[#1b1711] px-4 py-3">
-                                    <span className="text-sm text-[#f4efe7]">EN source</span>
-                                    <span className="text-xs uppercase tracking-[0.2em] text-[#d7be7e]">ready</span>
-                                </div>
-                                <div className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3">
-                                    <span className="text-sm text-[#f4efe7]">FR translated</span>
-                                    <span className="text-xs uppercase tracking-[0.2em] text-[#9d9386]">
-                                        sync
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3">
-                                    <span className="text-sm text-[#f4efe7]">ES pending</span>
-                                    <span className="text-xs uppercase tracking-[0.2em] text-[#9d9386]">
-                                        queued
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-between rounded-2xl border border-white/10 px-4 py-3">
-                                    <span className="text-sm text-[#f4efe7]">PT draft</span>
-                                    <span className="text-xs uppercase tracking-[0.2em] text-[#9d9386]">
-                                        review
-                                    </span>
-                                </div>
-                            </div>
-
-                            <Button
-                                type="button"
-                                onClick={translateToFrench}
-                                disabled={isTranslating}
-                                className="mt-4 w-full rounded-full bg-[#d2b26d] text-[#16120d] hover:bg-[#e3c57f]"
-                            >
-                                {isTranslating ? "Traduction..." : "Traduire en francais"}
-                            </Button>
-                        </div>
-
-                        {translationMessage ? (
-                            <div className="rounded-[1.6rem] border border-white/10 bg-[#13100c] p-4 text-sm leading-6 text-[#d7cec2]">
-                                {translationMessage}
-                            </div>
-                        ) : null}
-                    </div>
-                ) : null}
             </div>
         </aside>
     );
 }
 </file>
 
-<file path="articles-editor-topbar.tsx">
+<file path="components/editors/articles-editor-topbar.tsx">
 "use client";
 
+import { useState } from "react";
 import type { ArticleStatus } from "@/generated/prisma";
+import { Archive, ChevronDown, Eye, LayoutPanelTop, PencilLine, Save, Send, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 import { useArticleEditor } from "./articles-editor-context";
@@ -1144,8 +1253,6 @@ const previewModes = [
     { value: "preview", label: "Preview" },
 ] as const;
 
-const statuses: ArticleStatus[] = ["DRAFT", "REVIEW", "PUBLISHED", "ARCHIVED"];
-
 function getStatusLabel(status: ArticleStatus) {
     if (status === "DRAFT") return "Brouillon";
     if (status === "REVIEW") return "En revision";
@@ -1154,6 +1261,7 @@ function getStatusLabel(status: ArticleStatus) {
 }
 
 export function ArticlesEditorTopbar() {
+    const [publishMenuOpen, setPublishMenuOpen] = useState(false);
     const {
         articleLocale,
         title,
@@ -1162,76 +1270,128 @@ export function ArticlesEditorTopbar() {
         setPreviewMode,
         saveArticle,
         changeStatus,
+        deleteArticle,
         isSaving,
         isStatusPending,
+        isDeleting,
     } = useArticleEditor();
 
     return (
-        <header className="border-b border-white/10 bg-[#12100d]/88 backdrop-blur">
-            <div className="flex flex-col gap-4 px-4 py-4 lg:px-6 xl:flex-row xl:items-center xl:justify-between">
+        <header className="border-b border-white/10 bg-[#1b1b1b]">
+            <div className="grid gap-4 px-4 py-3 lg:px-6 xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:items-center">
                 <div className="min-w-0">
-                    <p className="text-[11px] uppercase tracking-[0.32em] text-[#c9a84c]">
-                        ISOLELE Editorial Studio
-                    </p>
-                    <div className="mt-2 flex flex-wrap items-center gap-3">
-                        <h1 className="truncate font-serif text-2xl font-light text-[#f6f0e8]">
+                    <div className="flex flex-wrap items-center gap-3">
+                        <h1 className="truncate text-xl font-semibold text-[#f6f0e8]">
                             {title.trim() || "Nouvel article"}
                         </h1>
-                        <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[#b9ac9a]">
+                        <span className="rounded-md border border-white/10 bg-[#252525] px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-[#b9ac9a]">
                             {articleLocale}
                         </span>
-                        <span className="rounded-full border border-[#3d3220] bg-[#1b1711] px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-[#d7be7e]">
+                        <span className="rounded-md border border-[#574827] bg-[#2a2417] px-2.5 py-1 text-[11px] uppercase tracking-[0.16em] text-[#d7be7e]">
                             {getStatusLabel(status)}
                         </span>
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-3 xl:items-end">
-                    <div className="inline-flex w-fit rounded-full border border-white/10 bg-black/20 p-1">
+                <div className="flex justify-start xl:justify-center">
+                    <div className="inline-flex w-fit rounded-lg border border-white/10 bg-[#202020] p-1">
                         {previewModes.map((mode) => (
                             <button
                                 key={mode.value}
                                 type="button"
                                 onClick={() => setPreviewMode(mode.value)}
                                 className={cn(
-                                    "rounded-full px-4 py-2 text-xs uppercase tracking-[0.24em] transition",
+                                    "rounded-md px-4 py-2 text-xs uppercase tracking-[0.18em] transition",
                                     previewMode === mode.value
                                         ? "bg-[#d2b26d] text-[#16120d]"
-                                        : "text-[#a99c8a] hover:text-[#f2ede6]",
+                                        : "text-[#c1b6a9] hover:bg-white/5 hover:text-[#f2ede6]",
                                 )}
                             >
-                                {mode.label}
+                                <span className="flex items-center gap-2">
+                                    {mode.value === "edit" ? <PencilLine className="h-3.5 w-3.5" /> : null}
+                                    {mode.value === "split" ? <LayoutPanelTop className="h-3.5 w-3.5" /> : null}
+                                    {mode.value === "preview" ? <Eye className="h-3.5 w-3.5" /> : null}
+                                    {mode.label}
+                                </span>
                             </button>
                         ))}
                     </div>
+                </div>
 
-                    <div className="flex flex-wrap items-center gap-2">
-                        {statuses.map((nextStatus) => (
-                            <Button
-                                key={nextStatus}
-                                type="button"
-                                variant={status === nextStatus ? "secondary" : "ghost"}
-                                size="sm"
-                                onClick={() => changeStatus(nextStatus)}
-                                disabled={isStatusPending}
-                                className={cn(
-                                    "rounded-full border border-white/10 bg-transparent px-3 text-xs uppercase tracking-[0.2em]",
-                                    status === nextStatus && "border-[#5b4b30] bg-[#201a11] text-[#f4e1b0]",
-                                )}
-                            >
-                                {getStatusLabel(nextStatus)}
-                            </Button>
-                        ))}
-
+                <div className="flex flex-wrap items-center justify-start gap-2 xl:justify-end">
+                    <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={saveArticle}
+                        disabled={isSaving}
+                        className="rounded-md border-white/10 bg-[#252525] px-4 text-[#f0e7db]"
+                    >
+                        <Save className="h-3.5 w-3.5" />
+                        {isSaving ? "Sauvegarde..." : "Save"}
+                    </Button>
+                    <div className="relative">
                         <Button
                             type="button"
                             size="sm"
-                            onClick={saveArticle}
-                            disabled={isSaving}
-                            className="rounded-full bg-[#d2b26d] px-4 text-[#16120d] hover:bg-[#e3c57f]"
+                            onClick={() => setPublishMenuOpen((open) => !open)}
+                            disabled={isStatusPending || isDeleting}
+                            className="rounded-md bg-[#d2b26d] px-5 text-[#16120d] hover:bg-[#e3c57f]"
                         >
-                            {isSaving ? "Sauvegarde..." : "Sauvegarder"}
+                            Publish
+                            <ChevronDown className="h-3.5 w-3.5" />
                         </Button>
+
+                        {publishMenuOpen ? (
+                            <div className="absolute right-0 top-[calc(100%+0.75rem)] z-20 min-w-56 rounded-2xl border border-white/10 bg-[#15120e] p-2 shadow-2xl">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setPublishMenuOpen(false);
+                                        changeStatus("PUBLISHED");
+                                    }}
+                                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#f4efe7] transition hover:bg-white/5"
+                                >
+                                    <Send className="h-4 w-4 text-[#d2b26d]" />
+                                    Publish
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setPublishMenuOpen(false);
+                                        changeStatus("DRAFT");
+                                    }}
+                                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#d7cec2] transition hover:bg-white/5"
+                                >
+                                    <Save className="h-4 w-4 text-[#9d9386]" />
+                                    Save draft
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setPublishMenuOpen(false);
+                                        changeStatus("ARCHIVED");
+                                    }}
+                                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#d7cec2] transition hover:bg-white/5"
+                                >
+                                    <Archive className="h-4 w-4 text-[#9d9386]" />
+                                    Archive
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setPublishMenuOpen(false);
+                                        if (window.confirm("Supprimer cet article ? Cette action est irreversible.")) {
+                                            deleteArticle();
+                                        }
+                                    }}
+                                    className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm text-[#f3b7ae] transition hover:bg-white/5"
+                                >
+                                    <Trash2 className="h-4 w-4" />
+                                    {isDeleting ? "Suppression..." : "Delete article"}
+                                </button>
+                            </div>
+                        ) : null}
                     </div>
                 </div>
             </div>
@@ -1240,13 +1400,13 @@ export function ArticlesEditorTopbar() {
 }
 </file>
 
-<file path="articles-editor-types.ts">
+<file path="components/editors/articles-editor-types.ts">
 import type { Dispatch, ReactNode, SetStateAction } from "react";
 import type { ArticleStatus } from "@/generated/prisma";
 import type { ArticleBlock, ArticleBlockType } from "../../model/article-blocks";
 
 export type ArticleEditorPreviewMode = "edit" | "split" | "preview";
-export type ArticleEditorSidebarPanel = "structure" | "seo" | "media" | "translations";
+export type ArticleEditorSidebarPanel = "structure" | "seo" | "media";
 
 export type ArticleEditorProps = {
     id: string;
@@ -1288,15 +1448,14 @@ export type ArticleEditorContextValue = {
     setFocusedBlockId: (id: string | null) => void;
     isSaving: boolean;
     isStatusPending: boolean;
-    isTranslating: boolean;
+    isDeleting: boolean;
     isUploading: boolean;
     uploadError: string | null;
-    translationMessage: string | null;
     activityMessage: string | null;
     coverImageInputId: string;
     saveArticle: () => void;
     changeStatus: (value: ArticleStatus) => void;
-    translateToFrench: () => void;
+    deleteArticle: () => void;
     triggerCoverImagePicker: () => void;
     addBlock: (type: ArticleBlockType, index?: number) => void;
     duplicateBlock: (id: string) => void;
@@ -1313,7 +1472,7 @@ export type ArticleEditorProviderProps = {
 };
 </file>
 
-<file path="blocks/article-block-registry.ts">
+<file path="components/editors/blocks/article-block-registry.ts">
 import type { ComponentType } from "react";
 import type { ArticleBlock, ArticleBlockType } from "@/features/articles/model/article-blocks";
 import { HeadingBlockEditor } from "./heading/heading-editor";
@@ -1344,7 +1503,7 @@ export const articleBlockRegistry: Record<ArticleBlockType, ArticleBlockRegistry
         editor: ParagraphBlockEditor,
     },
     image: {
-        label: "Image",
+        label: "Image de contenu",
         editor: ImageBlockEditor,
     },
     quote: {
@@ -1370,7 +1529,7 @@ export const articleBlockRegistry: Record<ArticleBlockType, ArticleBlockRegistry
 };
 </file>
 
-<file path="blocks/heading/heading-editor.tsx">
+<file path="components/editors/blocks/heading/heading-editor.tsx">
 "use client";
 
 import type { HeadingBlock } from "@/features/articles/model/article-blocks";
@@ -1394,7 +1553,7 @@ export function HeadingBlockEditor({
                     })
                 }
                 placeholder="Titre de section"
-                className="h-auto border-0 bg-transparent px-0 py-0 font-serif text-4xl font-light text-[#faf4eb] shadow-none focus-visible:ring-0"
+                className="h-auto border-0 bg-transparent px-0 py-0 font-serif text-4xl font-light text-[#000000] shadow-none focus-visible:ring-0"
             />
             <div className="flex items-center gap-3">
                 <label className="text-sm text-[#9d9386]">Niveau</label>
@@ -1406,7 +1565,7 @@ export function HeadingBlockEditor({
                             level: Number(event.target.value) as 1 | 2 | 3,
                         })
                     }
-                    className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-[#f4efe7]"
+                    className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-4 text-sm text-[#000000]"
                 >
                     <option value={1}>H1</option>
                     <option value={2}>H2</option>
@@ -1418,12 +1577,12 @@ export function HeadingBlockEditor({
 }
 </file>
 
-<file path="blocks/image/image-editor.tsx">
+<file path="components/editors/blocks/image/image-editor.tsx">
 "use client";
 
 import { useRef } from "react";
+import { ImagePlus } from "lucide-react";
 import type { ImageBlock } from "@/features/articles/model/article-blocks";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { ArticleBlockEditorProps } from "../article-block-registry";
 
@@ -1436,8 +1595,19 @@ export function ImageBlockEditor({
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     return (
-        <div className="space-y-4">
-            <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+        <div className="space-y-5">
+            <div className="grid gap-3 lg:grid-cols-2">
+                <Input
+                    value={imageBlock.alt ?? ""}
+                    onChange={(event) =>
+                        onUpdate({
+                            ...imageBlock,
+                            alt: event.target.value,
+                        })
+                    }
+                    placeholder="Texte alternatif"
+                    className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
+                />
                 <Input
                     value={imageBlock.url}
                     onChange={(event) =>
@@ -1446,18 +1616,24 @@ export function ImageBlockEditor({
                             url: event.target.value,
                         })
                     }
-                    placeholder="URL image"
+                    placeholder="URL de l'image de contenu"
                     className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
                 />
-                <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="rounded-full border-white/10 bg-transparent text-[#f4efe7]"
-                >
-                    Importer une image
-                </Button>
             </div>
+
+            <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="flex min-h-56 w-full flex-col items-center justify-center rounded-[1.5rem] border border-dashed border-white/10 bg-white/[0.02] px-6 text-center transition hover:border-[#5b4b30] hover:bg-white/[0.04]"
+            >
+                <ImagePlus className="h-8 w-8 text-[#d2b26d]" />
+                <p className="mt-4 text-base text-[#f4efe7]">
+                    {imageBlock.url ? "Remplacer l'image de contenu" : "Ajouter une image de contenu"}
+                </p>
+                <p className="mt-2 text-sm text-[#9d9386]">
+                    Clique pour importer une image dans le corps de l&apos;article.
+                </p>
+            </button>
 
             <input
                 ref={fileInputRef}
@@ -1473,48 +1649,43 @@ export function ImageBlockEditor({
             />
 
             {imageBlock.url ? (
-                <div className="overflow-hidden rounded-[1.4rem] border border-white/10 bg-white/[0.03]">
+                <div className="overflow-hidden rounded-[1.4rem] bg-white/[0.03]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={imageBlock.url}
                         alt={imageBlock.alt ?? ""}
-                        className="h-64 w-full object-cover"
+                        className="h-72 w-full object-cover"
                     />
                 </div>
             ) : null}
 
-            <Input
-                value={imageBlock.alt ?? ""}
-                onChange={(event) =>
-                    onUpdate({
-                        ...imageBlock,
-                        alt: event.target.value,
-                    })
-                }
-                placeholder="Texte alternatif"
-                className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
-            />
-            <Input
-                value={imageBlock.caption ?? ""}
-                onChange={(event) =>
-                    onUpdate({
-                        ...imageBlock,
-                        caption: event.target.value,
-                    })
-                }
-                placeholder="Legende"
-                className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
-            />
+            <div className="grid gap-3 lg:grid-cols-2">
+                <Input
+                    value={imageBlock.caption ?? ""}
+                    onChange={(event) =>
+                        onUpdate({
+                            ...imageBlock,
+                            caption: event.target.value,
+                        })
+                    }
+                    placeholder="Legende de l'image de contenu"
+                    className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
+                />
+                <Input
+                    placeholder="Credits / source"
+                    className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
+                />
+            </div>
         </div>
     );
 }
 </file>
 
-<file path="blocks/paragraph/paragraph-editor.tsx">
+<file path="components/editors/blocks/paragraph/paragraph-editor.tsx">
 "use client";
 
 import type { ParagraphBlock } from "@/features/articles/model/article-blocks";
-import { Textarea } from "@/components/ui/textarea";
+import { AutoResizeTextarea } from "@/components/editor/auto-resize-textarea";
 import type { ArticleBlockEditorProps } from "../article-block-registry";
 
 export function ParagraphBlockEditor({
@@ -1524,7 +1695,7 @@ export function ParagraphBlockEditor({
     const paragraphBlock = block as ParagraphBlock;
 
     return (
-        <Textarea
+        <AutoResizeTextarea
             value={paragraphBlock.text}
             onChange={(event) =>
                 onUpdate({
@@ -1533,18 +1704,19 @@ export function ParagraphBlockEditor({
                 })
             }
             placeholder="Votre paragraphe..."
-            className="min-h-40 resize-y border-0 bg-transparent px-0 py-0 text-lg leading-9 text-[#ece4d8] shadow-none focus-visible:ring-0"
+            rows={1}
+            className="w-full h-auto overflow-hidden resize-none border-0 bg-transparent px-0 py-0 text-lg leading-9 text-[#2b2824] placeholder:text-[#b8afa2] outline-none focus:outline-none"
         />
     );
 }
 </file>
 
-<file path="blocks/quote/quote-editor.tsx">
+<file path="components/editors/blocks/quote/quote-editor.tsx">
 "use client";
 
 import type { QuoteBlock } from "@/features/articles/model/article-blocks";
+import { AutoResizeTextarea } from "@/components/editor/auto-resize-textarea";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import type { ArticleBlockEditorProps } from "../article-block-registry";
 
 export function QuoteBlockEditor({
@@ -1555,7 +1727,7 @@ export function QuoteBlockEditor({
 
     return (
         <div className="space-y-4">
-            <Textarea
+            <AutoResizeTextarea
                 value={quoteBlock.text}
                 onChange={(event) =>
                     onUpdate({
@@ -1564,7 +1736,8 @@ export function QuoteBlockEditor({
                     })
                 }
                 placeholder="Citation"
-                className="min-h-32 resize-y border-0 bg-transparent px-0 py-0 font-serif text-3xl font-light italic leading-tight text-[#f2e9dd] shadow-none focus-visible:ring-0"
+                rows={1}
+                className="h-auto overflow-hidden resize-none border-0 bg-transparent px-0 py-0 font-serif text-3xl font-light italic leading-tight text-[#2b2824] placeholder:text-[#b8afa2] shadow-none outline-none focus:outline-none"
             />
             <Input
                 value={quoteBlock.author ?? ""}
@@ -1575,14 +1748,14 @@ export function QuoteBlockEditor({
                     })
                 }
                 placeholder="Auteur"
-                className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
+                className="border-[#d6cec1] bg-white text-[#6c6458] placeholder:text-[#b8afa2]"
             />
         </div>
     );
 }
 </file>
 
-<file path="blocks/unsupported/unsupported-editor.tsx">
+<file path="components/editors/blocks/unsupported/unsupported-editor.tsx">
 "use client";
 
 import type { UnsupportedBlock } from "@/features/articles/model/article-blocks";
@@ -1601,6 +1774,1599 @@ export function UnsupportedBlockEditor({ block }: ArticleBlockEditorProps) {
             </pre>
         </div>
     );
+}
+</file>
+
+<file path="model/article-blocks.ts">
+export type ArticleBlockType =
+  | "heading"
+  | "paragraph"
+  | "image"
+  | "quote"
+  | "video"
+  | "divider"
+  | "cta"
+  | "unsupported";
+
+export type ArticleBlockBase = {
+  id: string;
+  type: ArticleBlockType;
+};
+
+export type HeadingBlock = ArticleBlockBase & {
+  type: "heading";
+  text: string;
+  level?: 1 | 2 | 3;
+};
+
+export type ParagraphBlock = ArticleBlockBase & {
+  type: "paragraph";
+  text: string;
+};
+
+export type ImageBlock = ArticleBlockBase & {
+  type: "image";
+  url: string;
+  alt?: string;
+  caption?: string;
+};
+
+export type QuoteBlock = ArticleBlockBase & {
+  type: "quote";
+  text: string;
+  author?: string;
+};
+
+export type VideoBlock = ArticleBlockBase & {
+  type: "video";
+  url: string;
+  title?: string;
+};
+
+export type DividerBlock = ArticleBlockBase & {
+  type: "divider";
+};
+
+export type CtaBlock = ArticleBlockBase & {
+  type: "cta";
+  title: string;
+  description?: string;
+  buttonLabel: string;
+  href: string;
+};
+
+export type UnsupportedBlock = ArticleBlockBase & {
+  type: "unsupported";
+  originalType: string;
+  raw: Record<string, unknown>;
+};
+
+export type ArticleBlock =
+  | HeadingBlock
+  | ParagraphBlock
+  | ImageBlock
+  | QuoteBlock
+  | VideoBlock
+  | DividerBlock
+  | CtaBlock
+  | UnsupportedBlock;
+
+const ARTICLE_BLOCK_TYPES: ArticleBlockType[] = [
+  "heading",
+  "paragraph",
+  "image",
+  "quote",
+  "video",
+  "divider",
+  "cta",
+  "unsupported",
+];
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return !!value && typeof value === "object" && !Array.isArray(value);
+}
+
+function isArticleBlockType(value: unknown): value is ArticleBlockType {
+  return typeof value === "string" && ARTICLE_BLOCK_TYPES.includes(value as ArticleBlockType);
+}
+
+function optionalString(value: unknown) {
+  return typeof value === "string" ? value : "";
+}
+
+function optionalHeadingLevel(value: unknown): 1 | 2 | 3 | undefined {
+  return value === 1 || value === 2 || value === 3 ? value : undefined;
+}
+
+type NormalizeResult = {
+  blocks: ArticleBlock[];
+  warnings: string[];
+};
+
+export function normalizeArticleBlocksDetailed(value: unknown): NormalizeResult {
+  if (!Array.isArray(value)) {
+    return {
+      blocks: [],
+      warnings: ["blocksJson must be an array"],
+    };
+  }
+
+  const blocks: ArticleBlock[] = [];
+  const warnings: string[] = [];
+
+  value.forEach((raw, index) => {
+    if (!isRecord(raw)) {
+      warnings.push(`Block ${index + 1} is not an object and was ignored.`);
+      return;
+    }
+
+    const normalizedType = raw.type === "text" ? "paragraph" : raw.type;
+    const fallbackId = `block-${index}`;
+    const id = optionalString(raw.id) || fallbackId;
+
+    if (normalizedType === "unsupported") {
+      blocks.push({
+        id,
+        type: "unsupported",
+        originalType: optionalString(raw.originalType) || "unsupported",
+        raw,
+      });
+      warnings.push(`Block ${index + 1} uses an unsupported type and was preserved as read-only.`);
+      return;
+    }
+
+    if (!isArticleBlockType(normalizedType)) {
+      blocks.push({
+        id,
+        type: "unsupported",
+        originalType: optionalString(raw.type) || "unknown",
+        raw,
+      });
+      warnings.push(`Block ${index + 1} uses an unsupported type and was preserved as read-only.`);
+      return;
+    }
+
+    if (normalizedType === "heading") {
+      blocks.push({
+        id,
+        type: "heading",
+        text: optionalString(raw.text ?? raw.content),
+        level: optionalHeadingLevel(raw.level),
+      });
+      return;
+    }
+    if (normalizedType === "paragraph") {
+      blocks.push({
+        id,
+        type: "paragraph",
+        text: optionalString(raw.text ?? raw.content),
+      });
+      return;
+    }
+    if (normalizedType === "image") {
+      blocks.push({
+        id,
+        type: "image",
+        url: optionalString(raw.url),
+        alt: optionalString(raw.alt),
+        caption: optionalString(raw.caption),
+      });
+      return;
+    }
+    if (normalizedType === "quote") {
+      blocks.push({
+        id,
+        type: "quote",
+        text: optionalString(raw.text ?? raw.content),
+        author: optionalString(raw.author ?? raw.source),
+      });
+      return;
+    }
+    if (normalizedType === "video") {
+      blocks.push({ id, type: "video", url: optionalString(raw.url), title: optionalString(raw.title) });
+      return;
+    }
+    if (normalizedType === "cta") {
+      blocks.push({
+        id,
+        type: "cta",
+        title: optionalString(raw.title),
+        description: optionalString(raw.description),
+        buttonLabel: optionalString(raw.buttonLabel),
+        href: optionalString(raw.href),
+      });
+      return;
+    }
+
+    blocks.push({ id, type: "divider" });
+  });
+
+  return { blocks, warnings };
+}
+
+export function normalizeArticleBlocks(value: unknown): ArticleBlock[] {
+  return normalizeArticleBlocksDetailed(value).blocks;
+}
+
+export function sanitizeArticleBlocks(value: unknown): NormalizeResult {
+  const result = normalizeArticleBlocksDetailed(value);
+  return {
+    blocks: result.blocks.map((block, index) => {
+      if (block.type === "unsupported") {
+        return {
+          id: block.id || `unsupported-${index}`,
+          type: "unsupported",
+          originalType: block.originalType,
+          raw: block.raw,
+        };
+      }
+
+      return block;
+    }),
+    warnings: result.warnings,
+  };
+}
+
+export function createArticleBlock(type: ArticleBlockType): ArticleBlock {
+  const id = globalThis.crypto?.randomUUID?.() ?? `${type}-${Date.now()}`;
+
+  if (type === "heading") return { id, type, text: "", level: 2 };
+  if (type === "paragraph") return { id, type, text: "" };
+  if (type === "image") return { id, type, url: "", alt: "", caption: "" };
+  if (type === "quote") return { id, type, text: "", author: "" };
+  if (type === "video") return { id, type, url: "", title: "" };
+  if (type === "cta") {
+    return { id, type, title: "", description: "", buttonLabel: "Read more", href: "/" };
+  }
+  if (type === "unsupported") {
+    return { id, type, originalType: "unknown", raw: {} };
+  }
+
+  return { id, type };
+}
+
+export function getArticlePlainText(blocks: ArticleBlock[]) {
+  return blocks
+    .map((block) => {
+      if (block.type === "heading" || block.type === "paragraph" || block.type === "quote") {
+        return block.text;
+      }
+      if (block.type === "image") return [block.alt, block.caption].filter(Boolean).join(" ");
+      if (block.type === "video") return block.title ?? "";
+      if (block.type === "cta") {
+        return [block.title, block.description, block.buttonLabel].filter(Boolean).join(" ");
+      }
+      return "";
+    })
+    .join(" ");
+}
+
+export function getReadingTimeMinutes(blocks: ArticleBlock[]) {
+  const words = getArticlePlainText(blocks).trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 220));
+}
+</file>
+
+<file path="model/articles.data.ts">
+import type { ArticleBlock } from "@/features/articles/model/article-blocks";
+import type { SupportedLocale } from "@/shared/i18n/locales";
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+export interface StaticArticle {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  coverImage: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  published: boolean;
+  blocksJson: ArticleBlock[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// ---------------------------------------------------------------------------
+// Locale-aware data map
+// ---------------------------------------------------------------------------
+const ARTICLES_BY_LOCALE: Record<SupportedLocale, StaticArticle[]> = {
+
+  // ══════════════════════════════════════════════════════════════════════════
+  //  FRANÇAIS
+  // ══════════════════════════════════════════════════════════════════════════
+  fr: [
+    // ── Article 1 ───────────────────────────────────────────────────────────
+    {
+      id: "article-univers-isolele",
+      slug: "lunivers-disolele-entre-mythe-et-modernite",
+      title: "L'univers d'Isolele : entre mythe et modernité",
+      excerpt:
+        "Plongez au cœur de la création d'Isolele, un monde où les légendes africaines rencontrent la narration graphique contemporaine.",
+      coverImage: "/royal-palace-background.png",
+      published: true,
+      createdAt: new Date("2026-04-01T10:00:00Z"),
+      updatedAt: new Date("2026-04-15T08:30:00Z"),
+      blocksJson: [
+        {
+          id: "h1",
+          type: "heading",
+          text: "Les racines d'un monde imaginaire",
+        },
+        {
+          id: "t1",
+          type: "paragraph",
+          text: "Isolele est né d'une ambition simple mais profonde : donner vie aux récits oraux de l'Afrique centrale à travers la bande dessinée. Chaque ligne dessinée, chaque couleur choisie, chaque mot posé sur la page est le fruit d'un dialogue entre tradition et innovation.\n\nLe roi Kufulula, figure centrale de l'univers, n'est pas seulement un personnage de fiction. Il est l'incarnation de siècles de sagesse, de guerres oubliées et de pactes scellés sous des arbres millénaires. Son règne est une métaphore de la quête identitaire que vivent des millions de personnes à travers le monde.",
+        },
+        {
+          id: "q1",
+          type: "quote",
+          text: "Un conte qui ne voyage pas est un conte qui meurt.",
+          author: "Proverbe Kongo",
+        },
+        {
+          id: "h2",
+          type: "heading",
+          text: "Une esthétique délibérément hybride",
+        },
+        {
+          id: "t2",
+          type: "paragraph",
+          text: "La direction artistique d'Isolele refuse de choisir entre les codes de la bande dessinée franco-belge, du manga et de l'illustration africaine contemporaine. Ce métissage revendiqué produit un style immédiatement reconnaissable : des aplats de couleurs chaudes empruntés aux tissus wax, des compositions dynamiques héritées du 9e art européen, et une typographie qui intègre des glyphes inspirés des idéogrammes nsibidi.\n\nChaque case est pensée comme un tableau autonome, capable d'exister indépendamment de la séquence narrative tout en contribuant à l'élan dramatique de l'histoire.",
+        },
+        {
+          id: "d1",
+          type: "divider",
+        },
+        {
+          id: "h3",
+          type: "heading",
+          text: "Kufu Game : le monde dans tes mains",
+        },
+        {
+          id: "t3",
+          type: "paragraph",
+          text: "L'extension vidéoludique de l'univers Isolele, baptisée Kufu Game, transpose les mécaniques narratives de la BD en expérience interactive. Les joueurs explorent le royaume, résolvent des énigmes fondées sur la cosmologie locale et participent à des rituels virtuels qui reflètent des pratiques culturelles authentiques.\n\nLoin d'être un simple produit dérivé, Kufu Game est conçu comme un vecteur d'éducation culturelle, accessible dès l'âge de 7 ans et validé par un comité de linguistes et d'anthropologues partenaires du projet.",
+        },
+        {
+          id: "cta1",
+          type: "cta",
+          title: "Découvrez le premier tome",
+          description:
+            "Commandez le premier volume de la saga Isolele et rejoignez des milliers de lecteurs à travers le monde.",
+          buttonLabel: "Voir les livres",
+          href: "/fr/books",
+        },
+      ],
+    },
+
+    // ── Article 2 ───────────────────────────────────────────────────────────
+    {
+      id: "article-kufulula-roi",
+      slug: "kufulula-anatomie-dun-roi-hors-du-commun",
+      title: "Kufulula : anatomie d'un roi hors du commun",
+      excerpt:
+        "Qui est vraiment le roi Kufulula ? Portrait d'un personnage complexe, à la fois guerrier, diplomate et gardien des ancêtres.",
+      coverImage: "/royal-palace-background.png",
+      published: true,
+      createdAt: new Date("2026-04-10T14:00:00Z"),
+      updatedAt: new Date("2026-04-20T11:00:00Z"),
+      blocksJson: [
+        {
+          id: "h1",
+          type: "heading",
+          text: "L'enfance du roi",
+        },
+        {
+          id: "t1",
+          type: "paragraph",
+          text: "Avant d'être roi, Kufulula était enfant. Né pendant une éclipse lunaire dans la province de Mbata, il fut immédiatement confié aux devins du palais qui virent dans sa naissance un signe ambigu : à la fois promesse de prospérité et présage de bouleversements profonds.\n\nSon éducation fut rigoureuse. Dès l'âge de cinq ans, il apprenait à lire les étoiles, à identifier les plantes médicinales et à écouter les ancêtres à travers le murmure du vent dans les hautes herbes de la savane. Son mentor, le vieux Nsamba, lui enseigna que la force d'un roi ne réside pas dans ses armées, mais dans sa capacité à comprendre les silences de son peuple.",
+        },
+        {
+          id: "q1",
+          type: "quote",
+          text: "Gouverner, c'est d'abord savoir se taire au bon moment.",
+          author: "Nsamba, conseiller royal",
+        },
+        {
+          id: "h2",
+          type: "heading",
+          text: "La guerre des Trois Rivières",
+        },
+        {
+          id: "t2",
+          type: "paragraph",
+          text: "Le baptême du feu de Kufulula survint lors de la guerre des Trois Rivières, un conflit territorial qui opposa le royaume d'Isolele à deux royaumes voisins pendant sept saisons. À dix-neuf ans, il commandait le flanc ouest des armées royales avec une habileté tactique qui dérouta ses adversaires.\n\nCe qui distingue Kufulula des conquérants ordinaires, c'est qu'après chaque victoire militaire, il s'asseyait avec les chefs ennemis défaits pour boire le même vin de palme. Pour lui, la paix n'est pas l'absence de guerre — c'est une architecture délicate qu'on bâtit patiemment, pierre après pierre.",
+        },
+        {
+          id: "d1",
+          type: "divider",
+        },
+        {
+          id: "h3",
+          type: "heading",
+          text: "Les pouvoirs du gardien",
+        },
+        {
+          id: "t3",
+          type: "paragraph",
+          text: "Dans la mythologie d'Isolele, le roi n'est pas simplement un chef politique. Il est le nexus entre le monde des vivants et celui des ancêtres. Kufulula hérite de ce rôle avec un mélange de foi sincère et de scepticisme discret — une tension qui le rend particulièrement humain et attachant.\n\nSes pouvoirs, décrits dans les tomes comme des manifestations de sa connexion aux forces ancestrales, sont toujours représentés avec une sobriété visuelle remarquable : pas d'effets spéciaux tapageurs, mais des petits détails subtils — une flamme qui ne vacille pas par vent fort, une plante qui fleurit hors saison à son passage.",
+        },
+        {
+          id: "cta2",
+          type: "cta",
+          title: "Explorez les personnages",
+          description:
+            "Découvrez toute la galerie des personnages qui peuplent l'univers d'Isolele.",
+          buttonLabel: "Voir les personnages",
+          href: "/fr/characters",
+        },
+      ],
+    },
+
+    // ── Article 3 ───────────────────────────────────────────────────────────
+    {
+      id: "article-processus-creatif",
+      slug: "dessiner-lafrique-autrement-le-processus-creatif-disolele",
+      title: "Dessiner l'Afrique autrement : le processus créatif d'Isolele",
+      excerpt:
+        "De l'esquisse au produit final, découvrez les coulisses de la création des planches d'Isolele et la vision artistique qui les anime.",
+      coverImage: "/royal-palace-background.png",
+      published: true,
+      createdAt: new Date("2026-05-01T09:00:00Z"),
+      updatedAt: new Date("2026-05-05T16:45:00Z"),
+      blocksJson: [
+        {
+          id: "h1",
+          type: "heading",
+          text: "Tout commence par un carnet",
+        },
+        {
+          id: "t1",
+          type: "paragraph",
+          text: "Le processus créatif d'Isolele commence invariablement par des carnets de croquis. Des centaines de pages couvertes de visages, de postures, d'expressions — une exploration patiente de la façon dont les émotions s'écrivent sur les corps africains, si souvent mal représentés dans la culture populaire mondiale.\n\nL'équipe créative refuse le raccourci des stéréotypes visuels. Chaque personnage est documenté : sa tribu, ses vêtements, ses scarifications le cas échéant, ses bijoux, sa façon de marcher. Ce travail de documentation prend parfois plus de temps que la réalisation des planches elles-mêmes.",
+        },
+        {
+          id: "q1",
+          type: "quote",
+          text: "Chaque visage que je dessine est une promesse faite à quelqu'un que je n'ai jamais rencontré mais que je respecte profondément.",
+          author: "L'auteur d'Isolele",
+        },
+        {
+          id: "h2",
+          type: "heading",
+          text: "La couleur comme langage",
+        },
+        {
+          id: "t2",
+          type: "paragraph",
+          text: "La palette chromatique d'Isolele n'est pas aléatoire. Chaque arc narratif possède sa propre dominante colorielle, qui évolue imperceptiblement au fil des planches pour accompagner les états émotionnels des personnages. Les scènes de paix baignent dans des ocres chauds et des verts profonds. Les moments de tension glissent vers des bleus nuit et des rouges sang discrets.\n\nCette cohérence chromatique est le résultat d'une collaboration étroite entre le scénariste et le coloriste, qui se réunissent régulièrement pour calibrer l'atmosphère de chaque chapitre avant même que le crayon ne touche le papier.",
+        },
+        {
+          id: "d1",
+          type: "divider",
+        },
+        {
+          id: "h3",
+          type: "heading",
+          text: "L'impression : un acte militant",
+        },
+        {
+          id: "t3",
+          type: "paragraph",
+          text: "Isolele est imprimé sur du papier certifié FSC, en Europe, avec des encres végétales. Ce choix n'est pas anodin : il s'inscrit dans une réflexion plus large sur la responsabilité écologique de l'industrie de l'édition et sur la cohérence entre les valeurs portées par l'œuvre et les conditions matérielles de sa production.\n\nLes couvertures sont réalisées en impression numérique haute définition avec un vernis sélectif sur certains éléments graphiques, créant un effet de relief qui invite le lecteur à toucher le livre avant même de l'ouvrir. Le livre comme objet sensoriel — une philosophie qui court tout au long du projet Isolele.",
+        },
+        {
+          id: "cta3",
+          type: "cta",
+          title: "Suivez l'aventure Isolele",
+          description:
+            "Rejoignez notre communauté et recevez les dernières actualités, planches exclusives et événements à venir.",
+          buttonLabel: "Découvrir l'univers",
+          href: "/fr/comics",
+        },
+      ],
+    },
+  ],
+
+  // ══════════════════════════════════════════════════════════════════════════
+  //  ENGLISH
+  // ══════════════════════════════════════════════════════════════════════════
+  en: [
+    // ── Article 1 ───────────────────────────────────────────────────────────
+    {
+      id: "article-univers-isolele",
+      slug: "the-isolele-universe-between-myth-and-modernity",
+      title: "The Isolele Universe: Between Myth and Modernity",
+      excerpt:
+        "Dive into the heart of Isolele's creation — a world where African legends collide with contemporary graphic storytelling.",
+      coverImage: "/royal-palace-background.png",
+      published: true,
+      createdAt: new Date("2026-04-01T10:00:00Z"),
+      updatedAt: new Date("2026-04-15T08:30:00Z"),
+      blocksJson: [
+        {
+          id: "h1",
+          type: "heading",
+          text: "The roots of an imaginary world",
+        },
+        {
+          id: "t1",
+          type: "paragraph",
+          text: "Isolele was born from a simple yet profound ambition: to breathe life into the oral traditions of Central Africa through comics. Every line drawn, every color chosen, every word set on the page is the result of a dialogue between tradition and innovation.\n\nKing Kufulula, the central figure of the universe, is not merely a fictional character. He is the embodiment of centuries of wisdom, forgotten wars, and pacts sealed beneath ancient trees. His reign is a metaphor for the quest for identity lived by millions of people around the world.",
+        },
+        {
+          id: "q1",
+          type: "quote",
+          text: "A story that does not travel is a story that dies.",
+          author: "Kongo Proverb",
+        },
+        {
+          id: "h2",
+          type: "heading",
+          text: "A deliberately hybrid aesthetic",
+        },
+        {
+          id: "t2",
+          type: "paragraph",
+          text: "The artistic direction of Isolele refuses to choose between the codes of Franco-Belgian comics, manga, and contemporary African illustration. This deliberate blending produces an immediately recognizable style: warm flat colors borrowed from wax fabrics, dynamic compositions inherited from the European 9th art, and typography that integrates glyphs inspired by nsibidi ideograms.\n\nEach panel is conceived as an autonomous painting, capable of existing independently of the narrative sequence while contributing to the dramatic momentum of the story.",
+        },
+        {
+          id: "d1",
+          type: "divider",
+        },
+        {
+          id: "h3",
+          type: "heading",
+          text: "Kufu Game: The World in Your Hands",
+        },
+        {
+          id: "t3",
+          type: "paragraph",
+          text: "The video game extension of the Isolele universe, called Kufu Game, transposes the narrative mechanics of the comic into an interactive experience. Players explore the kingdom, solve puzzles rooted in local cosmology, and participate in virtual rituals reflecting authentic cultural practices.\n\nFar from being a simple spin-off, Kufu Game is designed as a vehicle for cultural education, accessible from age 7 and validated by a committee of linguists and anthropologists partnering with the project.",
+        },
+        {
+          id: "cta1",
+          type: "cta",
+          title: "Discover the first volume",
+          description:
+            "Order the first volume of the Isolele saga and join thousands of readers around the world.",
+          buttonLabel: "See the books",
+          href: "/en/books",
+        },
+      ],
+    },
+
+    // ── Article 2 ───────────────────────────────────────────────────────────
+    {
+      id: "article-kufulula-roi",
+      slug: "kufulula-anatomy-of-an-extraordinary-king",
+      title: "Kufulula: Anatomy of an Extraordinary King",
+      excerpt:
+        "Who is King Kufulula really? A portrait of a complex character — warrior, diplomat, and guardian of the ancestors all at once.",
+      coverImage: "/royal-palace-background.png",
+      published: true,
+      createdAt: new Date("2026-04-10T14:00:00Z"),
+      updatedAt: new Date("2026-04-20T11:00:00Z"),
+      blocksJson: [
+        {
+          id: "h1",
+          type: "heading",
+          text: "The king's childhood",
+        },
+        {
+          id: "t1",
+          type: "paragraph",
+          text: "Before becoming king, Kufulula was a child. Born during a lunar eclipse in the province of Mbata, he was immediately entrusted to the palace diviners, who saw in his birth an ambiguous sign — both a promise of prosperity and an omen of profound upheaval.\n\nHis education was rigorous. From the age of five, he learned to read the stars, identify medicinal plants, and listen to the ancestors through the whisper of the wind in the tall savanna grass. His mentor, old Nsamba, taught him that a king's strength lies not in his armies, but in his ability to understand the silences of his people.",
+        },
+        {
+          id: "q1",
+          type: "quote",
+          text: "To rule is first to know when to remain silent.",
+          author: "Nsamba, Royal Advisor",
+        },
+        {
+          id: "h2",
+          type: "heading",
+          text: "The War of the Three Rivers",
+        },
+        {
+          id: "t2",
+          type: "paragraph",
+          text: "Kufulula's baptism by fire came during the War of the Three Rivers, a territorial conflict that pitted the kingdom of Isolele against two neighboring kingdoms for seven seasons. At nineteen, he commanded the western flank of the royal armies with tactical skill that confounded his adversaries.\n\nWhat sets Kufulula apart from ordinary conquerors is that after every military victory, he would sit with the defeated enemy chiefs to share the same palm wine. For him, peace is not the absence of war — it is a delicate architecture built patiently, stone by stone.",
+        },
+        {
+          id: "d1",
+          type: "divider",
+        },
+        {
+          id: "h3",
+          type: "heading",
+          text: "The guardian's powers",
+        },
+        {
+          id: "t3",
+          type: "paragraph",
+          text: "In the mythology of Isolele, the king is not simply a political leader. He is the nexus between the world of the living and that of the ancestors. Kufulula inherits this role with a blend of sincere faith and quiet skepticism — a tension that makes him particularly human and endearing.\n\nHis powers, described in the volumes as manifestations of his connection to ancestral forces, are always depicted with remarkable visual restraint: no flashy special effects, but small subtle details — a flame that does not flicker in strong wind, a plant that blooms out of season at his passing.",
+        },
+        {
+          id: "cta2",
+          type: "cta",
+          title: "Explore the characters",
+          description:
+            "Discover the full gallery of characters who populate the Isolele universe.",
+          buttonLabel: "See the characters",
+          href: "/en/characters",
+        },
+      ],
+    },
+
+    // ── Article 3 ───────────────────────────────────────────────────────────
+    {
+      id: "article-processus-creatif",
+      slug: "drawing-africa-differently-isolele-creative-process",
+      title: "Drawing Africa Differently: Isolele's Creative Process",
+      excerpt:
+        "From sketch to final product, discover the behind-the-scenes of creating Isolele's pages and the artistic vision that drives them.",
+      coverImage: "/royal-palace-background.png",
+      published: true,
+      createdAt: new Date("2026-05-01T09:00:00Z"),
+      updatedAt: new Date("2026-05-05T16:45:00Z"),
+      blocksJson: [
+        {
+          id: "h1",
+          type: "heading",
+          text: "It all starts with a sketchbook",
+        },
+        {
+          id: "t1",
+          type: "paragraph",
+          text: "Isolele's creative process invariably begins with sketchbooks. Hundreds of pages filled with faces, postures, and expressions — a patient exploration of how emotions are written on African bodies, so often poorly represented in mainstream global culture.\n\nThe creative team refuses the shortcut of visual stereotypes. Every character is documented: their tribe, their clothing, their scarifications if any, their jewelry, their way of walking. This documentation work sometimes takes longer than producing the panels themselves.",
+        },
+        {
+          id: "q1",
+          type: "quote",
+          text: "Every face I draw is a promise made to someone I have never met but deeply respect.",
+          author: "The author of Isolele",
+        },
+        {
+          id: "h2",
+          type: "heading",
+          text: "Color as language",
+        },
+        {
+          id: "t2",
+          type: "paragraph",
+          text: "Isolele's color palette is not random. Each narrative arc has its own dominant hue, which shifts imperceptibly across panels to accompany the emotional states of the characters. Peaceful scenes are bathed in warm ochres and deep greens. Moments of tension slide toward midnight blues and discreet blood reds.\n\nThis chromatic consistency is the result of close collaboration between the writer and the colorist, who meet regularly to calibrate the atmosphere of each chapter even before pencil touches paper.",
+        },
+        {
+          id: "d1",
+          type: "divider",
+        },
+        {
+          id: "h3",
+          type: "heading",
+          text: "Printing: a political act",
+        },
+        {
+          id: "t3",
+          type: "paragraph",
+          text: "Isolele is printed on FSC-certified paper, in Europe, with vegetable-based inks. This choice is not incidental — it is part of a broader reflection on the ecological responsibility of the publishing industry and on the coherence between the values carried by the work and the material conditions of its production.\n\nThe covers are produced in high-definition digital printing with selective varnishing on certain graphic elements, creating a relief effect that invites the reader to touch the book before even opening it. The book as a sensory object — a philosophy that runs throughout the Isolele project.",
+        },
+        {
+          id: "cta3",
+          type: "cta",
+          title: "Follow the Isolele adventure",
+          description:
+            "Join our community and receive the latest news, exclusive pages, and upcoming events.",
+          buttonLabel: "Discover the universe",
+          href: "/en/comics",
+        },
+      ],
+    },
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// Public helpers — same API shape as the data service, but static
+// ---------------------------------------------------------------------------
+
+/** Returns published articles for a given locale, sorted newest-first. */
+export function getStaticPublishedArticles(locale: SupportedLocale = "fr") {
+  return (ARTICLES_BY_LOCALE[locale] ?? ARTICLES_BY_LOCALE.fr)
+    .filter((a) => a.published)
+    .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
+}
+
+/** Finds a published article by slug within a given locale. */
+export function getStaticArticleBySlug(
+  slug: string,
+  locale: SupportedLocale = "fr"
+) {
+  const list = ARTICLES_BY_LOCALE[locale] ?? ARTICLES_BY_LOCALE.fr;
+  return list.find((a) => a.slug === slug && a.published) ?? null;
+}
+</file>
+
+<file path="model/articles.types.ts">
+export type {
+  ArticleBlock,
+  HeadingBlock,
+  ParagraphBlock,
+  ImageBlock,
+  QuoteBlock,
+} from "./article-blocks";
+</file>
+
+<file path="services/articles-translation.service.ts">
+import { Prisma } from "@/generated/prisma/client";
+import type { SupportedLocale } from "@/shared/i18n/locales";
+import {
+  normalizeArticleBlocks,
+  type ArticleBlock,
+} from "../model/article-blocks";
+import {
+  getArticleById,
+  getArticleByTranslationGroupAndLocale,
+  upsertArticleTranslation,
+} from "./articles.services";
+
+type TranslationEntry = {
+  key: string;
+  text: string;
+  context: string;
+};
+
+type TranslationResponse = {
+  slug: string;
+  translations: Array<{
+    key: string;
+    text: string;
+  }>;
+};
+
+const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
+const SOURCE_LOCALE: SupportedLocale = "en";
+
+function requireOpenAiApiKey() {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error("OPENAI_API_KEY is missing. Add it to your environment before translating articles.");
+  }
+  return apiKey;
+}
+
+function getTranslationModel() {
+  return process.env.OPENAI_TRANSLATION_MODEL || "gpt-5";
+}
+
+function slugify(value: string) {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 120) || `article-${Date.now()}`;
+}
+
+function collectBlockEntries(blocks: ArticleBlock[]) {
+  const entries: TranslationEntry[] = [];
+
+  blocks.forEach((block) => {
+    if (block.type === "heading" || block.type === "paragraph" || block.type === "quote") {
+      if (block.text.trim()) {
+        entries.push({
+          key: `block:${block.id}:text`,
+          text: block.text,
+          context: `${block.type} text`,
+        });
+      }
+    }
+
+    if (block.type === "image") {
+      if (block.alt?.trim()) {
+        entries.push({
+          key: `block:${block.id}:alt`,
+          text: block.alt,
+          context: "image alt text",
+        });
+      }
+
+      if (block.caption?.trim()) {
+        entries.push({
+          key: `block:${block.id}:caption`,
+          text: block.caption,
+          context: "image caption",
+        });
+      }
+    }
+
+    if (block.type === "cta") {
+      if (block.title.trim()) {
+        entries.push({
+          key: `block:${block.id}:title`,
+          text: block.title,
+          context: "call to action title",
+        });
+      }
+
+      if (block.description?.trim()) {
+        entries.push({
+          key: `block:${block.id}:description`,
+          text: block.description,
+          context: "call to action description",
+        });
+      }
+
+      if (block.buttonLabel.trim()) {
+        entries.push({
+          key: `block:${block.id}:buttonLabel`,
+          text: block.buttonLabel,
+          context: "call to action button label",
+        });
+      }
+    }
+
+    if (block.type === "video" && block.title?.trim()) {
+      entries.push({
+        key: `block:${block.id}:title`,
+        text: block.title,
+        context: "video title",
+      });
+    }
+  });
+
+  return entries;
+}
+
+function collectArticleEntries(article: {
+  title: string;
+  excerpt: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+}) {
+  const entries: TranslationEntry[] = [
+    {
+      key: "article:title",
+      text: article.title,
+      context: "article title",
+    },
+  ];
+
+  if (article.excerpt?.trim()) {
+    entries.push({
+      key: "article:excerpt",
+      text: article.excerpt,
+      context: "article excerpt",
+    });
+  }
+
+  if (article.seoTitle?.trim()) {
+    entries.push({
+      key: "article:seoTitle",
+      text: article.seoTitle,
+      context: "SEO title",
+    });
+  }
+
+  if (article.seoDescription?.trim()) {
+    entries.push({
+      key: "article:seoDescription",
+      text: article.seoDescription,
+      context: "SEO description",
+    });
+  }
+
+  return entries;
+}
+
+function applyTranslatedText(block: ArticleBlock, translated: Map<string, string>): ArticleBlock {
+  if (block.type === "heading" || block.type === "paragraph" || block.type === "quote") {
+    return {
+      ...block,
+      text: translated.get(`block:${block.id}:text`) ?? block.text,
+    };
+  }
+
+  if (block.type === "image") {
+    return {
+      ...block,
+      alt: translated.get(`block:${block.id}:alt`) ?? block.alt,
+      caption: translated.get(`block:${block.id}:caption`) ?? block.caption,
+    };
+  }
+
+  if (block.type === "cta") {
+    return {
+      ...block,
+      title: translated.get(`block:${block.id}:title`) ?? block.title,
+      description: translated.get(`block:${block.id}:description`) ?? block.description,
+      buttonLabel: translated.get(`block:${block.id}:buttonLabel`) ?? block.buttonLabel,
+    };
+  }
+
+  if (block.type === "video") {
+    return {
+      ...block,
+      title: translated.get(`block:${block.id}:title`) ?? block.title,
+    };
+  }
+
+  return block;
+}
+
+function getResponseText(payload: Record<string, unknown>) {
+  if (typeof payload.output_text === "string" && payload.output_text.trim()) {
+    return payload.output_text;
+  }
+
+  const output = Array.isArray(payload.output) ? payload.output : [];
+  for (const item of output) {
+    if (!item || typeof item !== "object") continue;
+    const content = Array.isArray((item as { content?: unknown[] }).content)
+      ? (item as { content: unknown[] }).content
+      : [];
+
+    for (const contentItem of content) {
+      if (!contentItem || typeof contentItem !== "object") continue;
+      const maybeText = contentItem as {
+        type?: string;
+        text?: string;
+        refusal?: string;
+      };
+
+      if (maybeText.type === "refusal") {
+        throw new Error(maybeText.refusal || "The model refused the translation request.");
+      }
+
+      if (maybeText.type === "output_text" && typeof maybeText.text === "string") {
+        return maybeText.text;
+      }
+    }
+  }
+
+  throw new Error("OpenAI response did not include translatable text output.");
+}
+
+async function translateEntriesWithGpt(params: {
+  sourceSlug: string;
+  targetLocale: SupportedLocale;
+  entries: TranslationEntry[];
+}) {
+  const apiKey = requireOpenAiApiKey();
+  const response = await fetch(OPENAI_RESPONSES_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: getTranslationModel(),
+      reasoning: { effort: "low" },
+      input: [
+        {
+          role: "developer",
+          content:
+            "You are a professional editorial translator. Translate English article content into the requested target language. Preserve paragraph breaks, tone, and factual meaning. Do not invent new content. Keep URLs, identifiers, and proper nouns unchanged unless they have a standard localized form. Return only valid JSON matching the schema.",
+        },
+        {
+          role: "user",
+          content: JSON.stringify({
+            sourceLocale: SOURCE_LOCALE,
+            targetLocale: params.targetLocale,
+            sourceSlug: params.sourceSlug,
+            entries: params.entries,
+            instructions: [
+              "Translate every entry.text value into the target locale.",
+              "Keep the same key values unchanged.",
+              "Return a localized slug in lowercase kebab-case suitable for a public URL.",
+              "The slug must not include a leading slash.",
+            ],
+          }),
+        },
+      ],
+      text: {
+        format: {
+          type: "json_schema",
+          name: "article_translation_payload",
+          schema: {
+            type: "object",
+            properties: {
+              slug: {
+                type: "string",
+              },
+              translations: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    key: { type: "string" },
+                    text: { type: "string" },
+                  },
+                  required: ["key", "text"],
+                  additionalProperties: false,
+                },
+              },
+            },
+            required: ["slug", "translations"],
+            additionalProperties: false,
+          },
+          strict: true,
+        },
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenAI translation failed with status ${response.status}.`);
+  }
+
+  const payload = await response.json() as Record<string, unknown>;
+  const text = getResponseText(payload);
+  return JSON.parse(text) as TranslationResponse;
+}
+
+export async function translateArticleFromEnglish(
+  articleId: string,
+  targetLocale: SupportedLocale,
+) {
+  if (targetLocale === SOURCE_LOCALE) {
+    throw new Error("Target locale must be different from the English source locale.");
+  }
+
+  const sourceArticle = await getArticleById(articleId);
+  if (!sourceArticle) {
+    throw new Error("Source article was not found.");
+  }
+
+  if (sourceArticle.locale !== SOURCE_LOCALE) {
+    throw new Error("Only English source articles can be translated in this first version.");
+  }
+
+  const blocks = normalizeArticleBlocks(sourceArticle.blocksJson);
+  const entries = [
+    ...collectArticleEntries(sourceArticle),
+    ...collectBlockEntries(blocks),
+  ];
+
+  if (entries.length === 0) {
+    throw new Error("There is no translatable content in this article yet.");
+  }
+
+  const translatedPayload = await translateEntriesWithGpt({
+    sourceSlug: sourceArticle.slug,
+    targetLocale,
+    entries,
+  });
+
+  const translatedMap = new Map(
+    translatedPayload.translations.map((entry) => [entry.key, entry.text]),
+  );
+
+  const translatedBlocks = blocks.map((block) =>
+    applyTranslatedText(block, translatedMap),
+  );
+
+  const existingTranslation = await getArticleByTranslationGroupAndLocale(
+    sourceArticle.translationGroupId,
+    targetLocale,
+  );
+
+  const nextSlug = slugify(translatedPayload.slug || translatedMap.get("article:title") || sourceArticle.slug);
+
+  return upsertArticleTranslation({
+    existingTranslationId: existingTranslation?.id,
+    translationGroupId: sourceArticle.translationGroupId,
+    locale: targetLocale,
+    slug: nextSlug,
+    title: translatedMap.get("article:title") ?? sourceArticle.title,
+    excerpt: translatedMap.get("article:excerpt") ?? sourceArticle.excerpt,
+    coverImage: sourceArticle.coverImage,
+    seoTitle: translatedMap.get("article:seoTitle") ?? sourceArticle.seoTitle,
+    seoDescription:
+      translatedMap.get("article:seoDescription") ?? sourceArticle.seoDescription,
+    blocksJson: translatedBlocks as Prisma.InputJsonValue,
+  });
+}
+</file>
+
+<file path="services/articles.services.ts">
+import { prisma } from "@/lib/prisma";
+import { Prisma, type ArticleStatus } from "@/generated/prisma/client";
+import { getStaticArticleBySlug, getStaticPublishedArticles } from "../model/articles.data";
+import type { SupportedLocale } from "@/shared/i18n/locales";
+
+export async function getAllArticles() {
+    return prisma.article.findMany({
+        orderBy: {
+            createdAt: "desc",
+        },
+    });
+}
+
+export async function getPublishedArticles(locale?: string) {
+    return prisma.article.findMany({
+        where: {
+            status: "PUBLISHED",
+            ...(locale ? { locale } : {}),
+        },
+        orderBy: {
+            publishedAt: "desc",
+        },
+    });
+}
+
+export async function getPublicPublishedArticles(
+    locale: SupportedLocale,
+) {
+    const dbArticles = await getPublishedArticles(locale);
+    if (dbArticles.length > 0) {
+        return dbArticles;
+    }
+    return getStaticPublishedArticles(locale);
+}
+
+export async function getArticleById(id: string) {
+    return prisma.article.findUnique({
+        where: {
+            id,
+        },
+    });
+}
+
+export async function getArticleBySlug(
+    slug: string,
+    locale?: string,
+) {
+    const article = await prisma.article.findFirst({
+        where: {
+            slug,
+            status: "PUBLISHED",
+            ...(locale ? { locale } : {}),
+        },
+    });
+    if (!article) {
+        return null;
+    }
+    return article;
+}
+
+export async function getPublicArticleBySlug(
+    slug: string,
+    locale: SupportedLocale,
+) {
+    const dbArticle = await getArticleBySlug(
+        slug,
+        locale,
+    );
+
+    if (dbArticle) {
+        return dbArticle;
+    }
+
+    return getStaticArticleBySlug(
+        slug,
+        locale,
+    );
+}
+
+export async function createArticle() {
+    return prisma.article.create({
+        data: {
+            translationGroupId: crypto.randomUUID(),
+
+            locale: "en",
+
+            slug: `article-${Date.now()}`,
+
+            title: "Nouvel article",
+
+            blocksJson: [] as Prisma.InputJsonValue,
+
+            status: "DRAFT",
+        },
+    });
+}
+
+// Update an article by its ID
+type UpdateArticleInput = {
+    title?: string;
+    excerpt?: string;
+    coverImage?: string | null;
+    seoTitle?: string | null;
+    seoDescription?: string | null;
+    blocksJson?: Prisma.InputJsonValue;
+}
+
+export async function updateArticle(
+    id: string,
+    data: UpdateArticleInput
+){
+    return prisma.article.update({
+        where :{
+            id,
+        },
+        data
+    })
+}
+
+export async function getArticleByTranslationGroupAndLocale(
+    translationGroupId: string,
+    locale: string,
+) {
+    return prisma.article.findFirst({
+        where: {
+            translationGroupId,
+            locale,
+        },
+    });
+}
+
+type UpsertArticleTranslationInput = {
+    existingTranslationId?: string;
+    translationGroupId: string;
+    locale: string;
+    slug: string;
+    title: string;
+    excerpt: string | null;
+    coverImage: string | null;
+    seoTitle: string | null;
+    seoDescription: string | null;
+    blocksJson: Prisma.InputJsonValue;
+}
+
+export async function upsertArticleTranslation(
+    input: UpsertArticleTranslationInput,
+) {
+    if (input.existingTranslationId) {
+        return prisma.article.update({
+            where: {
+                id: input.existingTranslationId,
+            },
+            data: {
+                slug: input.slug,
+                title: input.title,
+                excerpt: input.excerpt,
+                coverImage: input.coverImage,
+                seoTitle: input.seoTitle,
+                seoDescription: input.seoDescription,
+                blocksJson: input.blocksJson,
+            },
+        });
+    }
+
+    return prisma.article.create({
+        data: {
+            translationGroupId: input.translationGroupId,
+            locale: input.locale,
+            slug: input.slug,
+            title: input.title,
+            excerpt: input.excerpt,
+            coverImage: input.coverImage,
+            seoTitle: input.seoTitle,
+            seoDescription: input.seoDescription,
+            blocksJson: input.blocksJson,
+            status: "DRAFT",
+        },
+    });
+}
+
+export async function updateArticleStatus(
+    id: string,
+    status: ArticleStatus,
+) {
+    return prisma.article.update({
+        where: {
+            id,
+        },
+        data: {
+            status,
+            publishedAt: status === "PUBLISHED" ? new Date() : null,
+        },
+    });
+}
+
+export async function deleteArticle(id: string) {
+    return prisma.article.delete({
+        where: {
+            id,
+        },
+    });
+}
+</file>
+
+<file path="ui/article-block-renderer.tsx">
+/* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
+import type { ArticleBlock } from "@/features/articles/model/article-blocks";
+
+function getYoutubeEmbedUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace("www.", "");
+    if (host === "youtube.com") {
+      const id = parsed.searchParams.get("v");
+      return id ? `https://www.youtube-nocookie.com/embed/${id}` : null;
+    }
+    if (host === "youtu.be") {
+      const id = parsed.pathname.replace("/", "");
+      return id ? `https://www.youtube-nocookie.com/embed/${id}` : null;
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function paragraphs(text: string) {
+  return text
+    .split(/\n{2,}/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+export function ArticleBlockRenderer({ blocks }: { blocks: ArticleBlock[] }) {
+  return (
+    <div className="mx-auto max-w-3xl px-6 py-16 text-[#d8d0c4] sm:py-20">
+      {blocks.map((block) => {
+        if (block.type === "heading") {
+          if (!block.text.trim()) return null;
+          const HeadingTag = block.level === 1 ? "h1" : block.level === 3 ? "h3" : "h2";
+          return (
+            <section key={block.id} className="mt-16 first:mt-0">
+              <div className="mb-5 flex items-center gap-4">
+                <span className="h-px flex-1 bg-[#3a342c]" />
+                <span className="text-xs font-medium uppercase tracking-[0.24em] text-[#c9a84c]">
+                  Section
+                </span>
+              </div>
+              <HeadingTag className="font-serif text-3xl font-light leading-tight text-[#f4ecdf] sm:text-5xl">
+                {block.text}
+              </HeadingTag>
+            </section>
+          );
+        }
+
+        if (block.type === "paragraph") {
+          const parts = paragraphs(block.text);
+          if (parts.length === 0) return null;
+          return (
+            <div key={block.id} className="my-8 space-y-6">
+              {parts.map((paragraph, index) => (
+                <p key={index} className="text-lg leading-9 text-[#d8d0c4]">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          );
+        }
+
+        if (block.type === "image") {
+          if (!block.url.trim()) return null;
+          return (
+            <figure key={block.id} className="my-14 sm:-mx-12">
+              <div className="overflow-hidden border border-[#2a2620] bg-[#161412]">
+                <img
+                  src={block.url}
+                  alt={block.alt ?? ""}
+                  className="h-auto max-h-[680px] w-full object-cover brightness-90 contrast-105"
+                />
+              </div>
+              {block.caption ? (
+                <figcaption className="mt-3 border-t border-[#3a342c] pt-3 text-sm leading-6 text-[#8c8070]">
+                  {block.caption}
+                </figcaption>
+              ) : null}
+            </figure>
+          );
+        }
+
+        if (block.type === "quote") {
+          if (!block.text.trim()) return null;
+          return (
+            <figure key={block.id} className="my-12 border-y border-[#2a2620] px-4 py-8 sm:-mx-8 sm:px-8">
+              <blockquote className="font-serif text-2xl font-light italic leading-snug text-[#ede5d8] sm:text-3xl">
+                &ldquo;{block.text}&rdquo;
+              </blockquote>
+              {block.author ? (
+                <figcaption className="mt-5 text-xs font-medium uppercase tracking-[0.18em] text-[#7d6630]">
+                  {block.author}
+                </figcaption>
+              ) : null}
+            </figure>
+          );
+        }
+
+        if (block.type === "video") {
+          if (!block.url.trim()) return null;
+          const embedUrl = getYoutubeEmbedUrl(block.url);
+          return (
+            <figure key={block.id} className="my-14 sm:-mx-12">
+              <div className="aspect-video overflow-hidden border border-[#2a2620] bg-black">
+                {embedUrl ? (
+                  <iframe
+                    src={embedUrl}
+                    title={block.title || "Article video"}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="h-full w-full"
+                  />
+                ) : (
+                  <video src={block.url} controls className="h-full w-full object-cover" />
+                )}
+              </div>
+              {block.title ? (
+                <figcaption className="mt-3 text-sm leading-6 text-[#8c8070]">{block.title}</figcaption>
+              ) : null}
+            </figure>
+          );
+        }
+
+        if (block.type === "divider") {
+          return (
+            <div key={block.id} className="my-12 flex items-center gap-5 text-[#7d6630]">
+              <span className="h-px flex-1 bg-[#3a342c]" />
+              <span className="text-xs tracking-[0.35em]">*</span>
+              <span className="h-px flex-1 bg-[#3a342c]" />
+            </div>
+          );
+        }
+
+        if (block.type === "cta") {
+          if (!block.title.trim()) return null;
+          return (
+            <aside key={block.id} className="my-14 border border-[#2a2620] bg-[#161412] px-6 py-8 text-center">
+              <h2 className="font-serif text-3xl font-light text-[#f4ecdf]">{block.title}</h2>
+              {block.description ? (
+                <p className="mx-auto mt-3 max-w-xl text-base leading-7 text-[#a79b8b]">{block.description}</p>
+              ) : null}
+              {block.href && block.buttonLabel ? (
+                <Link
+                  href={block.href}
+                  className="mt-6 inline-flex items-center justify-center bg-[#c9a84c] px-5 py-3 text-sm font-semibold text-[#0d0c0b] transition hover:bg-[#e0bf61]"
+                >
+                  {block.buttonLabel}
+                </Link>
+              ) : null}
+            </aside>
+          );
+        }
+
+        if (block.type === "unsupported") {
+          return (
+            <aside
+              key={block.id}
+              className="my-10 rounded border border-dashed border-[#7d6630] bg-[#161412] px-5 py-4 text-sm text-[#a79b8b]"
+            >
+              Unsupported block type: {block.originalType}
+            </aside>
+          );
+        }
+
+        return null;
+      })}
+    </div>
+  );
+}
+</file>
+
+<file path="ui/article-reading-progress.tsx">
+"use client";
+
+import { useEffect, useState } from "react";
+
+export function ArticleReadingProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    function updateProgress() {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(scrollable > 0 ? Math.min(100, (window.scrollY / scrollable) * 100) : 0);
+    }
+
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+
+    return () => {
+      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("resize", updateProgress);
+    };
+  }, []);
+
+  return (
+    <div className="fixed inset-x-0 top-0 z-[80] h-0.5 bg-transparent">
+      <div
+        className="h-full bg-gradient-to-r from-amber-300 via-orange-400 to-red-500 transition-[width] duration-100"
+        style={{ width: `${progress}%` }}
+      />
+    </div>
+  );
+}
+</file>
+
+<file path="ui/article-template.tsx">
+/* eslint-disable @next/next/no-img-element */
+import { ArticleBlockRenderer } from "@/features/articles/ui/article-block-renderer";
+import { ArticleReadingProgress } from "@/features/articles/ui/article-reading-progress";
+import {
+  getReadingTimeMinutes,
+  type ArticleBlock,
+} from "@/features/articles/model/article-blocks";
+
+const FALLBACK_COVER = "/royal-palace-background.png";
+
+export function ArticleTemplate({
+  article,
+  blocks,
+}: {
+  article: {
+    title: string;
+    excerpt: string | null;
+    coverImage: string | null;
+    updatedAt: Date;
+  };
+  blocks: ArticleBlock[];
+}) {
+  const coverImage = article.coverImage || FALLBACK_COVER;
+  const readingTime = getReadingTimeMinutes(blocks);
+  const date = new Intl.DateTimeFormat("fr", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(article.updatedAt);
+
+  return (
+    <main className="min-h-screen bg-[#0d0c0b] text-[#e8e0d4]">
+      <ArticleReadingProgress />
+
+      <article>
+        <header className="px-6 pb-16 pt-24 sm:px-10 lg:px-16">
+          <div className="mx-auto max-w-5xl">
+            <p className="mb-6 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.26em] text-[#c9a84c]">
+              <span className="h-px w-9 bg-[#c9a84c]" />
+              ISOLELE Editorial
+            </p>
+            <h1 className="max-w-4xl font-serif text-5xl font-light leading-[1.03] text-white sm:text-7xl lg:text-8xl">
+              {article.title}
+            </h1>
+            {article.excerpt ? (
+              <p className="mt-7 max-w-2xl text-lg font-light leading-8 text-[#e8e0d4]/75">
+                {article.excerpt}
+              </p>
+            ) : null}
+            <div className="mt-8 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.16em] text-[#8c8070]">
+              <span>{date}</span>
+              <span className="text-[#7d6630]">/</span>
+              <span>{readingTime} min read</span>
+            </div>
+
+            <div className="mt-12 overflow-hidden border border-[#2a2620] bg-[#161412]">
+              <img
+                src={coverImage}
+                alt=""
+                className="h-auto max-h-[720px] w-full object-cover"
+              />
+            </div>
+          </div>
+        </header>
+
+        <ArticleBlockRenderer blocks={blocks} />
+
+        <footer className="mx-auto max-w-3xl border-t border-[#2a2620] px-6 py-14 text-center">
+          <p className="text-xs font-medium uppercase tracking-[0.26em] text-[#c9a84c]">
+            ISOLELE
+          </p>
+          <p className="mx-auto mt-4 max-w-xl font-serif text-2xl font-light italic leading-snug text-[#ede5d8]">
+            Stories shaped with care, culture, and imagination.
+          </p>
+        </footer>
+      </article>
+    </main>
+  );
 }
 </file>
 

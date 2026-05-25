@@ -1,31 +1,22 @@
 import { Prisma } from "@/generated/prisma/client";
 import type { SupportedLocale } from "@/shared/i18n/locales";
 import {
-  normalizeArticleBlocks,
-  type ArticleBlock,
-} from "../model/article-blocks";
+  collectArticleEntries,
+  collectBlockEntries,
+  getTranslatableBlockSignature,
+  getTranslationStatusAfterSync,
+  mergeTranslatedBlocks,
+  SOURCE_LOCALE,
+  type TranslationResponse,
+} from "../model/article-translation-workflow";
+import { normalizeArticleBlocks } from "../model/article-blocks";
 import {
   getArticleById,
   getArticleByTranslationGroupAndLocale,
   upsertArticleTranslation,
 } from "./articles.services";
 
-type TranslationEntry = {
-  key: string;
-  text: string;
-  context: string;
-};
-
-type TranslationResponse = {
-  slug: string;
-  translations: Array<{
-    key: string;
-    text: string;
-  }>;
-};
-
 const OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses";
-const SOURCE_LOCALE: SupportedLocale = "en";
 
 function requireOpenAiApiKey() {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -47,152 +38,6 @@ function slugify(value: string) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 120) || `article-${Date.now()}`;
-}
-
-function collectBlockEntries(blocks: ArticleBlock[]) {
-  const entries: TranslationEntry[] = [];
-
-  blocks.forEach((block) => {
-    if (block.type === "heading" || block.type === "paragraph" || block.type === "quote") {
-      if (block.text.trim()) {
-        entries.push({
-          key: `block:${block.id}:text`,
-          text: block.text,
-          context: `${block.type} text`,
-        });
-      }
-    }
-
-    if (block.type === "image") {
-      if (block.alt?.trim()) {
-        entries.push({
-          key: `block:${block.id}:alt`,
-          text: block.alt,
-          context: "image alt text",
-        });
-      }
-
-      if (block.caption?.trim()) {
-        entries.push({
-          key: `block:${block.id}:caption`,
-          text: block.caption,
-          context: "image caption",
-        });
-      }
-    }
-
-    if (block.type === "cta") {
-      if (block.title.trim()) {
-        entries.push({
-          key: `block:${block.id}:title`,
-          text: block.title,
-          context: "call to action title",
-        });
-      }
-
-      if (block.description?.trim()) {
-        entries.push({
-          key: `block:${block.id}:description`,
-          text: block.description,
-          context: "call to action description",
-        });
-      }
-
-      if (block.buttonLabel.trim()) {
-        entries.push({
-          key: `block:${block.id}:buttonLabel`,
-          text: block.buttonLabel,
-          context: "call to action button label",
-        });
-      }
-    }
-
-    if (block.type === "video" && block.title?.trim()) {
-      entries.push({
-        key: `block:${block.id}:title`,
-        text: block.title,
-        context: "video title",
-      });
-    }
-  });
-
-  return entries;
-}
-
-function collectArticleEntries(article: {
-  title: string;
-  excerpt: string | null;
-  seoTitle: string | null;
-  seoDescription: string | null;
-}) {
-  const entries: TranslationEntry[] = [
-    {
-      key: "article:title",
-      text: article.title,
-      context: "article title",
-    },
-  ];
-
-  if (article.excerpt?.trim()) {
-    entries.push({
-      key: "article:excerpt",
-      text: article.excerpt,
-      context: "article excerpt",
-    });
-  }
-
-  if (article.seoTitle?.trim()) {
-    entries.push({
-      key: "article:seoTitle",
-      text: article.seoTitle,
-      context: "SEO title",
-    });
-  }
-
-  if (article.seoDescription?.trim()) {
-    entries.push({
-      key: "article:seoDescription",
-      text: article.seoDescription,
-      context: "SEO description",
-    });
-  }
-
-  return entries;
-}
-
-function applyTranslatedText(block: ArticleBlock, translated: Map<string, string>): ArticleBlock {
-  if (block.type === "heading" || block.type === "paragraph" || block.type === "quote") {
-    return {
-      ...block,
-      text: translated.get(`block:${block.id}:text`) ?? block.text,
-    };
-  }
-
-  if (block.type === "image") {
-    return {
-      ...block,
-      alt: translated.get(`block:${block.id}:alt`) ?? block.alt,
-      caption: translated.get(`block:${block.id}:caption`) ?? block.caption,
-    };
-  }
-
-  if (block.type === "cta") {
-    return {
-      ...block,
-      title: translated.get(`block:${block.id}:title`) ?? block.title,
-      description: translated.get(`block:${block.id}:description`) ?? block.description,
-      buttonLabel: translated.get(`block:${block.id}:buttonLabel`) ?? block.buttonLabel,
-    };
-  }
-
-  if (block.type === "video") {
-    return {
-      ...block,
-      title: translated.get(`block:${block.id}:title`) ?? block.title,
-    };
-  }
-
-  return block;
 }
 
 function getResponseText(payload: Record<string, unknown>) {
@@ -231,7 +76,11 @@ function getResponseText(payload: Record<string, unknown>) {
 async function translateEntriesWithGpt(params: {
   sourceSlug: string;
   targetLocale: SupportedLocale;
-  entries: TranslationEntry[];
+  entries: Array<{
+    key: string;
+    text: string;
+    context: string;
+  }>;
 }) {
   const apiKey = requireOpenAiApiKey();
   const response = await fetch(OPENAI_RESPONSES_URL, {
@@ -301,15 +150,12 @@ async function translateEntriesWithGpt(params: {
     throw new Error(`OpenAI translation failed with status ${response.status}.`);
   }
 
-  const payload = await response.json() as Record<string, unknown>;
+  const payload = (await response.json()) as Record<string, unknown>;
   const text = getResponseText(payload);
   return JSON.parse(text) as TranslationResponse;
 }
 
-export async function translateArticleFromEnglish(
-  articleId: string,
-  targetLocale: SupportedLocale,
-) {
+export async function translateArticleFromEnglish(articleId: string, targetLocale: SupportedLocale) {
   if (targetLocale === SOURCE_LOCALE) {
     throw new Error("Target locale must be different from the English source locale.");
   }
@@ -323,48 +169,114 @@ export async function translateArticleFromEnglish(
     throw new Error("Only English source articles can be translated in this first version.");
   }
 
-  const blocks = normalizeArticleBlocks(sourceArticle.blocksJson);
-  const entries = [
-    ...collectArticleEntries(sourceArticle),
-    ...collectBlockEntries(blocks),
-  ];
-
-  if (entries.length === 0) {
-    throw new Error("There is no translatable content in this article yet.");
-  }
-
-  const translatedPayload = await translateEntriesWithGpt({
-    sourceSlug: sourceArticle.slug,
-    targetLocale,
-    entries,
-  });
-
-  const translatedMap = new Map(
-    translatedPayload.translations.map((entry) => [entry.key, entry.text]),
-  );
-
-  const translatedBlocks = blocks.map((block) =>
-    applyTranslatedText(block, translatedMap),
-  );
-
   const existingTranslation = await getArticleByTranslationGroupAndLocale(
     sourceArticle.translationGroupId,
     targetLocale,
   );
 
-  const nextSlug = slugify(translatedPayload.slug || translatedMap.get("article:title") || sourceArticle.slug);
+  const sourceBlocks = normalizeArticleBlocks(sourceArticle.blocksJson);
+  const existingBlocks = existingTranslation
+    ? normalizeArticleBlocks(existingTranslation.blocksJson)
+    : [];
+  const existingByKey = new Map(existingBlocks.map((block) => [block.translationKey, block]));
+
+  const changedBlockKeys = new Set<string>();
+  const staleManualBlocks: string[] = [];
+
+  sourceBlocks.forEach((block) => {
+    const sourceFingerprint = getTranslatableBlockSignature(block);
+    const currentTranslationBlock = existingByKey.get(block.translationKey);
+
+    if (!currentTranslationBlock) {
+      changedBlockKeys.add(block.translationKey);
+      return;
+    }
+
+    if ((currentTranslationBlock.sourceFingerprint ?? null) !== sourceFingerprint) {
+      if (currentTranslationBlock.manuallyEdited) {
+        staleManualBlocks.push(block.translationKey);
+      } else {
+        changedBlockKeys.add(block.translationKey);
+      }
+    }
+  });
+
+  const shouldRetranslateArticleMeta =
+    !existingTranslation ||
+    existingTranslation.translatedFromVersion !== sourceArticle.sourceVersion ||
+    existingTranslation.translationStatus === "NEEDS_UPDATE";
+
+  const entries = [
+    ...(shouldRetranslateArticleMeta ? collectArticleEntries(sourceArticle) : []),
+    ...collectBlockEntries(sourceBlocks, changedBlockKeys),
+  ];
+
+  if (!existingTranslation && entries.length === 0) {
+    throw new Error("There is no translatable content in this article yet.");
+  }
+
+  const translatedPayload =
+    entries.length > 0
+      ? await translateEntriesWithGpt({
+          sourceSlug: sourceArticle.slug,
+          targetLocale,
+          entries,
+        })
+      : ({
+          slug: existingTranslation?.slug ?? sourceArticle.slug,
+          translations: [],
+        } satisfies TranslationResponse);
+
+  const translatedMap = new Map(
+    translatedPayload.translations.map((entry) => [entry.key, entry.text]),
+  );
+
+  const translatedBlocks = mergeTranslatedBlocks({
+    sourceBlocks,
+    existingTranslationBlocks: existingBlocks,
+    translatedMap,
+  });
+
+  const nextSlug = slugify(
+    translatedPayload.slug ||
+      translatedMap.get("article:title") ||
+      existingTranslation?.slug ||
+      sourceArticle.slug,
+  );
+
+  const hasPendingManualReview = staleManualBlocks.length > 0;
+  const isNewTranslation = !existingTranslation;
 
   return upsertArticleTranslation({
     existingTranslationId: existingTranslation?.id,
     translationGroupId: sourceArticle.translationGroupId,
     locale: targetLocale,
     slug: nextSlug,
-    title: translatedMap.get("article:title") ?? sourceArticle.title,
-    excerpt: translatedMap.get("article:excerpt") ?? sourceArticle.excerpt,
+    title:
+      translatedMap.get("article:title") ??
+      existingTranslation?.title ??
+      sourceArticle.title,
+    excerpt:
+      translatedMap.get("article:excerpt") ??
+      existingTranslation?.excerpt ??
+      sourceArticle.excerpt,
     coverImage: sourceArticle.coverImage,
-    seoTitle: translatedMap.get("article:seoTitle") ?? sourceArticle.seoTitle,
+    seoTitle:
+      translatedMap.get("article:seoTitle") ??
+      existingTranslation?.seoTitle ??
+      sourceArticle.seoTitle,
     seoDescription:
-      translatedMap.get("article:seoDescription") ?? sourceArticle.seoDescription,
+      translatedMap.get("article:seoDescription") ??
+      existingTranslation?.seoDescription ??
+      sourceArticle.seoDescription,
     blocksJson: translatedBlocks as Prisma.InputJsonValue,
+    sourceVersion: sourceArticle.sourceVersion,
+    translatedFromVersion: hasPendingManualReview
+      ? existingTranslation?.translatedFromVersion ?? sourceArticle.sourceVersion
+      : sourceArticle.sourceVersion,
+    translationStatus: getTranslationStatusAfterSync({
+      isNewTranslation,
+      hasPendingManualReview,
+    }),
   });
 }

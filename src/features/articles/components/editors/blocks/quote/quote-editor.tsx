@@ -1,8 +1,8 @@
 "use client";
 
 import type { QuoteBlock } from "@/features/articles/model/article-blocks";
+import { AutoResizeTextarea } from "@/components/editor/auto-resize-textarea";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import type { ArticleBlockEditorProps } from "../article-block-registry";
 
 export function QuoteBlockEditor({
@@ -13,7 +13,7 @@ export function QuoteBlockEditor({
 
     return (
         <div className="space-y-4">
-            <Textarea
+            <AutoResizeTextarea
                 value={quoteBlock.text}
                 onChange={(event) =>
                     onUpdate({
@@ -22,7 +22,8 @@ export function QuoteBlockEditor({
                     })
                 }
                 placeholder="Citation"
-                className="min-h-32 resize-y border-0 bg-transparent px-0 py-0 font-serif text-3xl font-light italic leading-tight text-[#f2e9dd] shadow-none focus-visible:ring-0"
+                rows={1}
+                className="h-auto overflow-hidden resize-none border-0 bg-transparent px-0 py-0 font-serif text-3xl font-light italic leading-tight text-[#2b2824] placeholder:text-[#b8afa2] shadow-none outline-none focus:outline-none"
             />
             <Input
                 value={quoteBlock.author ?? ""}
@@ -33,7 +34,7 @@ export function QuoteBlockEditor({
                     })
                 }
                 placeholder="Auteur"
-                className="border-white/10 bg-white/[0.03] text-[#f4efe7]"
+                className="border-[#d6cec1] bg-white text-[#6c6458] placeholder:text-[#b8afa2]"
             />
         </div>
     );

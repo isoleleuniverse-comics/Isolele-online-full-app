@@ -1,7 +1,7 @@
 "use client";
 
 import type { ParagraphBlock } from "@/features/articles/model/article-blocks";
-import { Textarea } from "@/components/ui/textarea";
+import { AutoResizeTextarea } from "@/components/editor/auto-resize-textarea";
 import type { ArticleBlockEditorProps } from "../article-block-registry";
 
 export function ParagraphBlockEditor({
@@ -11,7 +11,7 @@ export function ParagraphBlockEditor({
     const paragraphBlock = block as ParagraphBlock;
 
     return (
-        <Textarea
+        <AutoResizeTextarea
             value={paragraphBlock.text}
             onChange={(event) =>
                 onUpdate({
@@ -20,7 +20,8 @@ export function ParagraphBlockEditor({
                 })
             }
             placeholder="Votre paragraphe..."
-            className="min-h-40 resize-y border-0 bg-transparent px-0 py-0 text-lg leading-9 text-[#ece4d8] shadow-none focus-visible:ring-0"
+            rows={1}
+            className="w-full h-auto overflow-hidden resize-none border-0 bg-transparent px-0 py-0 text-lg leading-9 text-[#2b2824] placeholder:text-[#b8afa2] outline-none focus:outline-none"
         />
     );
 }

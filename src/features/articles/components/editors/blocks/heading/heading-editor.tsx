@@ -21,7 +21,7 @@ export function HeadingBlockEditor({
                     })
                 }
                 placeholder="Titre de section"
-                className="h-auto border-0 bg-transparent px-0 py-0 font-serif text-4xl font-light text-[#faf4eb] shadow-none focus-visible:ring-0"
+                className="h-auto border-0 bg-transparent px-0 py-0 font-serif text-4xl font-light text-[#000000] shadow-none focus-visible:ring-0"
             />
             <div className="flex items-center gap-3">
                 <label className="text-sm text-[#9d9386]">Niveau</label>
@@ -33,7 +33,7 @@ export function HeadingBlockEditor({
                             level: Number(event.target.value) as 1 | 2 | 3,
                         })
                     }
-                    className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-[#f4efe7]"
+                    className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-4 text-sm text-[#000000]"
                 >
                     <option value={1}>H1</option>
                     <option value={2}>H2</option>
