@@ -23,9 +23,9 @@ export function MobileBottomNav() {
   }
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-5 lg:hidden">
+    <nav className="pointer-events-none fixed inset-x-0 bottom-0 z-[60] flex justify-center px-4 pb-5 lg:hidden">
       <div
-        className="flex items-center gap-2 rounded-3xl border px-3 py-2 backdrop-blur-xl"
+        className="pointer-events-auto flex items-center gap-2 rounded-3xl border px-3 py-2 backdrop-blur-xl"
         style={{
           backgroundColor: `${currentTheme.colors.background}e8`,
           borderColor: `${currentTheme.colors.accentPrimary}40`,
@@ -37,9 +37,10 @@ export function MobileBottomNav() {
           const Icon = item.icon;
 
           return (
-            <Link key={item.href} href={localizedHref(item.href)} aria-label={content.labels[item.key]}>
-              <motion.span
-                whileTap={{ scale: 0.9 }}
+            <motion.div key={item.href} whileTap={{ scale: 0.9 }}>
+              <Link
+                href={localizedHref(item.href)}
+                aria-label={content.labels[item.key]}
                 className={cn("inline-flex rounded-2xl p-3")}
                 style={{
                   backgroundColor: active ? `${currentTheme.colors.accentPrimary}26` : `${currentTheme.colors.accentPrimary}10`,
@@ -47,8 +48,8 @@ export function MobileBottomNav() {
                 }}
               >
                 {Icon ? <Icon className="h-5 w-5" /> : null}
-              </motion.span>
-            </Link>
+              </Link>
+            </motion.div>
           );
         })}
 

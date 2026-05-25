@@ -416,6 +416,7 @@ const ARTICLES_BY_LOCALE: Record<SupportedLocale, StaticArticle[]> = {
   ],
 };
 
+
 // ---------------------------------------------------------------------------
 // Public helpers — same API shape as the data service, but static
 // ---------------------------------------------------------------------------

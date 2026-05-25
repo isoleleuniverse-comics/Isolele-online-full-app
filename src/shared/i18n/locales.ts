@@ -1,4 +1,4 @@
-export const SUPPORTED_LOCALES = ["fr", "en"] as const;
+export const SUPPORTED_LOCALES = ["fr", "en", "sw", "es", "ln", "xh", "zu"] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
 
 export const DEFAULT_LOCALE: SupportedLocale = "fr";
@@ -8,6 +8,11 @@ export const LOCALE_COOKIE_NAME = "isolele_locale";
 export const LOCALE_LABELS: Record<SupportedLocale, string> = {
   fr: "Francais",
   en: "English",
+  sw: "Swahili",
+  es: "Español",
+  ln: "Lingala",
+  xh: "Xhosa",
+  zu: "Zulu",
 };
 
 export function isSupportedLocale(value: string | undefined | null): value is SupportedLocale {

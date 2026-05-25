@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SiteFooter } from "@/features/navigation/ui/footer/site-footer";
 import { LoadingScreen } from "@/components/loading-screen";
 import { SiteHeader } from "@/features/navigation/ui/header/site-header";
+import { CartSheet } from "@/features/navigation/ui/header/cart-sheet";
 
 import type { SupportedLocale } from "@/shared/i18n/locales";
 import { LanguageProvider } from "@/shared/i18n/language-context";
@@ -34,6 +35,7 @@ export function PublicShell({
               }}
             >
               <SiteHeader />
+              <CartSheet />
               <main className="flex-1 w-full pb-28 pt-16 lg:pb-0 lg:pt-20">{children}</main>
               <SiteFooter />
             </div>
