@@ -1,5 +1,7 @@
 export const SUPPORTED_LOCALES = ["fr", "en", "sw", "es", "ln", "xh", "zu"] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
+export const CONTENT_LOCALES = ["fr", "en"] as const;
+export type ContentLocale = (typeof CONTENT_LOCALES)[number];
 
 export const DEFAULT_LOCALE: SupportedLocale = "fr";
 
@@ -33,6 +35,10 @@ export function stripLocaleFromPathname(pathname: string): string {
 
 export function resolveLocaleFromPathname(pathname: string): SupportedLocale {
   return getLocaleFromPathname(pathname) ?? DEFAULT_LOCALE;
+}
+
+export function resolveContentLocale(locale: SupportedLocale): ContentLocale {
+  return locale === "en" ? "en" : "fr";
 }
 
 export function withLocale(locale: SupportedLocale, href: string): string {

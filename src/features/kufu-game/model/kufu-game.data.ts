@@ -1,5 +1,5 @@
 import { Award, Crown, Dice5, Globe, ShieldCheck, Users } from "lucide-react";
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import { resolveContentLocale, type ContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import type {
   KufuCharacter,
   KufuFeature,
@@ -14,7 +14,7 @@ export const KUFU_ASSETS = {
   board: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260304-WA0012-XSCUSyYtBnqRoFkU9Ubd5qRihh3IXm.jpg",
 } as const;
 
-const gameByLocale: Record<SupportedLocale, KufuGameConfig> = {
+const gameByLocale: Record<ContentLocale, KufuGameConfig> = {
   en: {
     title: "KUFU Ludo",
     subtitle: "The Crown Game",
@@ -59,7 +59,7 @@ const gameByLocale: Record<SupportedLocale, KufuGameConfig> = {
   },
 };
 
-const screenshotsByLocale: Record<SupportedLocale, KufuScreenshot[]> = {
+const screenshotsByLocale: Record<ContentLocale, KufuScreenshot[]> = {
   en: [
     { url: KUFU_ASSETS.board, label: "KUFU Ludo board" },
     { url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-ifvBiGyVajqX0jXvhJQOH1k83wp5KC.jpeg", label: "KUFU card set" },
@@ -75,7 +75,7 @@ const screenshotsByLocale: Record<SupportedLocale, KufuScreenshot[]> = {
 export const GAME = gameByLocale.en;
 export const SCREENSHOTS = screenshotsByLocale.en;
 
-const featuresByLocale: Record<SupportedLocale, KufuFeature[]> = {
+const featuresByLocale: Record<ContentLocale, KufuFeature[]> = {
   en: [
     { icon: Crown, title: "4 Kingdoms", desc: "Red, green, blue, and gold clans with distinct pawn identities." },
     { icon: ShieldCheck, title: "Crown of Ancestors", desc: "Reach the sacred center to claim victory and reign as the chosen king." },
@@ -94,7 +94,7 @@ const featuresByLocale: Record<SupportedLocale, KufuFeature[]> = {
   ],
 };
 
-const charactersByLocale: Record<SupportedLocale, KufuCharacter[]> = {
+const charactersByLocale: Record<ContentLocale, KufuCharacter[]> = {
   en: [
     { name: "LIKAKU", role: "4 of Trees", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0058-gD7wFf8li9ITXSvC57xza5JO8jIl7z.jpg" },
     { name: "ZAIRA MBUBE", role: "D of Spots", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0031-049OjN1f25uQV6CYqHaFcawtnmViJA.jpg" },
@@ -113,7 +113,7 @@ const charactersByLocale: Record<SupportedLocale, KufuCharacter[]> = {
   ],
 };
 
-const reviewsByLocale: Record<SupportedLocale, KufuReview[]> = {
+const reviewsByLocale: Record<ContentLocale, KufuReview[]> = {
   en: [
     { name: "Makamba K.", country: "Congo-Kinshasa", rating: 5, text: "An extraordinary game that celebrates heritage and strategy. Family favorite." },
     { name: "Amara D.", country: "Senegal", rating: 5, text: "A masterpiece of visual identity and cultural direction. Every detail feels intentional." },
@@ -126,7 +126,7 @@ const reviewsByLocale: Record<SupportedLocale, KufuReview[]> = {
   ],
 };
 
-const pageContent: Record<SupportedLocale, Omit<KufuGamePageContent, "locale">> = {
+const pageContent: Record<ContentLocale, Omit<KufuGamePageContent, "locale">> = {
   en: {
     hero: {
       backLabel: "ISOLELE",
@@ -226,13 +226,14 @@ const pageContent: Record<SupportedLocale, Omit<KufuGamePageContent, "locale">> 
 };
 
 export function getKufuGameContent(locale: SupportedLocale) {
+  const contentLocale = resolveContentLocale(locale);
   return {
     locale,
-    game: gameByLocale[locale] ?? gameByLocale.en,
-    screenshots: screenshotsByLocale[locale] ?? screenshotsByLocale.en,
-    features: featuresByLocale[locale] ?? featuresByLocale.en,
-    characters: charactersByLocale[locale] ?? charactersByLocale.en,
-    reviews: reviewsByLocale[locale] ?? reviewsByLocale.en,
-    page: { locale, ...(pageContent[locale] ?? pageContent.en) },
+    game: gameByLocale[contentLocale],
+    screenshots: screenshotsByLocale[contentLocale],
+    features: featuresByLocale[contentLocale],
+    characters: charactersByLocale[contentLocale],
+    reviews: reviewsByLocale[contentLocale],
+    page: { locale, ...pageContent[contentLocale] },
   };
 }

@@ -4,6 +4,7 @@ import {
 import type {
   Character, CharacterProfile, CharactersPageContent,
 } from "./characters.types";
+import { resolveContentLocale, type ContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SECTION 1 — locale-independent base (ids, images, colors, powerIcons)
@@ -43,7 +44,7 @@ const characterBaseList: CharacterBase[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 type CharacterLocale = { origin: string; title: string; description: string; powers: string[] };
 
-const characterLocalizedText: Record<"en" | "fr", Record<string, CharacterLocale>> = {
+const characterLocalizedText: Record<ContentLocale, Record<string, CharacterLocale>> = {
   en: {
     "zaiire-kongo": { origin: "Kingdom of Kongo / Central Africa", title: "The Prince of Kongo and the Necklace of Destiny", description: "Forged in the heart of Kongo, Zaiire carries ancestral memory and royal force. Chosen by the Necklace of Destiny, he walks between spirit and present to restore what history tried to erase.", powers: ["Royal Transformation", "Lightning Control", "Time Walking", "Ancestral Sight"] },
     "kimoya-kandake": { origin: "Kingdom of Makanda / Central Africa", title: "The Rising Kandake", description: "Kimoya is heir to a hidden empire awakened by the Sacred Flame. She does not ask for power. She reclaims it as warrior, strategist, and sovereign.", powers: ["Sacred Flame Mastery", "Divine Combat", "Royal Authority", "Empire Shielding"] },
@@ -91,10 +92,11 @@ const characterLocalizedText: Record<"en" | "fr", Record<string, CharacterLocale
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** Returns the full characters array for a given locale. */
-export function getCharacters(locale: "en" | "fr"): Character[] {
+export function getCharacters(locale: SupportedLocale): Character[] {
+  const contentLocale = resolveContentLocale(locale);
   return characterBaseList.map((base) => ({
     ...base,
-    ...characterLocalizedText[locale][base.id],
+    ...characterLocalizedText[contentLocale][base.id],
   })) as Character[];
 }
 
@@ -109,7 +111,7 @@ export const characterFilterMap: Record<string, string[]> = {
 // ─────────────────────────────────────────────────────────────────────────────
 // SECTION 4 — bilingual page content (UI strings + filter labels)
 // ─────────────────────────────────────────────────────────────────────────────
-export const charactersPageData: Record<"en" | "fr", CharactersPageContent> = {
+export const charactersPageData: Record<ContentLocale, CharactersPageContent> = {
   en: {
     ui: {
       heroTagline: "ISOLELE UNIVERSE",
@@ -171,7 +173,7 @@ export const charactersPageData: Record<"en" | "fr", CharactersPageContent> = {
 // ─────────────────────────────────────────────────────────────────────────────
 type ProfilesMap = Record<string, CharacterProfile>;
 
-export const characterProfilesData: Record<"en" | "fr", ProfilesMap> = {
+export const characterProfilesData: Record<ContentLocale, ProfilesMap> = {
   en: {
     zaiire: {
       name: "ZAIIRE",

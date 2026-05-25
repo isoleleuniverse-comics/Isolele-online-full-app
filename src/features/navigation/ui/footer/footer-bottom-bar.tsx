@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import type { FooterSectionContext } from "./footer.types";
+import { FooterLocaleSwitcher } from "./footer-locale-switcher";
 
 export function FooterBottomBar({ currentTheme, content }: FooterSectionContext) {
   return (
@@ -12,7 +13,9 @@ export function FooterBottomBar({ currentTheme, content }: FooterSectionContext)
       <p className="flex items-center gap-2 text-center text-sm md:text-left" style={{ color: currentTheme.colors.textSecondary }}>
         {content.copyright}
       </p>
-      <div className="flex flex-wrap justify-center gap-4 text-sm">
+      <div className="flex flex-col items-center gap-4 md:items-end">
+        <FooterLocaleSwitcher currentTheme={currentTheme} />
+        <div className="flex flex-wrap justify-center gap-4 text-sm">
         {content.bottomLinks.map((link, index) => (
           <div key={`${link.label}-${link.href}`} className="flex items-center gap-4">
             <Link
@@ -33,6 +36,7 @@ export function FooterBottomBar({ currentTheme, content }: FooterSectionContext)
             ) : null}
           </div>
         ))}
+        </div>
       </div>
     </div>
   );

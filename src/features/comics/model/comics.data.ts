@@ -1,7 +1,7 @@
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import { resolveContentLocale, type ContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import type { ComicBook, ComicCategory, ComicsPageContent } from "./comics.types";
 
-const comicsByLocale: Record<SupportedLocale, Record<ComicCategory, ComicBook[]>> = {
+const comicsByLocale: Record<ContentLocale, Record<ComicCategory, ComicBook[]>> = {
   en: {
     featured: [
       {
@@ -146,7 +146,7 @@ const comicsByLocale: Record<SupportedLocale, Record<ComicCategory, ComicBook[]>
   },
 };
 
-const comicsPageContent: Record<SupportedLocale, Omit<ComicsPageContent, "locale">> = {
+const comicsPageContent: Record<ContentLocale, Omit<ComicsPageContent, "locale">> = {
   fr: {
     hero: {
       title: "ISOLELE Comics",
@@ -196,6 +196,6 @@ const comicsPageContent: Record<SupportedLocale, Omit<ComicsPageContent, "locale
 };
 
 export function getComicsPageContent(locale: SupportedLocale): ComicsPageContent {
-  const content = comicsPageContent[locale] ?? comicsPageContent.en;
+  const content = comicsPageContent[resolveContentLocale(locale)];
   return { locale, ...content };
 }

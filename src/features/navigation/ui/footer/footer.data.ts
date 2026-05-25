@@ -1,8 +1,8 @@
 import { Camera, Globe, MessageCircle, PlayCircle } from "lucide-react";
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import { resolveContentLocale, type ContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import type { FooterContent, FooterLink, FooterSocialLink } from "./footer.types";
 
-const quickLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
+const quickLinksByLocale: Record<ContentLocale, FooterLink[]> = {
   fr: [
     { label: "Accueil", href: "/" },
     { label: "A propos", href: "/#hero" },
@@ -21,7 +21,7 @@ const quickLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
   ],
 };
 
-const resourceLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
+const resourceLinksByLocale: Record<ContentLocale, FooterLink[]> = {
   fr: [
     { label: "Presse", href: "/#hero" },
     { label: "Carrieres", href: "/#hero" },
@@ -48,9 +48,10 @@ export const socialLinks: FooterSocialLink[] = [
 ];
 
 export function getFooterContent(locale: SupportedLocale, content: FooterContent) {
+  const contentLocale = resolveContentLocale(locale);
   return {
     ...content,
-    quickLinks: quickLinksByLocale[locale] ?? quickLinksByLocale.en,
-    resourceLinks: resourceLinksByLocale[locale] ?? resourceLinksByLocale.en,
+    quickLinks: quickLinksByLocale[contentLocale],
+    resourceLinks: resourceLinksByLocale[contentLocale],
   };
 }

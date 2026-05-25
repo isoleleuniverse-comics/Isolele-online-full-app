@@ -1,6 +1,6 @@
 import { Crown, Flame, Shield } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import { resolveContentLocale, type ContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
 
 export interface KingKufululaSection {
   id: string;
@@ -110,7 +110,7 @@ const sectionsFr: KingKufululaSection[] = [
   },
 ];
 
-const contentByLocale: Record<SupportedLocale, Omit<KingKufululaPageContent, "locale">> = {
+const contentByLocale: Record<ContentLocale, Omit<KingKufululaPageContent, "locale">> = {
   en: {
     hero: {
       founderBadge: "Founder of ISOLELE",
@@ -169,6 +169,6 @@ export const KING_KUFULULA_PHOTO = {
 } as const;
 
 export function getKingKufululaPageContent(locale: SupportedLocale): KingKufululaPageContent {
-  const content = contentByLocale[locale] ?? contentByLocale.en;
+  const content = contentByLocale[resolveContentLocale(locale)];
   return { locale, ...content };
 }

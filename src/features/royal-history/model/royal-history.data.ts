@@ -1,4 +1,4 @@
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import { resolveContentLocale, type ContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
 
 export interface RoyalHistoryBlock {
   id: string;
@@ -46,7 +46,7 @@ const historyFr: RoyalHistoryBlock[] = [
   { id: "why", title: "Pourquoi ISOLELE existe", body: "Cette page restaure ce qui a ete efface : les enfants africains meritent un regard vrai sur leur histoire royale, leur puissance civilisationnelle et leur continuite ancestrale." },
 ];
 
-const contentByLocale: Record<SupportedLocale, Omit<RoyalHistoryPageContent, "locale">> = {
+const contentByLocale: Record<ContentLocale, Omit<RoyalHistoryPageContent, "locale">> = {
   en: {
     hero: {
       badge: "Royal history",
@@ -100,6 +100,6 @@ const contentByLocale: Record<SupportedLocale, Omit<RoyalHistoryPageContent, "lo
 };
 
 export function getRoyalHistoryPageContent(locale: SupportedLocale): RoyalHistoryPageContent {
-  const content = contentByLocale[locale] ?? contentByLocale.en;
+  const content = contentByLocale[resolveContentLocale(locale)];
   return { locale, ...content };
 }

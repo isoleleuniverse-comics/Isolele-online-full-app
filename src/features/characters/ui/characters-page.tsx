@@ -10,7 +10,7 @@ import {
   CharactersGrid,
   CharactersHeroSection,
 } from "@/features/characters/ui/sections";
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import { resolveContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import { useTheme } from "@/shared/contexts/theme-context";
 
 interface CharactersPageProps {
@@ -22,7 +22,7 @@ export function CharactersPage({ locale }: CharactersPageProps) {
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [filter, setFilter] = useState("all");
   const characters = useMemo(() => getCharacters(locale), [locale]);
-  const pageContent = charactersPageData[locale] ?? charactersPageData.en;
+  const pageContent = charactersPageData[resolveContentLocale(locale)];
 
   const displayedCharacters = useMemo(() => {
     if (filter === "all") return characters;

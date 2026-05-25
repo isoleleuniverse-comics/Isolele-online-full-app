@@ -1,7 +1,8 @@
 import { absoluteUrl } from "@/shared/seo/site-url";
-import type { HomeLocale, HomeSeoConfig } from "@/features/home/content";
+import { resolveContentLocale, type ContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
+import type { HomeSeoConfig } from "@/features/home/content";
 
-const metadataByLocale: Record<HomeLocale, HomeSeoConfig["metadata"]> = {
+const metadataByLocale: Record<ContentLocale, HomeSeoConfig["metadata"]> = {
   en: {
     title: "Black African Superhero Comics | Kongo Universe | ISOLELE",
     description:
@@ -78,7 +79,7 @@ const metadataByLocale: Record<HomeLocale, HomeSeoConfig["metadata"]> = {
   },
 };
 
-const jsonLdByLocale: Record<HomeLocale, HomeSeoConfig["jsonLd"]> = {
+const jsonLdByLocale: Record<ContentLocale, HomeSeoConfig["jsonLd"]> = {
   en: {
     organization: {
       "@context": "https://schema.org",
@@ -177,9 +178,10 @@ const jsonLdByLocale: Record<HomeLocale, HomeSeoConfig["jsonLd"]> = {
   },
 };
 
-export function getHomeSeo(locale: HomeLocale): HomeSeoConfig {
+export function getHomeSeo(locale: SupportedLocale): HomeSeoConfig {
+  const contentLocale = resolveContentLocale(locale);
   return {
-    metadata: metadataByLocale[locale],
-    jsonLd: jsonLdByLocale[locale],
+    metadata: metadataByLocale[contentLocale],
+    jsonLd: jsonLdByLocale[contentLocale],
   };
 }

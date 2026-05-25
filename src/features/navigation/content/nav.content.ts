@@ -1,4 +1,4 @@
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import { resolveContentLocale, type ContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
 
 export type NavLinkLabelKey =
   | "nav_home"
@@ -34,7 +34,7 @@ export interface NavigationContent {
   };
 }
 
-export const navigationContent: Record<SupportedLocale, NavigationContent> = {
+export const navigationContent: Record<ContentLocale, NavigationContent> = {
   fr: {
     labels: {
       nav_home: "Accueil",
@@ -114,5 +114,5 @@ export const navigationContent: Record<SupportedLocale, NavigationContent> = {
 };
 
 export function getNavigationContent(locale: SupportedLocale) {
-  return navigationContent[locale] ?? navigationContent.en;
+  return navigationContent[resolveContentLocale(locale)];
 }

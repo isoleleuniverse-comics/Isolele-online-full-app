@@ -1,5 +1,6 @@
 import { lazySection } from "@/shared/lib/lazy-section";
-import type { HomeJsonLd, HomeLocale } from "../content";
+import type { SupportedLocale } from "@/shared/i18n/locales";
+import type { HomeJsonLd } from "../content";
 import { getHomePageContent } from "../content";
 import { HomeContentProvider } from "../model";
 import { HomeStructuredData } from "../seo/home-structured-data";
@@ -21,7 +22,7 @@ const CharactersShowcase = lazySection(() => import("./sections/characters-showc
 const CtaSection = lazySection(() => import("./sections/cta-section/cta-section"), "CtaSection");
 
 interface HomePageProps {
-  locale: HomeLocale;
+  locale: SupportedLocale;
   seo: HomeJsonLd;
 }
 

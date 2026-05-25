@@ -1,7 +1,8 @@
-import type { HomeLocale, HomePageContent } from "./types";
+import { resolveContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
+import type { HomePageContent } from "./types";
 
-export function getHomePageContent(locale: HomeLocale): HomePageContent {
+export function getHomePageContent(locale: SupportedLocale): HomePageContent {
   return {
-    locale,
+    locale: resolveContentLocale(locale),
   };
 }

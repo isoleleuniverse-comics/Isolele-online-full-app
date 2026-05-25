@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { withLocale, type SupportedLocale } from "@/shared/i18n/locales";
+import { resolveContentLocale, withLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import { bookPageUiContent } from "@/features/books/model/books.data";
 import { getBookBreadcrumbJsonLd, getBookJsonLd } from "@/features/books/model/books-json-ld";
 import type { BookCta, BookPageData } from "@/features/books/model/books.types";
@@ -37,7 +37,7 @@ export function BookStoryPage({ page, locale }: { page: BookPageData; locale: Su
   const articleJsonLd = getBookJsonLd(page, locale);
   const breadcrumbJsonLd = getBookBreadcrumbJsonLd(page, locale);
   const introProse = page.sections.find((section) => section.type === "prose");
-  const uiText = bookPageUiContent[locale] ?? bookPageUiContent.en;
+  const uiText = bookPageUiContent[resolveContentLocale(locale)];
 
   return (
     <article

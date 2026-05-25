@@ -1,9 +1,9 @@
-import type { SupportedLocale } from "@/shared/i18n/locales";
+import { resolveContentLocale, type ContentLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import type { BookPageData, BookSlug } from "./books.types";
 import { BOOKS_CTA_LINKS } from "./books-cta-links";
 
 export const bookPageUiContent: Record<
-  SupportedLocale,
+  ContentLocale,
   {
     universeContext: string;
     contextBody: string;
@@ -525,7 +525,7 @@ const booksPagesFr: Record<BookSlug, BookPageData> = {
   },
 };
 
-const booksPagesByLocale: Record<SupportedLocale, Record<BookSlug, BookPageData>> = {
+const booksPagesByLocale: Record<ContentLocale, Record<BookSlug, BookPageData>> = {
   en: booksPagesEn,
   fr: booksPagesFr,
 };
@@ -535,6 +535,6 @@ export function getBooksStaticParams() {
 }
 
 export function getBookBySlug(slug: string, locale: SupportedLocale = "en") {
-  const pages = booksPagesByLocale[locale] ?? booksPagesByLocale.en;
+  const pages = booksPagesByLocale[resolveContentLocale(locale)];
   return pages[slug as BookSlug] ?? booksPagesByLocale.en[slug as BookSlug] ?? null;
 }

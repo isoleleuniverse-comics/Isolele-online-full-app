@@ -14,6 +14,11 @@ export interface Language {
 export const publicLanguages: Language[] = [
   { code: "fr", name: "French", nativeName: LOCALE_LABELS.fr, flag: "FR" },
   { code: "en", name: "English", nativeName: LOCALE_LABELS.en, flag: "US" },
+  { code: "sw", name: "Swahili", nativeName: LOCALE_LABELS.sw, flag: "SW" },
+  { code: "es", name: "Spanish", nativeName: LOCALE_LABELS.es, flag: "ES" },
+  { code: "ln", name: "Lingala", nativeName: LOCALE_LABELS.ln, flag: "LN" },
+  { code: "xh", name: "Xhosa", nativeName: LOCALE_LABELS.xh, flag: "XH" },
+  { code: "zu", name: "Zulu", nativeName: LOCALE_LABELS.zu, flag: "ZU" },
 ];
 
 interface LanguageContextValue {
@@ -27,7 +32,7 @@ interface LanguageContextValue {
 const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
 
 function getLanguage(code: SupportedLocale) {
-  return publicLanguages.find((language) => language.code === code) ?? publicLanguages[0];
+  return publicLanguages.find((language) => language.code === code) ?? publicLanguages.find((language) => language.code === DEFAULT_LOCALE) ?? publicLanguages[0];
 }
 
 interface LanguageProviderProps {

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { characterProfilesData, CHARACTER_SLUGS } from "./characters.data";
-import { isSupportedLocale, type SupportedLocale, DEFAULT_LOCALE } from "@/shared/i18n/locales";
+import { isSupportedLocale, resolveContentLocale, type SupportedLocale, DEFAULT_LOCALE } from "@/shared/i18n/locales";
 
 export type CharacterSlug = typeof CHARACTER_SLUGS[number];
 
 export function getCharacterBySlug(slug: string, locale: SupportedLocale) {
-  const profiles = characterProfilesData[locale] ?? characterProfilesData.en;
+  const profiles = characterProfilesData[resolveContentLocale(locale)];
   return profiles[slug] ?? null;
 }
 
