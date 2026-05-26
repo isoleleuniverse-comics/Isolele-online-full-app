@@ -6,7 +6,7 @@ export const charactersData = {
   discoverLabel: "DISCOVER",
   items: [
     {
-      id: "zaire",
+      id: "zaiire",
       name: "ZAIIRE",
       title: "The Prince of Kongo and the Necklace of Destiny",
       description: "Son of thunder and royalty, chosen by the Necklace of Destiny.",

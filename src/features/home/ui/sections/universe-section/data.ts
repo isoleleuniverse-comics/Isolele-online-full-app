@@ -58,7 +58,7 @@ export const universeData = {
         "An African proverb says: ‘Until the lion learns to write, every story will glorify the hunter.’ ISOLELE is the lion’s pen. Africa is writing its own story. For the first time in history, the Kongo civilization has its own superhero universe. Black African heroes created in Kinshasa, DRC, for every child on earth who deserves to see themselves as the chosen one.",
       href: "/#hero",
       characterName: "Zaiire",
-      discoverMoreLabel: "DISCOVER ZAIRE",
+      discoverMoreLabel: "DISCOVER ZAIiRE",
     },
     {
       key: "heritage",
