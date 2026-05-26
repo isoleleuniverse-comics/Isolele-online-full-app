@@ -4,6 +4,7 @@ import { BookStoryPage } from "@/features/books/ui/book-story-page";
 import { getBookBySlug, getBookMetadata, getBooksStaticParams } from "@/features/books/model";
 import { DEFAULT_LOCALE, isSupportedLocale, SUPPORTED_LOCALES, type SupportedLocale } from "@/shared/i18n/locales";
 
+export const dynamic = "force-dynamic";
 export function generateStaticParams() {
   const pages = getBooksStaticParams();
   return SUPPORTED_LOCALES.flatMap((locale) => pages.map((item) => ({ locale, ...item })));

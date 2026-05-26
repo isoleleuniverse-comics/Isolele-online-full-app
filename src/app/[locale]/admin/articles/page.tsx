@@ -1,6 +1,8 @@
 import { ArticlesManager } from "@/features/articles/components/articles-manager";
 import { getArticleManagerItems } from "@/features/articles/services/articles.services";
 
+export const dynamic = "force-dynamic";
+
 type Props = {
   params: Promise<{
     locale: string;

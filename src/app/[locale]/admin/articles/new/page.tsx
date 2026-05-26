@@ -4,6 +4,8 @@ import {
     createArticle,
 } from "@/features/articles/services/articles.services";
 
+export const dynamic = "force-dynamic";
+
 type NewArticlePageProps = {
     params: Promise<{
         locale: string;

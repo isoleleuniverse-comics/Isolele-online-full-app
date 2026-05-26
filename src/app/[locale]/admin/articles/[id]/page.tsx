@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { ArticlesEditors } from "@/features/articles/components/articles-editors";
 import { buildEditorArticlePayload, getArticleById } from "@/features/articles/services/articles.services";
 
+export const dynamic = "force-dynamic";
+
 type Props = {
     params: Promise<{
         locale: string;
