@@ -32,6 +32,12 @@ type TranslationGroupMeta = {
   targetLocales: LanguageCode[];
 };
 
+function getDefaultTargetLocales(sourceLocale: LanguageCode) {
+  return getEnabledLanguages()
+    .map((language) => language.code)
+    .filter((code): code is LanguageCode => code !== sourceLocale);
+}
+
 type PersistedArticle = {
   id: string;
   translationGroupId: string;
@@ -146,72 +152,70 @@ async function getTranslationsForArticle(article: Pick<PersistedArticle, "transl
 }
 
 async function getTranslationGroupMeta(translationGroupId: string): Promise<TranslationGroupMeta | null> {
-  try {
-    const rows = await prisma.$queryRaw<Array<{ sourceLocale: string; targetLocales: unknown }>>(Prisma.sql`
-      SELECT sourceLocale, targetLocales
-      FROM TranslationGroup
-      WHERE id = ${translationGroupId}
-      LIMIT 1
-    `);
-    const row = rows[0];
-    if (!row) return null;
-    const resolvedSourceLocale = getLanguageByCode(row.sourceLocale)?.code;
-    if (!resolvedSourceLocale) {
-      return null;
-    }
+  const row = await prisma.translationGroup.findUnique({
+    where: {
+      id: translationGroupId,
+    },
+    select: {
+      sourceLocale: true,
+      targetLocales: true,
+    },
+  });
 
-    if (Array.isArray(row.targetLocales)) {
-      return {
-        sourceLocale: resolvedSourceLocale,
-        targetLocales: row.targetLocales.filter((item): item is LanguageCode => typeof item === "string"),
-      };
-    }
-
-    if (typeof row.targetLocales === "string") {
-      try {
-        const parsed = JSON.parse(row.targetLocales) as unknown;
-        return {
-          sourceLocale: resolvedSourceLocale,
-          targetLocales: Array.isArray(parsed)
-            ? parsed.filter((item): item is LanguageCode => typeof item === "string")
-            : [],
-        };
-      } catch {
-        return {
-          sourceLocale: resolvedSourceLocale,
-          targetLocales: [],
-        };
-      }
-    }
-
-    return {
-      sourceLocale: resolvedSourceLocale,
-      targetLocales: [],
-    };
-  } catch {
+  if (!row) {
     return null;
   }
+
+  const resolvedSourceLocale = getLanguageByCode(row.sourceLocale)?.code;
+  if (!resolvedSourceLocale) {
+    return null;
+  }
+
+  if (Array.isArray(row.targetLocales)) {
+    return {
+      sourceLocale: resolvedSourceLocale,
+      targetLocales: row.targetLocales.filter((item): item is LanguageCode => typeof item === "string"),
+    };
+  }
+
+  if (typeof row.targetLocales === "string") {
+    try {
+      const parsed = JSON.parse(row.targetLocales) as unknown;
+      return {
+        sourceLocale: resolvedSourceLocale,
+        targetLocales: Array.isArray(parsed)
+          ? parsed.filter((item): item is LanguageCode => typeof item === "string")
+          : [],
+      };
+    } catch {
+      return {
+        sourceLocale: resolvedSourceLocale,
+        targetLocales: [],
+      };
+    }
+  }
+
+  return {
+    sourceLocale: resolvedSourceLocale,
+    targetLocales: [],
+  };
 }
 
 async function upsertTranslationGroupMeta(translationGroupId: string, meta: TranslationGroupMeta) {
-  try {
-    await prisma.$executeRaw(Prisma.sql`
-      INSERT INTO TranslationGroup (id, sourceLocale, targetLocales, createdAt, updatedAt)
-      VALUES (
-        ${translationGroupId},
-        ${meta.sourceLocale},
-        ${JSON.stringify(meta.targetLocales)},
-        NOW(),
-        NOW()
-      )
-      ON DUPLICATE KEY UPDATE
-        sourceLocale = VALUES(sourceLocale),
-        targetLocales = VALUES(targetLocales),
-        updatedAt = NOW()
-    `);
-  } catch {
-    // The editor can still function with heuristic metadata if this table is unavailable.
-  }
+  await prisma.translationGroup.upsert({
+    where: {
+      id: translationGroupId,
+    },
+    create: {
+      id: translationGroupId,
+      sourceLocale: meta.sourceLocale,
+      targetLocales: meta.targetLocales,
+    },
+    update: {
+      sourceLocale: meta.sourceLocale,
+      targetLocales: meta.targetLocales,
+    },
+  });
 }
 
 async function resolveTranslationGroupMeta(article: Pick<PersistedArticle, "translationGroupId" | "locale">) {
@@ -372,25 +376,37 @@ export async function getPublicArticleBySlug(slug: string, locale: SupportedLoca
 export async function createArticle() {
   const sourceLocale = getDefaultLanguage().code;
   const translationGroupId = crypto.randomUUID();
-  await upsertTranslationGroupMeta(translationGroupId, {
-    sourceLocale,
-    targetLocales: getEnabledLanguages()
-      .map((language) => language.code)
-      .filter((code) => code !== sourceLocale),
-  });
+  const targetLocales = getDefaultTargetLocales(sourceLocale);
 
-  return prisma.article.create({
-    data: {
-      translationGroupId,
-      locale: sourceLocale,
-      slug: `article-${Date.now()}`,
-      title: "Nouvel article",
-      blocksJson: [] as Prisma.InputJsonValue,
-      status: "DRAFT",
-      translationStatus: "UP_TO_DATE",
-      sourceVersion: 1,
-      translatedFromVersion: 1,
-    },
+  return prisma.$transaction(async (tx) => {
+    await tx.translationGroup.upsert({
+      where: {
+        id: translationGroupId,
+      },
+      create: {
+        id: translationGroupId,
+        sourceLocale,
+        targetLocales,
+      },
+      update: {
+        sourceLocale,
+        targetLocales,
+      },
+    });
+
+    return tx.article.create({
+      data: {
+        translationGroupId,
+        locale: sourceLocale,
+        slug: `article-${Date.now()}`,
+        title: "Nouvel article",
+        blocksJson: [] as Prisma.InputJsonValue,
+        status: "DRAFT",
+        translationStatus: "UP_TO_DATE",
+        sourceVersion: 1,
+        translatedFromVersion: 1,
+      },
+    });
   });
 }
 
@@ -400,31 +416,43 @@ export async function duplicateArticle(id: string) {
     throw new Error("Article not found.");
   }
   const sourceLocale = getLanguageByCode(currentArticle.locale)?.code ?? getDefaultLanguage().code;
+  const targetLocales = getDefaultTargetLocales(sourceLocale);
 
   const translationGroupId = crypto.randomUUID();
-  await upsertTranslationGroupMeta(translationGroupId, {
-    sourceLocale,
-    targetLocales: getEnabledLanguages()
-      .map((language) => language.code)
-      .filter((code) => code !== sourceLocale),
-  });
 
-  return prisma.article.create({
-    data: {
-      translationGroupId,
-      locale: sourceLocale,
-      slug: `${currentArticle.slug}-${Date.now()}`,
-      title: `${currentArticle.title} (Copy)`,
-      excerpt: currentArticle.excerpt,
-      coverImage: currentArticle.coverImage,
-      seoTitle: currentArticle.seoTitle,
-      seoDescription: currentArticle.seoDescription,
-      blocksJson: currentArticle.blocksJson as Prisma.InputJsonValue,
-      status: "DRAFT",
-      translationStatus: "UP_TO_DATE",
-      sourceVersion: 1,
-      translatedFromVersion: 1,
-    },
+  return prisma.$transaction(async (tx) => {
+    await tx.translationGroup.upsert({
+      where: {
+        id: translationGroupId,
+      },
+      create: {
+        id: translationGroupId,
+        sourceLocale,
+        targetLocales,
+      },
+      update: {
+        sourceLocale,
+        targetLocales,
+      },
+    });
+
+    return tx.article.create({
+      data: {
+        translationGroupId,
+        locale: sourceLocale,
+        slug: `${currentArticle.slug}-${Date.now()}`,
+        title: `${currentArticle.title} (Copy)`,
+        excerpt: currentArticle.excerpt,
+        coverImage: currentArticle.coverImage,
+        seoTitle: currentArticle.seoTitle,
+        seoDescription: currentArticle.seoDescription,
+        blocksJson: currentArticle.blocksJson as Prisma.InputJsonValue,
+        status: "DRAFT",
+        translationStatus: "UP_TO_DATE",
+        sourceVersion: 1,
+        translatedFromVersion: 1,
+      },
+    });
   });
 }
 
@@ -610,6 +638,25 @@ export async function upsertArticleTranslation(input: UpsertArticleTranslationIn
       },
     });
   }
+
+  const sourceArticle = await prisma.article.findFirst({
+    where: {
+      translationGroupId: input.translationGroupId,
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+    select: {
+      locale: true,
+    },
+  });
+
+  const sourceLocale = getLanguageByCode(sourceArticle?.locale ?? "")?.code ?? getDefaultLanguage().code;
+
+  await upsertTranslationGroupMeta(input.translationGroupId, {
+    sourceLocale,
+    targetLocales: getDefaultTargetLocales(sourceLocale),
+  });
 
   return prisma.article.create({
     data: {
