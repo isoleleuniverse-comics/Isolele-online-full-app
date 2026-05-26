@@ -240,7 +240,7 @@ export async function translateArticle(articleId: string, targetLocale: Language
   const shouldRetranslateArticleMeta =
     !existingTranslation ||
     existingTranslation.translatedFromVersion !== sourceArticle.sourceVersion ||
-    existingTranslation.translationStatus === "NEEDS_UPDATE";
+    existingTranslation.translationStatus === "NEEDS_REVIEW";
 
   const entries = [
     ...(shouldRetranslateArticleMeta ? collectArticleEntries(sourceArticle) : []),

@@ -524,7 +524,7 @@ export async function updateArticle(id: string, data: UpdateArticleInput) {
           },
         },
         data: {
-          translationStatus: "NEEDS_UPDATE",
+          translationStatus: "OUTDATED",
         },
       });
 

@@ -5,6 +5,7 @@ import {
 } from "../../languages/config/languages.ts";
 import type { ArticleBlock } from "./article-blocks.ts";
 import { createArticleBlock, normalizeArticleBlocks } from "./article-blocks.ts";
+import type { TranslationStatus } from "@/generated/prisma/client";
 
 export type TranslationStatusValue =
   | "draft"
@@ -13,12 +14,8 @@ export type TranslationStatusValue =
   | "up_to_date"
   | "needs_update";
 
-export type TranslationStatusRecord =
-  | "DRAFT"
-  | "TRANSLATED"
-  | "REVIEWING"
-  | "UP_TO_DATE"
-  | "NEEDS_UPDATE";
+/** Alias de l'enum Prisma TranslationStatus pour assurer la compatibilité de type. */
+export type TranslationStatusRecord = TranslationStatus;
 
 export type TranslationEntry = {
   key: string;
@@ -197,19 +194,19 @@ function hasTranslatedEntryForBlock(translated: Map<string, string>, blockKey: s
 }
 
 export function getTranslationStatusLabel(status: TranslationStatusRecord): TranslationStatusValue {
-  if (status === "DRAFT") return "draft";
-  if (status === "TRANSLATED") return "translated";
-  if (status === "REVIEWING") return "reviewing";
+  if (status === "MACHINE_TRANSLATED") return "translated";
+  if (status === "NEEDS_REVIEW") return "reviewing";
   if (status === "UP_TO_DATE") return "up_to_date";
-  return "needs_update";
+  if (status === "OUTDATED") return "needs_update";
+  return "draft";
 }
 
 export function getTranslationStatusAfterSync(params: {
   isNewTranslation: boolean;
   hasPendingManualReview: boolean;
 }): TranslationStatusRecord {
-  if (params.isNewTranslation) return "TRANSLATED";
-  if (params.hasPendingManualReview) return "REVIEWING";
+  if (params.isNewTranslation) return "MACHINE_TRANSLATED";
+  if (params.hasPendingManualReview) return "NEEDS_REVIEW";
   return "UP_TO_DATE";
 }
 
@@ -221,7 +218,7 @@ export function getTranslationStatusAfterManualEdit(params: {
   if (params.articleLocale === params.sourceLocale) {
     return params.currentStatus;
   }
-  return "REVIEWING" satisfies TranslationStatusRecord;
+  return "NEEDS_REVIEW" satisfies TranslationStatusRecord;
 }
 
 export function getTranslationStatusAfterSourceUpdate(params: {
@@ -231,7 +228,7 @@ export function getTranslationStatusAfterSourceUpdate(params: {
   if (params.articleLocale === params.sourceLocale) {
     return "UP_TO_DATE" satisfies TranslationStatusRecord;
   }
-  return "NEEDS_UPDATE" satisfies TranslationStatusRecord;
+  return "OUTDATED" satisfies TranslationStatusRecord;
 }
 
 export function getTranslatableBlockSignature(block: ArticleBlock): string | null {

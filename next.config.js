@@ -29,6 +29,9 @@ const nextConfig = {
     root: __dirname,
   },
 
+  // Prisma: exclure du bundle Turbopack (doit rester en module Node.js natif)
+  serverExternalPackages: ['@prisma/client', '@prisma/client-runtime-utils'],
+
   // Experimental features for performance
   experimental: {
     optimizePackageImports: ['framer-motion', '@hookform/resolvers'],

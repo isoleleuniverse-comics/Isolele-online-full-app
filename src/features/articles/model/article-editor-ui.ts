@@ -30,20 +30,18 @@ export function getArticleStatusLabel(status: ArticleStatus) {
 }
 
 export function getTranslationStatusLabel(status: TranslationStatus | "MISSING") {
-  if (status === "TRANSLATED") return "Translated";
-  if (status === "REVIEWING") return "Reviewing";
+  if (status === "MACHINE_TRANSLATED") return "Translated";
+  if (status === "NEEDS_REVIEW") return "Reviewing";
   if (status === "UP_TO_DATE") return "Up to date";
-  if (status === "NEEDS_UPDATE") return "Needs update";
-  if (status === "DRAFT") return "Draft";
+  if (status === "OUTDATED") return "Needs update";
   return "Missing";
 }
 
 export function getTranslationStatusTone(status: TranslationStatus | "MISSING") {
   if (status === "UP_TO_DATE") return "success";
-  if (status === "TRANSLATED") return "accent";
-  if (status === "REVIEWING") return "warning";
-  if (status === "NEEDS_UPDATE") return "danger";
-  if (status === "DRAFT") return "muted";
+  if (status === "MACHINE_TRANSLATED") return "accent";
+  if (status === "NEEDS_REVIEW") return "warning";
+  if (status === "OUTDATED") return "danger";
   return "ghost";
 }
 

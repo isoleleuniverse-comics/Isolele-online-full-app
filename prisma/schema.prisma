@@ -4,7 +4,7 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -41,12 +41,10 @@ model Article {
   id String @id @default(cuid())
 
   translationGroupId String
-  translationGroup TranslationGroup
-    @relation(fields: [translationGroupId], references: [id])
+  translationGroup TranslationGroup @relation(fields: [translationGroupId], references: [id])
 
   locale String
-  language Language
-    @relation(fields: [locale], references: [code])
+  language Language @relation(fields: [locale], references: [code])
 
   slug String
 
@@ -59,18 +57,17 @@ model Article {
 
   status ArticleStatus @default(DRAFT)
 
-  translationStatus TranslationStatus
-    @default(UP_TO_DATE)
+  translationStatus TranslationStatus @default(UP_TO_DATE)
 
-  sourceVersion Int @default(1)
+  sourceVersion Int @default(1) 
   translatedFromVersion Int?
 
-  seoTitle String?
+  seoTitle String? 
   seoDescription String?
 
   publishedAt DateTime?
 
-  createdAt DateTime @default(now())
+  createdAt DateTime @default(now()) 
   updatedAt DateTime @updatedAt
 
   @@unique([translationGroupId, locale])
@@ -78,4 +75,18 @@ model Article {
 
   @@index([locale])
   @@index([status])
+}
+
+enum ArticleStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+enum TranslationStatus {
+  UP_TO_DATE
+  OUTDATED
+  MACHINE_TRANSLATED
+  NEEDS_REVIEW
 }
