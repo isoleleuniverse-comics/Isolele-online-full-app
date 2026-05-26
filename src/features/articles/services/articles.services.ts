@@ -658,22 +658,39 @@ export async function upsertArticleTranslation(input: UpsertArticleTranslationIn
     targetLocales: getDefaultTargetLocales(sourceLocale),
   });
 
-  return prisma.article.create({
-    data: {
-      translationGroupId: input.translationGroupId,
-      locale: input.locale,
-      slug: input.slug,
-      title: input.title,
-      excerpt: input.excerpt,
-      coverImage: input.coverImage,
-      seoTitle: input.seoTitle,
-      seoDescription: input.seoDescription,
-      blocksJson: input.blocksJson,
-      status: "DRAFT",
-      translationStatus: input.translationStatus,
-      sourceVersion: input.sourceVersion,
-      translatedFromVersion: input.translatedFromVersion,
-    },
+  return prisma.$transaction(async (tx) => {
+    await tx.translationGroup.upsert({
+      where: {
+        id: input.translationGroupId,
+      },
+      create: {
+        id: input.translationGroupId,
+        sourceLocale,
+        targetLocales: getDefaultTargetLocales(sourceLocale),
+      },
+      update: {
+        sourceLocale,
+        targetLocales: getDefaultTargetLocales(sourceLocale),
+      },
+    });
+
+    return tx.article.create({
+      data: {
+        translationGroupId: input.translationGroupId,
+        locale: input.locale,
+        slug: input.slug,
+        title: input.title,
+        excerpt: input.excerpt,
+        coverImage: input.coverImage,
+        seoTitle: input.seoTitle,
+        seoDescription: input.seoDescription,
+        blocksJson: input.blocksJson,
+        status: "DRAFT",
+        translationStatus: input.translationStatus,
+        sourceVersion: input.sourceVersion,
+        translatedFromVersion: input.translatedFromVersion,
+      },
+    });
   });
 }
 
