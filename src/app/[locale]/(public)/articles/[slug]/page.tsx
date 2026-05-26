@@ -6,6 +6,9 @@ import { normalizeArticleBlocks } from "@/features/articles/model/article-blocks
 import { getPublicArticleBySlug } from "@/features/articles/services/articles.services";
 import { ArticleTemplate } from "@/features/articles/ui/article-template";
 
+export const dynamic = "force-dynamic";
+
+
 export async function generateMetadata({
   params,
 }: {

@@ -30,7 +30,7 @@ const nextConfig = {
   },
 
   // Prisma: exclure du bundle Turbopack (doit rester en module Node.js natif)
-  serverExternalPackages: ['@prisma/client', '@prisma/client-runtime-utils'],
+  serverExternalPackages: ['@prisma/client', '@prisma/client-runtime-utils', '@prisma/adapter-pg', 'pg'],
 
   // Experimental features for performance
   experimental: {

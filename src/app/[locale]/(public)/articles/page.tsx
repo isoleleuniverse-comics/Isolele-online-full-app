@@ -3,6 +3,8 @@ import Link from "next/link";
 import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import { getPublicPublishedArticles } from "@/features/articles/services/articles.services";
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({
   params,
 }: {
