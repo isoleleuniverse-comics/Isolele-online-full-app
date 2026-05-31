@@ -10,6 +10,43 @@ export interface ComicBook {
   price: number;
 }
 
+export interface ComicDetailCharacter {
+  name: string;
+  role: string;
+  description: string;
+  image: string;
+}
+
+export interface ComicDetailGalleryItem {
+  image: string;
+  alt: string;
+}
+
+export interface ComicDetailPageData {
+  slug: string;
+  title: string;
+  eyebrow: string;
+  subtitle: string;
+  description: string;
+  heroImage: string;
+  heroImageAlt: string;
+  price: number;
+  purchaseHref?: string;
+  characters: ComicDetailCharacter[];
+  synopsisTitle: string;
+  synopsis: string[];
+  galleryTitle: string;
+  gallery: ComicDetailGalleryItem[];
+  authorTitle: string;
+  authorName: string;
+  authorDescription: string;
+  authorImage: string;
+  backLabel: string;
+  comingSoon: boolean;
+  comingSoonLabel?: string;
+  comingSoonBody?: string;
+}
+
 export interface ComicsCategorySection {
   id: ComicCategory;
   title: string;

@@ -56,7 +56,7 @@ export function CharacterCard({
           <div
             className="absolute inset-0"
             style={{
-              background: `linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, ${character.color}40 100%, ${colors.background} 100%)`,
+              background: `linear-gradient(180deg, transparent 0%, ${character.color}40 100%, ${colors.background} 100%)`,
             }}
           />
 

@@ -25,6 +25,7 @@ export function ComicsPage({ locale }: ComicsPageProps) {
           ctaHref={section.ctaHref}
           books={section.books}
           readLabel={content.ui.readLabel}
+          locale={locale}
           scrollLeftLabel={content.ui.scrollLeftLabel}
           scrollRightLabel={content.ui.scrollRightLabel}
         />

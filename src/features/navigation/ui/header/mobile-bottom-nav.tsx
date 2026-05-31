@@ -7,7 +7,6 @@ import { getNavigationContent } from "@/features/navigation/content/nav.content"
 import { cn } from "@/shared/lib/utils";
 import { useTheme } from "@/shared/contexts/theme-context";
 import { resolveLocaleFromPathname, stripLocaleFromPathname, withLocale } from "@/shared/i18n/locales";
-import { CartButton } from "./cart-button";
 import { NAV_LINKS, isActive } from "../../config/nav.config";
 
 export function MobileBottomNav() {
@@ -52,7 +51,6 @@ export function MobileBottomNav() {
           );
         })}
 
-        <CartButton isMobile />
       </div>
     </nav>
   );

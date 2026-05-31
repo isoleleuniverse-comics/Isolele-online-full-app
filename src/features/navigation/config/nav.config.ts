@@ -16,7 +16,7 @@ export const NAV_LINKS: NavLink[] = [
   { key: "nav_home", href: "/", icon: Home },
   { key: "nav_comics", href: "/comics", icon: BookOpen },
   { key: "nav_characters", href: "/characters", icon: Users, hasDropdown: true },
-  { key: "nav_games", href: "/kufu-game", icon: Gamepad2 },
+  { key: "nav_games", href: "/games", icon: Gamepad2 },
 ];
 
 export const CHARACTER_NAV_LINKS = CHARACTER_SLUGS.map((slug) => ({

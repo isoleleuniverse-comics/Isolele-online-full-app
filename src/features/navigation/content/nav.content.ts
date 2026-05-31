@@ -40,7 +40,7 @@ export const navigationContent: Record<SupportedLocale, NavigationContent> = {
       nav_home: "Accueil",
       nav_comics: "Comics",
       nav_characters: "Personnages",
-      nav_games: "Jeu",
+      nav_games: "Jeux",
       nav_all_characters: "Tous les personnages",
     },
     mobileMenu: {
@@ -78,7 +78,7 @@ export const navigationContent: Record<SupportedLocale, NavigationContent> = {
       nav_home: "Home",
       nav_comics: "Comics",
       nav_characters: "Characters",
-      nav_games: "Game",
+      nav_games: "Games",
       nav_all_characters: "All characters",
     },
     mobileMenu: {

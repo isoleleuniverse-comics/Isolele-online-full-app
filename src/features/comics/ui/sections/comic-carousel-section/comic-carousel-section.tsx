@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { ComicBook } from "@/features/comics/model/comics.types";
+import type { SupportedLocale } from "@/shared/i18n/locales";
+import { withLocale } from "@/shared/i18n/locales";
 import { ComicCard } from "./comic-card";
 
 interface ComicCarouselSectionProps {
@@ -13,6 +15,7 @@ interface ComicCarouselSectionProps {
   ctaHref: string;
   books: ComicBook[];
   readLabel: string;
+  locale: SupportedLocale;
   scrollLeftLabel: string;
   scrollRightLabel: string;
 }
@@ -23,6 +26,7 @@ export function ComicCarouselSection({
   ctaHref,
   books,
   readLabel,
+  locale,
   scrollLeftLabel,
   scrollRightLabel,
 }: ComicCarouselSectionProps) {
@@ -61,10 +65,10 @@ export function ComicCarouselSection({
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.35, delay: Math.min(index * 0.06, 0.4) }}
-              className="w-72 flex-shrink-0 sm:w-80"
-            >
-              <ComicCard book={book} readLabel={readLabel} />
+            transition={{ duration: 0.35, delay: Math.min(index * 0.06, 0.4) }}
+            className="w-72 flex-shrink-0 sm:w-80"
+          >
+              <ComicCard book={book} readLabel={readLabel} href={withLocale(locale, `/comics/${book.id}`)} />
             </motion.div>
           ))}
         </div>

@@ -14,7 +14,7 @@ export function StarRating({ rating, size = 16 }: StarRatingProps) {
         <Star
           key={index}
           size={size}
-          fill={index <= Math.round(rating) ? "#F6B800" : "none"}
+          fill={index <= Math.round(rating) ? "#F6B800" : "none"}  
           stroke={index <= Math.round(rating) ? "#F6B800" : "#555555"}
         />
       ))}
