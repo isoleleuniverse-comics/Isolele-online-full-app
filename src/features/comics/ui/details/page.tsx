@@ -15,14 +15,25 @@ export function ComicDetailPage({ page, locale }: ComicDetailPageProps) {
   const castEyebrow = locale === "fr" ? "Personnages" : "Cast";
   const castTitle = locale === "fr" ? "Personnages cles" : "Key Characters";
   const isExternalPurchase = !!page.purchaseHref && page.purchaseHref.startsWith("http");
-
+ 
   return (
     <main className="min-h-screen bg-white text-neutral-950">
       <section className="relative overflow-hidden border-b border-black/10 bg-white">
+        {page.heroBackground ? (
+          <Image
+            src={page.heroBackground}
+            alt=""
+            fill
+            className="object-cover object-center opacity-20"
+            sizes="100vw"
+            priority
+          />
+        ) : null}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(184,134,11,0.14),transparent_36%)]" />
+        <div className="absolute inset-0 bg-white/78" />
         <div className="absolute inset-x-0 top-0 h-72 bg-[linear-gradient(180deg,rgba(248,246,240,0.95),rgba(255,255,255,0))]" />
 
-        <div className="mx-auto grid min-h-[76vh] w-full max-w-7xl gap-10 px-6 pb-16 pt-32 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+        <div className="mx-auto grid min-h-[76vh] w-full max-w-7xl gap-8 px-6 pb-16 pt-20 sm:pt-24 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-10 lg:pt-32">
           <div className="relative z-10 order-2 lg:order-1">
             
 
@@ -61,8 +72,8 @@ export function ComicDetailPage({ page, locale }: ComicDetailPageProps) {
           </div>
 
           <div className="relative z-10 order-1 lg:order-2">
-            <div className="relative overflow-hidden rounded-[2rem] border border-black/10 bg-[#f8f6f0] p-3 shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
-              <div className="relative aspect-[16/10] overflow-hidden rounded-[1.4rem]">
+            <div className="relative overflow-hidden bg-transparent p-0 shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
+              <div className="relative aspect-[16/9] overflow-hidden rounded-[1.4rem] lg:ml-auto lg:max-w-[34rem] lg:aspect-square">
                 <Image src={page.heroImage} alt={page.heroImageAlt} fill className="object-cover" priority />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/15 via-transparent to-transparent" />
               </div>
@@ -121,8 +132,8 @@ export function ComicDetailPage({ page, locale }: ComicDetailPageProps) {
                     key={`${item.image}-${index}`}
                     className={
                       index === 0
-                        ? "relative min-h-[280px] overflow-hidden rounded-[2rem] border border-black/10 bg-[#f8f6f0] sm:row-span-2"
-                        : "relative min-h-[180px] overflow-hidden rounded-[2rem] border border-black/10 bg-[#f8f6f0]"
+                        ? "relative aspect-square overflow-hidden rounded-[2rem] border border-black/10 bg-[#f8f6f0] sm:min-h-[280px] sm:aspect-auto sm:row-span-2"
+                        : "relative aspect-square overflow-hidden rounded-[2rem] border border-black/10 bg-[#f8f6f0] sm:min-h-[180px] sm:aspect-auto"
                     }
                   >
                     <Image src={item.image} alt={item.alt} fill className="object-cover" />
@@ -144,7 +155,7 @@ function AuthorBlock({ page }: { page: ComicDetailPageData }) {
     <section className="mx-auto w-full max-w-7xl px-6 pb-24">
       <div className="grid gap-6 rounded-[2rem] border border-black/10 bg-[#f8f6f0] p-6 sm:p-8 md:grid-cols-[220px_1fr] md:items-center">
         <div className="relative aspect-square overflow-hidden rounded-[1.5rem] border border-black/10 bg-white">
-          <Image src={page.authorImage} alt={page.authorName} fill className="object-cover" />
+          <Image src={page.authorImage} alt={page.authorName} fill className="object-cover object-top scale-[1.2] translate-y-[20px]" />
         </div>
 
         <div>

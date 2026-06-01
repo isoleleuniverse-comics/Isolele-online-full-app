@@ -30,6 +30,7 @@ export interface ComicDetailPageData {
   description: string;
   heroImage: string;
   heroImageAlt: string;
+  heroBackground?: string;
   price: number;
   purchaseHref?: string;
   characters: ComicDetailCharacter[];

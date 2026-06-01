@@ -1,11 +1,12 @@
 import type { SupportedLocale } from "@/shared/i18n/locales";
-import { BOOKS_CTA_LINKS } from "@/features/books/model/books-cta-links";
 import type {
   ComicBook,
   ComicCategory,
   ComicDetailPageData,
   ComicsPageContent,
 } from "./comics.types";
+
+const HOME_PRODUCTS_STRIPE_LINK = "https://buy.stripe.com/14A5kD44Z6yM2zR6qh6Zy0c";
 
 const comicsByLocale: Record<SupportedLocale, Record<ComicCategory, ComicBook[]>> = {
   en: {
@@ -84,14 +85,14 @@ const comicsByLocale: Record<SupportedLocale, Record<ComicCategory, ComicBook[]>
       {
         id: "zaiire",
         title: "ZAIIRE",
-        description: "Le prince du Kongo eveille le Collier du Destin et restaure une memoire royale effacee.",
+        description: "Le prince du Kongo éveille le Collier du Destin et restaure une mémoire royale effacée.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg",
         price: 25.99,
       },
       {
         id: "bambula",
         title: "BAMBULA",
-        description: "Un heros du tambour sacre qui porte rythme, memoire et puissance spirituelle.",
+        description: "Un héros du tambour sacré qui porte rythme, mémoire et puissance spirituelle.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
         price: 24.99,
       },
@@ -107,21 +108,21 @@ const comicsByLocale: Record<SupportedLocale, Record<ComicCategory, ComicBook[]>
       {
         id: "makanda",
         title: "MAKANDA",
-        description: "Un empire cache protege par la Flamme Sacree attend de se relever.",
+        description: "Un empire caché protégé par la Flamme Sacrée attend de se relever.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
         price: 23.99,
       },
       {
         id: "sacred-flame",
-        title: "Au coeur des plans de la Flamme Sacree",
-        description: "Une exploration de la science spirituelle cachee dans les archives ancestrales.",
+        title: "Au cœur des plans de la Flamme Sacrée",
+        description: "Une exploration de la science spirituelle cachée dans les archives ancestrales.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg",
         price: 27.99,
       },
       {
         id: "kufulula",
         title: "King Kufulula : Le fondateur",
-        description: "L'origine royale derriere l'empire narratif ISOLELE.",
+        description: "L'origine royale derrière l'empire narratif ISOLELE.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
         price: 29.99,
       },
@@ -129,22 +130,22 @@ const comicsByLocale: Record<SupportedLocale, Record<ComicCategory, ComicBook[]>
     new: [
       {
         id: "how-isolele",
-        title: "Comment ISOLELE restaure la memoire africaine",
-        description: "Un manifeste culturel sur la memoire, l'identite et la souverainete narrative.",
+        title: "Comment ISOLELE restaure la mémoire africaine",
+        description: "Un manifeste culturel sur la mémoire, l'identité et la souveraineté narrative.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chrome_screenshot_Mar%2031%2C%202026%202_16_31%20PM%20GMT%2B02_00-v3ueG61JhSCQHjK2LqR5FJbw9dJJao.png",
         price: 21.99,
       },
       {
         id: "zattar",
         title: "ZATTAR",
-        description: "Un prince refuse par le destin decide de prendre tous les trones de l'univers.",
+        description: "Un prince refusé par le destin décide de prendre tous les trônes de l'univers.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e9c64c65-3717-4fe3-a391-885767df3303-LbjnMwCViF43pwErKmoFv7iGxQdCeQ.jpeg",
         price: 22.99,
       },
       {
         id: "zaiko",
         title: "ZAIKO",
-        description: "Le Nord-Kivu et Kinshasa faconnent l'ascension d'un roi ne de la survie.",
+        description: "Le Nord-Kivu et Kinshasa façonnent l'ascension d'un roi né de la survie.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1175-njlosetUOsqZszKylrOXsIRLw0l3s7.jpeg",
         price: 24.99,
       },
@@ -156,7 +157,7 @@ const comicsPageContent: Record<SupportedLocale, Omit<ComicsPageContent, "locale
   fr: {
     hero: {
       title: "ISOLELE Comics",
-      description: "Decouvrez des recits premium, des heros souverains et des aventures ancrees dans la memoire africaine.",
+      description: "Découvrez des récits premium, des héros souverains et des aventures ancrées dans la mémoire africaine.",
     },
     sections: [
       { id: "featured", title: "Collections vedettes", ctaLabel: "Voir tout", ctaHref: "/books", books: comicsByLocale.fr.featured },
@@ -164,16 +165,16 @@ const comicsPageContent: Record<SupportedLocale, Omit<ComicsPageContent, "locale
       { id: "new", title: "Nouvelles sorties", ctaLabel: "Voir tout", ctaHref: "/books", books: comicsByLocale.fr.new },
     ],
     footer: {
-      description: "Des histoires puissantes pour celebrer l'heritage africain a travers des icones, des royaumes et des destins.",
-      primaryCtaLabel: "Retour a l'accueil",
+      description: "Des histoires puissantes pour célébrer l'héritage africain à travers des icônes, des royaumes et des destins.",
+      primaryCtaLabel: "Retour à l'accueil",
       primaryCtaHref: "/",
       secondaryCtaLabel: "Explorer le jeu Kufu",
       secondaryCtaHref: "/kufu-game",
     },
     ui: {
       readLabel: "Lire",
-      scrollLeftLabel: "Defiler vers la gauche",
-      scrollRightLabel: "Defiler vers la droite",
+      scrollLeftLabel: "Défiler vers la gauche",
+      scrollRightLabel: "Défiler vers la droite",
     },
   },
   en: {
@@ -209,10 +210,11 @@ const zaiireDetailByLocale: Record<SupportedLocale, ComicDetailPageData> = {
     subtitle: "The Necklace of Destiny",
     description:
       "A royal odyssey where memory, thunder, and destiny collide. Zaiire inherits more than a kingdom when the Necklace of Destiny awakens.",
-    heroImage: "/images/zaiire-prince-cover.jpg",
+    heroImage: "/Fichier%202@0.5x.png",
+    heroBackground: "/HERO.jpg",
     heroImageAlt: "Zaiire Prince of Kongo cover art",
-    price: 25.99,
-    purchaseHref: BOOKS_CTA_LINKS.zaiireBookI,
+    price: 36.99,
+    purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [
       {
         name: "Zaiire",
@@ -225,19 +227,7 @@ const zaiireDetailByLocale: Record<SupportedLocale, ComicDetailPageData> = {
         role: "Warrior queen",
         description: "A sovereign mother whose strength, sacrifice, and royal lineage set Zaiire's destiny in motion.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0013-6Xt165l5rPK1nNYEUoAqZBFN42ioH4.jpg",
-      },
-      {
-        name: "Shango",
-        role: "Divine thunder lord",
-        description: "The celestial force behind Zaiire's power, linking him to a world larger than kings and empires.",
-        image: "/images/cosmic-whirlwind-scene.jpg",
-      },
-      {
-        name: "The Necklace of Destiny",
-        role: "Living relic",
-        description: "Forged to choose, not to adorn. It awakens ancestral memory and returns royal power to its rightful heir.",
-        image: "/images/necklace-transformation.jpg",
-      },
+      }
     ],
     synopsisTitle: "Synopsis",
     synopsis: [
@@ -256,7 +246,7 @@ const zaiireDetailByLocale: Record<SupportedLocale, ComicDetailPageData> = {
     authorName: "HRM King Kufulula",
     authorDescription:
       "Traditional king, cultural architect, and founder of ISOLELE. He builds stories that restore African memory through royalty, mythology, and sovereign imagination.",
-    authorImage: "/king-kufulula-portrait.jpg",
+    authorImage: "/king-kufulula.jpg",
     backLabel: "Back to all comics",
     comingSoon: false,
   },
@@ -266,55 +256,44 @@ const zaiireDetailByLocale: Record<SupportedLocale, ComicDetailPageData> = {
     eyebrow: "Le Prince du Kongo",
     subtitle: "Le Collier du Destin",
     description:
-      "Une odyssee royale ou memoire, tonnerre et destin se rencontrent. Zaiire n'herite pas seulement d'un royaume quand le Collier du Destin s'eveille.",
-    heroImage: "/images/zaiire-prince-cover.jpg",
+      "Une odyssée royale où mémoire, tonnerre et destin se rencontrent. Zaiire n'hérite pas seulement d'un royaume quand le Collier du Destin s'éveille.",
+    heroImage: "/Fichier%202@0.5x.png",
+    heroBackground: "/HERO.jpg",
     heroImageAlt: "Couverture Zaiire Prince du Kongo",
-    price: 25.99,
-    purchaseHref: BOOKS_CTA_LINKS.zaiireBookI,
+    price: 36.99,
+    purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [
       {
         name: "Zaiire",
-        role: "Prince elu",
-        description: "Fils de Shango et de Kimoya, il porte un sang royal, une force divine et la mission de restaurer une memoire effacee.",
+        role: "Prince élu",
+        description: "Fils de Shango et de Kimoya, il porte un sang royal, une force divine et la mission de restaurer une mémoire effacée.",
         image: "/characters/zaiire-kongo-throne.jpg",
       },
       {
         name: "Kimoya",
-        role: "Reine guerriere",
-        description: "Mere souveraine dont la force, le sacrifice et la lignee royale mettent en marche le destin de Zaiire.",
+        role: "Reine guerrière",
+        description: "Mère souveraine dont la force, le sacrifice et la lignée royale mettent en marche le destin de Zaiire.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0013-6Xt165l5rPK1nNYEUoAqZBFN42ioH4.jpg",
-      },
-      {
-        name: "Shango",
-        role: "Seigneur divin du tonnerre",
-        description: "La force celeste qui nourrit le pouvoir de Zaiire et l'ouvre a un monde plus vaste que les royaumes.",
-        image: "/images/cosmic-whirlwind-scene.jpg",
-      },
-      {
-        name: "Le Collier du Destin",
-        role: "Relique vivante",
-        description: "Forge pour choisir et non pour decorer. Il eveille la memoire ancestrale et rend le pouvoir royal a son veritable heritier.",
-        image: "/images/necklace-transformation.jpg",
       },
     ],
     synopsisTitle: "Synopsis",
     synopsis: [
-      "Eleve entre privilege et silences, Zaiire croit comprendre le monde qui l'a forme. Tout change lorsqu'il retrouve sa mere a Kinshasa et recoit le Collier du Destin.",
-      "La relique ne revele pas seulement une puissance. Elle revele une histoire, des lignees et une guerre menee contre la memoire elle-meme. La quete familiale devient alors un combat pour l'ame du royaume Kongo.",
-      "Alors que le tonnerre, la prophetie et la memoire royale s'eveillent en lui, Zaiire doit choisir s'il restera un prince ou deviendra la force attendue par ses ancetres.",
+      "Élevé entre privilège et silences, Zaiire croit comprendre le monde qui l'a formé. Tout change lorsqu'il retrouve sa mère à Kinshasa et reçoit le Collier du Destin.",
+      "La relique ne révèle pas seulement une puissance. Elle révèle une histoire, des lignées et une guerre menée contre la mémoire elle-même. La quête familiale devient alors un combat pour l'âme du royaume Kongo.",
+      "Alors que le tonnerre, la prophétie et la mémoire royale s'éveillent en lui, Zaiire doit choisir s'il restera un prince ou deviendra la force attendue par ses ancêtres.",
     ],
     galleryTitle: "Quelques planches",
     gallery: [
       { image: "/images/zaiire-cast-ensemble.jpg", alt: "Ensemble des personnages de Zaiire" },
       { image: "/images/necklace-transformation.jpg", alt: "Transformation du Collier du Destin" },
-      { image: "/images/royal-bloodlines.jpg", alt: "Lignees royales du Kongo" },
-      { image: "/images/body-transformation.jpg", alt: "Eveil du pouvoir de Zaiire" },
+      { image: "/images/royal-bloodlines.jpg", alt: "Lignées royales du Kongo" },
+      { image: "/images/body-transformation.jpg", alt: "Éveil du pouvoir de Zaiire" },
     ],
     authorTitle: "Auteur",
     authorName: "HRM King Kufulula",
     authorDescription:
-      "Roi traditionnel, architecte culturel et fondateur d'ISOLELE. Il construit des histoires qui restaurent la memoire africaine a travers la royaute, la mythologie et l'imaginaire souverain.",
-    authorImage: "/king-kufulula-portrait.jpg",
+      "Roi traditionnel, architecte culturel et fondateur d'ISOLELE. Il construit des histoires qui restaurent la mémoire africaine à travers la royauté, la mythologie et l'imaginaire souverain.",
+    authorImage: "/king-kufulula.jpg",
     backLabel: "Retour aux comics",
     comingSoon: false,
   },
@@ -333,14 +312,14 @@ const detailUi = {
     backLabel: "Back to all comics",
   },
   fr: {
-    comingSoonEyebrow: "Nouveau chapitre en preparation",
-    comingSoonSubtitle: "La page complete arrive bientot.",
+    comingSoonEyebrow: "Nouveau chapitre en préparation",
+    comingSoonSubtitle: "La page complète arrive bientôt.",
     comingSoonBody:
-      "Ce titre fait deja partie de l'univers ISOLELE, mais sa page de lecture detaillee est encore en preparation. Revenez bientot pour decouvrir les personnages, le synopsis et quelques planches.",
+      "Ce titre fait déjà partie de l'univers ISOLELE, mais sa page de lecture détaillée est encore en préparation. Revenez bientôt pour découvrir les personnages, le synopsis et quelques planches.",
     authorTitle: "Auteur",
     authorName: "Studio ISOLELE",
     authorDescription:
-      "ISOLELE developpe depuis la RDC des histoires pour le monde, entre mythologie, royaute et imagination africaine contemporaine.",
+      "ISOLELE développe depuis la RDC des histoires pour le monde, entre mythologie, royauté et imagination africaine contemporaine.",
     backLabel: "Retour aux comics",
   },
 } satisfies Record<
@@ -395,7 +374,9 @@ export function getComicDetailPageData(slug: string, locale: SupportedLocale): C
     description: book.description,
     heroImage: book.image,
     heroImageAlt: book.title,
+    heroBackground: "/HERO.jpg",
     price: book.price,
+    purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [],
     synopsisTitle: ui.comingSoonSubtitle,
     synopsis: [ui.comingSoonBody],
@@ -404,7 +385,7 @@ export function getComicDetailPageData(slug: string, locale: SupportedLocale): C
     authorTitle: ui.authorTitle,
     authorName: ui.authorName,
     authorDescription: ui.authorDescription,
-    authorImage: "/king-kufulula-portrait.jpg",
+    authorImage: "/king-kufulula.jpg",
     backLabel: ui.backLabel,
     comingSoon: true,
     comingSoonLabel: locale === "fr" ? "Coming soon" : "Coming soon",
