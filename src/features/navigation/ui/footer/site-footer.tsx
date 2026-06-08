@@ -7,7 +7,6 @@ import { getFooterContent } from "./footer.data";
 import { FooterTopBorder } from "./footer-top-border";
 import { FooterBrand } from "./footer-brand";
 import { FooterLinksColumn } from "./footer-links-column";
-import { FooterNewsletter } from "./footer-newsletter";
 import { FooterBottomBar } from "./footer-bottom-bar";
 import { FooterBackground } from "./footer-background";
 
@@ -22,21 +21,18 @@ export function SiteFooter() {
       <FooterTopBorder currentTheme={currentTheme} />
 
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
-          <FooterBrand currentTheme={currentTheme} content={footerContent} />
-          <FooterLinksColumn
-            currentTheme={currentTheme}
-            content={footerContent}
-            title={footerContent.exploreTitle}
-            links={footerContent.quickLinks ?? []}
-          />
-          <FooterLinksColumn
-            currentTheme={currentTheme}
-            content={footerContent}
-            title={footerContent.resourcesTitle}
-            links={footerContent.resourceLinks ?? []}
-          />
-          <FooterNewsletter currentTheme={currentTheme} content={footerContent} />
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+          <div className="md:col-span-2">
+            <FooterBrand currentTheme={currentTheme} content={footerContent} />
+          </div>
+          <div>
+            <FooterLinksColumn
+              currentTheme={currentTheme}
+              content={footerContent}
+              title={footerContent.resourcesTitle}
+              links={footerContent.resourceLinks ?? []}
+            />
+          </div>
         </div>
 
         <FooterBottomBar currentTheme={currentTheme} content={footerContent} />

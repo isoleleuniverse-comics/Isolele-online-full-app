@@ -245,22 +245,6 @@ export function CtaSection() {
               <span className="relative z-10">{cta.exploreLabel}</span>
             </motion.button>
           </Link>
-          
-          <motion.button
-            className="px-12 py-5 rounded-full text-lg font-bold tracking-wider transition-all border-2 whitespace-nowrap"
-            style={{
-              borderColor: currentTheme.colors.accentPrimary,
-              color: currentTheme.colors.accentPrimary,
-              backgroundColor: "transparent",
-            }}
-            whileHover={{ 
-              scale: 1.05,
-              backgroundColor: `${currentTheme.colors.accentPrimary}20`
-            }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {cta.newsletterLabel}
-          </motion.button>
         </motion.div>
 
         {/* Decorative dots */}

@@ -3,40 +3,20 @@ import type { SupportedLocale } from "@/shared/i18n/locales";
 import type { FooterContent, FooterLink, FooterSocialLink } from "./footer.types";
 
 const quickLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
-  fr: [
-    { label: "Accueil", href: "/" },
-    { label: "A propos", href: "/#hero" },
-    { label: "Fondateur", href: "/#hero" },
-    { label: "Actualites", href: "/#hero" },
-    { label: "Personnages", href: "/characters" },
-    { label: "Boutique", href: "/#hero" },
-  ],
-  en: [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/#hero" },
-    { label: "Founder", href: "/#hero" },
-    { label: "News", href: "/#hero" },
-    { label: "Characters", href: "/characters" },
-    { label: "Shop", href: "/#hero" },
-  ],
+  fr: [],
+  en: [],
 };
 
 const resourceLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
   fr: [
-    { label: "Presse", href: "/#hero" },
-    { label: "Carrieres", href: "/#hero" },
-    { label: "Contact", href: "/#hero" },
-    { label: "FAQ", href: "/#hero" },
-    { label: "Conditions", href: "/#hero" },
-    { label: "Confidentialite", href: "/#hero" },
+    { label: "Carrières", href: "/careers" },
+    { label: "Contact", href: "/contact" },
+    { label: "Conditions de confidentialité", href: "/privacy" },
   ],
   en: [
-    { label: "Press", href: "/#hero" },
-    { label: "Careers", href: "/#hero" },
-    { label: "Contact", href: "/#hero" },
-    { label: "FAQ", href: "/#hero" },
-    { label: "Terms", href: "/#hero" },
-    { label: "Privacy", href: "/#hero" },
+    { label: "Careers", href: "/careers" },
+    { label: "Contact", href: "/contact" },
+    { label: "Privacy Policy", href: "/privacy" },
   ],
 };
 
