@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import type { Theme } from "@/shared/contexts/theme-context";
 import { TypingText } from "./typing-text";
+
 
 interface HeroPrimarySlideProps {
   theme: Theme;
@@ -9,6 +11,7 @@ interface HeroPrimarySlideProps {
 }
 
 export function HeroPrimarySlide({ theme, t }: HeroPrimarySlideProps) {
+  const [expanded, setExpanded] = useState(false);
   return (
     <motion.div
       key="slide-1"
@@ -51,10 +54,20 @@ export function HeroPrimarySlide({ theme, t }: HeroPrimarySlideProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.4 }}
-        className="text-base sm:text-lg leading-relaxed mb-10 max-w-2xl mx-auto"
+        className={`text-base sm:text-lg leading-relaxed mb-4 max-w-2xl mx-auto ${expanded ? "line-clamp-none" : "line-clamp-4"
+          }`}
         style={{ color: theme.colors.textSecondary }}
       >
-        {t("hero_description")}
+        {t("hero_description")} 
+          <span>
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="text-sm font-semibold tracking-wide underline transition-colors"
+            style={{ color: theme.colors.accentPrimary }}
+          >
+            {expanded ? "read_less" : "read_more"}
+          </button>
+          </span>
       </motion.p>
 
       <motion.div

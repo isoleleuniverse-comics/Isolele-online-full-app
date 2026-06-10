@@ -67,14 +67,14 @@ export function PrivacyPage() {
         </div>
 
         {/* Section Cards */}
-        <div className="space-y-8">
+        <div className="space-y-4">
           {sections.map((section, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="p-8 rounded-3xl border shadow-lg relative overflow-hidden"
+              className=" shadow-lg relative overflow-hidden"
               style={{
                 backgroundColor: `${currentTheme.colors.backgroundSecondary}80`,
                 borderColor: `${currentTheme.colors.accentPrimary}20`,

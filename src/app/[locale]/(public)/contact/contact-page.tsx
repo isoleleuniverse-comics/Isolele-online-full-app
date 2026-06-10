@@ -12,42 +12,63 @@ export function ContactPage() {
 
   const [formState, setFormState] = useState({ name: "", email: "", subject: "", message: "" });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.message) return;
 
     setStatus("sending");
+    setErrorMessage("");
 
     try {
-      // Mock API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formState),
+      });
+
+      if (!response.ok) {
+        const json = await response.json().catch(() => null);
+        setErrorMessage(json?.error || "Une erreur est survenue.");
+        setStatus("error");
+        return;
+      }
+
       setStatus("success");
       setFormState({ name: "", email: "", subject: "", message: "" });
     } catch {
+      setErrorMessage("Impossible de contacter le serveur.");
       setStatus("error");
     }
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8"
-      style={{ backgroundColor: currentTheme.colors.background }}
+      style={{
+        backgroundImage: "url('/royal-palace-background.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
+      }}
     >
-      {/* Decorative Orbs */}
+      <div className="absolute inset-0 bg-slate-950/75" />
+
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div 
-          className="absolute w-96 h-96 rounded-full blur-3xl opacity-10 -top-10 -left-10"
+        <div
+          className="absolute w-96 h-96 rounded-full blur-3xl opacity-20 -top-10 -left-10"
           style={{ backgroundColor: currentTheme.colors.accentPrimary }}
         />
-        <div 
-          className="absolute w-96 h-96 rounded-full blur-3xl opacity-10 bottom-10 right-10"
+        <div
+          className="absolute w-96 h-96 rounded-full blur-3xl opacity-20 bottom-10 right-10"
           style={{ backgroundColor: currentTheme.colors.accentSecondary }}
         />
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Hero Section */}
         <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -59,7 +80,7 @@ export function ContactPage() {
             <span style={{ color: currentTheme.colors.accentPrimary }}>◆</span>
             <div className="h-px w-8" style={{ backgroundColor: currentTheme.colors.accentPrimary }} />
           </motion.div>
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -68,7 +89,7 @@ export function ContactPage() {
           >
             {t("contact_title")}
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -80,14 +101,13 @@ export function ContactPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Contact Info Cards */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             className="lg:col-span-5 space-y-6"
           >
-            <h2 
+            <h2
               className="text-2xl font-bold tracking-wide mb-6 uppercase"
               style={{ color: currentTheme.colors.accentPrimary }}
             >
@@ -97,7 +117,7 @@ export function ContactPage() {
             {[
               { title: t("contact_info_support"), email: "contact@isolele.com", icon: MessageSquare },
               { title: t("contact_info_careers"), email: "talents@isolele.com", icon: User },
-              { title: t("contact_info_partners"), email: "partners@isolele.com", icon: Mail }
+              { title: t("contact_info_partners"), email: "partners@isolele.com", icon: Mail },
             ].map((card, idx) => (
               <motion.a
                 key={idx}
@@ -110,10 +130,7 @@ export function ContactPage() {
                 whileHover={{ borderColor: currentTheme.colors.accentPrimary }}
               >
                 <div className="flex gap-4 items-center">
-                  <div 
-                    className="p-3 rounded-xl"
-                    style={{ backgroundColor: `${currentTheme.colors.accentPrimary}15` }}
-                  >
+                  <div className="p-3 rounded-xl" style={{ backgroundColor: `${currentTheme.colors.accentPrimary}15` }}>
                     <card.icon className="w-6 h-6" style={{ color: currentTheme.colors.accentPrimary }} />
                   </div>
                   <div>
@@ -129,8 +146,7 @@ export function ContactPage() {
             ))}
           </motion.div>
 
-          {/* Contact Form */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -142,10 +158,7 @@ export function ContactPage() {
           >
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label 
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: currentTheme.colors.textPrimary }}
-                >
+                <label className="block text-sm font-semibold mb-2" style={{ color: currentTheme.colors.textPrimary }}>
                   {t("contact_form_name")} <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -159,16 +172,13 @@ export function ContactPage() {
                     color: currentTheme.colors.textPrimary,
                     borderColor: `${currentTheme.colors.accentPrimary}30`,
                   }}
-                  onFocus={(e) => e.target.style.borderColor = currentTheme.colors.accentPrimary}
-                  onBlur={(e) => e.target.style.borderColor = `${currentTheme.colors.accentPrimary}30`}
+                  onFocus={(e) => (e.target.style.borderColor = currentTheme.colors.accentPrimary)}
+                  onBlur={(e) => (e.target.style.borderColor = `${currentTheme.colors.accentPrimary}30`)}
                 />
               </div>
 
               <div>
-                <label 
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: currentTheme.colors.textPrimary }}
-                >
+                <label className="block text-sm font-semibold mb-2" style={{ color: currentTheme.colors.textPrimary }}>
                   {t("contact_form_email")} <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -182,53 +192,49 @@ export function ContactPage() {
                     color: currentTheme.colors.textPrimary,
                     borderColor: `${currentTheme.colors.accentPrimary}30`,
                   }}
-                  onFocus={(e) => e.target.style.borderColor = currentTheme.colors.accentPrimary}
-                  onBlur={(e) => e.target.style.borderColor = `${currentTheme.colors.accentPrimary}30`}
+                  onFocus={(e) => (e.target.style.borderColor = currentTheme.colors.accentPrimary)}
+                  onBlur={(e) => (e.target.style.borderColor = `${currentTheme.colors.accentPrimary}30`)}
                 />
               </div>
 
               <div>
-                <label 
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: currentTheme.colors.textPrimary }}
-                >
+                <label className="block text-sm font-semibold mb-2" style={{ color: currentTheme.colors.textPrimary }}>
                   {t("contact_form_subject")}
                 </label>
                 <input
                   type="text"
                   value={formState.subject}
                   onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
+                  placeholder={t("contact_form_subject")}
                   className="w-full px-4 py-3 rounded-xl border outline-none transition-all"
                   style={{
                     backgroundColor: currentTheme.colors.background,
                     color: currentTheme.colors.textPrimary,
                     borderColor: `${currentTheme.colors.accentPrimary}30`,
                   }}
-                  onFocus={(e) => e.target.style.borderColor = currentTheme.colors.accentPrimary}
-                  onBlur={(e) => e.target.style.borderColor = `${currentTheme.colors.accentPrimary}30`}
+                  onFocus={(e) => (e.target.style.borderColor = currentTheme.colors.accentPrimary)}
+                  onBlur={(e) => (e.target.style.borderColor = `${currentTheme.colors.accentPrimary}30`)}
                 />
               </div>
 
               <div>
-                <label 
-                  className="block text-sm font-semibold mb-2"
-                  style={{ color: currentTheme.colors.textPrimary }}
-                >
+                <label className="block text-sm font-semibold mb-2" style={{ color: currentTheme.colors.textPrimary }}>
                   {t("contact_form_message")} <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   required
-                  rows={5}
+                  rows={7}
                   value={formState.message}
                   onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border outline-none transition-all resize-none"
+                  placeholder="Écrivez votre message ici..."
+                  className="w-full px-4 py-3 rounded-xl border outline-none transition-all resize-none min-h-[220px]"
                   style={{
                     backgroundColor: currentTheme.colors.background,
                     color: currentTheme.colors.textPrimary,
                     borderColor: `${currentTheme.colors.accentPrimary}30`,
                   }}
-                  onFocus={(e) => e.target.style.borderColor = currentTheme.colors.accentPrimary}
-                  onBlur={(e) => e.target.style.borderColor = `${currentTheme.colors.accentPrimary}30`}
+                  onFocus={(e) => (e.target.style.borderColor = currentTheme.colors.accentPrimary)}
+                  onBlur={(e) => (e.target.style.borderColor = `${currentTheme.colors.accentPrimary}30`)}
                 />
               </div>
 
@@ -249,7 +255,7 @@ export function ContactPage() {
 
               <AnimatePresence>
                 {status === "success" && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
@@ -257,7 +263,7 @@ export function ContactPage() {
                     style={{
                       backgroundColor: "rgba(16, 185, 129, 0.1)",
                       borderColor: "rgba(16, 185, 129, 0.3)",
-                      color: "#10b981"
+                      color: "#10b981",
                     }}
                   >
                     <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
@@ -266,7 +272,7 @@ export function ContactPage() {
                 )}
 
                 {status === "error" && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
@@ -274,11 +280,11 @@ export function ContactPage() {
                     style={{
                       backgroundColor: "rgba(239, 68, 68, 0.1)",
                       borderColor: "rgba(239, 68, 68, 0.3)",
-                      color: "#ef4444"
+                      color: "#ef4444",
                     }}
                   >
                     <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                    <span>{t("contact_form_error")}</span>
+                    <span>{errorMessage || t("contact_form_error")}</span>
                   </motion.div>
                 )}
               </AnimatePresence>

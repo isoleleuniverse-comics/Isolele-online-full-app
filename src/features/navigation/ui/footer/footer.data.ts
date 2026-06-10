@@ -9,12 +9,12 @@ const quickLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
 
 const resourceLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
   fr: [
-    { label: "Carrières", href: "/careers" },
+    { label: "Carrières", href: "/characters" },
     { label: "Contact", href: "/contact" },
     { label: "Conditions de confidentialité", href: "/privacy" },
   ],
   en: [
-    { label: "Careers", href: "/careers" },
+    { label: "Careers", href: "/characters" },
     { label: "Contact", href: "/contact" },
     { label: "Privacy Policy", href: "/privacy" },
   ],

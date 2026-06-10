@@ -1,7 +1,17 @@
 import type { Metadata } from "next";
 import { isSupportedLocale, DEFAULT_LOCALE, type SupportedLocale } from "@/shared/i18n/locales";
-import { translations } from "@/shared/i18n/translations";
-import { PrivacyPage } from "./privacy-page";
+import { PrivacyPage } from "@/features/privacy/ui/page";
+
+const privacyMetadata = {
+  en: {
+    title: "Privacy Policy",
+    description: "Understand how ISOLELE collects, uses, and protects your personal information.",
+  },
+  fr: {
+    title: "Politique de Confidentialité",
+    description: "Comprenez comment ISOLELE collecte, utilise et protège vos informations personnelles.",
+  },
+};
 
 export async function generateMetadata({
   params,
@@ -10,10 +20,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
-  const trans = translations[safeLocale] ?? translations.en;
   
-  const title = trans.privacy_title;
-  const description = trans.privacy_subtitle;
+  const title = privacyMetadata[safeLocale]?.title ?? privacyMetadata.en.title;
+  const description = privacyMetadata[safeLocale]?.description ?? privacyMetadata.en.description;
 
   return {
     title,
@@ -30,6 +39,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page() {
-  return <PrivacyPage />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
+  
+  return <PrivacyPage locale={safeLocale} />;
 }
