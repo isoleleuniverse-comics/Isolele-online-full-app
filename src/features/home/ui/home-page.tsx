@@ -23,9 +23,10 @@ const CtaSection = lazySection(() => import("./sections/cta-section/cta-section"
 interface HomePageProps {
   locale: HomeLocale;
   seo: HomeJsonLd;
+  latestArticles: any[];
 }
 
-export function HomePage({ locale, seo }: HomePageProps) {
+export function HomePage({ locale, seo, latestArticles }: HomePageProps) {
   const content = getHomePageContent(locale);
 
   return (
@@ -40,7 +41,7 @@ export function HomePage({ locale, seo }: HomePageProps) {
       <FounderPreview />
       <BookstoreDisplaySection />
       <ReviewsSection />
-      <NewsSection />
+      <NewsSection  latestArticles={latestArticles} />
       <FashionPreview />
       <CharactersShowcase />
       <CtaSection />

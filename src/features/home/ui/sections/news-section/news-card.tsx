@@ -2,12 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Clock, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/shared/i18n/language-context";
 import type { Theme } from "@/shared/contexts/theme-context";
 import type { NewsArticle } from "./types";
 import { NEWS_IMAGE_BLUR_DATA_URL } from "./types";
 
+
 interface NewsCardProps {
-  article: NewsArticle;
+  article: NewsArticle & {slug?: string};
   index: number;
   isInView: boolean;
   theme: Theme;
@@ -16,6 +18,10 @@ interface NewsCardProps {
 }
 
 export function NewsCard({ article, index, isInView, theme, minutesReadLabel, readArticleLabel }: NewsCardProps) {
+  const {locale} = useLanguage();
+  const articleHref = article.slug
+    ? `/${locale}/articles/${article.slug}`
+    : "/#hero";
   return (
     <motion.article
       initial={{ opacity: 0, y: 32 }}
@@ -23,7 +29,7 @@ export function NewsCard({ article, index, isInView, theme, minutesReadLabel, re
       transition={{ duration: 0.5, delay: 0.6 + index * 0.14 }}
       className="group"
     >
-      <Link href="/#hero">
+      <Link href={articleHref}>
         <div
           className="rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2"
           style={{

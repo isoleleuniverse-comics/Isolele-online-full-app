@@ -5,7 +5,9 @@ export type ArticleBlockType =
   | "quote"
   | "video"
   | "divider"
-  | "cta";
+  | "cta"
+  | "callout"
+  | "gallery";
 
 export type ArticleBlockBase = {
   id: string;
@@ -53,6 +55,22 @@ export type CtaBlock = ArticleBlockBase & {
   href: string;
 };
 
+export type CalloutBlock = ArticleBlockBase & {
+  type: "callout";
+  title: string;
+  text: string;
+};
+
+export type GalleryBlock = ArticleBlockBase & {
+  type: "gallery";
+  caption?: string;
+  images: Array<{
+    id: string;
+    url: string;
+    alt?: string;
+  }>;
+};
+
 export type ArticleBlock =
   | HeadingBlock
   | TextBlock
@@ -60,7 +78,9 @@ export type ArticleBlock =
   | QuoteBlock
   | VideoBlock
   | DividerBlock
-  | CtaBlock;
+  | CtaBlock
+  | CalloutBlock
+  | GalleryBlock;
 
 const ARTICLE_BLOCK_TYPES: ArticleBlockType[] = [
   "heading",
@@ -70,6 +90,8 @@ const ARTICLE_BLOCK_TYPES: ArticleBlockType[] = [
   "video",
   "divider",
   "cta",
+  "callout",
+  "gallery",
 ];
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -129,6 +151,32 @@ export function normalizeArticleBlocks(value: unknown): ArticleBlock[] {
       });
       return;
     }
+    if (raw.type === "callout") {
+      blocks.push({
+        id,
+        type: "callout",
+        title: optionalString(raw.title),
+        text: optionalString(raw.text),
+      });
+      return;
+    }
+    if (raw.type === "gallery") {
+      blocks.push({
+        id,
+        type: "gallery",
+        caption: optionalString(raw.caption),
+        images: Array.isArray(raw.images)
+          ? raw.images
+              .filter(isRecord)
+              .map((image, imageIndex) => ({
+                id: optionalString(image.id) || `${id}-image-${imageIndex}`,
+                url: optionalString(image.url),
+                alt: optionalString(image.alt),
+              }))
+          : [],
+      });
+      return;
+    }
 
     blocks.push({ id, type: "divider" });
   });
@@ -147,6 +195,8 @@ export function createArticleBlock(type: ArticleBlockType): ArticleBlock {
   if (type === "cta") {
     return { id, type, title: "", description: "", buttonLabel: "Read more", href: "/" };
   }
+  if (type === "callout") return { id, type, title: "", text: "" };
+  if (type === "gallery") return { id, type, caption: "", images: [] };
 
   return { id, type };
 }
@@ -161,6 +211,10 @@ export function getArticlePlainText(blocks: ArticleBlock[]) {
       if (block.type === "video") return block.title ?? "";
       if (block.type === "cta") {
         return [block.title, block.description, block.buttonLabel].filter(Boolean).join(" ");
+      }
+      if (block.type === "callout") return [block.title, block.text].filter(Boolean).join(" ");
+      if (block.type === "gallery") {
+        return [block.caption, ...block.images.map((image) => image.alt)].filter(Boolean).join(" ");
       }
       return "";
     })

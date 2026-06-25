@@ -1,72 +1,49 @@
+import {NextResponse} from "next/server";
 import nodemailer from "nodemailer";
-import { NextResponse } from "next/server";
-
-export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  const data = await request.json().catch(() => null);
+    try{
+        const {name, email, subject, message} = await request.json();
 
-  if (!data) {
-    return NextResponse.json({ error: "Données de formulaire invalides." }, { status: 400 });
-  }
+        if (!name || !email || !message) {
+            return NextResponse.json({error: "Missing required fields"}, {status: 400});
+        }
 
-  const { name, email, subject, message } = data as {
-    name?: string;
-    email?: string;
-    subject?: string;
-    message?: string;
-  };
+        // configuration du transporteur
+        const transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST,
+            port: Number(process.env.SMTP_PORT) ,
+            secure: process.env.SMTP_PORT === "465", // true pour 465, false pour les autres ports
+            auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASSWORD,
+            },
+        })
 
-  if (!name || !email || !message) {
-    return NextResponse.json({ error: "Le nom, l'email et le message sont requis." }, { status: 400 });
-  }
-
-  const smtpHost = process.env.CONTACT_SMTP_HOST;
-  const smtpPort = Number(process.env.CONTACT_SMTP_PORT ?? 587);
-  const smtpUser = process.env.CONTACT_SMTP_USER;
-  const smtpPass = process.env.CONTACT_SMTP_PASS;
-  const mailFrom = process.env.CONTACT_EMAIL_FROM;
-  const mailTo = process.env.CONTACT_EMAIL_TO;
-
-  if (!smtpHost || !smtpUser || !smtpPass || !mailFrom || !mailTo) {
-    return NextResponse.json(
-      {
-        error:
-          "Le serveur de messagerie n'est pas configuré. Ajoutez CONTACT_SMTP_HOST, CONTACT_SMTP_PORT, CONTACT_SMTP_USER, CONTACT_SMTP_PASS, CONTACT_EMAIL_FROM et CONTACT_EMAIL_TO.",
-      },
-      { status: 500 }
-    );
-  }
-
-  const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    secure: smtpPort === 465,
-    auth: {
-      user: smtpUser,
-      pass: smtpPass,
-    },
-  });
-
-  try {
-    await transporter.sendMail({
-      from: mailFrom,
-      to: mailTo,
-      replyTo: email,
-      subject: subject?.trim() || `Message du site Isolele - ${name}`,
-      text: `Nom: ${name}\nEmail: ${email}\nSujet: ${subject || "(sans sujet)"}\n\n${message}`,
-      html: `
-        <p><strong>Nom:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Sujet:</strong> ${subject || "(sans sujet)"}</p>
-        <hr />
-        <p>${message.replace(/\n/g, "<br />")}</p>
+        const mailOptions = {
+            from: `"${name}" <${process.env.SMTP_USER}>`, // Adresse d'envoi authentifiée
+            replyTo: email, // Permet de répondre directement au client en faisant "Répondre"
+            to: process.env.CONTACT_RECEIVER_EMAIL || process.env.SMTP_USER,
+            subject: `[Contact ISOLELE] ${subject || "Nouveau Message"}`,
+            text: `Nom: ${name}\nEmail: ${email}\nSujet: ${subject || "Sans sujet"}\n\nMessage:\n${message}`,
+            html: `
+        <div style="font-family: sans-serif; padding: 20px; color: #333;">
+          <h2 style="color: #F6B800;">Nouveau message de contact - ISOLELE</h2>
+          <p><strong>Nom :</strong> ${name}</p>
+          <p><strong>Email :</strong> ${email}</p>
+          <p><strong>Sujet :</strong> ${subject || "Non spécifié"}</p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
+          <p><strong>Message :</strong></p>
+          <p style="white-space: pre-wrap; background-color: #f9f9f9; padding: 15px; border-radius: 8px;">${message}</p>
+        </div>
       `,
-    });
+        };
 
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Contact mail send failed:", error);
-    return NextResponse.json({ error: "Impossible d'envoyer le message. Vérifiez la configuration du serveur." }, { status: 500 });
-  }
+        await transporter.sendMail(mailOptions);
+
+        return NextResponse.json({message: "Message envoyé avec succès"});
+    }catch (error) {
+        console.error("Erreur lors de l'envoi du message :", error);
+        return NextResponse.json({error: "Erreur lors de l'envoi du message"}, {status: 500});
+    }
 }
