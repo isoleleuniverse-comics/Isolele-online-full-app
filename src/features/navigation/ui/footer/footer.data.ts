@@ -10,12 +10,12 @@ const quickLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
 const resourceLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
   fr: [
     { label: "Carrières", href: "/characters" },
-    { label: "Contact", href: "/contact" },
+    { label: "Contact", href: "mailto:isoleleuniverse@gmail.com" },
     { label: "Conditions de confidentialité", href: "/privacy" },
   ],
   en: [
     { label: "Careers", href: "/characters" },
-    { label: "Contact", href: "/contact" },
+    { label: "Contact", href: "mailto:isoleleuniverse@gmail.com" },
     { label: "Privacy Policy", href: "/privacy" },
   ],
 };
