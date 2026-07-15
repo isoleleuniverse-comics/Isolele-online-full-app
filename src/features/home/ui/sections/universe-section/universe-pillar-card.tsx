@@ -13,8 +13,8 @@ interface UniversePillarCardProps {
   backgroundImage?: string;
   theme: Theme;
   discoverMoreLabel: string;
-  readMoreLabel: string;
-  readLessLabel: string;
+  readMoreLabel?: string;
+  readLessLabel?: string;
 }
 
 
