@@ -6,6 +6,7 @@ import { HomeStructuredData } from "../seo/home-structured-data";
 
 // Eagerly loaded — above the fold
 import { BookHeroSection } from "./sections/book-hero-section/book-hero-section";
+import { BuyNowSection } from "./sections/buy-now-section/buy-now-section";
 import { UniverseSection } from "./sections/universe-section/universe-section";
 import { CharactersSection } from "./sections/characters-section/characters-section";
 
@@ -34,6 +35,7 @@ export function HomePage({ locale, seo, latestArticles }: HomePageProps) {
       <HomeStructuredData organization={seo.organization} comicSeries={seo.comicSeries} website={seo.website} />
 
       <BookHeroSection />
+      <BuyNowSection />
       <UniverseSection />
       <CharactersSection />
       <StorySection />
