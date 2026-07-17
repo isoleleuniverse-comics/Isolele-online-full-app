@@ -7,8 +7,8 @@ export const bookstoreDisplayData = {
     headingTitle: "A Pan-African Phenomenon",
     headingDescription:
       "The first Pan-African superhero universe already on bestseller shelves across Africa.",
-    // use the user's preferred uploaded image (ei_1784329016188-removebg-preview.png)
-    imageSrc: "/images/ei_1784329016188-removebg-preview.png",
+    // use the user's preferred uploaded image (20 Ultimate Bundle Transparent 20MB.png)
+    imageSrc: "/images/20 Ultimate Bundle Transparent 20MB.png",
     imageAlt: "ISOLELE books featured in a bookstore best sellers display",
     caption: "From Kinshasa to Nairobi's bestseller shelves, ISOLELE is taking Africa by storm.",
   },
@@ -17,8 +17,8 @@ export const bookstoreDisplayData = {
     headingTitle: "Un phénomène panafricain",
     headingDescription:
       "Le premier univers de super-héros panafricain déjà présent dans les rayons best-sellers à travers l'Afrique.",
-    // use the user's preferred uploaded image (ei_1784329016188-removebg-preview.png)
-    imageSrc: "/images/ei_1784329016188-removebg-preview.png",
+    // use the user's preferred uploaded image (20 Ultimate Bundle Transparent 20MB.png)
+    imageSrc: "/images/20 Ultimate Bundle Transparent 20MB.png",
     imageAlt: "Livres ISOLELE présentés dans une vitrine des meilleures ventes en librairie",
     caption: "De Kinshasa aux rayons best-sellers de Nairobi, ISOLELE prend l'Afrique d'assaut.",
   },
