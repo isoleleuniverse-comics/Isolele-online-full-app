@@ -10,6 +10,8 @@ import { LanguageProvider } from "@/shared/i18n/language-context";
 import { ThemeProvider } from "@/shared/contexts/theme-context";
 import { CartProvider } from "@/shared/contexts/cart-context";
 
+const LOADING_SEEN_KEY = "isolele_loading_seen";
+
 export function PublicShell({
   children,
   locale,
@@ -17,14 +19,32 @@ export function PublicShell({
   children: React.ReactNode;
   locale: SupportedLocale;
 }) {
-  const [showLoading, setShowLoading] = useState(true);
+  const [showLoading, setShowLoading] = useState(() => {
+    if (typeof window === "undefined") return false;
+
+    try {
+      return window.localStorage.getItem(LOADING_SEEN_KEY) !== "true";
+    } catch {
+      return true;
+    }
+  });
+
+  function handleLoadingComplete() {
+    try {
+      window.localStorage.setItem(LOADING_SEEN_KEY, "true");
+    } catch {
+      // Ignore storage failures; the site should continue normally.
+    }
+
+    setShowLoading(false);
+  }
 
   return (
     <ThemeProvider>
       <LanguageProvider initialLanguage={locale}>
         <CartProvider>
           <>
-            {showLoading && <LoadingScreen onComplete={() => setShowLoading(false)} />}
+            {showLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
 
             <div
               className="flex min-h-screen w-full flex-col overflow-x-hidden transition-colors duration-700"

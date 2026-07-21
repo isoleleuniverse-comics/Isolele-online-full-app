@@ -1,6 +1,6 @@
 import { CHARACTER_SLUGS } from "@/features/characters/model/characters.data";
 import type { NavLinkLabelKey } from "@/features/navigation/content/nav.content";
-import { BookOpen, Gamepad2, Home, Users } from "lucide-react";
+import { BookOpen, Gamepad2, Home, Mail, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export const HEADER_LOGO_SRC = "/isolele-official-logo.png";
@@ -17,6 +17,7 @@ export const NAV_LINKS: NavLink[] = [
   { key: "nav_comics", href: "/comics", icon: BookOpen },
   { key: "nav_characters", href: "/characters", icon: Users, hasDropdown: true },
   { key: "nav_games", href: "/games", icon: Gamepad2 },
+  { key: "nav_contact", href: "/contact", icon: Mail },
 ];
 
 export const CHARACTER_NAV_LINKS = CHARACTER_SLUGS.map((slug) => ({

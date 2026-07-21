@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import type { IconType } from "react-icons";
 import type { Theme } from "@/shared/contexts/theme-context";
 
 export interface FooterLink {
@@ -9,7 +9,7 @@ export interface FooterLink {
 export interface FooterSocialLink {
   href: string;
   label: string;
-  icon: LucideIcon;
+  icon: IconType;
 }
 
 export interface FooterContent {
