@@ -5,6 +5,7 @@ export type NavLinkLabelKey =
   | "nav_comics"
   | "nav_characters"
   | "nav_games"
+  | "nav_contact"
   | "nav_all_characters";
 
 export interface NavigationContent {
@@ -38,9 +39,10 @@ export const navigationContent: Record<SupportedLocale, NavigationContent> = {
   fr: {
     labels: {
       nav_home: "Accueil",
-      nav_comics: "Comics",
+      nav_comics: "Katiomics",
       nav_characters: "Personnages",
       nav_games: "Jeux",
+      nav_contact: "Contact",
       nav_all_characters: "Tous les personnages",
     },
     mobileMenu: {
@@ -76,9 +78,10 @@ export const navigationContent: Record<SupportedLocale, NavigationContent> = {
   en: {
     labels: {
       nav_home: "Home",
-      nav_comics: "Comics",
+      nav_comics: "Katiomics",
       nav_characters: "Characters",
       nav_games: "Games",
+      nav_contact: "Contact",
       nav_all_characters: "All characters",
     },
     mobileMenu: {
