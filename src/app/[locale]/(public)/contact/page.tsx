@@ -4,12 +4,12 @@ import { ContactPage } from "@/features/contact/ui/page";
 
 const contactMetadata = {
   en: {
-    title: "Contact the Royal Court",
-    description: "Reach out to the ISOLELE team for partnerships, press inquiries, or general support.",
+    title: "Contact ISOLELE Universe",
+    description: "Contact ISOLELE Universe for press, cultural institutions, licensing, distribution, retail, careers, and community inquiries.",
   },
   fr: {
-    title: "Contacter la Cour Royale",
-    description: "Contactez l'équipe ISOLELE pour des partenariats, des demandes de presse ou une assistance générale.",
+    title: "Contact ISOLELE Universe",
+    description: "Contactez ISOLELE Universe pour les demandes de presse, partenariats culturels, licences, distribution, retail, carrières et communauté.",
   },
 };
 
