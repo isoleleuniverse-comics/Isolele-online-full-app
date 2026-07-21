@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Twitter, Youtube } from "lucide-react";
+import { Instagram, Facebook, Twitter, PlayCircle } from "lucide-react";
 import type { SupportedLocale } from "@/shared/i18n/locales";
 import type { FooterContent, FooterLink, FooterSocialLink } from "./footer.types";
 
@@ -24,7 +24,7 @@ export const socialLinks: FooterSocialLink[] = [
   { icon: Instagram, href: "https://instagram.com/isolele", label: "Instagram" },
   { icon: Facebook, href: "https://facebook.com/isolele", label: "Facebook" },
   { icon: Twitter, href: "https://twitter.com/isolele", label: "Twitter" },
-  { icon: Youtube, href: "https://youtube.com/isolele", label: "YouTube" },
+  { icon: PlayCircle, href: "https://youtube.com/isolele", label: "YouTube" },
 ];
 
 export function getFooterContent(locale: SupportedLocale, content: FooterContent) {
