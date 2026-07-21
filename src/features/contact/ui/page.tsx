@@ -69,7 +69,8 @@ export function ContactPage({ locale }: ContactPageProps) {
             <p className="mb-4 text-xs font-black uppercase tracking-[0.38em]" style={{ color: currentTheme.colors.accentPrimary }}>
               {localizedEyebrow}
             </p>
-            <h1 className="text-4xl font-black tracking-tight md:text-6xl">ISOLELE Universe</h1>
+            <h1 className="text-4xl font-black tracking-tight md:text-6xl">Contact</h1>
+            <h2 className="mt-4 text-2xl font-black md:text-3xl">ISOLELE Universe</h2>
             <p className="mt-6 text-base leading-8 md:text-lg" style={{ color: currentTheme.colors.textSecondary }}>
               ISOLELE Universe welcomes inquiries from press, cultural institutions, licensing and distribution partners, retailers, and members of the public.
             </p>

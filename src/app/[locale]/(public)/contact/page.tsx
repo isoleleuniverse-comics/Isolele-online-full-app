@@ -4,11 +4,11 @@ import { ContactPage } from "@/features/contact/ui/page";
 
 const contactMetadata = {
   en: {
-    title: "Contact ISOLELE Universe",
+    title: "Contact",
     description: "Contact ISOLELE Universe for press, cultural institutions, licensing, distribution, retail, careers, and community inquiries.",
   },
   fr: {
-    title: "Contact ISOLELE Universe",
+    title: "Contact",
     description: "Contactez ISOLELE Universe pour les demandes de presse, partenariats culturels, licences, distribution, retail, carrières et communauté.",
   },
 };
