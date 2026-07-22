@@ -43,7 +43,7 @@ export function UniverseSection() {
           description={universe.description}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 gap-8 max-w-3xl mx-auto">
           {UNIVERSE_PILLARS.map((pillar, index) => (
             <UniversePillarCard
               key={pillar.key}
