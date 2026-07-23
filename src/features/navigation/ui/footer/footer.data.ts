@@ -21,10 +21,10 @@ const resourceLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
 };
 
 export const socialLinks: FooterSocialLink[] = [
-  { icon: Instagram, href: "https://instagram.com/isolele", label: "Instagram" },
-  { icon: Facebook, href: "https://facebook.com/isolele", label: "Facebook" },
-  { icon: Twitter, href: "https://twitter.com/isolele", label: "Twitter" },
-  { icon: PlayCircle, href: "https://youtube.com/isolele", label: "YouTube" },
+  { icon: Instagram, href: "https://www.instagram.com/isolelecomics", label: "Instagram" },
+  { icon: Facebook, href: "https://www.facebook.com/isolelecomics", label: "Facebook" },
+  { icon: Twitter, href: "https://twitter.com/isolelecomics", label: "Twitter" },
+  { icon: PlayCircle, href: "https://www.youtube.com/@isolelecomics", label: "YouTube" },
 ];
 
 export function getFooterContent(locale: SupportedLocale, content: FooterContent) {
