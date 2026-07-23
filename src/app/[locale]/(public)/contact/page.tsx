@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { isSupportedLocale, DEFAULT_LOCALE, type SupportedLocale } from "@/shared/i18n/locales";
-import { ContactPage } from "@/features/contact/ui/page";
+import { ContactPage } from "./contact-page";
 
 const contactMetadata = {
   en: {
@@ -39,13 +39,6 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
-  
-  return <ContactPage locale={safeLocale} />;
+export default function Page() {
+  return <ContactPage />;
 }
