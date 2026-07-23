@@ -18,12 +18,12 @@ export function FooterLinksColumn({ currentTheme, title, links }: FooterLinksCol
       <h3 className="mb-6 text-lg font-bold tracking-wider" style={{ color: currentTheme.colors.accentPrimary }}>
         {title}
       </h3>
-      <ul className="space-y-3">
-        {links.map((link) => (
-          <li key={`${link.label}-${link.href}`}>
+      <ul className="flex flex-wrap items-center gap-x-3 gap-y-3">
+        {links.map((link, index) => (
+          <li key={`${link.label}-${link.href}`} className="flex items-center gap-3">
             <Link
               href={withLocale(locale, link.href)}
-              className="inline-block text-sm transition-colors hover:translate-x-1"
+              className="inline-block text-xs font-black uppercase tracking-[0.18em] transition-all hover:-translate-y-0.5"
               style={{ color: currentTheme.colors.textSecondary }}
               onMouseEnter={(event) => {
                 event.currentTarget.style.color = currentTheme.colors.accentPrimary;
@@ -34,6 +34,11 @@ export function FooterLinksColumn({ currentTheme, title, links }: FooterLinksCol
             >
               {link.label}
             </Link>
+            {index < links.length - 1 ? (
+              <span aria-hidden="true" className="text-xs font-black" style={{ color: currentTheme.colors.accentPrimary }}>
+                ·
+              </span>
+            ) : null}
           </li>
         ))}
       </ul>

@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Twitter, PlayCircle } from "lucide-react";
+import { FaInstagram, FaRegEnvelope, FaYoutube } from "react-icons/fa6";
 import type { SupportedLocale } from "@/shared/i18n/locales";
 import type { FooterContent, FooterLink, FooterSocialLink } from "./footer.types";
 
@@ -7,24 +7,21 @@ const quickLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
   en: [],
 };
 
+const footerPageLinks: FooterLink[] = [
+  { label: "PRIVACY POLICY", href: "/privacy" },
+  { label: "CAREERS", href: "/careers" },
+  { label: "CONTACT", href: "/contact" },
+];
+
 const resourceLinksByLocale: Record<SupportedLocale, FooterLink[]> = {
-  fr: [
-    { label: "Carrières", href: "/careers" },
-    { label: "Contact", href: "/contact" },
-    { label: "Politique de confidentialité", href: "/privacy" },
-  ],
-  en: [
-    { label: "Careers", href: "/careers" },
-    { label: "Contact", href: "/contact" },
-    { label: "Privacy Policy", href: "/privacy" },
-  ],
+  fr: footerPageLinks,
+  en: footerPageLinks,
 };
 
 export const socialLinks: FooterSocialLink[] = [
-  { icon: Instagram, href: "https://instagram.com/isolele", label: "Instagram" },
-  { icon: Facebook, href: "https://facebook.com/isolele", label: "Facebook" },
-  { icon: Twitter, href: "https://twitter.com/isolele", label: "Twitter" },
-  { icon: PlayCircle, href: "https://youtube.com/isolele", label: "YouTube" },
+  { icon: FaInstagram, href: "https://www.instagram.com/isoleleuniverse1?igsh=NTc4MTIwNjQ2YQ==", label: "Instagram" },
+  { icon: FaRegEnvelope, href: "mailto:empire@isoleleuniverse.com", label: "Email" },
+  { icon: FaYoutube, href: "https://youtube.com/@isoleleuniverse?si=7R8MdKyg56K89QZF", label: "YouTube" },
 ];
 
 export function getFooterContent(locale: SupportedLocale, content: FooterContent) {
