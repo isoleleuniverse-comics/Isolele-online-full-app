@@ -94,7 +94,7 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
     title: "Bambula: Child of Rhythm | Black African Superhero | ISOLELE Comics",
     metaDescription:
       "Bambula walks between the spirit world and the living, armed with the sacred drum. A Black African superhero rooted in Kongo spiritual tradition. Part of the ISOLELE universe, produced in Kinshasa, DRC.",
-    heroImage: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
+    heroImage: "/images/PHOTO-2026-07-25-09-57-00.jpg",
     heroTag: "BAMBULA",
     accentColor: "#B3541E",
     keywords: ["Bambula superhero", "Kongo spiritual tradition", "Black African superhero", "sacred drum hero"],
@@ -107,7 +107,7 @@ const booksPagesEn: Record<BookSlug, BookPageData> = {
       },
       {
         type: "image_quote",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
+        image: "/images/PHOTO-2026-07-25-09-57-00.jpg",
         imageAlt: "Bambula and the sacred drum",
         quote:
           "The drum was never just music. In Kongo tradition, the drum was a language, a weapon, and a bridge between worlds. Bambula carries all three.",
