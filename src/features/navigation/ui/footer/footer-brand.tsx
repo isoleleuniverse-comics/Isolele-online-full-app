@@ -22,27 +22,34 @@ export function FooterBrand({ currentTheme, content }: FooterSectionContext) {
         {content.description}
       </p>
       <div className="flex gap-4">
-        {socialLinks.map((social) => (
-          <motion.a
-            key={social.label}
-            href={social.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full p-2 transition-colors"
-            style={{
-              backgroundColor: `${currentTheme.colors.accentPrimary}20`,
-              color: currentTheme.colors.textSecondary,
-            }}
-            whileHover={{
-              scale: 1.1,
-              backgroundColor: currentTheme.colors.accentPrimary,
-            }}
-            whileTap={{ scale: 0.95 }}
-            aria-label={social.label}
-          >
-            <social.icon className="h-5 w-5" />
-          </motion.a>
-        ))}
+        {socialLinks.map((social) => {
+          const isEmail = social.href.startsWith("mailto:");
+
+          return (
+            <motion.a
+              key={social.label}
+              href={social.href}
+              target={isEmail ? undefined : "_blank"}
+              rel={isEmail ? undefined : "noopener noreferrer"}
+              className="rounded-full p-2.5 transition-colors"
+              style={{
+                backgroundColor: `${currentTheme.colors.accentPrimary}20`,
+                color: currentTheme.colors.textSecondary,
+                boxShadow: `0 0 0 1px ${currentTheme.colors.accentPrimary}25`,
+              }}
+              whileHover={{
+                scale: 1.1,
+                y: -2,
+                backgroundColor: currentTheme.colors.accentPrimary,
+                color: currentTheme.colors.background,
+              }}
+              whileTap={{ scale: 0.95 }}
+              aria-label={social.label}
+            >
+              <social.icon className="h-5 w-5" />
+            </motion.a>
+          );
+        })}
       </div>
     </div>
   );
