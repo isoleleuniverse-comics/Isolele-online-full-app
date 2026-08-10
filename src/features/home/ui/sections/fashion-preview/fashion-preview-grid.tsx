@@ -9,33 +9,32 @@ interface FashionPreviewGridProps {
 }
 
 export function FashionPreviewGrid({ images, isInView }: FashionPreviewGridProps) {
+  const featureImage = images[0];
+
+  if (!featureImage) {
+    return null;
+  }
+
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-      {images.map((image, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 24, scale: 0.94 }}
-          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.94 }}
-          transition={{ duration: 0.58, delay: 0.12 + index * 0.14 }}
-          className="relative aspect-square rounded-lg overflow-hidden group cursor-pointer"
-        >
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            sizes="(max-width: 768px) 50vw, 25vw"
-            className="object-cover group-hover:scale-110 transition-transform duration-300"
-            placeholder="blur"
-            blurDataURL={FASHION_IMAGE_BLUR_DATA_URL}
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-end justify-start p-3">
-            <p className="text-white text-xs sm:text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {image.label}
-            </p>
-          </div>
-        </motion.div>
-      ))}
+    <div className="mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: 24, scale: 0.96 }}
+        animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.96 }}
+        transition={{ duration: 0.58, delay: 0.12 }}
+        className="relative aspect-[4/5] sm:aspect-[16/12] lg:aspect-[16/9] w-full overflow-hidden rounded-2xl"
+      >
+        <Image
+          src={featureImage.src}
+          alt={featureImage.alt}
+          fill
+          sizes="(max-width: 768px) 100vw, 1200px"
+          className="object-cover transition-transform duration-500 hover:scale-105"
+          placeholder="blur"
+          blurDataURL={FASHION_IMAGE_BLUR_DATA_URL}
+          priority={false}
+          loading="lazy"
+        />
+      </motion.div>
     </div>
   );
 }
