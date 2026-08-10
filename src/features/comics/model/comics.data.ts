@@ -22,7 +22,7 @@ const comicsByLocale: Record<SupportedLocale, Record<ComicCategory, ComicBook[]>
         id: "bambula",
         title: "BAMBULA",
         description: "A sacred drum hero carrying rhythm, memory, and spiritual power across worlds.",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
+        image: "/images/PHOTO-2026-07-25-09-57-00.jpg",
         price: 24.99,
       },
       {
@@ -93,7 +93,7 @@ const comicsByLocale: Record<SupportedLocale, Record<ComicCategory, ComicBook[]>
         id: "bambula",
         title: "BAMBULA",
         description: "Un héros du tambour sacré qui porte rythme, mémoire et puissance spirituelle.",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
+        image: "/images/PHOTO-2026-07-25-09-57-00.jpg",
         price: 24.99,
       },
       {

@@ -18,7 +18,7 @@ export const charactersData = {
       name: "BAMBULA",
       title: "Child of Rhythm",
       description: "Warrior of the savannas, master of sacred fire and wild nature.",
-      image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
+      image: "/images/PHOTO-2026-07-25-09-57-00.jpg",
       color: "#B3541E",
     },
     {
@@ -74,7 +74,7 @@ export const charactersData = {
         name: "BAMBULA",
         title: "Enfant du Rythme",
         description: "Guerrier des savanes, maître du feu sacré et de la nature sauvage.",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
+        image: "/images/PHOTO-2026-07-25-09-57-00.jpg",
         color: "#B3541E",
       },
       {
