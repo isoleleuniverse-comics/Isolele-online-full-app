@@ -1,7 +1,17 @@
 import type { Metadata } from "next";
 import { isSupportedLocale, DEFAULT_LOCALE, type SupportedLocale } from "@/shared/i18n/locales";
-import { translations } from "@/shared/i18n/translations";
 import { CareersPage } from "./careers-page";
+
+const careersMetadata = {
+  en: {
+    title: "Careers at ISOLELE Universe",
+    description: "Build the first Pan-African superhero universe with ISOLELE Universe.",
+  },
+  fr: {
+    title: "Careers chez ISOLELE Universe",
+    description: "Construire le premier univers super-héroïque panafricain avec ISOLELE Universe.",
+  },
+};
 
 export async function generateMetadata({
   params,
@@ -10,10 +20,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
-  const trans = translations[safeLocale] ?? translations.en;
-  
-  const title = trans.careers_title;
-  const description = trans.careers_subtitle;
+  const title = careersMetadata[safeLocale].title;
+  const description = careersMetadata[safeLocale].description;
 
   return {
     title,
@@ -30,6 +38,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page() {
-  return <CareersPage />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const safeLocale: SupportedLocale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
+  return <CareersPage locale={safeLocale} />;
 }

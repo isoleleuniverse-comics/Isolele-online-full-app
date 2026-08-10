@@ -1,253 +1,117 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Mail, MapPin, Send, MessageSquare, CheckCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { Briefcase, Building2, Handshake, Mail, MapPin, Megaphone, Store, Users } from "lucide-react";
 import { useTheme } from "@/shared/contexts/theme-context";
 import type { SupportedLocale } from "@/shared/i18n/locales";
-import emailjs from "@emailjs/browser";
 
 interface ContactPageProps {
-    locale: SupportedLocale;
+  locale: SupportedLocale;
 }
 
-const contactContent = {
-    en: {
-        eyebrow: "GET IN TOUCH",
-        title: "Contact the Royal Court",
-        description: "Reach out to the ISOLELE team for partnerships, press inquiries, or general support.",
-        formName: "Full Name",
-        formEmail: "Email Address",
-        formSubject: "Subject",
-        formMessage: "Your Message",
-        formSubmit: "Send Message",
-        formSubmitting: "Sending...",
-        formSuccess: "Your message has been sent successfully. We will respond shortly.",
-        infoTitle: "Royal Headquarters",
-        infoAddress: "Kinshasa, Democratic Republic of Congo",
-        infoEmailPartnerships: "Partnerships & Press",
-        infoEmailSupport: "General Support",
-        placeholderName: "Your name",
-        placeholderEmail: "your.email@example.com",
-        placeholderSubject: "How can we help you?",
-        placeholderMessage: "Write your message here...",
-    },
-    fr: {
-        eyebrow: "CONTACTER LA COUR",
-        title: "Contacter la Cour Royale",
-        description: "Contactez l'équipe ISOLELE pour des partenariats, des demandes de presse ou une assistance générale.",
-        formName: "Nom Complet",
-        formEmail: "Adresse Email",
-        formSubject: "Sujet",
-        formMessage: "Votre Message",
-        formSubmit: "Envoyer le Message",
-        formSubmitting: "Envoi en cours...",
-        formSuccess: "Votre message a été envoyé avec succès. Nous vous répondrons sous peu.",
-        infoTitle: "Siège Royal",
-        infoAddress: "Kinshasa, République Démocratique du Congo",
-        infoEmailPartnerships: "Partenariats & Presse",
-        infoEmailSupport: "Support Général",
-        placeholderName: "Votre nom",
-        placeholderEmail: "votre.email@exemple.com",
-        placeholderSubject: "Comment pouvons-nous vous aider ?",
-        placeholderMessage: "Écrivez votre message ici...",
-    },
+const content = {
+  en: {
+    eyebrow: "Contact",
+    title: "Contact",
+    brand: "ISOLELE Universe",
+    intro: "ISOLELE Universe welcomes inquiries from press, cultural institutions, licensing and distribution partners, retailers, and members of the public.",
+    general: "General Correspondence",
+    email: "Email",
+    response: "All correspondence is reviewed directly by our team. We aim to respond within three to five business days. Press inquiries with a publication deadline should note that deadline clearly in the subject line.",
+    categories: "Inquiry Categories",
+    categoriesIntro: "To ensure your message reaches the correct department, please indicate the nature of your inquiry.",
+    headquarters: "Headquarters",
+    locations: "Additional operations in Bukavu, the United States, Kenya, and Zambia.",
+    follow: "Follow ISOLELE Universe",
+    followText: "For ongoing announcements and releases, follow ISOLELE Universe across our official social channels.",
+    tagline: "Everything Begins in Kongo",
+    inquiryCategories: [
+      ["Press & Media", "Outlet name, publication or broadcast date, and the nature of the coverage."],
+      ["Partnerships, Licensing & Distribution", "Company name, proposed opportunity, and relevant background on your organization."],
+      ["Retail & Wholesale", "Store or platform name, region, and product lines of interest."],
+      ["Careers", "Please refer to our Careers page for current opportunities and application guidelines."],
+      ["General & Community", "All other correspondence, including reader and fan inquiries, is welcome."],
+    ],
+  },
+  fr: {
+    eyebrow: "Contact",
+    title: "Contact",
+    brand: "ISOLELE Universe",
+    intro: "ISOLELE Universe accueille les demandes de la presse, des institutions culturelles, des partenaires de licence et de distribution, des détaillants et du public.",
+    general: "Correspondance générale",
+    email: "Email",
+    response: "Toute correspondance est examinée directement par notre équipe. Nous visons à répondre dans un délai de trois à cinq jours ouvrables. Les demandes de presse avec une date limite de publication doivent indiquer clairement cette date dans l’objet du message.",
+    categories: "Catégories de demandes",
+    categoriesIntro: "Pour que votre message arrive au bon département, veuillez indiquer la nature de votre demande.",
+    headquarters: "Siège social",
+    locations: "Opérations supplémentaires à Bukavu, aux États-Unis, au Kenya et en Zambie.",
+    follow: "Suivre ISOLELE Universe",
+    followText: "Pour suivre les annonces et les sorties, retrouvez ISOLELE Universe sur nos réseaux sociaux officiels.",
+    tagline: "Everything Begins in Kongo",
+    inquiryCategories: [
+      ["Presse & Médias", "Nom du média, date de publication ou de diffusion, et nature de la couverture."],
+      ["Partenariats, licences & distribution", "Nom de l’entreprise, opportunité proposée et contexte pertinent sur votre organisation."],
+      ["Vente au détail & wholesale", "Nom du magasin ou de la plateforme, région et gammes de produits concernées."],
+      ["Careers", "Veuillez consulter notre page Careers pour les opportunités actuelles et les consignes de candidature."],
+      ["Général & Communauté", "Toute autre correspondance, y compris les demandes de lecteurs et de fans, est bienvenue."],
+    ],
+  },
 } as const;
 
+const icons = [Megaphone, Handshake, Store, Briefcase, Users];
+
 export function ContactPage({ locale }: ContactPageProps) {
-    const { currentTheme } = useTheme();
-    const content = contactContent[locale] ?? contactContent.en;
+  const { currentTheme } = useTheme();
+  const page = content[locale] ?? content.en;
 
-    const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
-    const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  return (
+    <div className="min-h-screen px-5 pb-24 pt-24 md:px-8 md:pt-32" style={{ background: `radial-gradient(120% 90% at 50% 0%, ${currentTheme.colors.accentPrimary}24 0%, ${currentTheme.colors.accentPrimary}0d 45%, transparent 100%), linear-gradient(180deg, ${currentTheme.colors.background} 0%, ${currentTheme.colors.backgroundSecondary} 100%)`, color: currentTheme.colors.textPrimary }}>
+      <section className="mx-auto max-w-6xl">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="relative overflow-hidden rounded-[34px] border px-6 py-12 md:px-12 md:py-16" style={{ background: `linear-gradient(135deg, ${currentTheme.colors.backgroundSecondary}f2 0%, ${currentTheme.colors.background}f7 100%)`, borderColor: `${currentTheme.colors.accentPrimary}55`, boxShadow: `0 30px 90px ${currentTheme.colors.accentPrimary}1f` }}>
+          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full blur-3xl" style={{ backgroundColor: `${currentTheme.colors.accentPrimary}22` }} />
+          <div className="relative max-w-3xl">
+            <p className="mb-4 text-xs font-black uppercase tracking-[0.38em]" style={{ color: currentTheme.colors.accentPrimary }}>{page.eyebrow}</p>
+            <h1 className="text-4xl font-black tracking-tight md:text-6xl">{page.title}</h1>
+            <h2 className="mt-4 text-2xl font-black md:text-3xl">{page.brand}</h2>
+            <p className="mt-6 text-base leading-8 md:text-lg" style={{ color: currentTheme.colors.textSecondary }}>{page.intro}</p>
+          </div>
+        </motion.div>
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setStatus("submitting");
+        <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+          <motion.article initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="rounded-[28px] border p-6 md:p-8" style={{ backgroundColor: `${currentTheme.colors.backgroundSecondary}e8`, borderColor: `${currentTheme.colors.accentPrimary}45` }}>
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full" style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20`, color: currentTheme.colors.accentPrimary }}><Mail size={22} /></div>
+            <h2 className="text-2xl font-black">{page.general}</h2>
+            <p className="mt-5 text-sm font-bold uppercase tracking-[0.18em]" style={{ color: currentTheme.colors.accentPrimary }}>{page.email}: <a href="mailto:empire@isoleleuniverse.com" className="underline decoration-1 underline-offset-4">empire@isoleleuniverse.com</a></p>
+            <p className="mt-5 leading-7" style={{ color: currentTheme.colors.textSecondary }}>{page.response}</p>
+          </motion.article>
 
-        try {
-            await emailjs.send(
-                'service_123abc', // Replace with your EmailJS service ID
-                'template_456def', // Replace with your EmailJS template ID
-                {
-                    ...formData,
-                    email: formData.email,
-                }
-            );
-        } catch (error) {
-            console.error("Error sending email:", error);
-        }
+          <motion.article initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.15 }} className="rounded-[28px] border p-6 md:p-8" style={{ backgroundColor: `${currentTheme.colors.backgroundSecondary}e8`, borderColor: `${currentTheme.colors.accentPrimary}45` }}>
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full" style={{ backgroundColor: `${currentTheme.colors.accentPrimary}20`, color: currentTheme.colors.accentPrimary }}><Building2 size={22} /></div>
+            <h2 className="text-2xl font-black">{page.headquarters}</h2>
+            <div className="mt-5 flex gap-3 leading-7" style={{ color: currentTheme.colors.textSecondary }}>
+              <MapPin className="mt-1 shrink-0" size={18} style={{ color: currentTheme.colors.accentPrimary }} />
+              <p>ISOLELE Universe<br />Kinshasa, Democratic Republic of Congo<br />{page.locations}</p>
+            </div>
+          </motion.article>
+        </div>
 
-        // Simulation d'envoi de formulaire
-        setTimeout(() => {
-            setStatus("success");
-            setFormData({ name: "", email: "", subject: "", message: "" });
-        }, 1500);
+        <motion.section initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="mt-10 rounded-[32px] border p-6 md:p-8" style={{ background: `linear-gradient(180deg, ${currentTheme.colors.backgroundSecondary}f0 0%, ${currentTheme.colors.background}f5 100%)`, borderColor: `${currentTheme.colors.accentPrimary}45` }}>
+          <p className="text-xs font-black uppercase tracking-[0.3em]" style={{ color: currentTheme.colors.accentPrimary }}>{page.categories}</p>
+          <h2 className="mt-3 text-3xl font-black">{page.categoriesIntro}</h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            {page.inquiryCategories.map(([title, description], index) => {
+              const Icon = icons[index];
+              return <div key={title} className="rounded-2xl border p-5" style={{ backgroundColor: `${currentTheme.colors.background}b8`, borderColor: `${currentTheme.colors.accentPrimary}30` }}><div className="mb-4 flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-full" style={{ backgroundColor: `${currentTheme.colors.accentPrimary}18`, color: currentTheme.colors.accentPrimary }}><Icon size={18} /></span><h3 className="font-black">{title}</h3></div><p className="text-sm leading-6" style={{ color: currentTheme.colors.textSecondary }}>{description}</p></div>;
+            })}
+          </div>
+        </motion.section>
 
-    };
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
-    };
-
-    return (
-        <main
-            className="min-h-screen px-5 pb-24 pt-28 md:px-8 md:pt-36"
-            style={{
-                background: `radial-gradient(120% 90% at 50% 0%, ${currentTheme.colors.accentPrimary}20 0%, ${currentTheme.colors.accentPrimary}08 50%, transparent 100%), linear-gradient(180deg, ${currentTheme.colors.background} 0%, ${currentTheme.colors.backgroundSecondary} 100%)`,
-                color: currentTheme.colors.textPrimary,
-            }}
-        >
-            <section className="mx-auto max-w-6xl">
-                <div className="max-w-3xl mb-12">
-                    <p className="mb-4 text-xs font-black uppercase tracking-[0.35em]" style={{ color: currentTheme.colors.accentPrimary }}>
-                        {content.eyebrow}
-                    </p>
-                    <h1 className="text-4xl font-black tracking-tight md:text-6xl">{content.title}</h1>
-                    <p className="mt-5 text-base leading-8 text-[var(--isolele-text-secondary)] md:text-lg" style={{ color: currentTheme.colors.textSecondary }}>
-                        {content.description}
-                    </p>
-                </div>
-
-                <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr]">
-                    {/* Formulaire de Contact */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="rounded-[28px] border p-6 md:p-10"
-                        style={{
-                            background: `linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.6) 100%)`,
-                            borderColor: currentTheme.colors.accentPrimary,
-                            boxShadow: `0 24px 60px ${currentTheme.colors.accentPrimary}20`,
-                        }}
-                    >
-                        <AnimatePresence mode="wait">
-                            {status === "success" ? (
-                                <motion.div
-                                    key="success"
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    className="flex flex-col items-center justify-center py-12 text-center"
-                                >
-                                    <CheckCircle size={48} style={{ color: currentTheme.colors.accentPrimary }} className="mb-4" />
-                                    <p className="text-lg font-bold leading-relaxed max-w-md">{content.formSuccess}</p>
-                                    <button
-                                        onClick={() => setStatus("idle")}
-                                        className="mt-6 rounded-full px-6 py-2.5 text-xs font-bold uppercase tracking-wider transition hover:opacity-90"
-                                        style={{ backgroundColor: currentTheme.colors.accentPrimary, color: currentTheme.colors.background }}
-                                    >
-                                        OK
-                                    </button>
-                                </motion.div>
-                            ) : (
-                                <form key="form" onSubmit={handleSubmit} className="space-y-6">
-                                    <div>
-                                        <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: currentTheme.colors.textSecondary }}>
-                                            {content.formName}
-                                        </label>
-                                        <input
-                                            required
-                                            type="text"
-                                            name="name"
-                                            value={formData.name}
-                                            onChange={handleInputChange}
-                                            placeholder={content.placeholderName}
-                                            className="w-full rounded-xl px-4 py-3 text-sm bg-white/90 border outline-none transition"
-                                            style={{
-                                                color: currentTheme.colors.textPrimary,
-                                                borderColor: currentTheme.colors.accentPrimary,
-                                            }}
-                                            onFocus={(e) => (e.target.style.boxShadow = `0 0 0 3px ${currentTheme.colors.accentPrimary}30`)}
-                                            onBlur={(e) => (e.target.style.boxShadow = "none")}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: currentTheme.colors.textSecondary }}>
-                                            {content.formEmail}
-                                        </label>
-                                        <input
-                                            required
-                                            type="email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleInputChange}
-                                            placeholder={content.placeholderEmail}
-                                            className="w-full rounded-xl px-4 py-3 text-sm bg-white/90 border outline-none transition"
-                                            style={{
-                                                color: currentTheme.colors.textPrimary,
-                                                borderColor: currentTheme.colors.accentPrimary,
-                                            }}
-                                            onFocus={(e) => (e.target.style.boxShadow = `0 0 0 3px ${currentTheme.colors.accentPrimary}30`)}
-                                            onBlur={(e) => (e.target.style.boxShadow = "none")}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: currentTheme.colors.textSecondary }}>
-                                            {content.formSubject}
-                                        </label>
-                                        <input
-                                            required
-                                            type="text"
-                                            name="subject"
-                                            value={formData.subject}
-                                            onChange={handleInputChange}
-                                            placeholder={content.placeholderSubject}
-                                            className="w-full rounded-xl px-4 py-3 text-sm bg-white/90 border outline-none transition"
-                                            style={{
-                                                color: currentTheme.colors.textPrimary,
-                                                borderColor: currentTheme.colors.accentPrimary,
-                                            }}
-                                            onFocus={(e) => (e.target.style.boxShadow = `0 0 0 3px ${currentTheme.colors.accentPrimary}30`)}
-                                            onBlur={(e) => (e.target.style.boxShadow = "none")}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="block text-xs font-bold uppercase tracking-wider mb-2" style={{ color: currentTheme.colors.textSecondary }}>
-                                            {content.formMessage}
-                                        </label>
-                                        <textarea
-                                            required
-                                            rows={5}
-                                            name="message"
-                                            value={formData.message}
-                                            onChange={handleInputChange}
-                                            placeholder={content.placeholderMessage}
-                                            className="w-full rounded-xl px-4 py-3 text-sm bg-white/90 border outline-none resize-none transition"
-                                            style={{
-                                                color: currentTheme.colors.textPrimary,
-                                                borderColor: currentTheme.colors.accentPrimary,
-                                            }}
-                                            onFocus={(e) => (e.target.style.boxShadow = `0 0 0 3px ${currentTheme.colors.accentPrimary}30`)}
-                                            onBlur={(e) => (e.target.style.boxShadow = "none")}
-                                        />
-                                    </div>
-
-                                    <motion.button
-                                        type="submit"
-                                        disabled={status === "submitting"}
-                                        className="inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-black uppercase tracking-[0.16em] transition disabled:opacity-50"
-                                        style={{ backgroundColor: currentTheme.colors.accentPrimary, color: currentTheme.colors.background }}
-                                        whileHover={{ scale: 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
-                                    >
-                                        <Send size={14} />
-                                        {status === "submitting" ? content.formSubmitting : content.formSubmit}
-                                    </motion.button>
-                                </form>
-                            )}
-                        </AnimatePresence>
-                    </motion.div>
-
-                    {/* Section d'Informations Alternatives */}
-                    
-                </div>
-            </section>
-        </main>
-    );
+        <motion.section initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.25 }} className="mt-10 overflow-hidden rounded-[32px] border p-6 text-center md:p-10" style={{ background: `linear-gradient(135deg, ${currentTheme.colors.accentPrimary}22 0%, ${currentTheme.colors.backgroundSecondary} 55%, ${currentTheme.colors.background} 100%)`, borderColor: `${currentTheme.colors.accentPrimary}55` }}>
+          <h2 className="text-2xl font-black">{page.follow}</h2>
+          <p className="mx-auto mt-4 max-w-2xl leading-7" style={{ color: currentTheme.colors.textSecondary }}>{page.followText}</p>
+          <p className="mt-8 text-sm font-black uppercase tracking-[0.32em]" style={{ color: currentTheme.colors.accentPrimary }}>{page.tagline}</p>
+        </motion.section>
+      </section>
+    </div>
+  );
 }
