@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Mail, MessageSquare, User, Send, CheckCircle2, AlertCircle } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 import { useTheme } from "@/shared/contexts/theme-context";
 
 export function ContactPage() {
