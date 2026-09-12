@@ -3,6 +3,15 @@ import { getStaticArticleBySlug, getStaticPublishedArticles } from "./articles.d
 import type { ArticleBlock } from "./article-blocks";
 import type { SupportedLocale } from "@/shared/i18n/locales";
 
+export interface ArticleSummary {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  coverImage: string | null;
+  updatedAt: Date;
+}
+
 let cachedBlobBaseUrl: string | null = null;
 
 function asString(value: unknown) {
@@ -15,7 +24,7 @@ function asRecord(value: unknown): Record<string, unknown> {
     : {};
 }
 
-function parseGalleryImages(block: any) {
+function parseGalleryImages(block: Record<string, unknown>): unknown[] {
   const data = asRecord(block.data);
 
   if (Array.isArray(block.items)) return block.items;
@@ -117,11 +126,14 @@ export function mapCmsBlocksToPublic(cmsBlocks: unknown): ArticleBlock[] {
             id,
             type: "gallery",
             caption: asString(data.caption) || asString(block.caption) || asString(block.label),
-            images: parseGalleryImages(block).map((image: any, imageIndex: number) => ({
-              id: asString(image.id) || `${id}-image-${imageIndex}`,
-              url: asString(image.src) || asString(image.url),
-              alt: asString(image.alt),
-            })),
+            images: parseGalleryImages(block).map((image, imageIndex) => {
+              const img = asRecord(image);
+              return {
+                id: asString(img.id) || `${id}-image-${imageIndex}`,
+                url: asString(img.src) || asString(img.url),
+                alt: asString(img.alt),
+              };
+            }),
           };
 
         case "video":
@@ -148,7 +160,7 @@ export function mapCmsBlocksToPublic(cmsBlocks: unknown): ArticleBlock[] {
     .filter((block): block is ArticleBlock => block !== null);
 }
 
-export async function fetchPublishedArticles(locale: SupportedLocale): Promise<any[]> {
+export async function fetchPublishedArticles(locale: SupportedLocale): Promise<ArticleSummary[]> {
   const blobUrl = await getBlobBaseUrl();
 
   if (!blobUrl) {
@@ -167,12 +179,18 @@ export async function fetchPublishedArticles(locale: SupportedLocale): Promise<a
       return getStaticPublishedArticles(locale);
     }
 
-    return dynamicArticles.map((article: any) => ({
-      ...article,
-      id: article.id || article.slug,
-      published: true,
-      updatedAt: new Date(article.date || article.publishedAt || article.updatedAt || Date.now()),
-    }));
+    return dynamicArticles.map((raw: unknown) => {
+      const article = asRecord(raw);
+      const dateValue = article.date ?? article.publishedAt ?? article.updatedAt;
+      return {
+        id: asString(article.id) || asString(article.slug),
+        slug: asString(article.slug),
+        title: asString(article.title),
+        excerpt: asString(article.excerpt) || null,
+        coverImage: asString(article.coverImage) || null,
+        updatedAt: new Date(typeof dateValue === "string" || typeof dateValue === "number" ? dateValue : Date.now()),
+      };
+    });
   } catch (error) {
     console.warn("Falling back to static local articles.", error);
     return getStaticPublishedArticles(locale);

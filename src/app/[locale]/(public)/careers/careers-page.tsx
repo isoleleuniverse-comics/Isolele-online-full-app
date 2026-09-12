@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Briefcase, Send, ArrowLeft } from "lucide-react";
+import { Briefcase, ArrowLeft } from "lucide-react";
 import { useTheme } from "@/shared/contexts/theme-context";
 import { useRouter } from "next/navigation";
 
@@ -140,7 +140,7 @@ export function CareersPage() {
           >
             <Briefcase className="w-12 h-12 mx-auto mb-4" style={{ color: currentTheme.colors.accentPrimary }} />
             <h3 className="text-2xl font-bold mb-2" style={{ color: currentTheme.colors.textPrimary }}>Want to reach us directly?</h3>
-            <p className="mb-4" style={{ color: currentTheme.colors.textSecondary }}>Email talents@isolele.com with the role you're interested in and portfolio samples (if applicable).</p>
+            <p className="mb-4" style={{ color: currentTheme.colors.textSecondary }}>Email talents@isolele.com with the role you&apos;re interested in and portfolio samples (if applicable).</p>
             <a href="mailto:talents@isoleleuniverse.com" className="inline-block px-6 py-3 rounded-xl font-bold" style={{ backgroundColor: currentTheme.colors.accentPrimary, color: currentTheme.colors.background }}>Email Talents</a>
           </motion.div>
         </div>

@@ -1,4 +1,5 @@
 import { lazySection } from "@/shared/lib/lazy-section";
+import type { ArticleSummary } from "@/features/articles/model/cms-bridge";
 import type { HomeJsonLd, HomeLocale } from "../content";
 import { getHomePageContent } from "../content";
 import { HomeContentProvider } from "../model";
@@ -24,7 +25,7 @@ const CtaSection = lazySection(() => import("./sections/cta-section/cta-section"
 interface HomePageProps {
   locale: HomeLocale;
   seo: HomeJsonLd;
-  latestArticles: any[];
+  latestArticles: ArticleSummary[];
 }
 
 export function HomePage({ locale, seo, latestArticles }: HomePageProps) {

@@ -1,9 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import type { ComicDetailPageData } from "@/features/comics/model/comics.types";
 import type { SupportedLocale } from "@/shared/i18n/locales";
-import { withLocale } from "@/shared/i18n/locales";
 
 interface ComicDetailPageProps {
   page: ComicDetailPageData;
@@ -12,7 +10,6 @@ interface ComicDetailPageProps {
 
 export function ComicDetailPage({ page, locale }: ComicDetailPageProps) {
   const priceLabel = locale === "fr" ? "Acheter" : "Buy now";
-  const castEyebrow = locale === "fr" ? "Personnages" : "Cast";
   const castTitle = locale === "fr" ? "Personnages cles" : "Key Characters";
   const isExternalPurchase = !!page.purchaseHref && page.purchaseHref.startsWith("http");
  

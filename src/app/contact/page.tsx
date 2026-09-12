@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { isSupportedLocale, DEFAULT_LOCALE, type SupportedLocale } from "@/shared/i18n/locales";
+import { DEFAULT_LOCALE, type SupportedLocale } from "@/shared/i18n/locales";
 import { ContactPage } from "@/features/contact/ui/page";
 
 const contactMetadata = {

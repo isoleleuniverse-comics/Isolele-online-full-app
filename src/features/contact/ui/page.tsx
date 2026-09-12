@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, MapPin, Send, MessageSquare, CheckCircle } from "lucide-react";
+import { Send, CheckCircle, AlertCircle } from "lucide-react";
 import { useTheme } from "@/shared/contexts/theme-context";
 import type { SupportedLocale } from "@/shared/i18n/locales";
-import emailjs from "@emailjs/browser";
 
 interface ContactPageProps {
     locale: SupportedLocale;
@@ -23,6 +22,7 @@ const contactContent = {
         formSubmit: "Send Message",
         formSubmitting: "Sending...",
         formSuccess: "Your message has been sent successfully. We will respond shortly.",
+        formError: "Something went wrong while sending your message. Please try again or email us directly.",
         infoTitle: "Royal Headquarters",
         infoAddress: "Kinshasa, Democratic Republic of Congo",
         infoEmailPartnerships: "Partnerships & Press",
@@ -43,6 +43,7 @@ const contactContent = {
         formSubmit: "Envoyer le Message",
         formSubmitting: "Envoi en cours...",
         formSuccess: "Votre message a été envoyé avec succès. Nous vous répondrons sous peu.",
+        formError: "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer ou nous écrire directement par email.",
         infoTitle: "Siège Royal",
         infoAddress: "Kinshasa, République Démocratique du Congo",
         infoEmailPartnerships: "Partenariats & Presse",
@@ -59,31 +60,27 @@ export function ContactPage({ locale }: ContactPageProps) {
     const content = contactContent[locale] ?? contactContent.en;
 
     const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
-    const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+    const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setStatus("submitting");
 
         try {
-            await emailjs.send(
-                'service_123abc', // Replace with your EmailJS service ID
-                'template_456def', // Replace with your EmailJS template ID
-                {
-                    ...formData,
-                    email: formData.email,
-                }
-            );
-        } catch (error) {
-            console.error("Error sending email:", error);
-        }
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
 
-        // Simulation d'envoi de formulaire
-        setTimeout(() => {
+            if (!response.ok) throw new Error("Contact request failed");
+
             setStatus("success");
             setFormData({ name: "", email: "", subject: "", message: "" });
-        }, 1500);
-
+        } catch (error) {
+            console.error("Error sending message:", error);
+            setStatus("error");
+        }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -227,6 +224,13 @@ export function ContactPage({ locale }: ContactPageProps) {
                                             onBlur={(e) => (e.target.style.boxShadow = "none")}
                                         />
                                     </div>
+
+                                    {status === "error" && (
+                                        <p className="flex items-center gap-2 text-sm font-semibold text-red-600">
+                                            <AlertCircle size={16} />
+                                            {content.formError}
+                                        </p>
+                                    )}
 
                                     <motion.button
                                         type="submit"

@@ -8,9 +8,10 @@ import { useTheme } from "@/shared/contexts/theme-context";
 import { NewsHeader } from "./news-header";
 import { NewsCard } from "./news-card";
 import { NewsCta } from "./news-cta";
+import type { ArticleSummary } from "@/features/articles/model/cms-bridge";
 
 interface NewsSectionProps {
-  latestArticles?: any[];
+  latestArticles?: ArticleSummary[];
 }
 
 // Nouvelle fonction d'estimation dynamique du temps de lecture
@@ -27,7 +28,7 @@ function estimateReadingTime(title: string, excerpt: string): string {
   return "7";
 }
 
-export function NewsSection({ latestArticles }: NewsSectionProps) {
+export function NewsSection({ latestArticles = [] }: NewsSectionProps) {
   const { currentTheme } = useTheme();
   const { currentLanguage } = useLanguage();
   const news = newsData[currentLanguage.code] || newsData.en;

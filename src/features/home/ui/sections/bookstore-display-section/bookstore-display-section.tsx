@@ -14,7 +14,7 @@ export function BookstoreDisplaySection() {
   const bookstoreDisplay = bookstoreDisplayData[currentLanguage.code] || bookstoreDisplayData.en;
   const buyLabel = currentLanguage.code === "fr" ? "ACHETER LE LIVRE" : "BUY THE BOOK";
   const subLabel = currentLanguage.code === "fr" ? "POSSEDEZ L'HÉRITAGE" : "OWN THE LEGACY";
-  const stripeHref = "https://buy.stripe.com/14A5kD44Z6yM2zR6qh6Zy0c";
+  const stripeHref = "https://buy.stripe.com/6oU6oH8lfaP2fmD4i96Zy0e";
 
   return (
     <section className="w-full bg-background py-12 md:py-16 px-4">

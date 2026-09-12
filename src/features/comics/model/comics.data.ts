@@ -6,7 +6,7 @@ import type {
   ComicsPageContent,
 } from "./comics.types";
 
-const HOME_PRODUCTS_STRIPE_LINK = "https://buy.stripe.com/14A5kD44Z6yM2zR6qh6Zy0c";
+const HOME_PRODUCTS_STRIPE_LINK = "https://buy.stripe.com/6oU6oH8lfaP2fmD4i96Zy0e";
 
 const comicsByLocale: Record<SupportedLocale, Record<ComicCategory, ComicBook[]>> = {
   en: {

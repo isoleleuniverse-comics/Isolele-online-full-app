@@ -14,7 +14,7 @@ export function BuyNowSection() {
   const [hovered, setHovered] = useState(false);
 
   const label = currentLanguage.code === "fr" ? "ACHETER LE LIVRE MAINTENANT" : "BUY THE BOOK NOW";
-  const stripeHref = "https://buy.stripe.com/14A5kD44Z6yM2zR6qh6Zy0c";
+  const stripeHref = "https://buy.stripe.com/6oU6oH8lfaP2fmD4i96Zy0e";
   const bookstoreDisplay = bookstoreDisplayData[currentLanguage.code] || bookstoreDisplayData.en;
 
   return (

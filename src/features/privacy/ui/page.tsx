@@ -63,6 +63,7 @@ We may update this Privacy Policy from time to time. The “Last updated” date
 If you have questions about this Privacy Policy or how we handle your information, contact us at: empire@isoleleuniverse.com
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- locale kept for API parity across page components; content is not yet localized
 export function PrivacyPage({ locale }: PrivacyPageProps) {
     const { currentTheme } = useTheme();
     const router = useRouter();

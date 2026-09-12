@@ -30,7 +30,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product, index, addItem, addToCartLabel, colors }: ProductCardProps) {
   return (
-    <a href="https://buy.stripe.com/14A5kD44Z6yM2zR6qh6Zy0c" target="_blanck" rel="nnoopener noreferrer">
+    <a href="https://buy.stripe.com/6oU6oH8lfaP2fmD4i96Zy0e" target="_blank" rel="noopener noreferrer">
       <motion.div
         initial={{ opacity: 0, y: 32 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -76,7 +76,9 @@ export function ProductCard({ product, index, addItem, addToCartLabel, colors }:
             style={{ backgroundColor: `${colors.background}80` }}
           >
             <motion.button
-              onClick={() =>
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
                 addItem({
                   id: product.id,
                   name: product.name,
@@ -85,8 +87,8 @@ export function ProductCard({ product, index, addItem, addToCartLabel, colors }:
                   originalPrice: product.originalPrice,
                   image: product.image,
                   type: product.type,
-                })
-              }
+                });
+              }}
               className="flex items-center gap-2 px-6 py-3 rounded-full font-bold"
               style={{
                 backgroundColor: colors.accentPrimary,
