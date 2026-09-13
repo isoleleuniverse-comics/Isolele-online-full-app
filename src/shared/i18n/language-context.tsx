@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useContext, useMemo, type ReactNode } from "react";
-import { DEFAULT_LOCALE, LOCALE_LABELS, type SupportedLocale } from "./locales";
-import { translations } from "./translations";
+import { DEFAULT_LOCALE, LOCALE_LABELS, SUPPORTED_LOCALES, type SupportedLocale } from "./locales";
+import { languageFlags, translations } from "./translations";
 
 export interface Language {
   code: SupportedLocale;
@@ -11,10 +11,12 @@ export interface Language {
   flag: string;
 }
 
-export const publicLanguages: Language[] = [
-  { code: "fr", name: "French", nativeName: LOCALE_LABELS.fr, flag: "FR" },
-  { code: "en", name: "English", nativeName: LOCALE_LABELS.en, flag: "US" },
-];
+export const publicLanguages: Language[] = SUPPORTED_LOCALES.map((code) => ({
+  code,
+  name: LOCALE_LABELS[code],
+  nativeName: LOCALE_LABELS[code],
+  flag: languageFlags[code],
+}));
 
 interface LanguageContextValue {
   currentLanguage: Language;

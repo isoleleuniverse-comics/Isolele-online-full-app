@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
+import { buildLocaleAlternates, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
 
 export async function generateMetadata({
   params,
@@ -17,10 +17,7 @@ export async function generateMetadata({
         "Explorez la collection de jeux ISOLELE, du KUFU Ludo au jeu de cartes KUFU, entre strategie, ceremonie et royaute africaine.",
       alternates: {
         canonical: path,
-        languages: {
-          fr: "/fr/games",
-          en: "/en/games",
-        },
+        languages: buildLocaleAlternates((locale) => `/${locale}/games`),
       },
     };
   }
@@ -31,10 +28,7 @@ export async function generateMetadata({
       "Explore ISOLELE's games collection, from KUFU Ludo to the KUFU card game, where strategy, ceremony, and African royalty meet.",
     alternates: {
       canonical: path,
-      languages: {
-        fr: "/fr/games",
-        en: "/en/games",
-      },
+      languages: buildLocaleAlternates((locale) => `/${locale}/games`),
     },
   };
 }

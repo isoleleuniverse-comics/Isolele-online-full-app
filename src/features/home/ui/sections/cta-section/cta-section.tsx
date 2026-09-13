@@ -187,7 +187,7 @@ export function CtaSection() {
           style={{ border: `5px solid ${currentTheme.colors.accentPrimary}` }}
         >
           <Image
-            src="/heroes/legends-crew.jpg"
+            src="/heroes/legends-crew.webp"
             alt={cta.imageAlt}
             fill
             sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 30vw"

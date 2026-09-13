@@ -142,7 +142,130 @@ export const bookHeroData: Record<string, { slides: HeroSlide[] }> = {
       }
     ]
   },
-  
+  pt: {
+    slides: [
+      {
+        id: "isolele",
+        type: "book",
+        tag: "BEM-VINDO A ISOLELE",
+        title: "O ESCOLHIDO",
+        subtitle: "O PRIMEIRO UNIVERSO DE SUPER-HERÓIS AFRICANOS NEGROS",
+        description:
+          "Isolele é um universo visionário nascido para restaurar a alma da narrativa africana, um império mitológico onde os super-heróis são escolhidos pelo destino, reinos nunca esquecidos, e o poder ancestral vive em cada página, cada profecia, cada batalha. Toda criança que ler Isolele vai descobrir super-heróis que se parecem com ela, falam a sua língua, protegem a sua terra e honram os seus ancestrais. Isto é para a próxima geração de reis, rainhas, guerreiros, inventores e contadores de histórias. A ISOLELE é o primeiro universo de super-heróis africanos negros enraizado na herança autêntica do Kongo, criado na RDC e construído para o mundo.",
+        buttonText: "EXPLORAR O UNIVERSO",
+        image:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Cover%20Book%202%20Isolele-QCEiRH2KJp3oFt4O31Qocqap3nLgiJ.jpg",
+        href: "/books/isolele",
+        accentColor: "#F6B800",
+      },
+      {
+        id: "zaiire",
+        type: "book",
+        tag: "ZAIIRE: PRÍNCIPE DO KONGO",
+        title: "ZAIIRE",
+        subtitle: "O COLAR DO DESTINO",
+        description:
+          "Zaiire não nasce herói. Nasce escolhido. Filho de Shango, o senhor divino do trovão, e da Princesa Kimoya, uma rainha guerreira da linhagem real do Kongo, Zaiire carrega dois mundos dentro de si. O mundo mortal de reis, guerras e sacrifício. E o mundo divino do poder ancestral, do destino cósmico e de forças mais antigas que qualquer reino.",
+        buttonText: "DESCOBRIR ZAIIRE",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260308-WA0059-75yxyGjuDt9hhqXF6obymfG8BpNLz4.jpg",
+        href: "/books/zaiire",
+        accentColor: "#F6B800",
+      },
+      {
+        id: "makanda",
+        type: "book",
+        tag: "A DINASTIA MAKANDA - LIVRO I",
+        title: "MAKANDA",
+        subtitle: "A DINASTIA ESCONDIDA",
+        description:
+          "No coração da África Central existia uma civilização que o mundo nunca deveria conhecer. Espiritualmente desperta. Tecnologicamente avançada. Protegida pela Chama Sagrada. Quando forças externas vieram atrás do que era deles, os Makanda não caíram. Desapareceram. A sua cidade nunca se perdeu. Estava à espera daquele que nasceu para carregar a chama de novo. A Dinastia Makanda é uma série de comics africanos negros nascida da civilização Kongo, um império escondido a erguer-se do coração da RDC.",
+        buttonText: "DESCOBRIR MAKANDA",
+        image:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg",
+        href: "/books/makanda",
+        accentColor: "#C0392B",
+      },
+      {
+        id: "bambula",
+        type: "book",
+        tag: "BAMBULA: FILHO DO RITMO",
+        title: "BAMBULA",
+        subtitle: "O TAMBOR SAGRADO",
+        description:
+          "Antes das palavras, havia o ritmo. Bambula era a criança que ouvia tudo. Quando os tambores foram tirados e a terra ficou em silêncio, ele manteve o ritmo vivo dentro de si. Armado com o tambor sagrado, caminha entre o mundo espiritual e os vivos. Não luta para destruir. Protege para lembrar. Bambula é um super-herói africano negro enraizado na tradição espiritual do Kongo, onde o tambor sagrado liga os vivos aos ancestrais.",
+        buttonText: "DESCOBRIR BAMBULA",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg",
+        href: "/books/bambula",
+        accentColor: "#B3541E",
+      },
+      {
+        id: "mokele",
+        type: "book",
+        tag: "MOKELE: DE CRIANÇA A SENHOR",
+        title: "MOKELE",
+        subtitle: "DAS RUAS DE KINSHASA",
+        description:
+          "Mokele não nasce rei. Nasce na luta. As ruas de Kinshasa ensinam-no antes de qualquer escola, onde a lealdade é frágil, a violência é normal e a sobrevivência é tudo. De criança a vigarista a senhor. Ele constrói poder, dinheiro e respeito. Em Kinshasa, ou és devorado... ou tornas-te o predador. Mokele é uma personagem de comics africana negra nascida nas ruas de Kinshasa, RDC, onde a sobrevivência constrói impérios.",
+        buttonText: "DESCOBRIR MOKELE",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg",
+        href: "/books/mokele",
+        accentColor: "#4169E1",
+      },
+      {
+        id: "kufu",
+        type: "book",
+        tag: "KUFU: JOGO DE CARTAS PAN-AFRICANO",
+        title: "KUFU",
+        subtitle: "103 CARTAS. UMA COROA.",
+        description:
+          "Isto não é apenas um jogo de cartas. É uma cerimónia. Reúna os seus guerreiros. Construa o seu reino. Supere todos os adversários à mesa. Mas para reivindicar a coroa há apenas uma forma de vencer. Tens de erguer a voz e dizer o nome do rei em voz alta. Depois alguém coloca o colar sobre a tua cabeça. Não pela tua própria mão. Por outra pessoa. Porque um verdadeiro rei não se coroa sozinho. KUFU é onde a realeza africana se torna algo que sentes nas mãos, ouves na tua voz e carregas ao pescoço. Cada jogo é uma coroação. Cada vencedor é um rei. Kufu é o primeiro jogo de cartas pan-africano com reis, rainhas e guerreiros africanos da civilização Kongo. 103 cartas. Uma coroa. A ser lançado em 30 de junho de 2026.",
+        buttonText: "DESCOBRIR KUFU",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_20260321_113436-ktAJOL2e0SS0pkTY6aPnn7aBKxr3pq.jpg",
+        href: "/books/kufu",
+        accentColor: "#F8B90D",
+      },
+      {
+        id: "zattar",
+        type: "book",
+        tag: "ZATTAR: O ÚLTIMO PRÍNCIPE",
+        title: "ZATTAR",
+        subtitle: "O ÚLTIMO PRÍNCIPE DO KONGO",
+        description:
+          "Quando o Destino Lhe Recusou Um Reino, Ele Decidiu Tomá-los Todos. O Príncipe Zattar nasceu para herdar o trono de Bapindi. Mas quando os Ancestrais escolheram outro, algo dentro dele não se quebrou. Incendiou-se. Estudou a Primeira e a Segunda Guerra de Vegas, lendas de devastação que abalaram o mundo antes mesmo de ele nascer. Onde outros viam um aviso, Zattar viu um mapa. Iniciou a Terceira Guerra de Vegas. Não por loucura. Não por dor. Mas porque olhou para o universo inteiro e chegou a uma conclusão: Pertence a alguém. E esse alguém é Zattar. Ele não foi escolhido. Por isso escolheu o universo. Zattar é o vilão africano negro mais perigoso dos comics, um Príncipe de Bapindi que recusou o destino e declarou guerra ao universo inteiro.",
+        buttonText: "DESCOBRIR ZATTAR",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/e9c64c65-3717-4fe3-a391-885767df3303-LbjnMwCViF43pwErKmoFv7iGxQdCeQ.jpeg",
+        href: "/books/zattar",
+        accentColor: "#2E8B57",
+      },
+      {
+        id: "amara",
+        type: "book",
+        tag: "AMARA: A PRINCESA REBELDE",
+        title: "AMARA",
+        subtitle: "A PRINCESA REBELDE DO KONGO",
+        description:
+          "Amara é uma princesa rebelde do Kongo. A filha feroz de um rei poderoso, ela desafia a tradição e luta pela justiça num mundo que tenta silenciá-la. Quando o seu reino é ameaçado por forças externas, Amara pega em armas para proteger o seu povo e reclamar o seu lugar de direito no trono. Amara é uma personagem de comics africana negra nascida da linhagem real da civilização Kongo, onde as princesas não são apenas figuras de beleza, mas guerreiras destinadas a liderar o seu povo até à vitória.",
+        buttonText: "DESCOBRIR AMARA",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
+        href: "/#hero",
+        accentColor: "#1E90B3",
+      },
+      {
+        id: "zaiko",
+        type: "book",
+        tag: "ZAIKO: O ÚLTIMO REI DAS RUAS DE KIVU",
+        title: "ZAIKO",
+        subtitle: "A LENDA DE ZAIKO",
+        description:
+          "Nascido em Kivu do Norte. Forjado em Kinshasa. Zaiko nunca deveria sobreviver. Mas sobreviver nunca foi suficiente. Num mundo governado pelo poder, dinheiro e medo, ele ergue-se do nada. Não como herói. Mas como uma força. Com o seu irmão, constrói o império mais temido que os Kivus já conheceram. Nenhuma coroa foi dada. Nenhum destino foi escrito. Tudo foi tomado. Cada império construído sobre as cinzas dos que vieram antes. Esta é a lenda de como um homem desafiou o próprio destino e gravou o seu nome na história africana com ferro e vontade. Zaiko é um herói de comics africano negro nascido em Kivu do Norte, RDC, onde a guerra forjou o rei mais temido que as ruas já conheceram.",
+        buttonText: "DESCOBRIR ZAIKO",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1175-njlosetUOsqZszKylrOXsIRLw0l3s7.jpeg",
+        href: "/books/zaiko",
+        accentColor: "#2E8B57",
+      }
+    ]
+  },
+
   fr:{
     slides: [
       {

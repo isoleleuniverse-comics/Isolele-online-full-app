@@ -1,14 +1,13 @@
-export const SUPPORTED_LOCALES = ["fr", "en"] as const;
+import { languageNames } from "./translations";
+
+export const SUPPORTED_LOCALES = ["fr", "en", "pt", "es", "zu", "xh", "sw", "ln"] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
 
 export const DEFAULT_LOCALE: SupportedLocale = "fr";
 
 export const LOCALE_COOKIE_NAME = "isolele_locale";
 
-export const LOCALE_LABELS: Record<SupportedLocale, string> = {
-  fr: "Francais",
-  en: "English",
-};
+export const LOCALE_LABELS: Record<SupportedLocale, string> = languageNames;
 
 export function isSupportedLocale(value: string | undefined | null): value is SupportedLocale {
   return !!value && (SUPPORTED_LOCALES as readonly string[]).includes(value);
@@ -34,4 +33,8 @@ export function withLocale(locale: SupportedLocale, href: string): string {
   if (!href.startsWith("/")) return `/${locale}/${href}`;
   if (href === "/") return `/${locale}`;
   return `/${locale}${href}`;
+}
+
+export function buildLocaleAlternates(pathFor: (locale: SupportedLocale) => string): Record<string, string> {
+  return Object.fromEntries(SUPPORTED_LOCALES.map((locale) => [locale, pathFor(locale)]));
 }

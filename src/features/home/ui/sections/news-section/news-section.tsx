@@ -51,7 +51,7 @@ export function NewsSection({ latestArticles = [] }: NewsSectionProps) {
           year: "numeric"
         })
         : "",
-      image: art.coverImage || "/royal-palace-background.png", // Image de couverture ou repli
+      image: art.coverImage || "/royal-palace-background.webp", // Image de couverture ou repli
       slug: art.slug, // On garde le slug de l'article pour le lien
     }))
     : news.articles; // Si Vercel Blob est vide lors de vos tests, on garde les fausses news pour ne pas casser l'affichage

@@ -2,16 +2,26 @@ import type { SupportedLocale } from "@/shared/i18n/locales";
 import type { BookPageData, BookSlug } from "./books.types";
 import { BOOKS_CTA_LINKS } from "./books-cta-links";
 
-export const bookPageUiContent: Record<
-  SupportedLocale,
-  {
+export const bookPageUiContent: Partial<
+  Record<
+    SupportedLocale,
+    {
+      universeContext: string;
+      contextBody: string;
+      focusKeywords: string;
+      quote: string;
+      continueJourney: string;
+    }
+  >
+> & {
+  en: {
     universeContext: string;
     contextBody: string;
     focusKeywords: string;
     quote: string;
     continueJourney: string;
-  }
-> = {
+  };
+} = {
   en: {
     universeContext: "Universe Context",
     contextBody: "Produced in Kinshasa, DRC. Built as part of the ISOLELE Black African storytelling universe.",
@@ -525,7 +535,9 @@ const booksPagesFr: Record<BookSlug, BookPageData> = {
   },
 };
 
-const booksPagesByLocale: Record<SupportedLocale, Record<BookSlug, BookPageData>> = {
+const booksPagesByLocale: Partial<Record<SupportedLocale, Record<BookSlug, BookPageData>>> & {
+  en: Record<BookSlug, BookPageData>;
+} = {
   en: booksPagesEn,
   fr: booksPagesFr,
 };

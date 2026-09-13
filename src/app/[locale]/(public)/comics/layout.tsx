@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
+import { buildLocaleAlternates, DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
 
 export async function generateMetadata({
   params,
@@ -24,10 +24,7 @@ export async function generateMetadata({
     ],
     alternates: {
       canonical: path,
-      languages: {
-        fr: "/fr/comics",
-        en: "/en/comics",
-      },
+      languages: buildLocaleAlternates((locale) => `/${locale}/comics`),
     },
     openGraph: {
       type: "website",

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { absoluteUrl } from "@/shared/seo/site-url";
-import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
+import { buildLocaleAlternates, DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import { getBookBySlug } from "./books.data";
 
 export function getBookMetadata(locale: string, slug: string): Metadata {
@@ -22,10 +22,7 @@ export function getBookMetadata(locale: string, slug: string): Metadata {
     keywords: page.keywords,
     alternates: {
       canonical: path,
-      languages: {
-        fr: `/fr/books/${page.slug}`,
-        en: `/en/books/${page.slug}`,
-      },
+      languages: buildLocaleAlternates((locale) => `/${locale}/books/${page.slug}`),
     },
     openGraph: {
       type: "article",

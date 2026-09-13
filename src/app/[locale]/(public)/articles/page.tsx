@@ -1,7 +1,7 @@
 // app/[locale]/articles/page.tsx (Côté Site Public)
 import type { Metadata } from "next";
 import Link from "next/link";
-import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
+import { buildLocaleAlternates, DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
 import { fetchPublishedArticles } from "@/features/articles/model/cms-bridge";
 
 export async function generateMetadata({
@@ -17,10 +17,7 @@ export async function generateMetadata({
     description: "Read ISOLELE articles, news, stories, and editorial updates.",
     alternates: {
       canonical: `/${safeLocale}/articles`,
-      languages: {
-        fr: "/fr/articles",
-        en: "/en/articles",
-      },
+      languages: buildLocaleAlternates((locale) => `/${locale}/articles`),
     },
     openGraph: {
       type: "website",
@@ -65,7 +62,13 @@ export default async function ArticlesPage({
               <div className="aspect-[4/3] overflow-hidden rounded-md bg-zinc-900 relative">
                 {article.coverImage ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={article.coverImage} alt="" className="h-full w-full object-cover" />
+                  <img
+                    src={article.coverImage}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 ) : null}
               </div>
               <div className="min-w-0 flex flex-col justify-between">

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
+import { buildLocaleAlternates, DEFAULT_LOCALE, isSupportedLocale, type SupportedLocale } from "@/shared/i18n/locales";
 
 export async function generateMetadata({
   params,
@@ -15,10 +15,7 @@ export async function generateMetadata({
     description: "Discover the heroes and legends of the ISOLELE universe.",
     alternates: {
       canonical: path,
-      languages: {
-        fr: "/fr/characters",
-        en: "/en/characters",
-      },
+      languages: buildLocaleAlternates((locale) => `/${locale}/characters`),
     },
     openGraph: {
       type: "website",

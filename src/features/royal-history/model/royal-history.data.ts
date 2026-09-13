@@ -46,7 +46,9 @@ const historyFr: RoyalHistoryBlock[] = [
   { id: "why", title: "Pourquoi ISOLELE existe", body: "Cette page restaure ce qui a ete efface : les enfants africains meritent un regard vrai sur leur histoire royale, leur puissance civilisationnelle et leur continuite ancestrale." },
 ];
 
-const contentByLocale: Record<SupportedLocale, Omit<RoyalHistoryPageContent, "locale">> = {
+const contentByLocale: Partial<Record<SupportedLocale, Omit<RoyalHistoryPageContent, "locale">>> & {
+  en: Omit<RoyalHistoryPageContent, "locale">;
+} = {
   en: {
     hero: {
       badge: "Royal history",

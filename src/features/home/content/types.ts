@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import type { SupportedLocale } from "@/shared/i18n/locales";
 
-export type HomeLocale = "fr" | "en";
+export type HomeLocale = SupportedLocale;
 
 export interface HomeHeroSlide {
   id: string;

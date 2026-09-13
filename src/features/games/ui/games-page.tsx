@@ -59,6 +59,168 @@ const gamesPageContent = {
       },
     ],
   },
+  pt: {
+    eyebrow: "Universo de Jogos",
+    title: "Os jogos ISOLELE",
+    description:
+      "Explore o lado jogável do universo ISOLELE, onde cerimónia, estratégia, realeza e imaginação africana se encontram.",
+    cards: [
+      {
+        title: "KUFU Ludo",
+        label: "Jogo de tabuleiro",
+        description:
+          "Um jogo de tabuleiro de estratégia inspirado no ludo, reinventado como um ritual de coroação dentro do universo ISOLELE.",
+        href: "/kufu-game",
+        cta: "Ver jogo",
+        image: KUFU_ASSETS.board,
+      },
+      {
+        title: "KUFU",
+        label: "Jogo de cartas",
+        description:
+          "O primeiro jogo de cartas pan-africano da ISOLELE, com reis, rainhas e guerreiros da civilização do Kongo.",
+        href: "/books/kufu",
+        cta: "Descobrir as cartas",
+        image:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-ifvBiGyVajqX0jXvhJQOH1k83wp5KC.jpeg",
+      },
+    ],
+  },
+  es: {
+    eyebrow: "Universo de Juegos",
+    title: "Los juegos ISOLELE",
+    description:
+      "Explora el lado jugable del universo ISOLELE, donde la ceremonia, la estrategia, la realeza y la imaginación africana se encuentran.",
+    cards: [
+      {
+        title: "KUFU Ludo",
+        label: "Juego de mesa",
+        description:
+          "Un juego de mesa de estrategia inspirado en el ludo, reinventado como un ritual de coronación dentro del universo ISOLELE.",
+        href: "/kufu-game",
+        cta: "Ver juego",
+        image: KUFU_ASSETS.board,
+      },
+      {
+        title: "KUFU",
+        label: "Juego de cartas",
+        description:
+          "El primer juego de cartas panafricano de ISOLELE, con reyes, reinas y guerreros de la civilización Kongo.",
+        href: "/books/kufu",
+        cta: "Descubrir las cartas",
+        image:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-ifvBiGyVajqX0jXvhJQOH1k83wp5KC.jpeg",
+      },
+    ],
+  },
+  zu: {
+    eyebrow: "Umhlaba Wemidlalo",
+    title: "Imidlalo ye-ISOLELE",
+    description:
+      "Hlola uhlangothi olungadlalwa lomhlaba we-ISOLELE, lapho amasiko, isu, ubukhosi, nomcabango wase-Afrika kuhlangana khona.",
+    cards: [
+      {
+        title: "KUFU Ludo",
+        label: "Umdlalo webhodi",
+        description:
+          "Umdlalo webhodi wesu ogqugquzelwe yi-ludo, obuyekeziwe njengomkhosi wokubekwa kwenkosi ngaphakathi komhlaba we-ISOLELE.",
+        href: "/kufu-game",
+        cta: "Buka umdlalo",
+        image: KUFU_ASSETS.board,
+      },
+      {
+        title: "KUFU",
+        label: "Umdlalo wamakhadi",
+        description:
+          "Umdlalo wamakhadi wokuqala wase-Afrika wonke we-ISOLELE, onamakhosi, izindlovukazi, namaqhawe avela kwisizwe saseKongo.",
+        href: "/books/kufu",
+        cta: "Thola amakhadi",
+        image:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-ifvBiGyVajqX0jXvhJQOH1k83wp5KC.jpeg",
+      },
+    ],
+  },
+  xh: {
+    eyebrow: "Ihlabathi Lemidlalo",
+    title: "Imidlalo ye-ISOLELE",
+    description:
+      "Hlola icala elidlalwayo lehlabathi le-ISOLELE, apho isiko, isu, ubukumkani, kunye nombono wase-Afrika kudibana khona.",
+    cards: [
+      {
+        title: "KUFU Ludo",
+        label: "Umdlalo webhodi",
+        description:
+          "Umdlalo webhodi wobuchule ophefumlelwe yi-ludo, ophindwe waqulunqwa njengomsitho wokubekwa kwenkosi ngaphakathi kwelizwe le-ISOLELE.",
+        href: "/kufu-game",
+        cta: "Jonga umdlalo",
+        image: KUFU_ASSETS.board,
+      },
+      {
+        title: "KUFU",
+        label: "Umdlalo wamakhadi",
+        description:
+          "Umdlalo wamakhadi wokuqala wase-Afrika wonke we-ISOLELE, oneekumkani, iikumkanikazi kunye namagorha avela kwizizwe zaseKongo.",
+        href: "/books/kufu",
+        cta: "Fumana amakhadi",
+        image:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-ifvBiGyVajqX0jXvhJQOH1k83wp5KC.jpeg",
+      },
+    ],
+  },
+  sw: {
+    eyebrow: "Ulimwengu wa Michezo",
+    title: "Michezo ya ISOLELE",
+    description:
+      "Gundua upande wa michezo wa ulimwengu wa ISOLELE, ambapo sherehe, mkakati, ufalme, na fikira za Kiafrika hukutana.",
+    cards: [
+      {
+        title: "KUFU Ludo",
+        label: "Mchezo wa ubaoni",
+        description:
+          "Mchezo wa ubaoni wa mkakati ulioongozwa na ludo, uliobuniwa upya kama ibada ya kutawazwa ndani ya ulimwengu wa ISOLELE.",
+        href: "/kufu-game",
+        cta: "Tazama mchezo",
+        image: KUFU_ASSETS.board,
+      },
+      {
+        title: "KUFU",
+        label: "Mchezo wa karata",
+        description:
+          "Mchezo wa kwanza wa karata wa Kiafrika wa ISOLELE, wenye wafalme, malkia, na mashujaa kutoka ustaarabu wa Kongo.",
+        href: "/books/kufu",
+        cta: "Gundua karata",
+        image:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-ifvBiGyVajqX0jXvhJQOH1k83wp5KC.jpeg",
+      },
+    ],
+  },
+  ln: {
+    eyebrow: "Mokili ya Masano",
+    title: "Masano ya ISOLELE",
+    description:
+      "Luka ngambo ya kosakana ya mokili ya ISOLELE, esika bizaleli, mayele, bokonzi, mpe makanisi ya Afrika ekutanaka.",
+    cards: [
+      {
+        title: "KUFU Ludo",
+        label: "Lisano ya etanda",
+        description:
+          "Lisano ya etanda ya mayele oyo ewuti na ludo, ebongisami lisusu lokola momesano ya kotia mokonzi na kati ya mokili ya ISOLELE.",
+        href: "/kufu-game",
+        cta: "Talá lisano",
+        image: KUFU_ASSETS.board,
+      },
+      {
+        title: "KUFU",
+        label: "Lisano ya bakarte",
+        description:
+          "Lisano ya liboso ya bakarte ya Afrika mobimba ya ISOLELE, na bakonzi, ba reine, mpe basoda oyo bawuti na bomoto ya Kongo.",
+        href: "/books/kufu",
+        cta: "Yeba bakarte",
+        image:
+          "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-ifvBiGyVajqX0jXvhJQOH1k83wp5KC.jpeg",
+      },
+    ],
+  },
 } as const;
 
 export function GamesPage({ locale }: { locale: SupportedLocale }) {

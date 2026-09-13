@@ -4,6 +4,7 @@ import {
 import type {
   Character, CharacterProfile, CharactersPageContent,
 } from "./characters.types";
+import type { SupportedLocale } from "@/shared/i18n/locales";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SECTION 1 — locale-independent base (ids, images, colors, powerIcons)
@@ -43,8 +44,7 @@ const characterBaseList: CharacterBase[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 type CharacterLocale = { origin: string; title: string; description: string; powers: string[] };
 
-const characterLocalizedText: Record<"en" | "fr", Record<string, CharacterLocale>> = {
-  en: {
+const enCharacterText: Record<string, CharacterLocale> = {
     "zaiire-kongo": { origin: "Kingdom of Kongo / Central Africa", title: "The Prince of Kongo and the Necklace of Destiny", description: "Forged in the heart of Kongo, Zaiire carries ancestral memory and royal force. Chosen by the Necklace of Destiny, he walks between spirit and present to restore what history tried to erase.", powers: ["Royal Transformation", "Lightning Control", "Time Walking", "Ancestral Sight"] },
     "kimoya-kandake": { origin: "Kingdom of Makanda / Central Africa", title: "The Rising Kandake", description: "Kimoya is heir to a hidden empire awakened by the Sacred Flame. She does not ask for power. She reclaims it as warrior, strategist, and sovereign.", powers: ["Sacred Flame Mastery", "Divine Combat", "Royal Authority", "Empire Shielding"] },
     "madiba-mandela": { origin: "Kongo / Bantu Civilization", title: "Wise Ancestor of Deep Roots", description: "A living symbol of resilience and justice, Madiba channels generational wisdom and unbreakable spirit for his people.", powers: ["Ancestral Wisdom", "Spirit Shield", "Truth Sight", "People's Voice"] },
@@ -63,8 +63,9 @@ const characterLocalizedText: Record<"en" | "fr", Record<string, CharacterLocale
     "zaiire-armor": { origin: "Kingdom of Kongo", title: "Chosen One - Golden Armor Form", description: "In full activation mode, Zaiire's armor channels ancestral memory and divine current through the Destiny Core.", powers: ["Divine Armor", "Destiny Core", "Kongo Lightning", "Royal Ascension"] },
     "sankuru": { origin: "Sankuru / Congo", title: "Boundless Flame of Katiopa", description: "Fast, fearless, and joyful in battle. Sankuru embodies a new generation of African heroic energy.", powers: ["Boundless Speed", "Sacred Symbol", "Fire Sprint", "Youth Power"] },
     "zaiko-style": { origin: "Kivu / Kinshasa", title: "The Cultural Emperor", description: "Luxury, symbolism, and control. In Style Form, Zaiko turns aesthetics into strategic dominance.", powers: ["Cultural Power", "Leopard Presence", "Gold Mastery", "Style Command"] },
-  },
-  fr: {
+};
+
+const frCharacterText: Record<string, CharacterLocale> = {
     "zaiire-kongo": { origin: "Royaume de Kongo / Afrique Centrale", title: "Le Prince de Kongo et le Collier du Destin", description: "Forgé au cœur du Kongo, Zaiire porte la mémoire ancestrale et la force royale. Choisi par le Collier du Destin, il marche entre l'esprit et le présent pour restaurer ce que l'histoire a tenté d'effacer.", powers: ["Transformation Royale", "Contrôle de la Foudre", "Marche Temporelle", "Vision Ancestrale"] },
     "kimoya-kandake": { origin: "Royaume de Makanda / Afrique Centrale", title: "La Kandake Ascendante", description: "Kimoya est l'héritière d'un empire caché éveillé par la Flamme Sacrée. Elle ne demande pas le pouvoir. Elle le réclame en tant que guerrière, stratège et souveraine.", powers: ["Maîtrise de la Flamme Sacrée", "Combat Divin", "Autorité Royale", "Bouclier de l'Empire"] },
     "madiba-mandela": { origin: "Kongo / Civilisation Bantou", title: "Sage Ancêtre aux Racines Profondes", description: "Symbole vivant de résilience et de justice, Madiba canalise la sagesse générationnelle et un esprit indestructible pour son peuple.", powers: ["Sagesse Ancestrale", "Bouclier de l'Esprit", "Vision de la Vérité", "Voix du Peuple"] },
@@ -83,7 +84,74 @@ const characterLocalizedText: Record<"en" | "fr", Record<string, CharacterLocale
     "zaiire-armor": { origin: "Royaume de Kongo", title: "L'Élu — Forme Armure Dorée", description: "En mode activation total, l'armure de Zaiire canalise la mémoire ancestrale et le courant divin à travers le Noyau du Destin.", powers: ["Armure Divine", "Noyau du Destin", "Foudre Kongo", "Ascension Royale"] },
     "sankuru": { origin: "Sankuru / Congo", title: "Flamme Sans Limites de Katiopa", description: "Rapide, intrépide et joyeux au combat. Sankuru incarne une nouvelle génération d'énergie héroïque africaine.", powers: ["Vitesse Sans Limites", "Symbole Sacré", "Sprint de Feu", "Puissance de la Jeunesse"] },
     "zaiko-style": { origin: "Kivu / Kinshasa", title: "L'Empereur Culturel", description: "Luxe, symbolisme et contrôle. Dans sa Forme Style, Zaiko transforme l'esthétique en domination stratégique.", powers: ["Pouvoir Culturel", "Présence du Léopard", "Maîtrise de l'Or", "Commandement du Style"] },
-  },
+};
+
+const ptCharacterOverrides: Record<string, CharacterLocale> = {
+    "zaiire-kongo": { origin: "Kongo / África Central", title: "O Príncipe do Kongo", description: "O príncipe leão-leopardo forjado pelo trovão, pelo tempo e pela herança dos impérios caídos.", powers: ["Transformação em Lionpard Real", "Controle do Trovão e Relâmpago", "Caminhar no Tempo (Colar do Destino)", "Regeneração Solar & Impulso Cósmico", "Memória Tática Ancestral", "Voo & Força Divina"] },
+    "kimoya-kandake": { origin: "África Central/Ocidental", title: "Herdeira do Reino de Kouch", description: "Uma rainha nascida do tempo, manejando o poder divino dos ancestrais kouchitas.", powers: ["Transformação Real", "Leoa de Kouch", "Soberania Temporal", "Poderes de Amanirenas", "Outros Poderes Divinos"] },
+    "madiba-mandela": { origin: "Nação Xhosa / África do Sul", title: "O Ancestral Sábio das Raízes Profundas", description: "O ancestral portador da chama que acende a memória, dignidade e soberania interior nos herdeiros esquecidos.", powers: ["Chama da Memória", "A Longa Marcha", "Chama dos Esquecidos", "A Coroa Interior", "Sussurro de Mandela", "Desencadeador de Chama de Zaiire"] },
+    "zaira-mbube": { origin: "Lyran / Reinos Celestiais", title: "A Leoa do Céu, Rainha Mãe do Leão Negro", description: "A leoa que preservou a Chama Sagrada e assegurou a herança da linhagem celestial através da força, graça e proteção.", powers: ["Transformação em Leoa", "Rugido da Eternidade", "Escudo de Chama", "Vínculo do Orgulho", "Chama da Continuidade"] },
+    "mask-of-bapindi": { origin: "Kongo / África (Relíquia Ancestral Pan-Africana)", title: "Senhor de Todas as Máscaras Africanas, Coroa da Chama Ancestral", description: "A máscara dourada que canaliza cada espírito ancestral e máscara da África.", powers: ["Dominação da Máscara", "Visão Ancestral", "Invocação Espiritual", "Transformação Totêmica", "Chama Unida"] },
+    "likaku": { origin: "Bacias do Congo / África Central", title: "Likaku Kongolo dos Grandes Macacos, O Macaco de Ferro do Kongo, Guardião da Floresta Sagrada", description: "O guardião inquebrável da floresta, leal, majestoso e inflamado pelo poder ancestral.", powers: ["Força Real Primal", "Pele de Ferro", "Rugido do Tambor", "Dominação da Floresta", "Chama da Coroa Ancestral"] },
+    "ganga-zumba": { origin: "Palmares / Brasil", title: "O Rei Que Escapou do Tempo", description: "Fundador do Quilombo Eterno, Jaguar do Caminho da Chama e Porta-Escudo da Rebelião da Diáspora.", powers: ["Metamorfose em Jaguar", "Forma Negus Capitão África", "Marcha Temporal", "Marca de Chama de Palmares", "Onda de Liberdade", "Memória de Batalha"] },
+    "zaiko-fashion": { origin: "Cidade de Kongo • Distritos da Harmonia e do Caos", title: "O Rebelde do Ritmo • Senhor da Vibração Urbana", description: "Zaiko Tabuli é a personificação do espírito urbano e da liberdade criativa — um rebelde cujo coração bate na frequência das ruas e das tradições ancestrais. Ele inspira movimento, revolução e música em cada passo.", powers: ["Batida Ancestral", "Dança da Libertação", "Ritmo da Resistência", "Eco Urbano"] },
+    "queen-jameela-califia": { origin: "Califórnia / México / Caribe", title: "A Chama das Rainhas Esquecidas", description: "O receptáculo vivo de quatro rainhas ancestrais — Califia, Anacaona, Carlota e Jameela — que se levanta para recuperar terras roubadas e soberanias esquecidas.", powers: ["Invocação Quad-Espírito", "Invocação de Fogo da Coroa", "Poesia Que Dobra a Realidade", "Metamorfose", "Tempestades da Memória", "Ecos do Tempo"] },
+    "sankuru": { origin: "Rio Sankuru • Coração da Floresta do Congo", title: "A Chama Sem Limites de Katiopa", description: "Nascido do sagrado Rio Sankuru, este corajoso garoto guerreiro encarna o potencial ilimitado da juventude africana — um espírito que nunca para de crescer, lutar e se erguer novamente. O riso de Sankuru carrega o ritmo dos ancestrais, e seu fogo flui como o rio que lhe deu nome.", powers: ["Energia do Rio", "Crescimento Sem Limites", "Instinto Marcial", "Explosão Ancestral", "Potencial Futuro"] },
+};
+
+const esCharacterOverrides: Record<string, CharacterLocale> = {
+    "zaiire-kongo": { origin: "Kongo / África Central", title: "El Príncipe del Kongo", description: "El príncipe león-leopardo forjado por el trueno, el tiempo y la herencia de imperios caídos.", powers: ["Transformación en León-Leopardo Real", "Control del Rayo y del Trueno", "Marcha en el Tiempo (Collar del Destino)", "Regeneración Solar & Impulso Cósmico", "Memoria Táctica Ancestral", "Vuelo & Fuerza Divina"] },
+    "kimoya-kandake": { origin: "África Central/Occidental", title: "Heredera del Reino de Kush", description: "Una reina nacida del tiempo que maneja el poder divino de los ancestros kushitas.", powers: ["Transformación Real", "Leona de Kush", "Soberanía Temporal", "Poderes de Amanirenas", "Otros Poderes Divinos"] },
+    "madiba-mandela": { origin: "Nación Xhosa / Sudáfrica", title: "El Ancestro Sabio de las Raíces Profundas", description: "El ancestro portador de la llama que enciende la memoria, la dignidad y la soberanía interior en los herederos olvidados.", powers: ["Llama de Memoria", "La Larga Marcha", "Llama de los Olvidados", "La Corona Interior", "Susurro de Mandela", "Desencadenador de la Llama de Zaiire"] },
+    "zaira-mbube": { origin: "Lyran / Reinos Celestiales", title: "La Leona del Cielo, Reina Madre del León Negro", description: "La leona que preservó la Llama Sagrada y aseguró la herencia de la línea celestial por la fuerza, la gracia y la protección.", powers: ["Transformación en Leona", "Rugido de la Eternidad", "Escudo de Llama", "Vínculo del Orgullo", "Llama de Continuidad"] },
+    "mask-of-bapindi": { origin: "Kongo / África (Reliquia Ancestral Pan-Africana)", title: "Señor de Todas las Máscaras Africanas, Corona de la Llama Ancestral", description: "La máscara dorada que canaliza cada espíritu ancestral y máscara de África.", powers: ["Dominio de la Máscara", "Visión Ancestral", "Invocación Espiritual", "Transformación Totémica", "Llama Unida"] },
+    "likaku": { origin: "Cuencas del Congo / África Central", title: "Likaku Kongolo de los Grandes Simios, El Mono de Hierro del Kongo, Guardián del Bosque Sagrado", description: "El guardián inquebrantable del bosque, leal, majestuoso y encendido por el poder ancestral.", powers: ["Fuerza Real Primal", "Piel de Hierro", "Rugido del Tambor", "Dominio del Bosque", "Llama de la Corona Ancestral"] },
+    "ganga-zumba": { origin: "Palmares / Brasil", title: "El Rey Que Escapó al Tiempo", description: "Fundador del Quilombo Eterno, Jaguar del Camino de la Llama y Portaescudo de la Rebelión de la Diáspora.", powers: ["Metamorfosis en Jaguar", "Forma Negus Capitán Afrika", "Marcha Temporal", "Marca de Llama de Palmares", "Onda de Libertad", "Memoria de Batalla"] },
+    "queen-jameela-califia": { origin: "California / México / Caribe", title: "La Llama de las Reinas Olvidadas", description: "El receptáculo viviente de cuatro reinas ancestrales — Califia, Anacaona, Carlota y Jameela — que se levanta para reclamar las tierras robadas y las soberanías olvidadas.", powers: ["Invocación Cuatro-Espíritus", "Invocación de Fuego Corona", "Poesía que Dobla la Realidad", "Metamorfosis", "Tormentas de Memoria", "Ecos del Tiempo"] },
+};
+
+const zuCharacterOverrides: Record<string, CharacterLocale> = {
+    "zaiire-kongo": { origin: "Kongo / Central Africa", title: "Inkosi yaseKongo", description: "Inkosi ye-lion-leopard eyakhiwe yisivunguvungu, isikhathi kanye nefa lezikoloni ezilahlekile.", powers: ["Ukuguqulwa kube yiLionpard Yenkosi", "Ukulawula Ugesi Nesivunguvungu", "Ukuhamba Ngesikhathi (Ikhola Lezomlando)", "Ukuzivuselela Ngelanga & Ukusheshisa Kwamazulu", "Inkumbulo Yezimpi YamaDlozi", "Ukundiza & Amandla Angcwele"] },
+    "kimoya-kandake": { origin: "Central / West Africa", title: "Ifa Lombuso waseKouch", description: "Inkosikazi ezelwe ngesikhathi elawula amandla angcwele ezizukulwaneni zaseKouch.", powers: ["Ukuguqulwa KweNkosikazi", "I-Lionne yaseKouch", "Ubukhosi Besikhathi", "Amandla kaAmanirenas", "Amanye Amandla Angcwele"] },
+    "madiba-mandela": { origin: "Isizwe samaXhosa / eNingizimu Afrika", title: "Umkhokhi Wabokhokho Bezimpande Ezijulile", description: "Umkhokhi wemlilo ophakamisa inkumbulo, isithunzi kanye nobukhosi bangaphakathi kubazalwane abakhohlakele.", powers: ["Umlilo Wenkumbulo", "Uhamba Olude", "Umlilo Wabakholwayo", "Ikhwaba Langaphakathi", "Ukuzwakala kukaMandela", "Isiqalisi Somlilo KaZaiire"] },
+    "zaira-mbube": { origin: "Lyran / Amazwe Ezinkanyezi", title: "Ingonyama Yasezulwini, Umama WeNgonyama Emnyama", description: "Ingonyama eyagcina Umlilo Ongcwele futhi yaqinisekisa ifa lohlanga lwasezulwini ngamandla, ubuhle nokuvikela.", powers: ["Ukuguqulwa Kube Ingonyama", "Ukukhwaza Kokuphakade", "Isihlangu Somlilo", "Ubudlelwano Bokuzigqaja", "Umlilo Wokuqhubeka"] },
+    "mask-of-bapindi": { origin: "Kongo / Afrika (Inhlawulo Yodabuka Yomhlaba Wonke)", title: "Nkosi Yazo Zonke Izifihla-buso zase-Afrika, Ikhoro Lomlilo Wodabuka", description: "Isifihla-buso segolide esihambisa umoya wodabuka kanye nezifihla-buso zase-Afrika.", powers: ["Ukulawula Izifihla-buso", "Umbono Wodabuka", "Ukubiza Imimoya", "Ukuguqulwa Kwesithombe", "Umlilo Owuhlanganisiwe"] },
+    "likaku": { origin: "Izifula zaseKongo / i-Afrika Ephakathi", title: "Likaku Kongolo Wamabhubesi Amakhulu, Inkawu Yensimbi yaseKongo, Umlindi Wehlathi Elingcwele", description: "Umlindi ongenakuphulwa wehlathi, othembekile, ohloniphekile futhi oshiswa amandla wokhokho.", powers: ["Amandla Okwesibili Obasebukhosini", "Isikhumba Sensimbi", "Ukukhala Kwedrum", "Ubukhosi Behlathi", "Umlilo Womqhele Wokhokho"] },
+    "ganga-zumba": { origin: "Palmares / Brazil", title: "Inkosi Ebaleke Esikhathini", description: "Umsunguli weQuilombo Engapheli, IJaguar YeFlame Way, Nomvikeli Wephiko LeMpi Yobandlululo.", powers: ["Ukuguqulwa kuJaguar", "Ifomu leNegus Capitaine Afrika", "Ukuhamba Kwesikhathi", "Umarke weFlame yasePalmares", "I-Wave Yokukhululeka", "Inkumbulo Yempi"] },
+    "zaiko-fashion": { origin: "Amabhange AseNguni / Izintaba Zobukhosi", title: "Umsindisi WamaNguni • Ibhubesi Elilondolozayo", description: "Zaiko Tabuli uyisivikelo samaNguni — ibhubesi elinolwazi nolukhulu. Uvikela abantu bakhe futhi ubalungiselela ukuphumelela empini nasempilweni yansuku zonke.", powers: ["Ukunqoba Kwebhubesi", "Ukuhola Ngokuhlakanipha", "Isivikelo Sabangane", "Isifundo SamaNguni"] },
+    "queen-jameela-califia": { origin: "California / Mexico / Caribbean", title: "Umlilo Wamakhosikazi Angakhohlwanga", description: "Isiqu esiphilayo samaKhosikazi amane angokhokho — Califia, Anacaona, Carlota noJameela — esivuka ukubuyisa izwe elibiwe kanye nobukhosi obukhohlakele.", powers: ["Ukubiza Okwe-Quad-Spirit", "Ukubiza Umlilo WeKhwaba", "Inkondlo Eguqula Iqiniso", "Ukuguqulwa", "Izivunguvungu Zenkumbulo", "Izwi Lesikhathi"] },
+    "sankuru": { origin: "Umfula iSankuru • Inhliziyo Yehlathi LaseKongo", title: "Umlilo Ongapheli WeKatiopa", description: "Ozalwe emfuleni ongcwele iSankuru, lo mntwana weqhawe uyisibonakaliso samandla angenamkhawulo entsha yase-Afrika — umoya ongakhathali, oshisa futhi ovuka njalo. Ukuhleka kwakhe kuthwala isigqi sokhokho, futhi umlilo wakhe ugobhoza njengomfula owamqambayo.", powers: ["Amandla Omfula", "Ukukhula Okungenamkhawulo", "Ukwazi Ukuhlasela Ngokwemvelo", "Ukuqhuma Kwamandla", "Amandla Esikhathi Esizayo"] },
+};
+
+const xhCharacterOverrides: Record<string, CharacterLocale> = {
+    "zaiire-kongo": { origin: "Kongo / Afrika Embindini", title: "Inkosana yaseKongo", description: "Inkosana ingonyama-ingwe eyenziwe ngombane, ixesha nelifa leembuso eziwile.", powers: ["Uguquko lube yiLionpard yobukhosi", "Ulawulo lombane nesaqhwithi", "Ukuhamba ngexesha (I-Chain yeSithsaba)", "Ukubuyiselwa kwelanga & iCosmic dash", "Inkumbulo yomkhosi woKhohlo", "Ukubhabha & Amandla obuThixo"] },
+    "kimoya-kandake": { origin: "Afrika Embindini/ntshona", title: "Ilifa leKumkanikazi yaseKush", description: "IKumkanikazi ezelwe ngexesha ephethe amandla angcwele ookhokho baseKushite.", powers: ["Uguquko lobukhosi", "Ingwe yaseKush", "Ulawulo lwexesha", "Amandla kaAmanirenas", "Amanye Amandla obuThixo"] },
+    "madiba-mandela": { origin: "Isizwe samaXhosa / eMzantsi Afrika", title: "Umkhulu oNgumeluleki weMithi eBanzi", description: "Umkhulu ophathela umlilo ovuselela inkumbulo, isidima kunye nobukumkani bangaphakathi kubafowunelwa abalibalekileyo.", powers: ["Umlilo weNkumbulo", "Uhambo olude", "Umlilo wabangabalekileyo", "Isitulo sangaphakathi", "Ukuthetha kukaMandela", "Umsasazi woMlilo kaZaiire"] },
+    "zaira-mbube": { origin: "Lyran / Ubukumkani bezulu", title: "Ingonyama yaseZulwini, Umama weNgonyama emnyama", description: "Ingonyama eyagcina Umlilo oNgcwele kwaye yaqinisekisa ilifa loludwe lwasezulwini ngamandla, ubuhle kunye nokukhusela.", powers: ["Uguquko lube yIngonyama", "Ukukhwaza kweNgunaphakade", "Isihlangu soMlilo", "Uxhulumaniso lwezibonda", "Umlilo woLandelelwano"] },
+    "ganga-zumba": { origin: "Palmares / Brazil", title: "Kumkani oWaphuma kwiXesha", description: "Umseki weQuilombo eNgunaphakade, iJaguar yeNdlela yoMlilo, kunye noPhatha-Sithsaba woMvukeli weDiaspora.", powers: ["Ukuguquka kube yiJaguar", "Ifomu yeNegus Capitaine Afrika", "Ukuhamba ngexesha", "Umqondiso woMlilo wasePalmares", "Iwave yoKhuseleko", "Inkumbulo yemfazwe"] },
+    "queen-jameela-califia": { origin: "California / Mexico / Caribbean", title: "Umlilo wabaKumkanikazi abalibalekileyo", description: "Isitya esiphilayo samaKumkanikazi amane angumzali — Califia, Anacaona, Carlota kunye noJameela — esima ukuzithatha kwakhona imihlaba eyebiwe kunye nobukumkani obulibalekileyo.", powers: ["Ukubiza imimoya emine", "Ukubiza umlilo wesitulo", "Imibongo ephambanisa inyani", "Ukuguquka", "Iitempu zomkhumbulo"] },
+};
+
+const swCharacterOverrides: Record<string, CharacterLocale> = {
+    "zaiire-kongo": { origin: "Kongo / Afrika ya Kati", title: "Kijana wa Kongo", description: "Kijana simba-chui aliyetengenezwa na radi, wakati na urithi wa falme zilizoporomoka.", powers: ["Mabadiliko ya Kifalme ya Simba-Chui", "Udhibiti wa Radi na Radi", "Mtembea wa Wakati (Mkufu wa Hatima)", "Urejeshaji wa Jua na Mwelekeo wa Kimaumbile", "Kumbukumbu ya Mbinu za Kale", "Kuruka na Nguvu za Kiungu"] },
+};
+
+const lnCharacterOverrides: Record<string, CharacterLocale> = {
+    "zaiire-kongo": { origin: "Kongo / Afrika ya Centre", title: "Mwana Nkolo ya Kongo", description: "Mwana nkolo ya nkosi-leopard oyo etungisamaki na lokumu, ntango mpe libula ya bokonzi oyo ebebisamaki.", powers: ["Mbongwana na Nkosi-Leopard ya Bokonzi", "Kontrole ya Lokumu mpe Lokonga", "Kotambola na Ntango (Mondele ya Destiny)", "Kobongwana na Moyi & Elan ya Likolo", "Bosembo ya Mindule ya Bankoko", "Kofanda likolo mpe Nguya ya Nzambe"] },
+    "kimoya-kandake": { origin: "Afrika ya Centre / Ouest", title: "Mwana Nkolo ya Bokonzi ya Kouch", description: "Mwasi nkolo abotamaki na ntango, azali kobatela nguya ya Nzambe ya bankoko ya Kouch.", powers: ["Mbongwana ya Bokonzi", "Nkosi-moke ya Kouch", "Bokonzi ya Ntango", "Nguya ya Amanirenas", "Nguya mosusu ya Nzambe"] },
+};
+
+const characterLocalizedText: Partial<Record<SupportedLocale, Record<string, CharacterLocale>>> & {
+  en: Record<string, CharacterLocale>;
+} = {
+  en: enCharacterText,
+  fr: frCharacterText,
+  pt: { ...enCharacterText, ...ptCharacterOverrides },
+  es: { ...enCharacterText, ...esCharacterOverrides },
+  zu: { ...enCharacterText, ...zuCharacterOverrides },
+  xh: { ...enCharacterText, ...xhCharacterOverrides },
+  sw: { ...enCharacterText, ...swCharacterOverrides },
+  ln: { ...enCharacterText, ...lnCharacterOverrides },
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -91,10 +159,11 @@ const characterLocalizedText: Record<"en" | "fr", Record<string, CharacterLocale
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** Returns the full characters array for a given locale. */
-export function getCharacters(locale: "en" | "fr"): Character[] {
+export function getCharacters(locale: SupportedLocale): Character[] {
+  const localizedText = characterLocalizedText[locale] ?? characterLocalizedText.en;
   return characterBaseList.map((base) => ({
     ...base,
-    ...characterLocalizedText[locale][base.id],
+    ...localizedText[base.id],
   })) as Character[];
 }
 
@@ -109,7 +178,9 @@ export const characterFilterMap: Record<string, string[]> = {
 // ─────────────────────────────────────────────────────────────────────────────
 // SECTION 4 — bilingual page content (UI strings + filter labels)
 // ─────────────────────────────────────────────────────────────────────────────
-export const charactersPageData: Record<"en" | "fr", CharactersPageContent> = {
+export const charactersPageData: Partial<Record<SupportedLocale, CharactersPageContent>> & {
+  en: CharactersPageContent;
+} = {
   en: {
     ui: {
       heroTagline: "ISOLELE UNIVERSE",
@@ -171,7 +242,7 @@ export const charactersPageData: Record<"en" | "fr", CharactersPageContent> = {
 // ─────────────────────────────────────────────────────────────────────────────
 type ProfilesMap = Record<string, CharacterProfile>;
 
-export const characterProfilesData: Record<"en" | "fr", ProfilesMap> = {
+export const characterProfilesData: Partial<Record<SupportedLocale, ProfilesMap>> & { en: ProfilesMap } = {
   en: {
     zaiire: {
       name: "ZAIIRE",

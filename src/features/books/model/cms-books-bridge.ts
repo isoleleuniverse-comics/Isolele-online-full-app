@@ -92,7 +92,7 @@ export function mapCmsToBookPageData(cmsData: Record<string, unknown>): BookPage
         if (block.type === "quote") {
             sections.push({
                 type: "image_quote",
-                image: asString(cmsData.coverImage) || "/royal-palace-background.png",
+                image: asString(cmsData.coverImage) || "/royal-palace-background.webp",
                 imageAlt: "Kongo Cover Story",
                 quote: asString(data.content) || asString(block.quote) || "",
                 attribution: asString(data.attribution) || asString(block.attribution) || ""
@@ -153,7 +153,7 @@ export function mapCmsToBookPageData(cmsData: Record<string, unknown>): BookPage
         slug: asString(cmsData.slug) as BookSlug,
         title: asString(cmsData.title),
         metaDescription: asString(cmsData.excerpt) || "",
-        heroImage: asString(cmsData.coverImage) || "/royal-palace-background.png",
+        heroImage: asString(cmsData.coverImage) || "/royal-palace-background.webp",
         heroTag,
         accentColor: "#F6B800", // Couleur or royale signature
         keywords: [],

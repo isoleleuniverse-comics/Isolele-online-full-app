@@ -5,7 +5,9 @@ export type NavLinkLabelKey =
   | "nav_comics"
   | "nav_characters"
   | "nav_games"
-  | "nav_all_characters";
+  | "nav_all_characters"
+  | "nav_shop"
+  | "nav_restaurant";
 
 export interface NavigationContent {
   labels: Record<NavLinkLabelKey, string>;
@@ -42,6 +44,8 @@ export const navigationContent: Record<SupportedLocale, NavigationContent> = {
       nav_characters: "Personnages",
       nav_games: "Jeux",
       nav_all_characters: "Tous les personnages",
+      nav_shop: "Boutique",
+      nav_restaurant: "Restaurant",
     },
     mobileMenu: {
       openLabel: "Ouvrir le menu",
@@ -80,6 +84,8 @@ export const navigationContent: Record<SupportedLocale, NavigationContent> = {
       nav_characters: "Characters",
       nav_games: "Games",
       nav_all_characters: "All characters",
+      nav_shop: "Shop",
+      nav_restaurant: "Restaurant",
     },
     mobileMenu: {
       openLabel: "Open menu",
@@ -108,6 +114,234 @@ export const navigationContent: Record<SupportedLocale, NavigationContent> = {
         { label: "Site map", href: "/#hero" },
         { label: "Accessibility", href: "/#hero" },
         { label: "Cookie settings", href: "/#hero" },
+      ],
+    },
+  },
+  pt: {
+    labels: {
+      nav_home: "Início",
+      nav_comics: "Comics",
+      nav_characters: "Personagens",
+      nav_games: "Jogos",
+      nav_all_characters: "Todos os personagens",
+      nav_shop: "Loja",
+      nav_restaurant: "Restaurante",
+    },
+    mobileMenu: {
+      openLabel: "Abrir menu",
+      closeLabel: "Fechar menu",
+      languageLabel: "Idioma",
+      themeLabel: "Tema",
+      themeButtonLabel: "Tema",
+    },
+    languageSwitcher: {
+      buttonLabel: "Mudar idioma",
+    },
+    footer: {
+      brandAlt: "ISOLELE - The Chosen Ones",
+      description: "Celebrando o património africano através de histórias poderosas e aventuras heróicas.",
+      exploreTitle: "Explorar",
+      resourcesTitle: "Recursos",
+      newsletterTitle: "Mantenha-se Atualizado",
+      newsletterDescription: "Receba as últimas notícias da ISOLELE na sua caixa de entrada.",
+      emailPlaceholder: "Digite o seu e-mail",
+      subscribeLabel: "Subscrever",
+      thankYouLabel: "Obrigado",
+      copyright: "Copyright 2026 ISOLELE. Todos os direitos reservados.",
+      bottomLinks: [
+        { label: "Mapa do site", href: "/#hero" },
+        { label: "Acessibilidade", href: "/#hero" },
+        { label: "Definições de cookies", href: "/#hero" },
+      ],
+    },
+  },
+  es: {
+    labels: {
+      nav_home: "Inicio",
+      nav_comics: "Comics",
+      nav_characters: "Personajes",
+      nav_games: "Juegos",
+      nav_all_characters: "Todos los personajes",
+      nav_shop: "Tienda",
+      nav_restaurant: "Restaurante",
+    },
+    mobileMenu: {
+      openLabel: "Abrir menú",
+      closeLabel: "Cerrar menú",
+      languageLabel: "Idioma",
+      themeLabel: "Tema",
+      themeButtonLabel: "Tema",
+    },
+    languageSwitcher: {
+      buttonLabel: "Cambiar idioma",
+    },
+    footer: {
+      brandAlt: "ISOLELE - The Chosen Ones",
+      description: "Celebrando la herencia africana a través de historias poderosas y aventuras heroicas.",
+      exploreTitle: "Explorar",
+      resourcesTitle: "Recursos",
+      newsletterTitle: "Mantente informado",
+      newsletterDescription: "Recibe las últimas noticias de ISOLELE en tu bandeja de entrada.",
+      emailPlaceholder: "Introduce tu correo electrónico",
+      subscribeLabel: "Suscribirse",
+      thankYouLabel: "Gracias",
+      copyright: "Copyright 2026 ISOLELE. Todos los derechos reservados.",
+      bottomLinks: [
+        { label: "Mapa del sitio", href: "/#hero" },
+        { label: "Accesibilidad", href: "/#hero" },
+        { label: "Configuración de cookies", href: "/#hero" },
+      ],
+    },
+  },
+  zu: {
+    labels: {
+      nav_home: "Ekhaya",
+      nav_comics: "Comics",
+      nav_characters: "Abalingisi",
+      nav_games: "Imidlalo",
+      nav_all_characters: "Bonke abalingisi",
+      nav_shop: "Isitolo",
+      nav_restaurant: "Irestorenti",
+    },
+    mobileMenu: {
+      openLabel: "Vula imenyu",
+      closeLabel: "Vala imenyu",
+      languageLabel: "Ulimi",
+      themeLabel: "Theme",
+      themeButtonLabel: "Theme",
+    },
+    languageSwitcher: {
+      buttonLabel: "Shintsha ulimi",
+    },
+    footer: {
+      brandAlt: "ISOLELE - The Chosen Ones",
+      description: "Sigubha ifa lama-Afrika ngezindaba ezinamandla kanye nezigigaba zobuqhawe.",
+      exploreTitle: "Hlola",
+      resourcesTitle: "Izinsiza",
+      newsletterTitle: "Hlala Unolwazi",
+      newsletterDescription: "Thola izindaba zakamuva ze-ISOLELE ebhokisini yakho ye-imeyili.",
+      emailPlaceholder: "Faka ikheli lakho le-imeyili",
+      subscribeLabel: "Bhalisela",
+      thankYouLabel: "Ngiyabonga",
+      copyright: "Copyright 2026 ISOLELE. Wonke amalungelo agodliwe.",
+      bottomLinks: [
+        { label: "Imephu yesayithi", href: "/#hero" },
+        { label: "Ukufinyeleleka", href: "/#hero" },
+        { label: "Amasethingi we-cookie", href: "/#hero" },
+      ],
+    },
+  },
+  xh: {
+    labels: {
+      nav_home: "Ekhaya",
+      nav_comics: "Comics",
+      nav_characters: "Abalinganwa",
+      nav_games: "Imidlalo",
+      nav_all_characters: "Bonke abalinganwa",
+      nav_shop: "Ivenkile",
+      nav_restaurant: "Indawo Yokutya",
+    },
+    mobileMenu: {
+      openLabel: "Vula imenyu",
+      closeLabel: "Vala imenyu",
+      languageLabel: "Ulwimi",
+      themeLabel: "Theme",
+      themeButtonLabel: "Theme",
+    },
+    languageSwitcher: {
+      buttonLabel: "Tshintsha ulwimi",
+    },
+    footer: {
+      brandAlt: "ISOLELE - The Chosen Ones",
+      description: "Sibungaza ilifa le-Afrika ngamabali anamandla kunye neenkqubo zobuqhawe.",
+      exploreTitle: "Hlola",
+      resourcesTitle: "Izixhobo",
+      newsletterTitle: "Hlala Unolwazi",
+      newsletterDescription: "Fumana iindaba zakutsha zeISOLELE kwibhokisi yakho yemeyile.",
+      emailPlaceholder: "Ngenisa idilesi yakho ye-imeyile",
+      subscribeLabel: "Bhalisela",
+      thankYouLabel: "Enkosi",
+      copyright: "Copyright 2026 ISOLELE. Onke amalungelo agciniwe.",
+      bottomLinks: [
+        { label: "Imephu yesayithi", href: "/#hero" },
+        { label: "Ukufikeleleka", href: "/#hero" },
+        { label: "Useto lwe-cookie", href: "/#hero" },
+      ],
+    },
+  },
+  sw: {
+    labels: {
+      nav_home: "Nyumbani",
+      nav_comics: "Comics",
+      nav_characters: "Wahusika",
+      nav_games: "Michezo",
+      nav_all_characters: "Wahusika wote",
+      nav_shop: "Duka",
+      nav_restaurant: "Mkahawa",
+    },
+    mobileMenu: {
+      openLabel: "Fungua menyu",
+      closeLabel: "Funga menyu",
+      languageLabel: "Lugha",
+      themeLabel: "Mandhari",
+      themeButtonLabel: "Mandhari",
+    },
+    languageSwitcher: {
+      buttonLabel: "Badilisha lugha",
+    },
+    footer: {
+      brandAlt: "ISOLELE - The Chosen Ones",
+      description: "Kusherehekea urithi wa Kiafrika kupitia hadithi zenye nguvu na matukio ya kishujaa.",
+      exploreTitle: "Gundua",
+      resourcesTitle: "Rasilimali",
+      newsletterTitle: "Kaa Umesasishwa",
+      newsletterDescription: "Pata habari za hivi punde kuhusu ISOLELE kwenye barua pepe yako.",
+      emailPlaceholder: "Ingiza barua pepe yako",
+      subscribeLabel: "Jiandikishe",
+      thankYouLabel: "Asante",
+      copyright: "Copyright 2026 ISOLELE. Haki zote zimehifadhiwa.",
+      bottomLinks: [
+        { label: "Ramani ya tovuti", href: "/#hero" },
+        { label: "Ufikivu", href: "/#hero" },
+        { label: "Mipangilio ya vidakuzi", href: "/#hero" },
+      ],
+    },
+  },
+  ln: {
+    labels: {
+      nav_home: "Ndako",
+      nav_comics: "Comics",
+      nav_characters: "Bato",
+      nav_games: "Masano",
+      nav_all_characters: "Bato nyonso",
+      nav_shop: "Butiki",
+      nav_restaurant: "Lestolá",
+    },
+    mobileMenu: {
+      openLabel: "Fungola menu",
+      closeLabel: "Kanga menu",
+      languageLabel: "Monoko",
+      themeLabel: "Theme",
+      themeButtonLabel: "Theme",
+    },
+    languageSwitcher: {
+      buttonLabel: "Bongola monoko",
+    },
+    footer: {
+      brandAlt: "ISOLELE - The Chosen Ones",
+      description: "Kosepelisa libula ya Afrika na nzela ya masapo makasi mpe maye ya bokonzi.",
+      exploreTitle: "Luka",
+      resourcesTitle: "Biloko",
+      newsletterTitle: "Zala na nsango",
+      newsletterDescription: "Zwá nsango ya sika ya ISOLELE na email na yo.",
+      emailPlaceholder: "Tía email na yo",
+      subscribeLabel: "Kokóma",
+      thankYouLabel: "Melesi",
+      copyright: "Copyright 2026 ISOLELE. Makoki nyonso ezali kobatama.",
+      bottomLinks: [
+        { label: "Karte ya site", href: "/#hero" },
+        { label: "Bokoki ya kokoma", href: "/#hero" },
+        { label: "Ba paramètre ya cookie", href: "/#hero" },
       ],
     },
   },

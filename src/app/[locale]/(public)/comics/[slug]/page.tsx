@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getComicDetailPageData, getComicStaticParams } from "@/features/comics/model/comics.data";
 import ComicDetailPage from "@/features/comics/ui/details/page";
-import { DEFAULT_LOCALE, isSupportedLocale, SUPPORTED_LOCALES, type SupportedLocale } from "@/shared/i18n/locales";
+import { buildLocaleAlternates, DEFAULT_LOCALE, isSupportedLocale, SUPPORTED_LOCALES, type SupportedLocale } from "@/shared/i18n/locales";
 
 export function generateStaticParams() {
   const comics = getComicStaticParams();
@@ -29,10 +29,7 @@ export async function generateMetadata({
     description: page.description,
     alternates: {
       canonical,
-      languages: {
-        fr: `/fr/comics/${slug}`,
-        en: `/en/comics/${slug}`,
-      },
+      languages: buildLocaleAlternates((locale) => `/${locale}/comics/${slug}`),
     },
     openGraph: {
       type: "article",

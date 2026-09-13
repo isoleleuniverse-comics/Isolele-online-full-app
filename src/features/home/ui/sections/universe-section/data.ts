@@ -38,9 +38,9 @@ export const UNIVERSE_PILLARS: UniversePillar[] = [
 
 export const UNIVERSE_BACKGROUND_IMAGES = [
   "/golden-throne-beasts.jpg",
-  "/kongo-spiritual-background.jpg",
-  "/royal-palace-background.png",
-  "/king-kufulula-background.png",
+  "/kongo-spiritual-background.webp",
+  "/royal-palace-background.webp",
+  "/king-kufulula-background.webp",
 ];
 
 export const universeData = {
@@ -128,5 +128,275 @@ fr:{
               "discoverMoreLabel": "DÉCOUVRIR KING KUFULULA"
             }
           ]
-}
+},
+  pt: {
+    title: "O UNIVERSO ISOLELE",
+    subtitle: "A África sempre teve heróis. A ISOLELE dá-lhes um universo.",
+    description:
+      "Nascido das raízes do Kongo. Construído para todas as crianças africanas que nunca se viram como heróis. A ISOLELE é o universo que sempre foi destinado a existir. O reino nunca se perdeu. Estava à espera dos seus contadores de histórias. ISOLELE PARA SEMPRE.",
+    discoverMoreLabel: "DESCOBRIR",
+    pillars: [
+      {
+        key: "destiny",
+        title: "O Leão Aprendeu a Escrever",
+        description:
+          "Um provérbio africano diz: 'Até que o leão aprenda a escrever, cada história glorificará o caçador.' A ISOLELE é a caneta do leão. A África está a escrever a sua própria história. Pela primeira vez na história, a civilização do Kongo tem o seu próprio universo de super-heróis. Heróis africanos negros criados em Kinshasa, RDC, para todas as crianças na terra que merecem ver-se como o escolhido.",
+        href: "/#hero",
+        characterName: "Zaiire",
+        discoverMoreLabel: "DESCOBRIR ZAIIRE",
+      },
+      {
+        key: "heritage",
+        title: "Tudo Começa no Kongo",
+        description:
+          "Música. Dança. Realeza. Moda. Cultura. História. Antes de o mundo ter nomes para estas coisas, o Kongo já as dominava todas. A África não é um continente. É uma fonte. E o Congo não é apenas parte dessa fonte. O Congo É a fonte. O gatilho de toda a cultura humana. O batimento cardíaco que começou tudo. A ISOLELE nasceu ali. Não por acaso. Por destino. A civilização do Kongo é o alicerce do universo ISOLELE. Cada herói, cada história, cada batalha começa onde toda a cultura humana começou. No Kongo.",
+        href: "/#hero",
+        characterName: "Kimoya",
+        discoverMoreLabel: "DESCOBRIR KIMOYA",
+      },
+      {
+        key: "resurrection",
+        title: "Sempre Foste Real",
+        description:
+          "Antes de alguém te dizer quem eras, os ancestrais já sabiam. Toda a criança nascida em solo africano, todo o membro da diáspora que atravessou oceanos e sobreviveu, toda a pessoa que carrega sangue africano nas veias sempre carregou uma coroa da qual nunca lhe falaram. A ISOLELE existe para a devolver. Não como um presente. Como um lembrete. Nunca estiveste perdido. Nunca foste menos. Nunca estiveste sem poder. Estavas apenas à espera que alguém te dissesse a verdade. Bem-vindo a casa. Esta é a verdade que a história se esqueceu de ensinar. A África não foi o começo da escravatura. A África foi o começo da civilização.",
+        href: "/royal-history",
+        characterName: "Bambula",
+        discoverMoreLabel: "DESCOBRE A TUA HISTÓRIA REAL",
+      },
+      {
+        key: "founder",
+        title: "HRM King Kufulula Bapindi Manikongo",
+        description:
+          "HRM King Kufulula Bapindi Manikongo fundou a ISOLELE para restaurar a alma da narrativa africana e criar um império mitológico onde os super-heróis africanos surgem da história autêntica do Kongo. O Rei tradicional do povo Bapindi. O Manikongo. Construído a partir de Kinshasa para o mundo.",
+        href: "/king-kufulula",
+        characterName: "King Kufulula",
+        discoverMoreLabel: "DESCOBRIR KING KUFULULA",
+      },
+    ],
+  },
+  es: {
+    title: "EL UNIVERSO ISOLELE",
+    subtitle: "África siempre ha tenido héroes. ISOLELE les da un universo.",
+    description:
+      "Nacido de las raíces de Kongo. Construido para todos los niños africanos que nunca se vieron a sí mismos como héroes. ISOLELE es el universo que siempre estuvo destinado a existir. El reino nunca se perdió. Estaba esperando a sus narradores. ISOLELE PARA SIEMPRE.",
+    discoverMoreLabel: "DESCUBRIR",
+    pillars: [
+      {
+        key: "destiny",
+        title: "El León Ha Aprendido a Escribir",
+        description:
+          "Un proverbio africano dice: 'Hasta que el león aprenda a escribir, cada historia glorificará al cazador.' ISOLELE es la pluma del león. África está escribiendo su propia historia. Por primera vez en la historia, la civilización Kongo tiene su propio universo de superhéroes. Héroes africanos negros creados en Kinshasa, RDC, para todos los niños en la tierra que merecen verse a sí mismos como el elegido.",
+        href: "/#hero",
+        characterName: "Zaiire",
+        discoverMoreLabel: "DESCUBRIR ZAIIRE",
+      },
+      {
+        key: "heritage",
+        title: "Todo Comienza en Kongo",
+        description:
+          "Música. Danza. Realeza. Moda. Cultura. Historia. Antes de que el mundo tuviera nombres para estas cosas, Kongo ya las dominaba todas. África no es un continente. Es una fuente. Y el Congo no es solo parte de esa fuente. El Congo ES la fuente. El detonante de toda la cultura humana. El latido que empezó todo. ISOLELE nació allí. No por accidente. Por destino. La civilización Kongo es el fundamento del universo ISOLELE. Cada héroe, cada historia, cada batalla comienza donde comenzó toda la cultura humana. En Kongo.",
+        href: "/#hero",
+        characterName: "Kimoya",
+        discoverMoreLabel: "DESCUBRIR KIMOYA",
+      },
+      {
+        key: "resurrection",
+        title: "Siempre Has Sido Real",
+        description:
+          "Antes de que alguien te dijera quién eras, los ancestros ya lo sabían. Cada niño nacido en suelo africano, cada miembro de la diáspora que cruzó océanos y sobrevivió, cada persona que lleva sangre africana en sus venas siempre ha llevado una corona de la que nunca le hablaron. ISOLELE existe para devolvértela. No como un regalo. Como un recordatorio. Nunca estuviste perdido. Nunca fuiste menos. Nunca estuviste sin poder. Solo estabas esperando que alguien te dijera la verdad. Bienvenido a casa. Esta es la verdad que la historia olvidó enseñar. África no fue el comienzo de la esclavitud. África fue el comienzo de la civilización.",
+        href: "/royal-history",
+        characterName: "Bambula",
+        discoverMoreLabel: "DESCUBRE TU HISTORIA REAL",
+      },
+      {
+        key: "founder",
+        title: "HRM King Kufulula Bapindi Manikongo",
+        description:
+          "HRM King Kufulula Bapindi Manikongo fundó ISOLELE para restaurar el alma de la narrativa africana y crear un imperio mitológico donde los superhéroes africanos surgen de la historia auténtica de Kongo. El Rey tradicional del pueblo Bapindi. El Manikongo. Construido desde Kinshasa para el mundo.",
+        href: "/king-kufulula",
+        characterName: "King Kufulula",
+        discoverMoreLabel: "DESCUBRIR KING KUFULULA",
+      },
+    ],
+  },
+  zu: {
+    title: "UMHLABA WE-ISOLELE",
+    subtitle: "I-Afrika ibilokhu inamaqhawe. I-ISOLELE iwanika umhlaba.",
+    description:
+      "Izalwa ezimpandeni zaseKongo. Yakhelwe zonke izingane zase-Afrika ezingazange zizibone njengamaqhawe. I-ISOLELE ingumhlaba obulokhu uhloselwe ukuba khona. Umbuso awuzange ulahleke. Wawulinde ababalisi bawo. I-ISOLELE PHAKADE.",
+    discoverMoreLabel: "HLOLA",
+    pillars: [
+      {
+        key: "destiny",
+        title: "Ibhubesi Selifundile Ukubhala",
+        description:
+          "Isaga sase-Afrika sithi: 'Kuze kube yilapho ibhubesi lifunda ukubhala, yonke indaba izokudumisa umzingeli.' I-ISOLELE iyipeni lebhubesi. I-Afrika ibhala eyayo indaba. Okokuqala emlandweni, isizwe saseKongo sinawo umhlaba wawo wamaqhawe amakhulu. Amaqhawe amnyama ase-Afrika adalelwe eKinshasa, e-DRC, zonke izingane emhlabeni ezifanele ukuzibona njengabakhethiwe.",
+        href: "/#hero",
+        characterName: "Zaiire",
+        discoverMoreLabel: "HLOLA UZAIIRE",
+      },
+      {
+        key: "heritage",
+        title: "Konke Kuqala EKongo",
+        description:
+          "Umculo. Umdanso. Ubukhosi. Imfashini. Amasiko. Umlando. Ngaphambi kokuba umhlaba ube namagama alezi zinto, iKongo yayivele ikuqonda konke. I-Afrika akulona izwekazi. Kungumthombo. NeKongo akuyona ingxenye nje yalowo mthombo. IKongo IWUMTHOMBO. Isiqalisi samasiko wonke omuntu. Ukushaya kwenhliziyo okwaqala konke. I-ISOLELE yazalelwa lapho. Hhayi ngengozi. Ngesiphetho. Isizwe saseKongo siyisisekelo somhlaba we-ISOLELE. Wonke amaqhawe, zonke izindaba, zonke izimpi ziqala lapho wonke amasiko omuntu aqala khona. EKongo.",
+        href: "/#hero",
+        characterName: "Kimoya",
+        discoverMoreLabel: "HLOLA UKIMOYA",
+      },
+      {
+        key: "resurrection",
+        title: "Ubulokhu Ungowasebukhosini",
+        description:
+          "Ngaphambi kokuba noma ubani akutshele ukuthi ungubani, okhokho babevele bekwazi. Yonke ingane ezalelwe emhlabathini wase-Afrika, wonke umuntu wokuhlakazeka owewele izilwandle waphila, wonke umuntu othwele igazi lase-Afrika ubelokhu ethwele umqhele angakaze axoxelwe ngawo. I-ISOLELE ikhona ukuwubuyisela. Hhayi njengesipho. Njengesikhumbuzo. Awuzange ulahleke. Awuzange ube ngaphansi. Awuzange ube ngaphandle kwamandla. Ubulinde nje ukuba othize akutshele iqiniso. Wamukelekile ekhaya. Leli yiqiniso umlando owakhohlwa ukulifundisa. I-Afrika akuyona lapho kwaqala khona ubugqila. I-Afrika kwaqala khona amasiko.",
+        href: "/royal-history",
+        characterName: "Bambula",
+        discoverMoreLabel: "HLOLA UMLANDO WAKHO WOBUKHOSI",
+      },
+      {
+        key: "founder",
+        title: "HRM King Kufulula Bapindi Manikongo",
+        description:
+          "HRM King Kufulula Bapindi Manikongo wasungula i-ISOLELE ukuze abuyisele umphefumulo wokulandisa kwase-Afrika futhi adale umbuso wezinganekwane lapho amaqhawe amakhulu ase-Afrika evuka emlandweni wangempela waseKongo. Inkosi yendabuko yabantu baseBapindi. UManikongo. Yakhiwa kusukela eKinshasa iyiswa emhlabeni.",
+        href: "/king-kufulula",
+        characterName: "King Kufulula",
+        discoverMoreLabel: "HLOLA UKING KUFULULA",
+      },
+    ],
+  },
+  xh: {
+    title: "IHLABATHI LE-ISOLELE",
+    subtitle: "I-Afrika ibisoloko inamaqhawe. I-ISOLELE iwanika ihlabathi.",
+    description:
+      "Izalwa kwiingcambu zaseKongo. Yakhelwe wonke umntwana wase-Afrika ongazange azibone njengeqhawe. I-ISOLELE lihlabathi ebelisoloko lihloselwe ukubakho. Ubukumkani abuzange bulahleke. Bebulinde ababalisi babo. I-ISOLELE NGONAPHAKADE.",
+    discoverMoreLabel: "FUMANISA",
+    pillars: [
+      {
+        key: "destiny",
+        title: "Ingonyama Ifundile Ukubhala",
+        description:
+          "Iqhalo lase-Afrika lithi: 'Kude kube ngunaphakade ingonyama ifunda ukubhala, onke amabali aya kudumisa umzingeli.' I-ISOLELE lipeni lengonyama. I-Afrika ibhala eyayo ibali. Okokuqala kwimbali, uhlanga lwaseKongo lunelo ihlabathi lawo lamaqhawe amakhulu. Amaqhawe amnyama ase-Afrika enziwe eKinshasa, e-DRC, kuwo onke umntwana emhlabeni ofanelwe kukuzibona njengokhethiweyo.",
+        href: "/#hero",
+        characterName: "Zaiire",
+        discoverMoreLabel: "FUMANISA UZAIIRE",
+      },
+      {
+        key: "heritage",
+        title: "Yonke Into Iqala EKongo",
+        description:
+          "Umculo. Umdaniso. Ubukumkani. Imfashoni. Inkcubeko. Imbali. Phambi kokuba ihlabathi libe namagama ezi zinto, iKongo yayisele iziqonda zonke. I-Afrika ayisiyo ilizwekazi. Ngumthombo. NeKongo ayisiyongxenye nje yaloo mthombo. IKongo INGUMTHOMBO. Isiqalisi senkcubeko yonke yomntu. Ukubetha kwentliziyo okwaqala yonke into. I-ISOLELE yazalelwa apho. Hayi ngengozi. Ngesiphelo. Uhlanga lwaseKongo luyisiseko sehlabathi le-ISOLELE. Onke amaqhawe, onke amabali, zonke iimfazwe ziqala apho yonke inkcubeko yomntu yaqala khona. EKongo.",
+        href: "/#hero",
+        characterName: "Kimoya",
+        discoverMoreLabel: "FUMANISA UKIMOYA",
+      },
+      {
+        key: "resurrection",
+        title: "Ubusoloko Ungowasebukhosini",
+        description:
+          "Phambi kokuba nabani na akuxelele ukuba ungubani, ookhokho babesele besazi. Wonke umntwana ozalelwe emhlabeni wase-Afrika, wonke ilungu lokuchithakala elawela iilwandle laza laphila, wonke umntu othwele igazi lase-Afrika ubesoloko ethwele umqhele angazange axelelwe ngawo. I-ISOLELE ikho ukuwubuyisela. Hayi njengesipho. Njengesikhumbuzo. Awuzange ulahleke. Awuzange ube phantsi. Awuzange ube ngaphandle kwamandla. Bewulindele nje ukuba omnye akuxelele inyaniso. Wamkelekile ekhaya. Le yinyaniso imbali eyalibalayo ukuyifundisa. I-Afrika ayisiyondawo apho kwaqala khona ubukhoboka. I-Afrika kwaqala khona inkcubeko.",
+        href: "/royal-history",
+        characterName: "Bambula",
+        discoverMoreLabel: "FUMANISA IMBALI YAKHO YOBUKHOSI",
+      },
+      {
+        key: "founder",
+        title: "HRM King Kufulula Bapindi Manikongo",
+        description:
+          "HRM King Kufulula Bapindi Manikongo waseka i-ISOLELE ukuze abuyisele umphefumlo wokubalisa kwase-Afrika kwaye adale ubukumkani beentsomi apho amaqhawe amakhulu ase-Afrika avela kwimbali yokwenene yaseKongo. Ukumkani wemveli wabantu baseBapindi. UManikongo. Yakhiwe ukususela eKinshasa isiya ehlabathini.",
+        href: "/king-kufulula",
+        characterName: "King Kufulula",
+        discoverMoreLabel: "FUMANISA UKING KUFULULA",
+      },
+    ],
+  },
+  sw: {
+    title: "ULIMWENGU WA ISOLELE",
+    subtitle: "Afrika daima imekuwa na mashujaa. ISOLELE inawapa ulimwengu.",
+    description:
+      "Alizaliwa kutoka mizizi ya Kongo. Alijengwa kwa ajili ya kila mtoto wa Kiafrika ambaye hakuwahi kujiona kama shujaa. ISOLELE ni ulimwengu ambao daima ulikusudiwa kuwepo. Ufalme haukupotea kamwe. Ulikuwa unasubiri wasimulizi wake. ISOLELE MILELE.",
+    discoverMoreLabel: "GUNDUA",
+    pillars: [
+      {
+        key: "destiny",
+        title: "Simba Amejifunza Kuandika",
+        description:
+          "Msemo wa Kiafrika unasema: 'Mpaka simba ajifunze kuandika, kila hadithi itamtukuza mwindaji.' ISOLELE ni kalamu ya simba. Afrika inaandika hadithi yake yenyewe. Kwa mara ya kwanza katika historia, ustaarabu wa Kongo una ulimwengu wake wa mashujaa wakuu. Mashujaa weusi wa Kiafrika waliobuniwa Kinshasa, DRC, kwa kila mtoto duniani anayestahili kujiona kama mteule.",
+        href: "/#hero",
+        characterName: "Zaiire",
+        discoverMoreLabel: "GUNDUA ZAIIRE",
+      },
+      {
+        key: "heritage",
+        title: "Kila Kitu Kinaanzia Kongo",
+        description:
+          "Muziki. Ngoma. Ufalme. Mitindo. Utamaduni. Historia. Kabla ulimwengu haujawa na majina kwa vitu hivi, Kongo ilikuwa tayari imevimudu vyote. Afrika si bara. Ni chanzo. Na Kongo si sehemu tu ya chanzo hicho. Kongo NDIYO chanzo. Kianzishi cha utamaduni wote wa binadamu. Mapigo ya moyo yaliyoanzisha kila kitu. ISOLELE ilizaliwa hapo. Sio kwa bahati. Kwa hatima. Ustaarabu wa Kongo ndio msingi wa ulimwengu wa ISOLELE. Kila shujaa, kila hadithi, kila vita huanzia pale utamaduni wote wa binadamu ulipoanzia. Kongo.",
+        href: "/#hero",
+        characterName: "Kimoya",
+        discoverMoreLabel: "GUNDUA KIMOYA",
+      },
+      {
+        key: "resurrection",
+        title: "Daima Umekuwa wa Kifalme",
+        description:
+          "Kabla ya mtu yeyote kukuambia ulikuwa nani, mababu walikwisha jua. Kila mtoto aliyezaliwa katika ardhi ya Kiafrika, kila mwanachama wa diaspora aliyevuka bahari na kuishi, kila mtu anayebeba damu ya Kiafrika mishipani mwake daima amebeba taji ambalo hakuwahi kuambiwa kulihusu. ISOLELE ipo kulirudisha. Sio kama zawadi. Kama ukumbusho. Haukuwahi kupotea. Haukuwahi kuwa duni. Haukuwahi kuwa bila nguvu. Ulikuwa tu unasubiri mtu akuambie ukweli. Karibu nyumbani. Huu ndio ukweli ambao historia ilisahau kufundisha. Afrika haikuwa mwanzo wa utumwa. Afrika ilikuwa mwanzo wa ustaarabu.",
+        href: "/royal-history",
+        characterName: "Bambula",
+        discoverMoreLabel: "GUNDUA HISTORIA YAKO YA KIFALME",
+      },
+      {
+        key: "founder",
+        title: "HRM King Kufulula Bapindi Manikongo",
+        description:
+          "HRM King Kufulula Bapindi Manikongo alianzisha ISOLELE kurejesha roho ya usimulizi wa Kiafrika na kuunda dola la hadithi ambapo mashujaa wakuu wa Kiafrika wanainuka kutoka historia halisi ya Kongo. Mfalme wa asili wa watu wa Bapindi. Manikongo. Alijengwa kutoka Kinshasa kwa ajili ya ulimwengu.",
+        href: "/king-kufulula",
+        characterName: "King Kufulula",
+        discoverMoreLabel: "GUNDUA KING KUFULULA",
+      },
+    ],
+  },
+  ln: {
+    title: "MOKILI YA ISOLELE",
+    subtitle: "Afrika ezalaki na ba héros ntango nyonso. ISOLELE epesi bango mokili.",
+    description:
+      "Abotami na misisa ya Kongo. Etongami mpo na mwana nyonso ya Afrika oyo amimonaki naino héros te. ISOLELE ezali mokili oyo ezalaki ntango nyonso mpo na kozala. Bokonzi ebungaki ata mokolo moko te. Ezalaki kozela bato ya kobimisa masolo na yango. ISOLELE LIBELA.",
+    discoverMoreLabel: "LUKA",
+    pillars: [
+      {
+        key: "destiny",
+        title: "Nkosi Ayekoli Kokoma",
+        description:
+          "Lisese moko ya Afrika elobi: 'Kino nkosi eyekola kokoma, lisolo nyonso ekokumisa kaka mobomi-nyama.' ISOLELE ezali kalamu ya nkosi. Afrika azali kokoma lisolo na ye moko. Mbala ya liboso na lisolo, bomoto ya Kongo ezali na mokili na yango moko ya ba héros minene. Ba héros ya mwindo ya Afrika basalemi na Kinshasa, RDC, mpo na mwana nyonso na mokili oyo abongi komimona lokola moponomi.",
+        href: "/#hero",
+        characterName: "Zaiire",
+        discoverMoreLabel: "LUKA ZAIIRE",
+      },
+      {
+        key: "heritage",
+        title: "Nyonso Ebandaka na Kongo",
+        description:
+          "Miziki. Mabina. Bokonzi. Bilamba. Mimeseno. Lisolo. Liboso mokili ezala na nkombo mpo na biloko oyo, Kongo esilaki koyeba yango nyonso. Afrika ezali kontinan te. Ezali liziba. Mpe Kongo ezali kaka eteni ya liziba yango te. Kongo EZALI liziba. Ebandeli ya mimeseno nyonso ya bomoto. Kobeta ya motema oyo ebandisaki nyonso. ISOLELE abotamaki wana. Na likambo ya mbala moko te. Na destin. Bomoto ya Kongo ezali fondation ya mokili ya ISOLELE. Héros nyonso, lisolo nyonso, etumba nyonso ebandaka esika mimeseno nyonso ya bomoto ebandaki. Na Kongo.",
+        href: "/#hero",
+        characterName: "Kimoya",
+        discoverMoreLabel: "LUKA KIMOYA",
+      },
+      {
+        key: "resurrection",
+        title: "Ozalaki Ntango Nyonso ya Bokonzi",
+        description:
+          "Liboso moto ayebisa yo nani ozalaki, bankoko bayebaki déjà. Mwana nyonso abotami na mabele ya Afrika, moto nyonso ya diaspora oyo akatisaki mbu mpe abikaki, moto nyonso oyo amemi makila ya Afrika na mikuwa na ye amemaki ntango nyonso motole oyo bayebisaki ye ata mokolo moko te. ISOLELE ezali mpo na kozongisela yo yango. Na likambo ya kabo te. Na ekaniseli. Obungaki ata mokolo moko te. Ozalaki moke ata mokolo moko te. Ozalaki kozanga nguya ata mokolo moko te. Ozalaki kaka kozela ete moto moko ayebisa yo bosolo. Boyei malamu na ndako. Oyo ezali bosolo oyo lisolo ebosanaki koteya. Afrika ezalaki ebandeli ya boombo te. Afrika ezalaki ebandeli ya bomoto.",
+        href: "/royal-history",
+        characterName: "Bambula",
+        discoverMoreLabel: "LUKA LISOLO NA YO YA BOKONZI",
+      },
+      {
+        key: "founder",
+        title: "HRM King Kufulula Bapindi Manikongo",
+        description:
+          "HRM King Kufulula Bapindi Manikongo abandisaki ISOLELE mpo na kozongisa molimo ya masolo ya Afrika mpe kosala bokonzi ya masapo esika ba héros minene ya Afrika bazali kobima na lisolo ya solo ya Kongo. Mokonzi ya bonkoko ya bato ya Bapindi. Manikongo. Etongami kobanda na Kinshasa mpo na mokili.",
+        href: "/king-kufulula",
+        characterName: "King Kufulula",
+        discoverMoreLabel: "LUKA KING KUFULULA",
+      },
+    ],
+  },
 };

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { characterProfilesData, CHARACTER_SLUGS } from "./characters.data";
-import { isSupportedLocale, type SupportedLocale, DEFAULT_LOCALE } from "@/shared/i18n/locales";
+import { buildLocaleAlternates, isSupportedLocale, type SupportedLocale, DEFAULT_LOCALE } from "@/shared/i18n/locales";
 
 export type CharacterSlug = typeof CHARACTER_SLUGS[number];
 
@@ -33,7 +33,7 @@ export function getCharacterMetadata(locale: string, slug: string): Metadata {
     description: pageDescription,
     alternates: {
       canonical: path,
-      languages: { fr: `/fr/characters/${slug}`, en: `/en/characters/${slug}` },
+      languages: buildLocaleAlternates((locale) => `/${locale}/characters/${slug}`),
     },
     openGraph: {
       type: "article",

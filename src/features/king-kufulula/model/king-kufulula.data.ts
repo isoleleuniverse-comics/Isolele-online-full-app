@@ -110,7 +110,9 @@ const sectionsFr: KingKufululaSection[] = [
   },
 ];
 
-const contentByLocale: Record<SupportedLocale, Omit<KingKufululaPageContent, "locale">> = {
+const contentByLocale: Partial<Record<SupportedLocale, Omit<KingKufululaPageContent, "locale">>> & {
+  en: Omit<KingKufululaPageContent, "locale">;
+} = {
   en: {
     hero: {
       founderBadge: "Founder of ISOLELE",

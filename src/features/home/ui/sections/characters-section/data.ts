@@ -110,8 +110,85 @@ export const charactersData = {
         color: "#9932CC",
       },
     ],
-  }
-
+  },
+  pt: {
+    title: "OS ESCOLHIDOS",
+    subtitle: "Conheça os heróis, lendas e guardiões do Universo Isolele",
+    discoverLabel: "DESCOBRIR",
+    items: [
+      { id: "zaiire", name: "ZAIIRE", title: "O Príncipe do Kongo e o Colar do Destino", description: "Filho do trovão e da realeza, escolhido pelo Colar do Destino.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg", color: "#F6B800" },
+      { id: "bambula", name: "BAMBULA", title: "Filho do Ritmo", description: "Guerreiro das savanas, mestre do fogo sagrado e da natureza selvagem.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", color: "#B3541E" },
+      { id: "kimoya", name: "MAKANDA", title: "O Império Mais Poderoso da História", description: "Imperatriz guerreira cuja corte real segura o destino do continente nas mãos.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260323-WA0012-2zfYaTNiUmh8XgNPMwbkLcKExGX65Q.jpg", color: "#C0392B" },
+      { id: "mokele", name: "MOKELE", title: "Coroado pelas Ruas", description: "Herdeiro do caos urbano e do poder ancestral, coroado pelas ruas.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5bdc2ecc-913b-412b-a840-2a5197cd801a.jpeg", color: "#4169E1" },
+      { id: "kufulula", name: "HRM KING KUFULULA", title: "Visionário - Arquiteto Cultural - Realeza Africana", description: "Monarca lendário, protetor da linhagem real da ISOLELE.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg", color: "#8B6914", discover: "Conheça o rei" },
+      { id: "ensemble", name: "A ASSEMBLEIA ISOLELE", title: "Os Escolhidos Unidos", description: "Todos os guerreiros e rainhas do reino ZAIIRE unidos em seu esplendor.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c389067b-e5b3-4664-8c15-26b59810c68b.jpeg", color: "#9932CC" },
+    ],
+  },
+  es: {
+    title: "LOS ELEGIDOS",
+    subtitle: "Conoce a los héroes, leyendas y guardianes del Universo Isolele",
+    discoverLabel: "DESCUBRIR",
+    items: [
+      { id: "zaiire", name: "ZAIIRE", title: "El Príncipe de Kongo y el Collar del Destino", description: "Hijo del trueno y la realeza, elegido por el Collar del Destino.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg", color: "#F6B800" },
+      { id: "bambula", name: "BAMBULA", title: "Hijo del Ritmo", description: "Guerrero de las sabanas, maestro del fuego sagrado y la naturaleza salvaje.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", color: "#B3541E" },
+      { id: "kimoya", name: "MAKANDA", title: "El Imperio Más Poderoso de la Historia", description: "Emperatriz guerrera cuya corte real sostiene el destino del continente en sus manos.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260323-WA0012-2zfYaTNiUmh8XgNPMwbkLcKExGX65Q.jpg", color: "#C0392B" },
+      { id: "mokele", name: "MOKELE", title: "Coronado por las Calles", description: "Heredero del caos urbano y el poder ancestral, coronado por las calles.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5bdc2ecc-913b-412b-a840-2a5197cd801a.jpeg", color: "#4169E1" },
+      { id: "kufulula", name: "HRM KING KUFULULA", title: "Visionario - Arquitecto Cultural - Realeza Africana", description: "Monarca legendario, protector del linaje real de ISOLELE.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg", color: "#8B6914", discover: "Conoce al rey" },
+      { id: "ensemble", name: "LA ASAMBLEA ISOLELE", title: "Los Elegidos Unidos", description: "Todos los guerreros y reinas del reino ZAIIRE unidos en su esplendor.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c389067b-e5b3-4664-8c15-26b59810c68b.jpeg", color: "#9932CC" },
+    ],
+  },
+  zu: {
+    title: "ABAKHETHIWE",
+    subtitle: "Hlangana namaqhawe, izinganekwane, kanye nabalindi Bomhlaba we-Isolele",
+    discoverLabel: "HLOLA",
+    items: [
+      { id: "zaiire", name: "ZAIIRE", title: "Inkosana yaseKongo Nomgexo Wesiphetho", description: "Indodana kanyazi nobukhosi, ekhethwe nguMgexo Wesiphetho.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg", color: "#F6B800" },
+      { id: "bambula", name: "BAMBULA", title: "Umntwana Womdlalo", description: "Ibutho lezingoqweni, umbusi womlilo ongcwele nemvelo eyinkanuka.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", color: "#B3541E" },
+      { id: "kimoya", name: "MAKANDA", title: "Umbuso Onamandla Kunayo Yonke Emlandweni", description: "Umbusi wempi onenkantolo yasebukhosini ephethe isiphetho sezwekazi ezandleni zayo.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260323-WA0012-2zfYaTNiUmh8XgNPMwbkLcKExGX65Q.jpg", color: "#C0392B" },
+      { id: "mokele", name: "MOKELE", title: "Wagcotshwa Yimigwaqo", description: "Indlalifa yesiyaluyalu semadolobheni kanye namandla okhokho, ogcotshwe imigwaqo.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5bdc2ecc-913b-412b-a840-2a5197cd801a.jpeg", color: "#4169E1" },
+      { id: "kufulula", name: "HRM KING KUFULULA", title: "Onombono - Umakhi Wamasiko - Ubukhosi Base-Afrika", description: "Inkosi engenakukhohlakala, umvikeli wolibo lobukhosi lwe-ISOLELE.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg", color: "#8B6914", discover: "Hlangana nenkosi" },
+      { id: "ensemble", name: "UMHLANGANO WE-ISOLELE", title: "Abakhethiwe Behlangene", description: "Wonke amabutho nezindlovukazi zombuso wakwaZAIIRE behlangene ebuhleni babo.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c389067b-e5b3-4664-8c15-26b59810c68b.jpeg", color: "#9932CC" },
+    ],
+  },
+  xh: {
+    title: "ABAKHETHIWEYO",
+    subtitle: "Dibana namaqhawe, iintsomi, kunye nabalindi beHlabathi le-Isolele",
+    discoverLabel: "FUMANISA",
+    items: [
+      { id: "zaiire", name: "ZAIIRE", title: "Inkosana yaseKongo neQhosha leSiphelo", description: "Unyana wombane nobukhosi, okhethwe liQhosha leSiphelo.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg", color: "#F6B800" },
+      { id: "bambula", name: "BAMBULA", title: "Umntwana Womqhafazo", description: "Ijoni lasezindle, umbusi womlilo ongcwele nendalo yasendle.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", color: "#B3541E" },
+      { id: "kimoya", name: "MAKANDA", title: "Ubukumkani Obunamandla Ngaphezulu Kwimbali", description: "Umlawuli wemfazwe onenkundla yasebukhosini ephethe isiphelo somhlaba ngezandla zakhe.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260323-WA0012-2zfYaTNiUmh8XgNPMwbkLcKExGX65Q.jpg", color: "#C0392B" },
+      { id: "mokele", name: "MOKELE", title: "Wagcotywa Zizitrato", description: "Indlalifa yesiphithi-phithi sedolophu kunye namandla okhokho, ogcotywe zizitrato.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5bdc2ecc-913b-412b-a840-2a5197cd801a.jpeg", color: "#4169E1" },
+      { id: "kufulula", name: "HRM KING KUFULULA", title: "Onombono - Umyili Wenkcubeko - Ubukhosi base-Afrika", description: "Ukumkani ongenakulityalwa, umkhuseli wolwelo lobukhosi lwe-ISOLELE.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg", color: "#8B6914", discover: "Dibana nokumkani" },
+      { id: "ensemble", name: "IBHUNGA LE-ISOLELE", title: "Abakhethiweyo Bemanyene", description: "Onke amajoni needlovukazi zobukumkani baseZAIIRE bemanyene bubuhle babo.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c389067b-e5b3-4664-8c15-26b59810c68b.jpeg", color: "#9932CC" },
+    ],
+  },
+  sw: {
+    title: "WATEULE",
+    subtitle: "Kutana na mashujaa, hekaya, na walinzi wa Ulimwengu wa Isolele",
+    discoverLabel: "GUNDUA",
+    items: [
+      { id: "zaiire", name: "ZAIIRE", title: "Mkuu wa Kongo na Mkufu wa Hatima", description: "Mwana wa radi na ufalme, aliyeteuliwa na Mkufu wa Hatima.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg", color: "#F6B800" },
+      { id: "bambula", name: "BAMBULA", title: "Mwana wa Mdundo", description: "Shujaa wa savanna, bwana wa moto mtakatifu na maumbile ya porini.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", color: "#B3541E" },
+      { id: "kimoya", name: "MAKANDA", title: "Dola Lenye Nguvu Zaidi Katika Historia", description: "Malkia shujaa ambaye baraza lake la kifalme linashikilia hatima ya bara mikononi mwake.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260323-WA0012-2zfYaTNiUmh8XgNPMwbkLcKExGX65Q.jpg", color: "#C0392B" },
+      { id: "mokele", name: "MOKELE", title: "Aliyetawazwa na Mitaa", description: "Mrithi wa machafuko ya mjini na nguvu za mababu, aliyetawazwa na mitaa.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5bdc2ecc-913b-412b-a840-2a5197cd801a.jpeg", color: "#4169E1" },
+      { id: "kufulula", name: "HRM KING KUFULULA", title: "Mwenye Maono - Mbunifu wa Utamaduni - Ufalme wa Kiafrika", description: "Mfalme wa hekaya, mlinzi wa ukoo wa kifalme wa ISOLELE.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg", color: "#8B6914", discover: "Kutana na mfalme" },
+      { id: "ensemble", name: "BARAZA LA ISOLELE", title: "Wateule Wameungana", description: "Mashujaa wote na malkia wa ufalme wa ZAIIRE wameungana katika fahari yao.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c389067b-e5b3-4664-8c15-26b59810c68b.jpeg", color: "#9932CC" },
+    ],
+  },
+  ln: {
+    title: "BAPONOMI",
+    subtitle: "Kutana na ba héros, masapo, mpe bakengeli ya Mokili ya Isolele",
+    discoverLabel: "LUKA",
+    items: [
+      { id: "zaiire", name: "ZAIIRE", title: "Mwana-mokonzi ya Kongo mpe Mondele ya Destin", description: "Mwana ya nkake mpe bokonzi, aponomi na Mondele ya Destin.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ZAIIRE%20-%20PRINCE%20OF%20KONGO-hmOq1ET63L87xXbWVilEom8IqvT0jo.jpg", color: "#F6B800" },
+      { id: "bambula", name: "BAMBULA", title: "Mwana ya Ngoma", description: "Elombe ya savane, moto ya moto ya bule mpe bomoto ya zamba.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", color: "#B3541E" },
+      { id: "kimoya", name: "MAKANDA", title: "Bokonzi ya Nguya Koleka na Lisolo", description: "Reine ya bitumba oyo lisanga na ye ya bokonzi esimbi destin ya kontinan na maboko na ye.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260323-WA0012-2zfYaTNiUmh8XgNPMwbkLcKExGX65Q.jpg", color: "#C0392B" },
+      { id: "mokele", name: "MOKELE", title: "Atiami na Kiti na Balabala", description: "Mokitani ya mobulu ya engumba mpe nguya ya bankoko, atiami na kiti na balabala.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5bdc2ecc-913b-412b-a840-2a5197cd801a.jpeg", color: "#4169E1" },
+      { id: "kufulula", name: "HRM KING KUFULULA", title: "Moto ya Vision - Motongi ya Mimeseno - Bokonzi ya Afrika", description: "Mokonzi ya lisolo, mobateli ya libota ya bokonzi ya ISOLELE.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/King%20kufulula-1pEeYE9t1QYruZhNooZuPw7Nkd1A8l.jpg", color: "#8B6914", discover: "Kutana na mokonzi" },
+      { id: "ensemble", name: "LISANGA YA ISOLELE", title: "Baponomi Basangani", description: "Basoda nyonso mpe ba reine ya bokonzi ya ZAIIRE basangani na kitoko na bango.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c389067b-e5b3-4664-8c15-26b59810c68b.jpeg", color: "#9932CC" },
+    ],
+  },
 };
 
 

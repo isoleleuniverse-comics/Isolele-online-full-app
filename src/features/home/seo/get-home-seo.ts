@@ -1,7 +1,8 @@
 import { absoluteUrl } from "@/shared/seo/site-url";
 import type { HomeLocale, HomeSeoConfig } from "@/features/home/content";
+import { buildLocaleAlternates } from "@/shared/i18n/locales";
 
-const metadataByLocale: Record<HomeLocale, HomeSeoConfig["metadata"]> = {
+const metadataByLocale: Partial<Record<HomeLocale, HomeSeoConfig["metadata"]>> & { en: HomeSeoConfig["metadata"] } = {
   en: {
     title: "Black African Superhero Comics | Kongo Universe | ISOLELE",
     description:
@@ -33,10 +34,7 @@ const metadataByLocale: Record<HomeLocale, HomeSeoConfig["metadata"]> = {
     },
     alternates: {
       canonical: "/en",
-      languages: {
-        fr: "/fr",
-        en: "/en",
-      },
+      languages: buildLocaleAlternates((locale) => `/${locale}`),
     },
   },
   fr: {
@@ -70,15 +68,140 @@ const metadataByLocale: Record<HomeLocale, HomeSeoConfig["metadata"]> = {
     },
     alternates: {
       canonical: "/fr",
-      languages: {
-        fr: "/fr",
-        en: "/en",
-      },
+      languages: buildLocaleAlternates((locale) => `/${locale}`),
     },
+  },
+  pt: {
+    title: "Comics de Super-Heróis Africanos Negros | Universo Kongo | ISOLELE",
+    description:
+      "A ISOLELE é o primeiro universo de super-heróis africanos negros enraizado na herança autêntica do Kongo. Descubra Zaiire, Kufu, heróis africanos negros e um mundo onde a África sempre teve heróis.",
+    keywords: [
+      "comics de super-heróis africanos negros",
+      "universo de super-heróis africano",
+      "comics de mitologia kongo",
+      "comics pan-africanos",
+      "fantasia africana",
+      "comics congoleses",
+      "jogo de cartas Kufu",
+      "Zaiire",
+      "herança kongo",
+      "ISOLELE",
+    ],
+    openGraph: {
+      title: "Comics de Super-Heróis Africanos Negros | Universo Kongo | ISOLELE",
+      description: "O primeiro universo de super-heróis africanos negros enraizado na herança do Kongo.",
+      url: "/pt",
+      images: [{ url: absoluteUrl("/LOGO.png"), width: 512, height: 512, alt: "ISOLELE icon" }],
+    },
+    alternates: { canonical: "/pt", languages: buildLocaleAlternates((locale) => `/${locale}`) },
+  },
+  es: {
+    title: "Cómics de Superhéroes Africanos Negros | Universo Kongo | ISOLELE",
+    description:
+      "ISOLELE es el primer universo de superhéroes africanos negros arraigado en la auténtica herencia de Kongo. Descubre a Zaiire, Kufu, héroes africanos negros y un mundo donde África siempre ha tenido héroes.",
+    keywords: [
+      "cómics de superhéroes africanos negros",
+      "universo de superhéroes africano",
+      "cómics de mitología kongo",
+      "cómics panafricanos",
+      "fantasía africana",
+      "cómics congoleños",
+      "juego de cartas Kufu",
+      "Zaiire",
+      "herencia kongo",
+      "ISOLELE",
+    ],
+    openGraph: {
+      title: "Cómics de Superhéroes Africanos Negros | Universo Kongo | ISOLELE",
+      description: "El primer universo de superhéroes africanos negros arraigado en la herencia de Kongo.",
+      url: "/es",
+      images: [{ url: absoluteUrl("/LOGO.png"), width: 512, height: 512, alt: "ISOLELE icon" }],
+    },
+    alternates: { canonical: "/es", languages: buildLocaleAlternates((locale) => `/${locale}`) },
+  },
+  zu: {
+    title: "Amacomics Amaqhawe Amakhulu Amnyama Ase-Afrika | Umhlaba WaseKongo | ISOLELE",
+    description:
+      "I-ISOLELE ingumhlaba wokuqala wamaqhawe amakhulu amnyama ase-Afrika ogxile efeni langempela laseKongo. Thola uZaiire, uKufu, amaqhawe amakhulu amnyama ase-Afrika, kanye nomhlaba lapho i-Afrika ibilokhu inamaqhawe.",
+    keywords: [
+      "amacomics amaqhawe amnyama ase-Afrika",
+      "umhlaba wamaqhawe ase-Afrika",
+      "amacomics enganekwane yaseKongo",
+      "amacomics ase-Afrika yonke",
+      "ISOLELE",
+      "Zaiire",
+    ],
+    openGraph: {
+      title: "Amacomics Amaqhawe Amakhulu Amnyama Ase-Afrika | Umhlaba WaseKongo | ISOLELE",
+      description: "Umhlaba wokuqala wamaqhawe amakhulu amnyama ase-Afrika ogxile efeni laseKongo.",
+      url: "/zu",
+      images: [{ url: absoluteUrl("/LOGO.png"), width: 512, height: 512, alt: "ISOLELE icon" }],
+    },
+    alternates: { canonical: "/zu", languages: buildLocaleAlternates((locale) => `/${locale}`) },
+  },
+  xh: {
+    title: "Ii-Comics Zamaqhawe Amakhulu Amnyama Ase-Afrika | Ihlabathi LaseKongo | ISOLELE",
+    description:
+      "I-ISOLELE lihlabathi lokuqala lamaqhawe amakhulu amnyama ase-Afrika elingcamele elifeni lokwenene laseKongo. Fumana uZaiire, uKufu, amaqhawe amakhulu amnyama ase-Afrika, kunye nehlabathi apho i-Afrika ibisoloko inamaqhawe.",
+    keywords: [
+      "ii-comics zamaqhawe amnyama ase-Afrika",
+      "ihlabathi lamaqhawe ase-Afrika",
+      "ii-comics zentsomi zaseKongo",
+      "ii-comics zase-Afrika yonke",
+      "ISOLELE",
+      "Zaiire",
+    ],
+    openGraph: {
+      title: "Ii-Comics Zamaqhawe Amakhulu Amnyama Ase-Afrika | Ihlabathi LaseKongo | ISOLELE",
+      description: "Ihlabathi lokuqala lamaqhawe amakhulu amnyama ase-Afrika elingcamele elifeni laseKongo.",
+      url: "/xh",
+      images: [{ url: absoluteUrl("/LOGO.png"), width: 512, height: 512, alt: "ISOLELE icon" }],
+    },
+    alternates: { canonical: "/xh", languages: buildLocaleAlternates((locale) => `/${locale}`) },
+  },
+  sw: {
+    title: "Katuni za Mashujaa Wakuu Weusi wa Kiafrika | Ulimwengu wa Kongo | ISOLELE",
+    description:
+      "ISOLELE ni ulimwengu wa kwanza wa mashujaa wakuu weusi wa Kiafrika uliojikita katika urithi halisi wa Kongo. Gundua Zaiire, Kufu, mashujaa weusi wa Kiafrika, na ulimwengu ambao Afrika daima imekuwa na mashujaa.",
+    keywords: [
+      "katuni za mashujaa weusi wa Kiafrika",
+      "ulimwengu wa mashujaa wa Kiafrika",
+      "katuni za hekaya za Kongo",
+      "katuni za Kiafrika mzima",
+      "ISOLELE",
+      "Zaiire",
+    ],
+    openGraph: {
+      title: "Katuni za Mashujaa Wakuu Weusi wa Kiafrika | Ulimwengu wa Kongo | ISOLELE",
+      description: "Ulimwengu wa kwanza wa mashujaa wakuu weusi wa Kiafrika uliojikita katika urithi wa Kongo.",
+      url: "/sw",
+      images: [{ url: absoluteUrl("/LOGO.png"), width: 512, height: 512, alt: "ISOLELE icon" }],
+    },
+    alternates: { canonical: "/sw", languages: buildLocaleAlternates((locale) => `/${locale}`) },
+  },
+  ln: {
+    title: "Ba Comics ya Ba Héros Minene ya Mwindo ya Afrika | Mokili ya Kongo | ISOLELE",
+    description:
+      "ISOLELE ezali mokili ya liboso ya ba héros minene ya mwindo ya Afrika oyo etongami na libula ya solo ya Kongo. Yeba Zaiire, Kufu, ba héros ya mwindo ya Afrika, mpe mokili esika Afrika azalaki na ba héros ntango nyonso.",
+    keywords: [
+      "ba comics ya ba héros ya mwindo ya Afrika",
+      "mokili ya ba héros ya Afrika",
+      "ba comics ya masapo ya Kongo",
+      "ba comics ya Afrika mobimba",
+      "ISOLELE",
+      "Zaiire",
+    ],
+    openGraph: {
+      title: "Ba Comics ya Ba Héros Minene ya Mwindo ya Afrika | Mokili ya Kongo | ISOLELE",
+      description: "Mokili ya liboso ya ba héros minene ya mwindo ya Afrika etongami na libula ya Kongo.",
+      url: "/ln",
+      images: [{ url: absoluteUrl("/LOGO.png"), width: 512, height: 512, alt: "ISOLELE icon" }],
+    },
+    alternates: { canonical: "/ln", languages: buildLocaleAlternates((locale) => `/${locale}`) },
   },
 };
 
-const jsonLdByLocale: Record<HomeLocale, HomeSeoConfig["jsonLd"]> = {
+const jsonLdByLocale: Partial<Record<HomeLocale, HomeSeoConfig["jsonLd"]>> & { en: HomeSeoConfig["jsonLd"] } = {
   en: {
     organization: {
       "@context": "https://schema.org",
@@ -175,11 +298,239 @@ const jsonLdByLocale: Record<HomeLocale, HomeSeoConfig["jsonLd"]> = {
       description: "Decouvrez l'univers mythologique de super-heros africains ancre dans l'heritage du Kongo.",
     },
   },
+  pt: {
+    organization: {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "ISOLELE COMICS",
+      alternateName: ["Isolele", "Super-heróis africanos"],
+      url: "https://isolele.com",
+      description:
+        "A ISOLELE é um universo visionário criado para restaurar a alma da narrativa africana através de mitologias heroicas enraizadas na herança do Kongo.",
+      foundingDate: "2024",
+      founders: [{ "@type": "Person", name: "HRM King Kufulula", jobTitle: "Fundador Real e Arquiteto Cultural" }],
+      sameAs: [
+        "https://www.instagram.com/isolelecomics",
+        "https://www.facebook.com/isolelecomics",
+        "https://twitter.com/isolelecomics",
+        "https://www.youtube.com/@isolelecomics",
+      ],
+    },
+    comicSeries: {
+      "@context": "https://schema.org",
+      "@type": "ComicSeries",
+      name: "Zaiire: O Príncipe do Kongo",
+      alternateName: "O Príncipe do Kongo: O Colar do Destino",
+      description: "Uma saga africana de super-heróis, intensa e luminosa, que celebra a herança, a coragem e a autodescoberta.",
+      publisher: { "@type": "Organization", name: "ISOLELE COMICS" },
+      inLanguage: ["pt", "en"],
+      genre: ["Super-herói", "Mitologia africana", "Fantasia", "Aventura"],
+    },
+    website: {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "ISOLELE COMICS",
+      alternateName: "Isolele - Casa dos super-heróis africanos",
+      url: "https://isolele.com/pt",
+      inLanguage: ["pt", "en"],
+      description: "Descubra o universo mitológico de super-heróis africanos enraizado na herança do Kongo.",
+    },
+  },
+  es: {
+    organization: {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "ISOLELE COMICS",
+      alternateName: ["Isolele", "Superhéroes africanos"],
+      url: "https://isolele.com",
+      description:
+        "ISOLELE es un universo visionario creado para restaurar el alma de la narrativa africana a través de mitologías heroicas arraigadas en la herencia de Kongo.",
+      foundingDate: "2024",
+      founders: [{ "@type": "Person", name: "HRM King Kufulula", jobTitle: "Fundador Real y Arquitecto Cultural" }],
+      sameAs: [
+        "https://www.instagram.com/isolelecomics",
+        "https://www.facebook.com/isolelecomics",
+        "https://twitter.com/isolelecomics",
+        "https://www.youtube.com/@isolelecomics",
+      ],
+    },
+    comicSeries: {
+      "@context": "https://schema.org",
+      "@type": "ComicSeries",
+      name: "Zaiire: El Príncipe de Kongo",
+      alternateName: "El Príncipe de Kongo: El Collar del Destino",
+      description: "Una saga africana de superhéroes, intensa y luminosa, que celebra la herencia, el coraje y el autodescubrimiento.",
+      publisher: { "@type": "Organization", name: "ISOLELE COMICS" },
+      inLanguage: ["es", "en"],
+      genre: ["Superhéroe", "Mitología africana", "Fantasía", "Aventura"],
+    },
+    website: {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "ISOLELE COMICS",
+      alternateName: "Isolele - Hogar de los superhéroes africanos",
+      url: "https://isolele.com/es",
+      inLanguage: ["es", "en"],
+      description: "Descubre el universo mitológico de superhéroes africanos arraigado en la herencia de Kongo.",
+    },
+  },
+  zu: {
+    organization: {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "ISOLELE COMICS",
+      alternateName: ["Isolele", "Amaqhawe ase-Afrika"],
+      url: "https://isolele.com",
+      description:
+        "I-ISOLELE ingumhlaba wombono owakhelwe ukubuyisela umphefumulo wokulandisa kwase-Afrika ngezinganekwane zamaqhawe ezigxile efeni laseKongo.",
+      foundingDate: "2024",
+      founders: [{ "@type": "Person", name: "HRM King Kufulula", jobTitle: "Umsunguli Wasebukhosini Nomakhi Wamasiko" }],
+      sameAs: [
+        "https://www.instagram.com/isolelecomics",
+        "https://www.facebook.com/isolelecomics",
+        "https://twitter.com/isolelecomics",
+        "https://www.youtube.com/@isolelecomics",
+      ],
+    },
+    comicSeries: {
+      "@context": "https://schema.org",
+      "@type": "ComicSeries",
+      name: "Zaiire: Inkosana yaseKongo",
+      alternateName: "Inkosana yaseKongo: Umgexo Wesiphetho",
+      description: "Indaba yamaqhawe amakhulu ase-Afrika enomdlandla negubha ifa, isibindi, kanye nokuzifunda.",
+      publisher: { "@type": "Organization", name: "ISOLELE COMICS" },
+      inLanguage: ["zu", "en"],
+      genre: ["Iqhawe elikhulu", "Inganekwane yase-Afrika", "Okuyinganekwane", "Ukuhamba"],
+    },
+    website: {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "ISOLELE COMICS",
+      alternateName: "Isolele - Ikhaya lamaqhawe amakhulu ase-Afrika",
+      url: "https://isolele.com/zu",
+      inLanguage: ["zu", "en"],
+      description: "Thola umhlaba wenganekwane wamaqhawe amakhulu ase-Afrika ogxile efeni laseKongo.",
+    },
+  },
+  xh: {
+    organization: {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "ISOLELE COMICS",
+      alternateName: ["Isolele", "Amaqhawe ase-Afrika"],
+      url: "https://isolele.com",
+      description:
+        "I-ISOLELE lihlabathi lombono elenzelwe ukubuyisela umphefumlo wokubalisa kwase-Afrika ngeentsomi zamaqhawe ezingcamele elifeni laseKongo.",
+      foundingDate: "2024",
+      founders: [{ "@type": "Person", name: "HRM King Kufulula", jobTitle: "Umseki Wasebukhosini Nomyili Wenkcubeko" }],
+      sameAs: [
+        "https://www.instagram.com/isolelecomics",
+        "https://www.facebook.com/isolelecomics",
+        "https://twitter.com/isolelecomics",
+        "https://www.youtube.com/@isolelecomics",
+      ],
+    },
+    comicSeries: {
+      "@context": "https://schema.org",
+      "@type": "ComicSeries",
+      name: "Zaiire: Inkosana yaseKongo",
+      alternateName: "Inkosana yaseKongo: IQhosha leSiphelo",
+      description: "Ibali lamaqhawe amakhulu ase-Afrika elinamandla nelikhazimlayo elibhiyozela ilifa, isibindi, kunye nokuzifumana.",
+      publisher: { "@type": "Organization", name: "ISOLELE COMICS" },
+      inLanguage: ["xh", "en"],
+      genre: ["Iqhawe elikhulu", "Intsomi yase-Afrika", "Okuyintsomi", "Uhambo"],
+    },
+    website: {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "ISOLELE COMICS",
+      alternateName: "Isolele - Ikhaya lamaqhawe amakhulu ase-Afrika",
+      url: "https://isolele.com/xh",
+      inLanguage: ["xh", "en"],
+      description: "Fumana ihlabathi lentsomi lamaqhawe amakhulu ase-Afrika elingcamele elifeni laseKongo.",
+    },
+  },
+  sw: {
+    organization: {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "ISOLELE COMICS",
+      alternateName: ["Isolele", "Mashujaa wa Kiafrika"],
+      url: "https://isolele.com",
+      description:
+        "ISOLELE ni ulimwengu wenye maono uliojengwa kurejesha roho ya usimulizi wa Kiafrika kupitia hekaya za mashujaa zilizojikita katika urithi wa Kongo.",
+      foundingDate: "2024",
+      founders: [{ "@type": "Person", name: "HRM King Kufulula", jobTitle: "Mwanzilishi wa Kifalme na Mbunifu wa Utamaduni" }],
+      sameAs: [
+        "https://www.instagram.com/isolelecomics",
+        "https://www.facebook.com/isolelecomics",
+        "https://twitter.com/isolelecomics",
+        "https://www.youtube.com/@isolelecomics",
+      ],
+    },
+    comicSeries: {
+      "@context": "https://schema.org",
+      "@type": "ComicSeries",
+      name: "Zaiire: Mkuu wa Kongo",
+      alternateName: "Mkuu wa Kongo: Mkufu wa Hatima",
+      description: "Hadithi ya mashujaa wakuu wa Kiafrika yenye msisimko na mwanga inayosherehekea urithi, ujasiri, na kujigundua.",
+      publisher: { "@type": "Organization", name: "ISOLELE COMICS" },
+      inLanguage: ["sw", "en"],
+      genre: ["Shujaa mkuu", "Hekaya za Kiafrika", "Uwongo wa kubuni", "Adventure"],
+    },
+    website: {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "ISOLELE COMICS",
+      alternateName: "Isolele - Nyumbani kwa mashujaa wakuu wa Kiafrika",
+      url: "https://isolele.com/sw",
+      inLanguage: ["sw", "en"],
+      description: "Gundua ulimwengu wa hekaya wa mashujaa wakuu wa Kiafrika uliojikita katika urithi wa Kongo.",
+    },
+  },
+  ln: {
+    organization: {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "ISOLELE COMICS",
+      alternateName: ["Isolele", "Ba héros ya Afrika"],
+      url: "https://isolele.com",
+      description:
+        "ISOLELE ezali mokili ya makanisi oyo etongami mpo na kozongisa molimo ya masolo ya Afrika na nzela ya masapo ya ba héros oyo etongami na libula ya Kongo.",
+      foundingDate: "2024",
+      founders: [{ "@type": "Person", name: "HRM King Kufulula", jobTitle: "Mobandisi ya Bokonzi mpe Motongi ya Mimeseno" }],
+      sameAs: [
+        "https://www.instagram.com/isolelecomics",
+        "https://www.facebook.com/isolelecomics",
+        "https://twitter.com/isolelecomics",
+        "https://www.youtube.com/@isolelecomics",
+      ],
+    },
+    comicSeries: {
+      "@context": "https://schema.org",
+      "@type": "ComicSeries",
+      name: "Zaiire: Mwana-mokonzi ya Kongo",
+      alternateName: "Mwana-mokonzi ya Kongo: Mondele ya Destin",
+      description: "Lisolo ya ba héros minene ya Afrika ya makasi mpe ya pole oyo esepelaka na libula, mpiko, mpe komiyeba.",
+      publisher: { "@type": "Organization", name: "ISOLELE COMICS" },
+      inLanguage: ["ln", "en"],
+      genre: ["Héros monene", "Masapo ya Afrika", "Fantezi", "Mobembo"],
+    },
+    website: {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "ISOLELE COMICS",
+      alternateName: "Isolele - Ndako ya ba héros minene ya Afrika",
+      url: "https://isolele.com/ln",
+      inLanguage: ["ln", "en"],
+      description: "Yeba mokili ya masapo ya ba héros minene ya Afrika oyo etongami na libula ya Kongo.",
+    },
+  },
 };
 
 export function getHomeSeo(locale: HomeLocale): HomeSeoConfig {
   return {
-    metadata: metadataByLocale[locale],
-    jsonLd: jsonLdByLocale[locale],
+    metadata: metadataByLocale[locale] ?? metadataByLocale.en,
+    jsonLd: jsonLdByLocale[locale] ?? jsonLdByLocale.en,
   };
 }

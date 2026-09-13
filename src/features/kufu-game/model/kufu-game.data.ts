@@ -14,7 +14,7 @@ export const KUFU_ASSETS = {
   board: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260304-WA0012-XSCUSyYtBnqRoFkU9Ubd5qRihh3IXm.jpg",
 } as const;
 
-const gameByLocale: Record<SupportedLocale, KufuGameConfig> = {
+const gameByLocale: Partial<Record<SupportedLocale, KufuGameConfig>> & { en: KufuGameConfig } = {
   en: {
     title: "KUFU Ludo",
     subtitle: "The Crown Game",
@@ -59,7 +59,7 @@ const gameByLocale: Record<SupportedLocale, KufuGameConfig> = {
   },
 };
 
-const screenshotsByLocale: Record<SupportedLocale, KufuScreenshot[]> = {
+const screenshotsByLocale: Partial<Record<SupportedLocale, KufuScreenshot[]>> & { en: KufuScreenshot[] } = {
   en: [
     { url: KUFU_ASSETS.board, label: "KUFU Ludo board" },
     { url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Jeux%20-des-cartes-ISOLELE%202026%20copie-1.png-ifvBiGyVajqX0jXvhJQOH1k83wp5KC.jpeg", label: "KUFU card set" },
@@ -75,7 +75,7 @@ const screenshotsByLocale: Record<SupportedLocale, KufuScreenshot[]> = {
 export const GAME = gameByLocale.en;
 export const SCREENSHOTS = screenshotsByLocale.en;
 
-const featuresByLocale: Record<SupportedLocale, KufuFeature[]> = {
+const featuresByLocale: Partial<Record<SupportedLocale, KufuFeature[]>> & { en: KufuFeature[] } = {
   en: [
     { icon: Crown, title: "4 Kingdoms", desc: "Red, green, blue, and gold clans with distinct pawn identities." },
     { icon: ShieldCheck, title: "Crown of Ancestors", desc: "Reach the sacred center to claim victory and reign as the chosen king." },
@@ -94,7 +94,7 @@ const featuresByLocale: Record<SupportedLocale, KufuFeature[]> = {
   ],
 };
 
-const charactersByLocale: Record<SupportedLocale, KufuCharacter[]> = {
+const charactersByLocale: Partial<Record<SupportedLocale, KufuCharacter[]>> & { en: KufuCharacter[] } = {
   en: [
     { name: "LIKAKU", role: "4 of Trees", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0058-gD7wFf8li9ITXSvC57xza5JO8jIl7z.jpg" },
     { name: "ZAIRA MBUBE", role: "D of Spots", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260319-WA0031-049OjN1f25uQV6CYqHaFcawtnmViJA.jpg" },
@@ -113,7 +113,7 @@ const charactersByLocale: Record<SupportedLocale, KufuCharacter[]> = {
   ],
 };
 
-const reviewsByLocale: Record<SupportedLocale, KufuReview[]> = {
+const reviewsByLocale: Partial<Record<SupportedLocale, KufuReview[]>> & { en: KufuReview[] } = {
   en: [
     { name: "Makamba K.", country: "Congo-Kinshasa", rating: 5, text: "An extraordinary game that celebrates heritage and strategy. Family favorite." },
     { name: "Amara D.", country: "Senegal", rating: 5, text: "A masterpiece of visual identity and cultural direction. Every detail feels intentional." },
@@ -126,7 +126,9 @@ const reviewsByLocale: Record<SupportedLocale, KufuReview[]> = {
   ],
 };
 
-const pageContent: Record<SupportedLocale, Omit<KufuGamePageContent, "locale">> = {
+const pageContent: Partial<Record<SupportedLocale, Omit<KufuGamePageContent, "locale">>> & {
+  en: Omit<KufuGamePageContent, "locale">;
+} = {
   en: {
     hero: {
       backLabel: "ISOLELE",
