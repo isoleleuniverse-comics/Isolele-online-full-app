@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Theme } from "@/shared/contexts/theme-context";
@@ -33,13 +34,13 @@ export function InfiniteCarouselCard({
             border: `1px solid ${theme.colors.accentPrimary}30`,
           }}
         >
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url('${character.image}')`,
-              backgroundSize: "cover",
-              backgroundPosition: "top center",
-            }}
+          <Image
+            src={character.image}
+            alt={character.name}
+            fill
+            loading="lazy"
+            className="object-cover object-top"
+            sizes="288px"
           />
 
           <div

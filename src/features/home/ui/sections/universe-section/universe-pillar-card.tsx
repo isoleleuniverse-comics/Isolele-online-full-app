@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -54,13 +55,13 @@ export function UniversePillarCard({
         }}
       >
         {backgroundImage ? (
-          <div
-            className="absolute z-0 inset-0 rounded-2xl transition-opacity duration-500 opacity-100"
-            style={{
-              backgroundImage: `url('${backgroundImage}')`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
+          <Image
+            src={backgroundImage}
+            alt=""
+            fill
+            loading="lazy"
+            className="rounded-2xl object-cover"
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
         ) : null}
 

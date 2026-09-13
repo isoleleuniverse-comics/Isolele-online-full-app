@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useTheme } from "@/shared/contexts/theme-context";
@@ -8,15 +9,9 @@ export function ContactPage() {
   const { currentTheme } = useTheme();
 
   return (
-    <div
-      className="min-h-screen relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8"
-      style={{
-        backgroundImage: "url('/royal-palace-background.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
+    <div className="min-h-screen relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8">
+      <Image src="/royal-palace-background.webp" alt="" fill priority className="object-cover" sizes="100vw" />
+
       <button
         onClick={() => history.back()}
         className="fixed left-4 top-6 z-40 flex items-center gap-2 px-4 py-2 rounded-full shadow-md"

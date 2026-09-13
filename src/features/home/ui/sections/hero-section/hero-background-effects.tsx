@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Theme } from "@/shared/contexts/theme-context";
 
@@ -8,14 +9,13 @@ interface HeroBackgroundEffectsProps {
 export function HeroBackgroundEffects({ theme }: HeroBackgroundEffectsProps) {
   return (
     <>
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage:
-            "url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Isolele%20ZAIIRE-dZ9qgcCZdyxMpgkCfSlSGCAMD2rMVC.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+      <Image
+        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Isolele%20ZAIIRE-dZ9qgcCZdyxMpgkCfSlSGCAMD2rMVC.jpg"
+        alt=""
+        fill
+        priority
+        className="object-cover object-center"
+        sizes="100vw"
       />
 
       <div

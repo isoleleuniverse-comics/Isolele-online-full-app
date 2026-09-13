@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Theme } from "@/shared/contexts/theme-context";
 
@@ -9,12 +10,7 @@ interface ProductsCarouselBackgroundProps {
 export function ProductsCarouselBackground({ image, theme }: ProductsCarouselBackgroundProps) {
   return (
     <>
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
-        style={{
-          backgroundImage: `url('${image}')`,
-        }}
-      />
+      <Image src={image} alt="" fill className="object-cover object-center z-0" sizes="100vw" />
       <div
         className="absolute inset-0 z-1"
         style={{

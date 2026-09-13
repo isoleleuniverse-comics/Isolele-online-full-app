@@ -56,7 +56,13 @@ export function BlocksRenderer({ blocks }: { blocks: CmsBlockV1[] }) {
             <figure key={index} className="mx-auto max-w-5xl space-y-3">
               <div className="overflow-hidden rounded-3xl border border-amber-500/10 bg-muted">
                 {/* Intentionally using <img> for CMS content URLs to avoid Next Image domain constraints in v1. */}
-                <img src={block.url} alt={block.alt ?? ""} className="h-auto w-full object-cover" />
+                <img
+                  src={block.url}
+                  alt={block.alt ?? ""}
+                  className="h-auto w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
               {block.caption ? (
                 <figcaption className="text-center text-sm text-muted-foreground">{block.caption}</figcaption>

@@ -72,6 +72,8 @@ export function ArticleBlockRenderer({ blocks }: { blocks: ArticleBlock[] }) {
                   src={block.url}
                   alt={block.alt ?? ""}
                   className="h-auto max-h-[680px] w-full object-cover brightness-90 contrast-105"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               {block.caption ? (
@@ -111,10 +113,11 @@ export function ArticleBlockRenderer({ blocks }: { blocks: ArticleBlock[] }) {
                     title={block.title || "Article video"}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
+                    loading="lazy"
                     className="h-full w-full"
                   />
                 ) : (
-                  <video src={block.url} controls className="h-full w-full object-cover" />
+                  <video src={block.url} controls preload="metadata" className="h-full w-full object-cover" />
                 )}
               </div>
               {block.title ? (

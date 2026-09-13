@@ -9,7 +9,7 @@ import {
   type ImageBlock,
 } from "@/features/articles/model/article-blocks";
 
-const FALLBACK_COVER = "/royal-palace-background.png";
+const FALLBACK_COVER = "/royal-palace-background.webp";
 
 function formatDate(date: Date) {
   return new Intl.DateTimeFormat("fr-FR", {
@@ -67,7 +67,7 @@ function ArticleImage({ block, full }: { block: ImageBlock; full: boolean }) {
   return (
     <ArticleContainer>
       <figure className={`article-figure ${full ? "article-figure-full" : ""} reveal visible`}>
-        <img src={block.url} alt={block.alt || block.caption || "Article image"} />
+        <img src={block.url} alt={block.alt || block.caption || "Article image"} loading="lazy" decoding="async" />
         {block.caption ? <figcaption>{block.caption}</figcaption> : null}
       </figure>
     </ArticleContainer>
@@ -134,7 +134,7 @@ function ArticleGallery({ block }: { block: GalleryBlock }) {
         <div className="gallery-grid">
           {images.map((image) => (
             <div className="gallery-item" key={image.id}>
-              <img src={image.url} alt={image.alt || "Image galerie"} />
+              <img src={image.url} alt={image.alt || "Image galerie"} loading="lazy" decoding="async" />
             </div>
           ))}
         </div>
@@ -224,7 +224,7 @@ export function ArticleTemplate({
 
       <article>
         <section className="article-hero">
-          <img className="hero-img" src={coverImage} alt="" />
+          <img className="hero-img" src={coverImage} alt="" fetchPriority="high" />
           <div className="hero-bg" />
           <div className="hero-texture" />
 
