@@ -9,7 +9,7 @@ export function HeroSecondarySlide() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
-      className="flex items-center justify-center w-full min-h-screen px-4"
+      className="flex items-center justify-center w-full min-h-dvh px-4"
     >
       <div className="relative w-full max-w-2xl mx-auto aspect-[2/3] sm:aspect-[3/4] lg:max-w-3xl">
         <Image

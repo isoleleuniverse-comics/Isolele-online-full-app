@@ -15,7 +15,7 @@ interface ProductDetailPageProps {
 
 export function ProductDetailPage({ product, locale, buyLabel, soldOutLabel, backLabel }: ProductDetailPageProps) {
   return (
-    <main className="min-h-screen bg-background pb-24 pt-32">
+    <main className="min-h-dvh bg-background pb-24 pt-32">
       <div className="mx-auto max-w-6xl px-6">
         <Link
           href={withLocale(locale, "/shop")}

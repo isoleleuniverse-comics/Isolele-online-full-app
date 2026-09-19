@@ -12,7 +12,7 @@ export function ComicsPage({ locale }: ComicsPageProps) {
   const content = getComicsPageContent(locale);
 
   return (
-    <main className="min-h-screen bg-background pb-24 pt-32">
+    <main className="min-h-dvh bg-background pb-24 pt-32">
       <ComicsStructuredData />
 
       <ComicsPageHeader title={content.hero.title} description={content.hero.description} />

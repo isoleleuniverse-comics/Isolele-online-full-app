@@ -69,7 +69,7 @@ export function PrivacyPage({ locale }: PrivacyPageProps) {
     const router = useRouter();
 
     return (
-        <main className="min-h-screen px-5 pb-24 pt-28 md:px-8 md:pt-36" style={{ background: `radial-gradient(120% 90% at 50% 0%, ${currentTheme.colors.accentPrimary}20 0%, ${currentTheme.colors.accentPrimary}08 50%, transparent 100%), linear-gradient(180deg, ${currentTheme.colors.background} 0%, ${currentTheme.colors.backgroundSecondary} 100%)`, color: currentTheme.colors.textPrimary }}>
+        <main className="min-h-dvh px-5 pb-24 pt-28 md:px-8 md:pt-36" style={{ background: `radial-gradient(120% 90% at 50% 0%, ${currentTheme.colors.accentPrimary}20 0%, ${currentTheme.colors.accentPrimary}08 50%, transparent 100%), linear-gradient(180deg, ${currentTheme.colors.background} 0%, ${currentTheme.colors.backgroundSecondary} 100%)`, color: currentTheme.colors.textPrimary }}>
             <button
                 onClick={() => router.back()}
                 className="fixed left-4 top-6 z-40 flex items-center gap-2 px-4 py-2 rounded-full shadow-md"

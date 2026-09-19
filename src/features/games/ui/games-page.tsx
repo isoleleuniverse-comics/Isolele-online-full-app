@@ -228,7 +228,7 @@ export function GamesPage({ locale }: { locale: SupportedLocale }) {
 
   return (
     <main
-      className="min-h-screen px-5 pb-24 pt-28 md:px-8 md:pt-36"
+      className="min-h-dvh px-5 pb-24 pt-28 md:px-8 md:pt-36"
       style={{
         background:
           "radial-gradient(120% 90% at 50% 0%, rgba(246,184,0,0.12) 0%, rgba(10,10,10,0) 45%), linear-gradient(180deg, #090909 0%, #050505 100%)",

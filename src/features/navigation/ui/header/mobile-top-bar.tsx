@@ -46,6 +46,9 @@ export function MobileTopBar() {
         style={{
           backgroundColor: `${currentTheme.colors.background}ee`,
           borderColor: `${currentTheme.colors.accentPrimary}1f`,
+          paddingTop: "env(safe-area-inset-top)",
+          paddingLeft: "env(safe-area-inset-left)",
+          paddingRight: "env(safe-area-inset-right)",
         }}
       >
         <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4">
@@ -81,10 +84,13 @@ export function MobileTopBar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="fixed inset-x-0 top-16 z-40 border-b px-4 py-4 lg:hidden"
+            className="fixed inset-x-0 z-40 border-b px-4 py-4 lg:hidden"
             style={{
+              top: "calc(4rem + env(safe-area-inset-top))",
               backgroundColor: `${currentTheme.colors.background}f5`,
               borderColor: `${currentTheme.colors.accentPrimary}30`,
+              paddingLeft: "env(safe-area-inset-left)",
+              paddingRight: "env(safe-area-inset-right)",
             }}
           >
             <nav className="grid grid-cols-2 gap-2">

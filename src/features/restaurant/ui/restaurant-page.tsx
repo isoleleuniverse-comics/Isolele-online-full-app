@@ -13,7 +13,7 @@ export function RestaurantPage({ locale }: RestaurantPageProps) {
   const content = getRestaurantContent(locale);
 
   return (
-    <main className="min-h-screen bg-background pb-24 pt-32">
+    <main className="min-h-dvh bg-background pb-24 pt-32">
       <section className="relative overflow-hidden border-b border-border/60">
         <Image
           src={RESTAURANT_GALLERY_IMAGES[0]}

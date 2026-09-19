@@ -18,7 +18,7 @@ export function CharacterDetailPage({ character, locale }: CharacterDetailPagePr
   if (!profile) notFound();
 
   return (
-    <main className="min-h-screen bg-[var(--isolele-bg)] text-[var(--isolele-text)]">
+    <main className="min-h-dvh bg-[var(--isolele-bg)] text-[var(--isolele-text)]">
       <section className="relative h-[56vh] min-h-[420px] w-full overflow-hidden">
         <Image src={profile.image} alt={profile.name} fill className="object-cover object-top" priority />
         <div className="absolute inset-0 bg-black/60" />

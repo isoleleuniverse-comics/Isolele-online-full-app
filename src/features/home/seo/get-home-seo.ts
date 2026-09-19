@@ -18,6 +18,11 @@ const metadataByLocale: Partial<Record<HomeLocale, HomeSeoConfig["metadata"]>> &
       "Kufu card game",
       "Congolese comics",
       "ISOLELE",
+      "African comics universe",
+      "Afrocentric comic book universe",
+      "Black-owned comic book franchise",
+      "African graphic novel series",
+      "Pan-African superhero universe",
     ],
     openGraph: {
       title: "Black African Superhero Comics | Kongo Universe | ISOLELE",
@@ -52,6 +57,10 @@ const metadataByLocale: Partial<Record<HomeLocale, HomeSeoConfig["metadata"]>> &
       "Zaiire",
       "heritage kongo",
       "ISOLELE",
+      "bande dessinee africaine",
+      "comics africains",
+      "super-heros africains",
+      "bande dessinee noire et africaine",
     ],
     openGraph: {
       title: "Comics de super-heros africains noirs | Univers Kongo | ISOLELE",
@@ -86,6 +95,8 @@ const metadataByLocale: Partial<Record<HomeLocale, HomeSeoConfig["metadata"]>> &
       "Zaiire",
       "herança kongo",
       "ISOLELE",
+      "quadrinhos africanos",
+      "super-heróis africanos",
     ],
     openGraph: {
       title: "Comics de Super-Heróis Africanos Negros | Universo Kongo | ISOLELE",
@@ -110,6 +121,9 @@ const metadataByLocale: Partial<Record<HomeLocale, HomeSeoConfig["metadata"]>> &
       "Zaiire",
       "herencia kongo",
       "ISOLELE",
+      "cómics africanos",
+      "superhéroes africanos",
+      "cómic afrodescendiente",
     ],
     openGraph: {
       title: "Cómics de Superhéroes Africanos Negros | Universo Kongo | ISOLELE",
@@ -170,6 +184,8 @@ const metadataByLocale: Partial<Record<HomeLocale, HomeSeoConfig["metadata"]>> &
       "katuni za Kiafrika mzima",
       "ISOLELE",
       "Zaiire",
+      "katuni za Afrika",
+      "mashujaa wa Afrika",
     ],
     openGraph: {
       title: "Katuni za Mashujaa Wakuu Weusi wa Kiafrika | Ulimwengu wa Kongo | ISOLELE",
@@ -190,6 +206,8 @@ const metadataByLocale: Partial<Record<HomeLocale, HomeSeoConfig["metadata"]>> &
       "ba comics ya Afrika mobimba",
       "ISOLELE",
       "Zaiire",
+      "bandi dessinée ya Afrika",
+      "héros ya Afrika",
     ],
     openGraph: {
       title: "Ba Comics ya Ba Héros Minene ya Mwindo ya Afrika | Mokili ya Kongo | ISOLELE",

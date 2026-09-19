@@ -20,7 +20,7 @@ export function ProductsCarousel() {
   const isEnglish = currentLanguage.code === "en";
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-dvh flex items-center justify-center overflow-hidden">
       <ProductsCarouselBackground image={currentProduct.image} theme={currentTheme} />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

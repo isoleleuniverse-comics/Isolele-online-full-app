@@ -27,14 +27,16 @@ export function PublicShell({
             {showLoading && <LoadingScreen onComplete={() => setShowLoading(false)} />}
 
             <div
-              className="flex min-h-screen w-full flex-col overflow-x-hidden transition-colors duration-700"
+              className="flex min-h-dvh w-full flex-col overflow-x-hidden transition-colors duration-700"
               style={{
                 backgroundColor: "var(--isolele-bg)",
                 color: "var(--isolele-text)",
               }}
             >
               <SiteHeader />
-              <main className="flex-1 w-full pb-28 pt-16 lg:pb-0 lg:pt-20">{children}</main>
+              <main className="flex-1 w-full pb-[calc(7rem+env(safe-area-inset-bottom))] pt-[calc(4rem+env(safe-area-inset-top))] lg:pb-0 lg:pt-20">
+                {children}
+              </main>
               <SiteFooter />
             </div>
           </>

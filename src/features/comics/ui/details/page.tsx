@@ -14,7 +14,7 @@ export function ComicDetailPage({ page, locale }: ComicDetailPageProps) {
   const isExternalPurchase = !!page.purchaseHref && page.purchaseHref.startsWith("http");
  
   return (
-    <main className="min-h-screen bg-white text-neutral-950">
+    <main className="min-h-dvh bg-white text-neutral-950">
       <section className="relative overflow-hidden border-b border-black/10 bg-white">
         {page.heroBackground ? (
           <Image

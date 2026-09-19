@@ -30,7 +30,7 @@ export function CharactersPage({ locale }: CharactersPageProps) {
   }, [characters, filter]);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: currentTheme.colors.background }}>
+    <div className="min-h-dvh" style={{ backgroundColor: currentTheme.colors.background }}>
       <CharactersHeroSection characterCount={characters.length} ui={pageContent.ui} />
       <CharactersFilterBar activeFilter={filter} filters={pageContent.filters} onChangeFilter={setFilter} />
       <CharactersGrid characters={displayedCharacters} ui={pageContent.ui} onSelectCharacter={setSelectedCharacter} />

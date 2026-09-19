@@ -16,7 +16,7 @@ export function ShopPage({ locale }: ShopPageProps) {
   const books = products.filter((product) => product.category === "books");
 
   return (
-    <main className="min-h-screen bg-background pb-24 pt-32">
+    <main className="min-h-dvh bg-background pb-24 pt-32">
       <header className="mx-auto max-w-5xl px-6 text-center">
         <h1 className="font-serif text-4xl font-black tracking-tight text-foreground sm:text-5xl">{content.heroTitle}</h1>
         <p className="mx-auto mt-4 max-w-2xl text-base text-foreground/70 sm:text-lg">{content.heroDescription}</p>

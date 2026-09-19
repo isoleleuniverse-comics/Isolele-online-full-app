@@ -22,7 +22,7 @@ export function MobileBottomNav() {
   }
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-5 lg:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 flex justify-center px-4 pb-[calc(1.25rem+env(safe-area-inset-bottom))] lg:hidden">
       <div
         className="flex items-center gap-2 rounded-3xl border px-3 py-2 backdrop-blur-xl"
         style={{

@@ -16,7 +16,7 @@ export function HeroSection() {
   const { activeSlide, setActiveSlide } = useHeroRotation();
 
   return (
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-dvh flex items-center justify-center overflow-hidden">
       <HeroBackgroundEffects theme={currentTheme} />
 
       <div className="relative z-10 w-full">

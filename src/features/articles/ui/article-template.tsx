@@ -279,7 +279,7 @@ const articleStyles = `
     --serif: 'Cormorant Garamond', Georgia, serif;
     --sans: 'DM Sans', sans-serif;
     --mono: 'DM Mono', monospace;
-    min-height: 100vh;
+    min-height: 100dvh;
     overflow: hidden;
     background: var(--warm-white);
     color: var(--ink);
@@ -294,7 +294,7 @@ const articleStyles = `
   .article-hero {
     position: relative;
     display: flex;
-    min-height: min(100vh, 900px);
+    min-height: min(100dvh, 900px);
     overflow: hidden;
     align-items: flex-end;
   }

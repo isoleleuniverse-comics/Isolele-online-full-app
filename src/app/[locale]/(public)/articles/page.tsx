@@ -40,7 +40,7 @@ export default async function ArticlesPage({
   const articles = await fetchPublishedArticles(safeLocale);
 
   return (
-    <main className="bg-[#0d0c0b] text-[#e8e0d4] min-h-screen">
+    <main className="bg-[#0d0c0b] text-[#e8e0d4] min-h-dvh">
       <section className="mx-auto max-w-5xl px-6 py-16 sm:py-24">
         <div className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.22em] text-amber-600">

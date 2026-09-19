@@ -90,7 +90,7 @@ export function ContactPage({ locale }: ContactPageProps) {
 
     return (
         <main
-            className="min-h-screen px-5 pb-24 pt-28 md:px-8 md:pt-36"
+            className="min-h-dvh px-5 pb-24 pt-28 md:px-8 md:pt-36"
             style={{
                 background: `radial-gradient(120% 90% at 50% 0%, ${currentTheme.colors.accentPrimary}20 0%, ${currentTheme.colors.accentPrimary}08 50%, transparent 100%), linear-gradient(180deg, ${currentTheme.colors.background} 0%, ${currentTheme.colors.backgroundSecondary} 100%)`,
                 color: currentTheme.colors.textPrimary,
@@ -152,7 +152,7 @@ export function ContactPage({ locale }: ContactPageProps) {
                                             value={formData.name}
                                             onChange={handleInputChange}
                                             placeholder={content.placeholderName}
-                                            className="w-full rounded-xl px-4 py-3 text-sm bg-white/90 border outline-none transition"
+                                            className="w-full rounded-xl px-4 py-3 text-base md:text-sm bg-white/90 border outline-none transition"
                                             style={{
                                                 color: currentTheme.colors.textPrimary,
                                                 borderColor: currentTheme.colors.accentPrimary,
@@ -173,7 +173,7 @@ export function ContactPage({ locale }: ContactPageProps) {
                                             value={formData.email}
                                             onChange={handleInputChange}
                                             placeholder={content.placeholderEmail}
-                                            className="w-full rounded-xl px-4 py-3 text-sm bg-white/90 border outline-none transition"
+                                            className="w-full rounded-xl px-4 py-3 text-base md:text-sm bg-white/90 border outline-none transition"
                                             style={{
                                                 color: currentTheme.colors.textPrimary,
                                                 borderColor: currentTheme.colors.accentPrimary,
@@ -194,7 +194,7 @@ export function ContactPage({ locale }: ContactPageProps) {
                                             value={formData.subject}
                                             onChange={handleInputChange}
                                             placeholder={content.placeholderSubject}
-                                            className="w-full rounded-xl px-4 py-3 text-sm bg-white/90 border outline-none transition"
+                                            className="w-full rounded-xl px-4 py-3 text-base md:text-sm bg-white/90 border outline-none transition"
                                             style={{
                                                 color: currentTheme.colors.textPrimary,
                                                 borderColor: currentTheme.colors.accentPrimary,
@@ -215,7 +215,7 @@ export function ContactPage({ locale }: ContactPageProps) {
                                             value={formData.message}
                                             onChange={handleInputChange}
                                             placeholder={content.placeholderMessage}
-                                            className="w-full rounded-xl px-4 py-3 text-sm bg-white/90 border outline-none resize-none transition"
+                                            className="w-full rounded-xl px-4 py-3 text-base md:text-sm bg-white/90 border outline-none resize-none transition"
                                             style={{
                                                 color: currentTheme.colors.textPrimary,
                                                 borderColor: currentTheme.colors.accentPrimary,

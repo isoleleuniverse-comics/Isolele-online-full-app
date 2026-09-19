@@ -9,7 +9,7 @@ export function ContactPage() {
   const { currentTheme } = useTheme();
 
   return (
-    <div className="min-h-screen relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-dvh relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8">
       <Image src="/royal-palace-background.webp" alt="" fill priority className="object-cover" sizes="100vw" />
 
       <button

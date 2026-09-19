@@ -31,7 +31,7 @@ export function FooterNewsletter({ currentTheme, content }: FooterSectionContext
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder={content.emailPlaceholder}
-          className="w-full rounded-lg px-4 py-3 text-sm outline-none transition-all"
+          className="w-full rounded-lg px-4 py-3 text-base md:text-sm outline-none transition-all"
           style={{
             backgroundColor: currentTheme.colors.background,
             color: currentTheme.colors.textPrimary,

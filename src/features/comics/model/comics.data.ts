@@ -7,6 +7,10 @@ import type {
 } from "./comics.types";
 
 const HOME_PRODUCTS_STRIPE_LINK = "https://buy.stripe.com/6oU6oH8lfaP2fmD4i96Zy0e";
+const SHANGO_STRIPE_LINK = "https://buy.stripe.com/28EfZhcBvf5ieizdSJ6Zy0d";
+const PURCHASE_LINKS_BY_SLUG: Record<string, string> = {
+  shango: SHANGO_STRIPE_LINK,
+};
 
 const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, ComicBook[]>>> & {
   en: Record<ComicCategory, ComicBook[]>;
@@ -17,8 +21,8 @@ const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, Comi
         id: "zaiire",
         title: "ZAIIRE",
         description: "The prince of Kongo awakens the Necklace of Destiny and restores erased royal memory.",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg",
-        price: 25.99,
+        image: "/images/zaiire-cover-2026.webp",
+        price: 60.97,
       },
       {
         id: "bambula",
@@ -33,6 +37,13 @@ const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, Comi
         description: "Kinshasa forges a street survivor into a ruler no empire can contain.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg",
         price: 26.99,
+      },
+      {
+        id: "shango",
+        title: "SHANGO ZAIIRE",
+        description: "A father's thunder becomes a son's legacy: a powerful letter from Shango to Zaiire.",
+        image: "/images/shango-zaiire-cover.webp",
+        price: 42.98,
       },
     ],
     bestseller: [
@@ -88,8 +99,8 @@ const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, Comi
         id: "zaiire",
         title: "ZAIIRE",
         description: "Le prince du Kongo éveille le Collier du Destin et restaure une mémoire royale effacée.",
-        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg",
-        price: 25.99,
+        image: "/images/zaiire-cover-2026.webp",
+        price: 60.97,
       },
       {
         id: "bambula",
@@ -104,6 +115,13 @@ const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, Comi
         description: "Kinshasa forge un survivant de la rue en souverain qu'aucun empire ne peut contenir.",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg",
         price: 26.99,
+      },
+      {
+        id: "shango",
+        title: "SHANGO ZAIIRE",
+        description: "Le tonnerre d'un père devient l'héritage d'un fils : une lettre puissante de Shango à Zaiire.",
+        image: "/images/shango-zaiire-cover.webp",
+        price: 42.98,
       },
     ],
     bestseller: [
@@ -155,9 +173,10 @@ const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, Comi
   },
   pt: {
     featured: [
-      { id: "zaiire", title: "ZAIIRE", description: "O príncipe do Kongo desperta o Colar do Destino e restaura a memória real apagada.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg", price: 25.99 },
+      { id: "zaiire", title: "ZAIIRE", description: "O príncipe do Kongo desperta o Colar do Destino e restaura a memória real apagada.", image: "/images/zaiire-cover-2026.webp", price: 60.97 },
       { id: "bambula", title: "BAMBULA", description: "Um herói do tambor sagrado que carrega ritmo, memória e poder espiritual através dos mundos.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", price: 24.99 },
       { id: "mokele", title: "MOKELE", description: "Kinshasa forja um sobrevivente das ruas em um governante que nenhum império pode conter.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg", price: 26.99 },
+      { id: "shango", title: "SHANGO ZAIIRE", description: "O trovão de um pai torna-se o legado de um filho: uma carta poderosa de Shango para Zaiire.", image: "/images/shango-zaiire-cover.webp", price: 42.98 },
     ],
     bestseller: [
       { id: "makanda", title: "MAKANDA", description: "Um império escondido protegido pela Chama Sagrada espera para se erguer novamente.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg", price: 23.99 },
@@ -172,9 +191,10 @@ const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, Comi
   },
   es: {
     featured: [
-      { id: "zaiire", title: "ZAIIRE", description: "El príncipe de Kongo despierta el Collar del Destino y restaura la memoria real borrada.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg", price: 25.99 },
+      { id: "zaiire", title: "ZAIIRE", description: "El príncipe de Kongo despierta el Collar del Destino y restaura la memoria real borrada.", image: "/images/zaiire-cover-2026.webp", price: 60.97 },
       { id: "bambula", title: "BAMBULA", description: "Un héroe del tambor sagrado que lleva ritmo, memoria y poder espiritual a través de los mundos.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", price: 24.99 },
       { id: "mokele", title: "MOKELE", description: "Kinshasa forja a un superviviente de la calle en un gobernante que ningún imperio puede contener.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg", price: 26.99 },
+      { id: "shango", title: "SHANGO ZAIIRE", description: "El trueno de un padre se convierte en el legado de un hijo: una carta poderosa de Shango a Zaiire.", image: "/images/shango-zaiire-cover.webp", price: 42.98 },
     ],
     bestseller: [
       { id: "makanda", title: "MAKANDA", description: "Un imperio oculto protegido por la Llama Sagrada espera para resurgir.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg", price: 23.99 },
@@ -189,9 +209,10 @@ const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, Comi
   },
   zu: {
     featured: [
-      { id: "zaiire", title: "ZAIIRE", description: "Inkosana yaseKongo ivusa Umgexo Wesiphetho futhi ibuyisela inkumbulo yasebukhosini eyayisusiwe.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg", price: 25.99 },
+      { id: "zaiire", title: "ZAIIRE", description: "Inkosana yaseKongo ivusa Umgexo Wesiphetho futhi ibuyisela inkumbulo yasebukhosini eyayisusiwe.", image: "/images/zaiire-cover-2026.webp", price: 60.97 },
       { id: "bambula", title: "BAMBULA", description: "Iqhawe lesigubhu esingcwele eliphethe umculo, inkumbulo, kanye namandla omoya emhlabeni wonke.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", price: 24.99 },
       { id: "mokele", title: "MOKELE", description: "IKinshasa yenza osindile emgwaqweni abe umbusi ongenakuvinjelwa umbuso.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg", price: 26.99 },
+      { id: "shango", title: "SHANGO ZAIIRE", description: "Unyazi lukayise luba yifa lendodana: incwadi enamandla kaShango kuZaiire.", image: "/images/shango-zaiire-cover.webp", price: 42.98 },
     ],
     bestseller: [
       { id: "makanda", title: "MAKANDA", description: "Umbuso ofihliwe ovikelwa uMlilo oNgcwele ulindele ukuvuka futhi.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg", price: 23.99 },
@@ -206,9 +227,10 @@ const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, Comi
   },
   xh: {
     featured: [
-      { id: "zaiire", title: "ZAIIRE", description: "Inkosana yaseKongo ivusa iQhosha leSiphelo kwaye ibuyisela inkumbulo yobukumkani eyayicinyiwe.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg", price: 25.99 },
+      { id: "zaiire", title: "ZAIIRE", description: "Inkosana yaseKongo ivusa iQhosha leSiphelo kwaye ibuyisela inkumbulo yobukumkani eyayicinyiwe.", image: "/images/zaiire-cover-2026.webp", price: 60.97 },
       { id: "bambula", title: "BAMBULA", description: "Iqhawe legubu elingcwele eliphethe umculo, inkumbulo, kunye namandla omoya kumazwe onke.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", price: 24.99 },
       { id: "mokele", title: "MOKELE", description: "IKinshasa yenza umntu osindileyo esitratweni abe ngumlawuli ongenakuvalelwa nabuphi na ubukhosi.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg", price: 26.99 },
+      { id: "shango", title: "SHANGO ZAIIRE", description: "Umbane kayise uba lilifa lonyana: incwadi enamandla kaShango kuZaiire.", image: "/images/shango-zaiire-cover.webp", price: 42.98 },
     ],
     bestseller: [
       { id: "makanda", title: "MAKANDA", description: "Ubukumkani obufihliweyo obukhuselwe nguMlilo oNgcwele bulindele ukuvuka kwakhona.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg", price: 23.99 },
@@ -223,9 +245,10 @@ const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, Comi
   },
   sw: {
     featured: [
-      { id: "zaiire", title: "ZAIIRE", description: "Mkuu wa Kongo anaamsha Mkufu wa Hatima na kurejesha kumbukumbu ya kifalme iliyofutwa.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg", price: 25.99 },
+      { id: "zaiire", title: "ZAIIRE", description: "Mkuu wa Kongo anaamsha Mkufu wa Hatima na kurejesha kumbukumbu ya kifalme iliyofutwa.", image: "/images/zaiire-cover-2026.webp", price: 60.97 },
       { id: "bambula", title: "BAMBULA", description: "Shujaa wa ngoma takatifu anayebeba mdundo, kumbukumbu, na nguvu za kiroho ulimwenguni kote.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", price: 24.99 },
       { id: "mokele", title: "MOKELE", description: "Kinshasa inamgeuza mwokokaji wa mtaani kuwa mtawala ambaye hakuna dola linaloweza kumzuia.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg", price: 26.99 },
+      { id: "shango", title: "SHANGO ZAIIRE", description: "Radi ya baba inakuwa urithi wa mwana: barua yenye nguvu kutoka kwa Shango kwenda kwa Zaiire.", image: "/images/shango-zaiire-cover.webp", price: 42.98 },
     ],
     bestseller: [
       { id: "makanda", title: "MAKANDA", description: "Dola lililofichwa linalolindwa na Moto Mtakatifu linasubiri kuinuka tena.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg", price: 23.99 },
@@ -240,9 +263,10 @@ const comicsByLocale: Partial<Record<SupportedLocale, Record<ComicCategory, Comi
   },
   ln: {
     featured: [
-      { id: "zaiire", title: "ZAIIRE", description: "Mwana-mokonzi ya Kongo alamwisi Mondele ya Destin mpe azongisi bosikoli ya bokonzi oyo esilaki.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5413e9fc-976b-4c59-97bd-5858678b1f42.jpeg", price: 25.99 },
+      { id: "zaiire", title: "ZAIIRE", description: "Mwana-mokonzi ya Kongo alamwisi Mondele ya Destin mpe azongisi bosikoli ya bokonzi oyo esilaki.", image: "/images/zaiire-cover-2026.webp", price: 60.97 },
       { id: "bambula", title: "BAMBULA", description: "Elombe ya ngoma ya bule oyo amemi ngoma, bosikoli, mpe nguya ya molimo na mokili mobimba.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Bambula%201-UAlmQoZVy1GslUfmVvqc5bdDDdEQdX.jpg", price: 24.99 },
       { id: "mokele", title: "MOKELE", description: "Kinshasa ekomisi moto oyo abikaki na balabala mokonzi oyo ata bokonzi moko te ekoki kokanga.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Mokele.png-7sTyiUJYN8wJbiGll8YdVThtR4F8FT.jpeg", price: 26.99 },
+      { id: "shango", title: "SHANGO ZAIIRE", description: "Nkake ya tata ekomi libula ya mwana: mokanda ya nguya oyo Shango akomeli Zaiire.", image: "/images/shango-zaiire-cover.webp", price: 42.98 },
     ],
     bestseller: [
       { id: "makanda", title: "MAKANDA", description: "Bokonzi ya kobombama oyo ebatelami na Moto ya Bule ezali kozela kotelema lisusu.", image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/KIMOYA%20-%20THE%20RISING%20KANDAKE-kpNHOGXUp1l9A5z7uJ2Z4kI3v7e0ek.jpg", price: 23.99 },
@@ -415,7 +439,7 @@ const zaiireDetailByLocale: Partial<Record<SupportedLocale, ComicDetailPageData>
     heroImage: "/Fichier%202@0.5x.png",
     heroBackground: "/HERO.webp",
     heroImageAlt: "Zaiire Prince of Kongo cover art",
-    price: 36.99,
+    price: 60.97,
     purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [
       {
@@ -462,7 +486,7 @@ const zaiireDetailByLocale: Partial<Record<SupportedLocale, ComicDetailPageData>
     heroImage: "/Fichier%202@0.5x.png",
     heroBackground: "/HERO.webp",
     heroImageAlt: "Couverture Zaiire Prince du Kongo",
-    price: 36.99,
+    price: 60.97,
     purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [
       {
@@ -509,7 +533,7 @@ const zaiireDetailByLocale: Partial<Record<SupportedLocale, ComicDetailPageData>
     heroImage: "/Fichier%202@0.5x.png",
     heroBackground: "/HERO.webp",
     heroImageAlt: "Capa de Zaiire, Príncipe do Kongo",
-    price: 36.99,
+    price: 60.97,
     purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [
       {
@@ -556,7 +580,7 @@ const zaiireDetailByLocale: Partial<Record<SupportedLocale, ComicDetailPageData>
     heroImage: "/Fichier%202@0.5x.png",
     heroBackground: "/HERO.webp",
     heroImageAlt: "Portada de Zaiire, Príncipe de Kongo",
-    price: 36.99,
+    price: 60.97,
     purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [
       {
@@ -603,7 +627,7 @@ const zaiireDetailByLocale: Partial<Record<SupportedLocale, ComicDetailPageData>
     heroImage: "/Fichier%202@0.5x.png",
     heroBackground: "/HERO.webp",
     heroImageAlt: "Isithombe sangaphambili sikaZaiire, Inkosana yaseKongo",
-    price: 36.99,
+    price: 60.97,
     purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [
       {
@@ -650,7 +674,7 @@ const zaiireDetailByLocale: Partial<Record<SupportedLocale, ComicDetailPageData>
     heroImage: "/Fichier%202@0.5x.png",
     heroBackground: "/HERO.webp",
     heroImageAlt: "Umfanekiso wangaphambili kaZaiire, Inkosana yaseKongo",
-    price: 36.99,
+    price: 60.97,
     purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [
       {
@@ -697,7 +721,7 @@ const zaiireDetailByLocale: Partial<Record<SupportedLocale, ComicDetailPageData>
     heroImage: "/Fichier%202@0.5x.png",
     heroBackground: "/HERO.webp",
     heroImageAlt: "Jalada la Zaiire, Mkuu wa Kongo",
-    price: 36.99,
+    price: 60.97,
     purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [
       {
@@ -744,7 +768,7 @@ const zaiireDetailByLocale: Partial<Record<SupportedLocale, ComicDetailPageData>
     heroImage: "/Fichier%202@0.5x.png",
     heroBackground: "/HERO.webp",
     heroImageAlt: "Couverture ya Zaiire, Mwana-mokonzi ya Kongo",
-    price: 36.99,
+    price: 60.97,
     purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
     characters: [
       {
@@ -925,7 +949,7 @@ export function getComicDetailPageData(slug: string, locale: SupportedLocale): C
     heroImageAlt: book.title,
     heroBackground: "/HERO.webp",
     price: book.price,
-    purchaseHref: HOME_PRODUCTS_STRIPE_LINK,
+    purchaseHref: PURCHASE_LINKS_BY_SLUG[book.id] ?? HOME_PRODUCTS_STRIPE_LINK,
     characters: [],
     synopsisTitle: ui.comingSoonSubtitle,
     synopsis: [ui.comingSoonBody],

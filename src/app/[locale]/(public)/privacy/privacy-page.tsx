@@ -18,7 +18,7 @@ export function PrivacyPage() {
 
   return (
     <div 
-      className="min-h-screen relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8"
+      className="min-h-dvh relative overflow-hidden py-24 px-4 sm:px-6 lg:px-8"
       style={{ backgroundColor: currentTheme.colors.background }}
     >
       {/* Decorative Orbs */}

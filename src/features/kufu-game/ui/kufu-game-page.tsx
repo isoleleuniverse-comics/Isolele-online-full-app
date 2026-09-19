@@ -24,7 +24,7 @@ export function KufuGamePage({ locale }: KufuGamePageProps) {
   const content = getKufuGameContent(locale);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#0A0A0A", color: "#F0F0F0" }}>
+    <div className="min-h-dvh" style={{ backgroundColor: "#0A0A0A", color: "#F0F0F0" }}>
       <KufuGameStructuredData />
       <KufuGameHero game={content.game} content={content.page.hero} />
       <KufuGameTabs tab={tab} onChangeTab={setTab} tabs={content.page.tabs} />
