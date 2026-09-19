@@ -15,7 +15,7 @@ export function NewsCta({ isInView, accentColor, label }: NewsCtaProps) {
       transition={{ duration: 0.6, delay: 0.6 }}
       className="text-center mt-12"
     >
-      <Link href="/#hero">
+      <Link href="/articles">
         <motion.button
           className="px-8 py-4 rounded-lg text-sm font-bold tracking-wider transition-all border-2"
           style={{

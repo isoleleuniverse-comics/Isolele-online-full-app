@@ -124,7 +124,7 @@ export const bookHeroData: Record<string, { slides: HeroSlide[] }> = {
           "Every pirate fears the ocean. Amara owns it. She is the Queen of the Seas. The most feared captain on every water in the world. No ship has outrun her. No king has outsmarted her. No army has stopped her fleet. But Amara does not sail alone. Beside her stand four women bound by blood, loyalty and destiny. Five queens of the sea who together carry a power that will shake every throne on the continent. From their union the Agojie dynasty is born. And from that dynasty rise the five women kings who will change the course of African history forever.",
         buttonText: "DISCOVER AMARA",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-        href: "/#hero",
+        href: "/comics",
         accentColor: "#1E90B3",
       },
       {
@@ -247,7 +247,7 @@ export const bookHeroData: Record<string, { slides: HeroSlide[] }> = {
           "Amara é uma princesa rebelde do Kongo. A filha feroz de um rei poderoso, ela desafia a tradição e luta pela justiça num mundo que tenta silenciá-la. Quando o seu reino é ameaçado por forças externas, Amara pega em armas para proteger o seu povo e reclamar o seu lugar de direito no trono. Amara é uma personagem de comics africana negra nascida da linhagem real da civilização Kongo, onde as princesas não são apenas figuras de beleza, mas guerreiras destinadas a liderar o seu povo até à vitória.",
         buttonText: "DESCOBRIR AMARA",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-        href: "/#hero",
+        href: "/comics",
         accentColor: "#1E90B3",
       },
       {
@@ -371,7 +371,7 @@ export const bookHeroData: Record<string, { slides: HeroSlide[] }> = {
           "Tout pirate craint l'océan. Amara le possède. Elle est la Reine des Mers. Le capitaine le plus craint sur toutes les eaux du monde. Aucun navire ne lui a échappé. Aucun roi ne l'a surpassée en ruse. Aucune armée n'a arrêté sa flotte. Mais Amara ne navigue pas seule. À ses côtés se tiennent quatre femmes liées par le sang, la loyauté et le destin. Cinq reines des mers qui portent ensemble un pouvoir qui ébranlera tous les trônes du continent. De leur union naît la dynastie Agojie. Et de cette dynastie s'élèvent les cinq femmes rois qui changeront à jamais le cours de l'histoire africaine.",
         buttonText: "DÉCOUVRIR AMARA",
         image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-        href: "/#hero",
+        href: "/comics",
         accentColor: "#1E90B3",
       },
       {
@@ -486,7 +486,7 @@ export const bookHeroData: Record<string, { slides: HeroSlide[] }> = {
           description: "Mwana ya mokonzi oyo aboyi mimeseno ya pamba. Amara azali mwanamoke ya bitumba oyo atelemeli mbeba nyonso mpo na kobatela bato na ye.",
           buttonText: "YREBA AMARA",
           image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-          href: "/#hero",
+          href: "/comics",
           accentColor: "#1E90B3",
         },
         {
@@ -599,7 +599,7 @@ export const bookHeroData: Record<string, { slides: HeroSlide[] }> = {
           description: "Binti wa mfalme mwenye nguvu anayepigania haki. Katika ustaarabu wa Kongo, mabinti mfalme ni wapiganaji wa kulinda watu wao.",
           buttonText: "MFAHAMU AMARA",
           image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-          href: "/#hero",
+          href: "/comics",
           accentColor: "#1E90B3",
         },
         {
@@ -712,7 +712,7 @@ export const bookHeroData: Record<string, { slides: HeroSlide[] }> = {
           description: "Hija de un rey pero guerrera por justicia. Amara desafía la tradición para liderar a su pueblo hacia la victoria.",
           buttonText: "DESCUBRIR AMARA",
           image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-          href: "/#hero",
+          href: "/comics",
           accentColor: "#1E90B3",
         },
         {
@@ -834,7 +834,7 @@ export const bookHeroData: Record<string, { slides: HeroSlide[] }> = {
             "U-Amara uyinkosazana eyisihlwane yase-Kongo. Indodakazi enolaka yenkosi enamandla, uphikisana namasiko futhi ulwela ubulungiswa ezweni elizama ukumthulisa. Lapho umbuso wakhe usongelwa amabutho angaphandle, u-Amara uthatha izikhali ukuze avikele abantu bakhe futhi abuyise indawo yakhe efanele esihlalweni sobukhosi. U-Amara ngumlingiswa wamahlaya amnyama lase-Afrika ozalwe ozalweni lwenkosi lwempucuko yase-Kongo, lapho amakhosazana engekona nje kuphela izibalo zobuhle, kodwa engamaqhawe amiselwe ukuhola abantu bawo ekunqobeni.",
           buttonText: "THOLA U-AMARA",
           image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-          href: "/#hero",
+          href: "/comics",
           accentColor: "#1E90B3",
         },
         {
@@ -958,7 +958,7 @@ export const bookHeroData: Record<string, { slides: HeroSlide[] }> = {
             "Intombi yekumkani kodwa eliqhawe ngokhetho, uAmara ucela umngeni kwizithethe ukukhusela abantu bakhe. Kwimpucuko yase-Kongo, iinkosazana ngamagorha amiselwe ukoyisa.",
           buttonText: "FUMANA U-AMARA",
           image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1173-wrVJYiZhuW6ZvCM0Xronsu544ccrqV.jpeg",
-          href: "/#hero",
+          href: "/comics",
           accentColor: "#1E90B3",
         },
         {

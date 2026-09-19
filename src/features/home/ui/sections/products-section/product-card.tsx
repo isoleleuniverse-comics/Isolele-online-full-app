@@ -76,9 +76,7 @@ export function ProductCard({ product, index, addItem, addToCartLabel, colors }:
             style={{ backgroundColor: `${colors.background}80` }}
           >
             <motion.button
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
+              onClick={() => {
                 addItem({
                   id: product.id,
                   name: product.name,

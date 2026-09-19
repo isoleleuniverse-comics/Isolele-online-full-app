@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Character } from "./types";
+import { CHARACTER_SLUGS } from "@/features/characters/model/characters.data";
 
 interface CharacterCardProps {
   character: Character;
@@ -29,6 +30,10 @@ export function CharacterCard({
   discoverLabel,
   colors,
 }: CharacterCardProps) {
+  const href = (CHARACTER_SLUGS as readonly string[]).includes(character.id)
+    ? `/characters/${character.id}`
+    : "/characters";
+
   return (
     <motion.div
       key={`${character.id}-${Math.floor(index / totalCharacters)}`}
@@ -37,7 +42,7 @@ export function CharacterCard({
       transition={{ duration: 0.62, delay: 0.14 + (index % totalCharacters) * 0.1 }}
       className="flex-shrink-0 w-72 group"
     >
-      <Link href="/#hero">
+      <Link href={href}>
         <div
           className="relative h-96 rounded-2xl overflow-hidden mb-4 transition-all duration-500 cursor-pointer"
           style={{

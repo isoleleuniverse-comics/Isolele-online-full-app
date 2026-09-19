@@ -54,7 +54,7 @@ export function ReviewCard({ review, index, theme }: ReviewCardProps) {
 
       {review.ctaLabel && review.ctaHref ? (
         <Link
-          href={review.ctaHref === "/comics" ? review.ctaHref : "/#hero"}
+          href={review.ctaHref}
           className="mt-5 inline-flex rounded-md px-5 py-3 text-xs font-bold tracking-wider uppercase transition-all duration-200 hover:brightness-110 hover:scale-[1.02]"
           style={{ backgroundColor: theme.colors.accentPrimary, color: theme.colors.background }}
         >

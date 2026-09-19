@@ -9,7 +9,7 @@ interface FashionPreviewCtaProps {
 export function FashionPreviewCta({ label, accentPrimary }: FashionPreviewCtaProps) {
   return (
     <div className="flex justify-center">
-      <Link href="/#hero">
+      <Link href="/shop">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

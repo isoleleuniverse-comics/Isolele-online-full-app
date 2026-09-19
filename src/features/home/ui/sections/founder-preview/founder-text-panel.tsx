@@ -48,7 +48,7 @@ export function FounderTextPanel({ theme, title, subtitle, description, quote, c
         <Sparkles size={24} style={{ color: theme.colors.accentPrimary }} className="mx-auto mt-3 opacity-60" />
       </div>
 
-      <Link href="/" className="center">
+      <Link href="/king-kufulula" className="center">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

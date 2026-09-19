@@ -7,7 +7,7 @@ export const UNIVERSE_PILLARS: UniversePillar[] = [
     icon: Sparkles,
     title: "",
     description: "",
-    href: "/#hero",
+    href: "/books/zaiire",
     characterName: "Zaiire",
   },
   {
@@ -15,7 +15,7 @@ export const UNIVERSE_PILLARS: UniversePillar[] = [
     icon: Crown,
     title: "",
     description: "",
-    href: "/#hero",
+    href: "/books/makanda",
     characterName: "Kimoya",
   },
   {
@@ -56,7 +56,7 @@ export const universeData = {
       title: "The Lion Has Learned to Write",
       description:
         "An African proverb says: ‘Until the lion learns to write, every story will glorify the hunter.’ ISOLELE is the lion’s pen. Africa is writing its own story. For the first time in history, the Kongo civilization has its own superhero universe. Black African heroes created in Kinshasa, DRC, for every child on earth who deserves to see themselves as the chosen one.",
-      href: "/#hero",
+      href: "/books/zaiire",
       characterName: "Zaiire",
       discoverMoreLabel: "DISCOVER ZAIiRE",
     },
@@ -65,7 +65,7 @@ export const universeData = {
       title: "Everything Begins in Kongo",
       description:
         "Music. Dance. Royalty. Fashion. Culture. History. Before the world had names for these things, the Kongo had mastered them all. Africa is not a continent. It is a source. And the Congo is not just part of that source. The Congo IS the source. The trigger of all human culture. The heartbeat that started everything. ISOLELE was born there. Not by accident. By destiny. The Kongo civilization is the foundation of the ISOLELE universe. Every hero, every story, every battle begins where all human culture began. In Kongo.",
-      href: "/#hero",
+      href: "/books/makanda",
       characterName: "Kimoya",
       discoverMoreLabel: "DISCOVER KIMOYA",
     },
@@ -141,7 +141,7 @@ fr:{
         title: "O Leão Aprendeu a Escrever",
         description:
           "Um provérbio africano diz: 'Até que o leão aprenda a escrever, cada história glorificará o caçador.' A ISOLELE é a caneta do leão. A África está a escrever a sua própria história. Pela primeira vez na história, a civilização do Kongo tem o seu próprio universo de super-heróis. Heróis africanos negros criados em Kinshasa, RDC, para todas as crianças na terra que merecem ver-se como o escolhido.",
-        href: "/#hero",
+        href: "/books/zaiire",
         characterName: "Zaiire",
         discoverMoreLabel: "DESCOBRIR ZAIIRE",
       },
@@ -150,7 +150,7 @@ fr:{
         title: "Tudo Começa no Kongo",
         description:
           "Música. Dança. Realeza. Moda. Cultura. História. Antes de o mundo ter nomes para estas coisas, o Kongo já as dominava todas. A África não é um continente. É uma fonte. E o Congo não é apenas parte dessa fonte. O Congo É a fonte. O gatilho de toda a cultura humana. O batimento cardíaco que começou tudo. A ISOLELE nasceu ali. Não por acaso. Por destino. A civilização do Kongo é o alicerce do universo ISOLELE. Cada herói, cada história, cada batalha começa onde toda a cultura humana começou. No Kongo.",
-        href: "/#hero",
+        href: "/books/makanda",
         characterName: "Kimoya",
         discoverMoreLabel: "DESCOBRIR KIMOYA",
       },
@@ -186,7 +186,7 @@ fr:{
         title: "El León Ha Aprendido a Escribir",
         description:
           "Un proverbio africano dice: 'Hasta que el león aprenda a escribir, cada historia glorificará al cazador.' ISOLELE es la pluma del león. África está escribiendo su propia historia. Por primera vez en la historia, la civilización Kongo tiene su propio universo de superhéroes. Héroes africanos negros creados en Kinshasa, RDC, para todos los niños en la tierra que merecen verse a sí mismos como el elegido.",
-        href: "/#hero",
+        href: "/books/zaiire",
         characterName: "Zaiire",
         discoverMoreLabel: "DESCUBRIR ZAIIRE",
       },
@@ -195,7 +195,7 @@ fr:{
         title: "Todo Comienza en Kongo",
         description:
           "Música. Danza. Realeza. Moda. Cultura. Historia. Antes de que el mundo tuviera nombres para estas cosas, Kongo ya las dominaba todas. África no es un continente. Es una fuente. Y el Congo no es solo parte de esa fuente. El Congo ES la fuente. El detonante de toda la cultura humana. El latido que empezó todo. ISOLELE nació allí. No por accidente. Por destino. La civilización Kongo es el fundamento del universo ISOLELE. Cada héroe, cada historia, cada batalla comienza donde comenzó toda la cultura humana. En Kongo.",
-        href: "/#hero",
+        href: "/books/makanda",
         characterName: "Kimoya",
         discoverMoreLabel: "DESCUBRIR KIMOYA",
       },
@@ -231,7 +231,7 @@ fr:{
         title: "Ibhubesi Selifundile Ukubhala",
         description:
           "Isaga sase-Afrika sithi: 'Kuze kube yilapho ibhubesi lifunda ukubhala, yonke indaba izokudumisa umzingeli.' I-ISOLELE iyipeni lebhubesi. I-Afrika ibhala eyayo indaba. Okokuqala emlandweni, isizwe saseKongo sinawo umhlaba wawo wamaqhawe amakhulu. Amaqhawe amnyama ase-Afrika adalelwe eKinshasa, e-DRC, zonke izingane emhlabeni ezifanele ukuzibona njengabakhethiwe.",
-        href: "/#hero",
+        href: "/books/zaiire",
         characterName: "Zaiire",
         discoverMoreLabel: "HLOLA UZAIIRE",
       },
@@ -240,7 +240,7 @@ fr:{
         title: "Konke Kuqala EKongo",
         description:
           "Umculo. Umdanso. Ubukhosi. Imfashini. Amasiko. Umlando. Ngaphambi kokuba umhlaba ube namagama alezi zinto, iKongo yayivele ikuqonda konke. I-Afrika akulona izwekazi. Kungumthombo. NeKongo akuyona ingxenye nje yalowo mthombo. IKongo IWUMTHOMBO. Isiqalisi samasiko wonke omuntu. Ukushaya kwenhliziyo okwaqala konke. I-ISOLELE yazalelwa lapho. Hhayi ngengozi. Ngesiphetho. Isizwe saseKongo siyisisekelo somhlaba we-ISOLELE. Wonke amaqhawe, zonke izindaba, zonke izimpi ziqala lapho wonke amasiko omuntu aqala khona. EKongo.",
-        href: "/#hero",
+        href: "/books/makanda",
         characterName: "Kimoya",
         discoverMoreLabel: "HLOLA UKIMOYA",
       },
@@ -276,7 +276,7 @@ fr:{
         title: "Ingonyama Ifundile Ukubhala",
         description:
           "Iqhalo lase-Afrika lithi: 'Kude kube ngunaphakade ingonyama ifunda ukubhala, onke amabali aya kudumisa umzingeli.' I-ISOLELE lipeni lengonyama. I-Afrika ibhala eyayo ibali. Okokuqala kwimbali, uhlanga lwaseKongo lunelo ihlabathi lawo lamaqhawe amakhulu. Amaqhawe amnyama ase-Afrika enziwe eKinshasa, e-DRC, kuwo onke umntwana emhlabeni ofanelwe kukuzibona njengokhethiweyo.",
-        href: "/#hero",
+        href: "/books/zaiire",
         characterName: "Zaiire",
         discoverMoreLabel: "FUMANISA UZAIIRE",
       },
@@ -285,7 +285,7 @@ fr:{
         title: "Yonke Into Iqala EKongo",
         description:
           "Umculo. Umdaniso. Ubukumkani. Imfashoni. Inkcubeko. Imbali. Phambi kokuba ihlabathi libe namagama ezi zinto, iKongo yayisele iziqonda zonke. I-Afrika ayisiyo ilizwekazi. Ngumthombo. NeKongo ayisiyongxenye nje yaloo mthombo. IKongo INGUMTHOMBO. Isiqalisi senkcubeko yonke yomntu. Ukubetha kwentliziyo okwaqala yonke into. I-ISOLELE yazalelwa apho. Hayi ngengozi. Ngesiphelo. Uhlanga lwaseKongo luyisiseko sehlabathi le-ISOLELE. Onke amaqhawe, onke amabali, zonke iimfazwe ziqala apho yonke inkcubeko yomntu yaqala khona. EKongo.",
-        href: "/#hero",
+        href: "/books/makanda",
         characterName: "Kimoya",
         discoverMoreLabel: "FUMANISA UKIMOYA",
       },
@@ -321,7 +321,7 @@ fr:{
         title: "Simba Amejifunza Kuandika",
         description:
           "Msemo wa Kiafrika unasema: 'Mpaka simba ajifunze kuandika, kila hadithi itamtukuza mwindaji.' ISOLELE ni kalamu ya simba. Afrika inaandika hadithi yake yenyewe. Kwa mara ya kwanza katika historia, ustaarabu wa Kongo una ulimwengu wake wa mashujaa wakuu. Mashujaa weusi wa Kiafrika waliobuniwa Kinshasa, DRC, kwa kila mtoto duniani anayestahili kujiona kama mteule.",
-        href: "/#hero",
+        href: "/books/zaiire",
         characterName: "Zaiire",
         discoverMoreLabel: "GUNDUA ZAIIRE",
       },
@@ -330,7 +330,7 @@ fr:{
         title: "Kila Kitu Kinaanzia Kongo",
         description:
           "Muziki. Ngoma. Ufalme. Mitindo. Utamaduni. Historia. Kabla ulimwengu haujawa na majina kwa vitu hivi, Kongo ilikuwa tayari imevimudu vyote. Afrika si bara. Ni chanzo. Na Kongo si sehemu tu ya chanzo hicho. Kongo NDIYO chanzo. Kianzishi cha utamaduni wote wa binadamu. Mapigo ya moyo yaliyoanzisha kila kitu. ISOLELE ilizaliwa hapo. Sio kwa bahati. Kwa hatima. Ustaarabu wa Kongo ndio msingi wa ulimwengu wa ISOLELE. Kila shujaa, kila hadithi, kila vita huanzia pale utamaduni wote wa binadamu ulipoanzia. Kongo.",
-        href: "/#hero",
+        href: "/books/makanda",
         characterName: "Kimoya",
         discoverMoreLabel: "GUNDUA KIMOYA",
       },
@@ -366,7 +366,7 @@ fr:{
         title: "Nkosi Ayekoli Kokoma",
         description:
           "Lisese moko ya Afrika elobi: 'Kino nkosi eyekola kokoma, lisolo nyonso ekokumisa kaka mobomi-nyama.' ISOLELE ezali kalamu ya nkosi. Afrika azali kokoma lisolo na ye moko. Mbala ya liboso na lisolo, bomoto ya Kongo ezali na mokili na yango moko ya ba héros minene. Ba héros ya mwindo ya Afrika basalemi na Kinshasa, RDC, mpo na mwana nyonso na mokili oyo abongi komimona lokola moponomi.",
-        href: "/#hero",
+        href: "/books/zaiire",
         characterName: "Zaiire",
         discoverMoreLabel: "LUKA ZAIIRE",
       },
@@ -375,7 +375,7 @@ fr:{
         title: "Nyonso Ebandaka na Kongo",
         description:
           "Miziki. Mabina. Bokonzi. Bilamba. Mimeseno. Lisolo. Liboso mokili ezala na nkombo mpo na biloko oyo, Kongo esilaki koyeba yango nyonso. Afrika ezali kontinan te. Ezali liziba. Mpe Kongo ezali kaka eteni ya liziba yango te. Kongo EZALI liziba. Ebandeli ya mimeseno nyonso ya bomoto. Kobeta ya motema oyo ebandisaki nyonso. ISOLELE abotamaki wana. Na likambo ya mbala moko te. Na destin. Bomoto ya Kongo ezali fondation ya mokili ya ISOLELE. Héros nyonso, lisolo nyonso, etumba nyonso ebandaka esika mimeseno nyonso ya bomoto ebandaki. Na Kongo.",
-        href: "/#hero",
+        href: "/books/makanda",
         characterName: "Kimoya",
         discoverMoreLabel: "LUKA KIMOYA",
       },

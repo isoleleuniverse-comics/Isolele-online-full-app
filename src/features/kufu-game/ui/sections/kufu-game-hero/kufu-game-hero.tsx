@@ -81,7 +81,7 @@ export function KufuGameHero({ game, content }: KufuGameHeroProps) {
                   <span className="text-3xl font-black" style={{ color: "#F6B800" }}>${game.price}</span>
                   <span className="ml-1 text-xs" style={{ color: "#555555" }}>{content.currencyLabel}</span>
                 </div>
-                <Link href="/#hero">
+                <Link href="/contact">
                   <button className="inline-flex items-center gap-2 rounded-lg px-7 py-3 text-sm font-bold tracking-wide transition-all hover:scale-[1.02] hover:brightness-110 active:scale-[0.97]" style={{ backgroundColor: "#F6B800", color: "#000000" }}>
                     <ShoppingCart size={16} />
                     {content.orderLabel}
