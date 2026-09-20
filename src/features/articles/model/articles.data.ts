@@ -32,7 +32,7 @@ const ARTICLES_BY_LOCALE: Partial<Record<SupportedLocale, StaticArticle[]>> & { 
       title: "L'univers d'Isolele : entre mythe et modernité",
       excerpt:
         "Plongez au cœur de la création d'Isolele, un monde où les légendes africaines rencontrent la narration graphique contemporaine.",
-      coverImage: "/royal-palace-background.webp",
+      coverImage: "/images/isolele-city-illustration.webp",
       published: true,
       createdAt: new Date("2026-04-01T10:00:00Z"),
       updatedAt: new Date("2026-04-15T08:30:00Z"),
@@ -96,7 +96,7 @@ const ARTICLES_BY_LOCALE: Partial<Record<SupportedLocale, StaticArticle[]>> & { 
       title: "Kufulula : anatomie d'un roi hors du commun",
       excerpt:
         "Qui est vraiment le roi Kufulula ? Portrait d'un personnage complexe, à la fois guerrier, diplomate et gardien des ancêtres.",
-      coverImage: "/royal-palace-background.webp",
+      coverImage: "/king-kufulula-background.webp",
       published: true,
       createdAt: new Date("2026-04-10T14:00:00Z"),
       updatedAt: new Date("2026-04-20T11:00:00Z"),
@@ -160,7 +160,7 @@ const ARTICLES_BY_LOCALE: Partial<Record<SupportedLocale, StaticArticle[]>> & { 
       title: "Dessiner l'Afrique autrement : le processus créatif d'Isolele",
       excerpt:
         "De l'esquisse au produit final, découvrez les coulisses de la création des planches d'Isolele et la vision artistique qui les anime.",
-      coverImage: "/royal-palace-background.webp",
+      coverImage: "/images/zaiire-book-hand.webp",
       published: true,
       createdAt: new Date("2026-05-01T09:00:00Z"),
       updatedAt: new Date("2026-05-05T16:45:00Z"),
@@ -229,7 +229,7 @@ const ARTICLES_BY_LOCALE: Partial<Record<SupportedLocale, StaticArticle[]>> & { 
       title: "The Isolele Universe: Between Myth and Modernity",
       excerpt:
         "Dive into the heart of Isolele's creation — a world where African legends collide with contemporary graphic storytelling.",
-      coverImage: "/royal-palace-background.webp",
+      coverImage: "/images/isolele-city-illustration.webp",
       published: true,
       createdAt: new Date("2026-04-01T10:00:00Z"),
       updatedAt: new Date("2026-04-15T08:30:00Z"),
@@ -293,7 +293,7 @@ const ARTICLES_BY_LOCALE: Partial<Record<SupportedLocale, StaticArticle[]>> & { 
       title: "Kufulula: Anatomy of an Extraordinary King",
       excerpt:
         "Who is King Kufulula really? A portrait of a complex character — warrior, diplomat, and guardian of the ancestors all at once.",
-      coverImage: "/royal-palace-background.webp",
+      coverImage: "/king-kufulula-background.webp",
       published: true,
       createdAt: new Date("2026-04-10T14:00:00Z"),
       updatedAt: new Date("2026-04-20T11:00:00Z"),
@@ -357,7 +357,7 @@ const ARTICLES_BY_LOCALE: Partial<Record<SupportedLocale, StaticArticle[]>> & { 
       title: "Drawing Africa Differently: Isolele's Creative Process",
       excerpt:
         "From sketch to final product, discover the behind-the-scenes of creating Isolele's pages and the artistic vision that drives them.",
-      coverImage: "/royal-palace-background.webp",
+      coverImage: "/images/zaiire-book-hand.webp",
       published: true,
       createdAt: new Date("2026-05-01T09:00:00Z"),
       updatedAt: new Date("2026-05-05T16:45:00Z"),
