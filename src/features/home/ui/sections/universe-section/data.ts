@@ -99,7 +99,7 @@ fr:{
               "key": "destiny",
               "title": "Le Lion a Appris à Écrire",
               "description": "Un proverbe africain dit : « Jusqu'à ce que le lion apprenne à écrire, chaque histoire glorifiera le chasseur. » ISOLELE est la plume du lion. L'Afrique écrit sa propre histoire. Pour la première fois dans l'histoire, la civilisation Kongo a son propre univers de super-héros. Des héros noirs africains créés à Kinshasa, RDC, pour chaque enfant sur terre qui mérite de se voir comme l'élu.",
-              "href": "/#hero",
+              "href": "/books/zaiire",
               "characterName": "Zaiire",
               "discoverMoreLabel": "DÉCOUVRIR ZAIIRE"
             },
@@ -107,7 +107,7 @@ fr:{
               "key": "heritage",
               "title": "Tout Commence au Kongo",
               "description": "La musique. La danse. La royauté. La mode. La culture. L'histoire. Avant que le monde n'ait des noms pour ces choses, le Kongo les avait toutes maîtrisées. L'Afrique n'est pas un continent. C'est une source. Et le Congo n'est pas seulement une partie de cette source. Le Congo EST la source. Le déclencheur de toute la culture humaine. Le battement de cœur qui a tout commencé. ISOLELE y est né. Pas par accident. Par destin. La civilisation Kongo est le fondement de l'univers ISOLELE. Chaque héros, chaque histoire, chaque bataille commence là où toute la culture humaine a commencé. Au Kongo.",
-              "href": "/#hero",
+              "href": "/books/makanda",
               "characterName": "Kimoya",
               "discoverMoreLabel": "DÉCOUVRIR KIMOYA"
             },

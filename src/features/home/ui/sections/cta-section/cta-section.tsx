@@ -218,7 +218,7 @@ export function CtaSection() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-4 justify-center mb-8"
         >
-          <Link href="/#hero">
+          <Link href="/comics">
             <motion.button
               className="relative px-12 py-5 rounded-full text-lg font-bold tracking-wider overflow-hidden whitespace-nowrap"
               style={{

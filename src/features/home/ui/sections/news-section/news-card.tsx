@@ -21,7 +21,7 @@ export function NewsCard({ article, index, isInView, theme, minutesReadLabel, re
   const {locale} = useLanguage();
   const articleHref = article.slug
     ? `/${locale}/articles/${article.slug}`
-    : "/#hero";
+    : "/articles";
   return (
     <motion.article
       initial={{ opacity: 0, y: 32 }}
